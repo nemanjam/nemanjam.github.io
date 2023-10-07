@@ -1,0 +1,34 @@
+<script>
+const loadGiscus = () => {
+  const isCLientSide = typeof window !== 'undefined';
+  if (!isCLientSide) return;
+
+  const theme = sessionStorage.theme;
+  console.log('theme', theme);
+
+  const script = document.createElement('script');
+  const anchor = document.getElementById('inject-comments-for-giscus');
+  if (!anchor) return;
+
+  script.setAttribute('src', 'https://giscus.app/client.js');
+  script.setAttribute('data-repo', 'nemanjam/nemanjam.github.io');
+  script.setAttribute('data-repo-id', 'R_kgDOKc-LeA');
+  script.setAttribute('data-category', 'General');
+  script.setAttribute('data-category-id', 'DIC_kwDOKc-LeM4CZ7UL');
+  script.setAttribute('data-mapping', 'pathname');
+  script.setAttribute('data-strict', '0');
+  script.setAttribute('data-reactions-enabled', '1');
+  script.setAttribute('data-emit-metadata', '0');
+  script.setAttribute('data-input-position', 'bottom');
+  script.setAttribute('data-theme', theme === 'light' ? 'light' : 'dark');
+  script.setAttribute('data-lang', 'en');
+  script.setAttribute('data-loading', 'lazy');
+  script.setAttribute('async', '1');
+  script.setAttribute('crossorigin', 'anonimous');
+  anchor.appendChild(script);
+}
+
+loadGiscus();
+</script>
+
+<div id="inject-comments-for-giscus" />
