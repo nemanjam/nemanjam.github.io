@@ -60,6 +60,11 @@ jobs:
       - name: Build nemanjam.github.io
         run: yarn build:nmc
 
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./apps/nemanjamiticcom/dist
+
   deploy:
     needs: build-monorepo
     runs-on: ubuntu-latest
