@@ -42,6 +42,17 @@ jobs:
       - name: Build nemanjamiticcom
         run: yarn build:nmc
 
+      - name: Clean up websites dir
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_KEY_ED25519 }}
+          port: ${{ secrets.VPS_PORT }}
+          script_stop: true
+          script: |
+            rm -rf /home/ubuntu/traefik-proxy/apps/nginx-with-volume-nmc/website/*
+
       - name: Copy dist folder to remote host
         uses: appleboy/scp-action@master
         with:
@@ -51,8 +62,9 @@ jobs:
           port: ${{ secrets.REMOTE_PORT }}
           source: 'apps/nemanjamiticcom/dist/'
           target: '/home/ubuntu/traefik-proxy/apps/nginx-with-volume-nmc/website'
-          
+
           # remove apps/nemanjamiticcom/dist path segments
           strip_components: 3
           # remove website dir
-          rm: true
+          # not good, must restart nginx docker every time
+          # rm: true
