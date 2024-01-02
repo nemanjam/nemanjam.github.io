@@ -42,7 +42,7 @@ jobs:
       - name: Build nemanjamiticcom
         run: yarn build:nmc
 
-      - name: Clean up websites dir
+      - name: Clean up website dir
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.REMOTE_HOST }}
@@ -50,8 +50,8 @@ jobs:
           key: ${{ secrets.REMOTE_KEY_ED25519 }}
           port: ${{ secrets.REMOTE_PORT }}
           script_stop: true
-          script: |
-            rm -rf /home/ubuntu/traefik-proxy/apps/nginx-with-volume-nmc/website/*
+          script: whoami
+          # script: rm -rf /home/ubuntu/traefik-proxy/apps/nginx-with-volume-nmc/website/*
 
       - name: Copy dist folder to remote host
         uses: appleboy/scp-action@master

@@ -23,7 +23,7 @@ jobs:
           port: ${{ secrets.REMOTE_PORT }}
           script_stop: true
           script: |
-            cd /home/ubuntu/traefik-proxy/apps/nemanjamiticcom
+            cd /home/ubuntu/traefik-proxy/apps/docker-nmc
 
             echo "Old image tag: $(docker inspect --format '{{ index .RepoTags 0 }}' nemanjamitic/nemanjamiticcom)"
             echo "Old image hash: $(docker inspect --format '{{ index .RepoDigests 0 }}' nemanjamitic/nemanjamiticcom)"
