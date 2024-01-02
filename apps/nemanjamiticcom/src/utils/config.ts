@@ -89,7 +89,7 @@ const config = yaml.load(configString) as {
   analytics?: unknown;
 };
 
-console.log('config', JSON.stringify(config, null, 2));
+// console.log('config', JSON.stringify(config, null, 2));
 
 const DEFAULT_SITE_NAME = 'Website';
 
