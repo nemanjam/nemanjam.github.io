@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy GitHub Pages
 
 on:
   push:
@@ -18,7 +18,7 @@ permissions:
   id-token: write
 
 env:
-  PUBLIC_SITE_HOSTNAME: nemanjam.github.io
+  PUBLIC_SITE_HOSTNAME: 'https://nemanjam.github.io'
 
 jobs:
   # build with astro action, no monorepo
@@ -33,7 +33,7 @@ jobs:
   #       with:
   #         path: apps/nemanjamiticcom
   #         node-version: 20.10.0
-  #         package-manager: yarn@latest 
+  #         package-manager: yarn@latest
 
   build-monorepo:
     runs-on: ubuntu-latest

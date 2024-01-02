@@ -1,4 +1,4 @@
-name: Deploy nemanjamiticcom Nginx
+name: Deploy Nginx
 
 on:
   push:
@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 env:
-  PUBLIC_SITE_HOSTNAME: nemanjamitic.com
+  PUBLIC_SITE_HOSTNAME: 'https://nemanjamitic.com'
 
 jobs:
   deploy:
@@ -49,8 +49,8 @@ jobs:
           username: ${{ secrets.REMOTE_USERNAME }}
           key: ${{ secrets.REMOTE_KEY_ED25519 }}
           port: ${{ secrets.REMOTE_PORT }}
-          source: "apps/nemanjamiticcom/dist/"
-          target: "/home/ubuntu/traefik-proxy/apps/nginx-with-volume-nmc/website"
+          source: 'apps/nemanjamiticcom/dist/'
+          target: '/home/ubuntu/traefik-proxy/apps/nginx-with-volume-nmc/website'
           
           # remove apps/nemanjamiticcom/dist path segments
           strip_components: 3

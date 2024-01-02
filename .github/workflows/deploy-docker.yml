@@ -1,9 +1,9 @@
-name: Deploy latest nemanjamiticcom Docker image
+name: Deploy Docker
 
 
 on:
   workflow_run:
-    workflows: ['Build and push nemanjamiticcom Docker image - disabled']
+    workflows: ['Build and push Docker - disabled']
     types:
       - completed
 
