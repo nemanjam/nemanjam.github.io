@@ -50,8 +50,11 @@ jobs:
           key: ${{ secrets.REMOTE_KEY_ED25519 }}
           port: ${{ secrets.REMOTE_PORT }}
           script_stop: true
-          script: whoami
-          # script: rm -rf /home/ubuntu/traefik-proxy/apps/nginx-with-volume-nmc/website/*
+          script: |
+            cd /home/ubuntu/traefik-proxy/apps/nginx-with-volume-nmc/website
+            ls -la
+            rm -rf ./*
+            ls -la
 
       - name: Copy dist folder to remote host
         uses: appleboy/scp-action@master
