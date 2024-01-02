@@ -52,8 +52,10 @@ jobs:
           script_stop: true
           script: |
             cd /home/ubuntu/traefik-proxy/apps/nginx-with-volume-nmc/website
+            echo "Content before deletion: $(pwd)"
             ls -la
             rm -rf ./*
+            echo "Content after deletion: $(pwd)"
             ls -la
 
       - name: Copy dist folder to remote host
