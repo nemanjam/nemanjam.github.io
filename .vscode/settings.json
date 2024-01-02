@@ -7,13 +7,10 @@
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
-  "prettier.configPath": "packages/prettier-config/.prettierrc.js",
-  "prettier.ignorePath": "packages/prettier-config/.prettierignore",
+  "prettier.configPath": "./packages/prettier-config/.prettierrc.js",
+  "prettier.ignorePath": "./packages/prettier-config/.prettierignore",
   "prettier.documentSelectors": ["**/*.astro"],
-  "[astro]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[json][jsonc]": {
+  "[astro][json][jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "astro"],

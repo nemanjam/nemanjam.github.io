@@ -1,6 +1,7 @@
 site:
   name: AstroWind
-  site: 'https://astrowind.vercel.app'
+  # site: 'https://astrowind.vercel.app'
+  site: <%= process.env.PUBLIC_SITE_HOSTNAME %>
   base: '/'
   trailingSlash: false
 

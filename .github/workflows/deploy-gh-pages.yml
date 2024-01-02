@@ -57,7 +57,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Build nemanjamiticcom
+      - name: Build nemanjam.github.io
         run: yarn build:nmc
 
   deploy:

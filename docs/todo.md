@@ -109,3 +109,5 @@ https://dev.to/emekaofe/how-to-pass-environment-variables-to-a-yaml-file-in-a-no
 
 
 add ssh keys again for nginx action
+
+write zod validation for env vars

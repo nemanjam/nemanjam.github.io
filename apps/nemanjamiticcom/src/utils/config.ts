@@ -1,8 +1,14 @@
 import fs from 'fs';
 import yaml from 'js-yaml';
 import merge from 'lodash.merge';
+import ejs from 'ejs';
+import dotenv from 'dotenv';
 
 import type { MetaData } from '~/types';
+
+// write zod validation for env vars
+const envFileName = `.env.${process.env.NODE_ENV}`;
+dotenv.config({ path: envFileName });
 
 export interface SiteConfig {
   name: string;
@@ -66,8 +72,13 @@ export interface AnalyticsConfig {
     };
   };
 }
+// todo: put in function and write zod validation for env vars
+// merge .env vars and yaml
+const envContext = { site: { site: process.env.PUBLIC_SITE_HOSTNAME } };
+const configTemplate = fs.readFileSync('src/config.yaml', 'utf8');
+const configString = ejs.render(configTemplate, envContext);
 
-const config = yaml.load(fs.readFileSync('src/config.yaml', 'utf8')) as {
+const config = yaml.load(configString) as {
   site?: SiteConfig;
   metadata?: MetaDataConfig;
   i18n?: I18NConfig;
@@ -78,7 +89,7 @@ const config = yaml.load(fs.readFileSync('src/config.yaml', 'utf8')) as {
   analytics?: unknown;
 };
 
-// console.log('config', JSON.stringify(config, null, 2));
+console.log('config', JSON.stringify(config, null, 2));
 
 const DEFAULT_SITE_NAME = 'Website';
 
