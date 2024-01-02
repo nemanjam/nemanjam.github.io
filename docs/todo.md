@@ -101,13 +101,28 @@ integrate tailwind-config package with astrowind
 
 prettier sorting imports
 
----------------
-every .gitignore manages only its level (package) or root
-------------
+---
+
+## every .gitignore manages only its level (package) or root
+
 marge env vars and yaml
 https://dev.to/emekaofe/how-to-pass-environment-variables-to-a-yaml-file-in-a-nodejs-application-using-ejs-templating-engine-ib7
-
 
 add ssh keys again for nginx action
 
 write zod validation for env vars
+add rand string to test redeploy
+
+---
+
+- on remove folder scp-action must restart nginx, fix this
+
+---
+
+Only build time variable **important**. Can be undefined in prod runtime.
+
+```bash
+PUBLIC_SITE_HOSTNAME=https://nemanjamitic.com
+```
+
+---
