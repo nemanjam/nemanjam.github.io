@@ -1,6 +1,5 @@
 name: Deploy Docker
 
-
 on:
   workflow_run:
     workflows: ['Build and push Docker - disabled']
@@ -18,10 +17,10 @@ jobs:
       - name: Deploy latest image
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USERNAME }}
-          key: ${{ secrets.VPS_KEY_ED25519 }}
-          port: ${{ secrets.VPS_PORT }}
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USERNAME }}
+          key: ${{ secrets.REMOTE_KEY_ED25519 }}
+          port: ${{ secrets.REMOTE_PORT }}
           script_stop: true
           script: |
             cd /home/ubuntu/traefik-proxy/apps/nemanjamiticcom
@@ -40,7 +39,3 @@ jobs:
                   
             # remove dangling images, optional
             docker image prune -af
-
-
-            
-
