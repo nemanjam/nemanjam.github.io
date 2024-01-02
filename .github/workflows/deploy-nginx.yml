@@ -1,0 +1,58 @@
+name: Deploy nemanjamiticcom Nginx
+
+on:
+  push:
+    branches:
+      - 'disabled-main'
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+  pull_request:
+    branches:
+      - 'disabled-main'
+  workflow_dispatch:
+
+env:
+  PUBLIC_SITE_HOSTNAME: nemanjamitic.com
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: Print commit id, message and tag
+        run: |
+          git show -s --format='%h %s'
+          echo "github.ref -> {{ github.ref }}"
+
+      - name: Set up Node.js and Yarn
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.10.0'
+          registry-url: 'https://registry.yarnpkg.com'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      # fix this for turbo
+      - name: Build nemanjamiticcom
+        run: yarn build:nmc
+
+      - name: Copy dist folder to remote host
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USERNAME }}
+          key: ${{ secrets.REMOTE_KEY_ED25519 }}
+          port: ${{ secrets.REMOTE_PORT }}
+          source: "apps/nemanjamiticcom/dist/"
+          target: "/home/ubuntu/traefik-proxy/apps/nginx-with-volume-nmc/website"
+          
+          # remove apps/nemanjamiticcom/dist path segments
+          strip_components: 3
+          # remove website dir
+          rm: true

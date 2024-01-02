@@ -1,0 +1,19 @@
+# used only for dev, localhost:8080
+
+version: '3.8'
+
+services:
+  nemanjamiticcom:
+    container_name: nemanjamiticcom
+    restart: unless-stopped
+    build:
+      context: ./
+      dockerfile: ./apps/nemanjamiticcom/docker/Dockerfile
+    ports:
+      - '8080:8080'
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true

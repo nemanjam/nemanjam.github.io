@@ -1,0 +1,10 @@
+{
+  "name": "@repo/prettier-config",
+  "main": "index.js",
+  "bin": "bin/format",
+  "license": "MIT",
+  "version": "0.0.6",
+  "scripts": {
+    "format": "node index.js"
+  }
+}

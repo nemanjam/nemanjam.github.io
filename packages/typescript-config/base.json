@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "astro/tsconfigs/strict",
+  "display": "Default",
+  "compilerOptions": {
+    "baseUrl": "../../",
+    "paths": {
+      "@packages/*": ["packages/*"],
+      "@apps/*": ["apps/*"],
+      "~/*": ["apps/nemanjamiticcom/src/*"]
+    },
+    "jsx": "react-jsx"
+  },
+  "exclude": ["node_modules"]
+}

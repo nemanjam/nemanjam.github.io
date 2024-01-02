@@ -1,0 +1,23 @@
+{
+  "name": "@repo/astro-components",
+  "version": "0.0.1",
+  "description": "This package contains a Astro components to use in Astro apps.",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint-config",
+    "format": "prettier-config",
+    "check-types": "tsc --noEmit --pretty"
+  },
+  "dependencies": {
+    "web-vitals": "^3.1.1"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/prettier-config": "*",
+    "@repo/tailwind-config": "*",
+    "@repo/typescript-config": "*",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.4.0"
+  }
+}

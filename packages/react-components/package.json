@@ -1,0 +1,32 @@
+{
+  "name": "@repo/react-components",
+  "version": "0.0.0",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    "./styles.css": "./dist/index.css",
+    "./card": "./src/card.tsx"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tailwindcss -i ./src/styles.css -o dist/index.css",
+    "disabled-dev": "tailwindcss -i ./src/styles.css -o ./dist/index.css --watch",
+    "check-types": "tsc --noEmit --pretty",
+    "lint": "eslint-config",
+    "format": "prettier-config"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/tailwind-config": "*",
+    "@repo/typescript-config": "*",
+    "@repo/prettier-config": "*",
+    "@types/react": "^18.2.38",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "react": "^18.2.0",
+    "tailwindcss": "^3.4.0",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.2"
+  }
+}

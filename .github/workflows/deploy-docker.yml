@@ -1,0 +1,46 @@
+name: Deploy latest nemanjamiticcom Docker image
+
+
+on:
+  workflow_run:
+    workflows: ['Build and push nemanjamiticcom Docker image - disabled']
+    types:
+      - completed
+
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy image from Dockerhub to remote host with ssh
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy latest image
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_KEY_ED25519 }}
+          port: ${{ secrets.VPS_PORT }}
+          script_stop: true
+          script: |
+            cd /home/ubuntu/traefik-proxy/apps/nemanjamiticcom
+
+            echo "Old image tag: $(docker inspect --format '{{ index .RepoTags 0 }}' nemanjamitic/nemanjamiticcom)"
+            echo "Old image hash: $(docker inspect --format '{{ index .RepoDigests 0 }}' nemanjamitic/nemanjamiticcom)"
+
+            docker-compose down
+            docker image rm nemanjamitic/nemanjamiticcom:latest
+
+            docker-compose up -d
+
+            echo "New image tag: $(docker inspect --format '{{ index .RepoTags 0 }}' nemanjamitic/nemanjamiticcom)"
+            echo "New image hash: $(docker inspect --format '{{ index .RepoDigests 0 }}' nemanjamitic/nemanjamiticcom)"
+
+                  
+            # remove dangling images, optional
+            docker image prune -af
+
+
+            
+
