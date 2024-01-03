@@ -121,3 +121,11 @@ PUBLIC_SITE_HOSTNAME=https://nemanjamitic.com
 ```
 
 - clean up utils folder
+
+- compare implementation of utils folders with all other astro examples
+- write types folder with models
+- integrations folder for task for sitemap on build
+- maybe use classes
+- functions dont return types
+- css colors in config?
+- js code in script tags, theme...
