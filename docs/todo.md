@@ -112,12 +112,7 @@ add ssh keys again for nginx action, done
 
 write zod validation for env vars
 add rand string to test redeploy
-
----
-
-- on remove folder scp-action must restart nginx, fix this, done
-
----
+on remove folder scp-action must restart nginx, fix this, done
 
 Only build time variable **important**. Can be undefined in prod runtime.
 
@@ -125,4 +120,4 @@ Only build time variable **important**. Can be undefined in prod runtime.
 PUBLIC_SITE_HOSTNAME=https://nemanjamitic.com
 ```
 
----
+- clean up utils folder

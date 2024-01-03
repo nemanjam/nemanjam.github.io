@@ -14,5 +14,12 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "astro"],
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "files.associations": {
+    "*.mdx": "markdown"
+  },
+  "yaml.schemas": {
+    "./apps/nemanjamiticcom/.vscode/config-schema.json": "./apps/nemanjamiticcom/src/config.yaml"
+  },
+  "css.customData": ["./apps/nemanjamiticcom/.vscode/tailwind.json"]
 }
