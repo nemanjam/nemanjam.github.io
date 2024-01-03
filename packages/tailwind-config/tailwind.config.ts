@@ -1,15 +1,27 @@
 import type { Config } from 'tailwindcss';
+import defaultTheme from 'tailwindcss/defaultTheme';
 
-// We want each package to be responsible for its own content.
-const config: Omit<Config, 'content'> = {
+/**
+ * We want each package to be responsible for its own content.
+ */
+const sharedConfig: Omit<Config, 'content'> = {
   theme: {
     extend: {
-      backgroundImage: {
-        'glow-conic':
-          'conic-gradient(from 180deg at 50% 50%, #2a8af6 0deg, #a853ba 180deg, #e92a67 360deg)',
+      colors: {
+        primary: 'var(--aw-color-primary)',
+        secondary: 'var(--aw-color-secondary)',
+        accent: 'var(--aw-color-accent)',
+        default: 'var(--aw-color-text-default)',
+        muted: 'var(--aw-color-text-muted)',
+      },
+      fontFamily: {
+        sans: ['var(--aw-font-sans)', ...defaultTheme.fontFamily.sans],
+        serif: ['var(--aw-font-serif)', ...defaultTheme.fontFamily.serif],
+        heading: ['var(--aw-font-heading)', ...defaultTheme.fontFamily.sans],
       },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
+  darkMode: 'class',
 };
-export default config;
+export default sharedConfig;

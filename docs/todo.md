@@ -75,10 +75,10 @@ solution: open some .ts file to restart typescript server // general to restart 
 
 ---
 
-make bin and . for eslint same as prettier, and move ignore files in package
+make bin and . for eslint same as prettier, and move ignore files in package, done
 nothing global
 main or bin is entry point of package
-remove shell -> js -> shell to script.sh and call it in bin:
+remove shell -> js -> shell to script.sh and call it in bin: // no, js easier than shell
 
 ---
 
@@ -108,14 +108,14 @@ prettier sorting imports
 marge env vars and yaml
 https://dev.to/emekaofe/how-to-pass-environment-variables-to-a-yaml-file-in-a-nodejs-application-using-ejs-templating-engine-ib7
 
-add ssh keys again for nginx action
+add ssh keys again for nginx action, done
 
 write zod validation for env vars
 add rand string to test redeploy
 
 ---
 
-- on remove folder scp-action must restart nginx, fix this
+- on remove folder scp-action must restart nginx, fix this, done
 
 ---
 
