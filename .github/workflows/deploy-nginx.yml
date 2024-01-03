@@ -51,7 +51,7 @@ jobs:
           port: ${{ secrets.REMOTE_PORT }}
           script_stop: true
           script: |
-            cd /home/ubuntu/traefik-proxy/apps/nginx-with-volume-nmc/website
+            cd /home/ubuntu/traefik-proxy/apps/nmc-nginx-with-volume/website
             echo "Content before deletion: $(pwd)"
             ls -la
             rm -rf ./*
@@ -66,7 +66,7 @@ jobs:
           key: ${{ secrets.REMOTE_KEY_ED25519 }}
           port: ${{ secrets.REMOTE_PORT }}
           source: 'apps/nemanjamiticcom/dist/'
-          target: '/home/ubuntu/traefik-proxy/apps/nginx-with-volume-nmc/website'
+          target: '/home/ubuntu/traefik-proxy/apps/nmc-nginx-with-volume/website'
           # remove apps/nemanjamiticcom/dist path segments
           strip_components: 3
 
