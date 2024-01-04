@@ -13,10 +13,13 @@ import tasks from './src/integrations/tasks';
 import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin } from './src/utils/frontmatter.mjs';
 
 import { ANALYTICS, SITE } from './src/utils/config.ts';
+import type { AstroIntegration } from 'astro';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const whenExternalScripts = (items = []) =>
+type ItemsType = () => AstroIntegration | Array<() => AstroIntegration>;
+
+const whenExternalScripts = (items: ItemsType) =>
   ANALYTICS.vendors.googleAnalytics.id && ANALYTICS.vendors.googleAnalytics.partytown
     ? Array.isArray(items)
       ? items.map((item) => item())

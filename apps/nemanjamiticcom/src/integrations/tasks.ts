@@ -1,3 +1,4 @@
+import type { AstroIntegration } from 'astro';
 import fs from 'node:fs';
 import os from 'node:os';
 
@@ -5,8 +6,9 @@ import os from 'node:os';
 // Not apps/nemanjamiticcom/src/navigation.js
 
 // custom integration
-const tasksIntegration = () => {
-  let config;
+const tasksIntegration = (): AstroIntegration => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let config: any;
   return {
     name: 'AstroWind:tasks',
 

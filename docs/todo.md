@@ -129,10 +129,13 @@ PUBLIC_SITE_HOSTNAME=https://nemanjamitic.com
 - functions dont return types
 - css colors in config?
 - js code in script tags, theme...
-- prettier sort imports
 - ts absolute paths imports
 - move components to packages, remove unneeded
 - rename to BaseLayout
+- prettier sort imports // this, shadcn
+- astro.config.ts, fix types in astro.config.ts and integration/tasks.ts
+- rewrite all types, config, etc
+- lib folder
 
 #### From readme
 

@@ -78,7 +78,7 @@ const envContext = { site: { site: process.env.PUBLIC_SITE_HOSTNAME } };
 const configTemplate = fs.readFileSync('src/config.yaml', 'utf8');
 const configString = ejs.render(configTemplate, envContext);
 
-const config = yaml.load(configString) as {
+export interface Config {
   site?: SiteConfig;
   metadata?: MetaDataConfig;
   i18n?: I18NConfig;
@@ -87,7 +87,9 @@ const config = yaml.load(configString) as {
   };
   ui?: unknown;
   analytics?: unknown;
-};
+}
+
+const config = yaml.load(configString) as Config;
 
 // console.log('config', JSON.stringify(config, null, 2));
 

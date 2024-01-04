@@ -3,13 +3,12 @@
   "extends": "astro/tsconfigs/strict",
   "display": "Default",
   "compilerOptions": {
+    "jsx": "react-jsx",
     "baseUrl": "../../",
     "paths": {
-      "@packages/*": ["packages/*"],
-      "@apps/*": ["apps/*"],
-      "~/*": ["apps/nemanjamiticcom/src/*"]
-    },
-    "jsx": "react-jsx"
+      "@packages/*": ["@packages/*"],
+      "@apps/*": ["@apps/*"]
+    }
   },
   "esModuleInterop": true,
   "exclude": ["node_modules"]
