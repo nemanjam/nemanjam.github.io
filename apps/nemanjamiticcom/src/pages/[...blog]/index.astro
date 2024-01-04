@@ -1,9 +1,9 @@
 ---
 import merge from 'lodash.merge';
 
+import Layout from '~/layouts/PageLayout.astro';
 import SinglePost from '~/components/blog/SinglePost.astro';
 import ToBlogLink from '~/components/blog/ToBlogLink.astro';
-import Layout from '~/layouts/PageLayout.astro';
 import { blogPostRobots, getStaticPathsBlogPost } from '~/utils/blog';
 import { findImage } from '~/utils/images';
 import { getCanonical, getPermalink } from '~/utils/permalinks';

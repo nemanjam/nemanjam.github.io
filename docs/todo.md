@@ -156,3 +156,11 @@ const url = transformUrl({
 console.log(url.toString());
 // https://cdn.shopify.com/static/sample-images/bath.jpeg?width=800&height=600&crop=center
 ```
+
+- add globes for include u tsconfig
+- poenta: include, exclude, base, paths ne ide u base tsconfig.json // zapazi
+
+```bash
+"**/*.ts",
+"**/*.tsx",
+```

@@ -28,12 +28,19 @@ module.exports = {
     '',
     '^@repo/(.*)$',
     '',
-    '^[~/]', // should not end with .css // (?:(?!styles))
-    '^[./]',
+    '^~/integrations',
+    '^~/pages',
+    '^~/content',
+    '^~/layouts',
+    '^~/components',
+    '^~/constants',
+    '^~/utils',
+    '^[./]', // all relative imports
     '',
     '<TYPES>',
     '<TYPES>^[.]',
     '',
-    '.css$', // doesnt work
+    '^~/assets',
+    '^~/styles',
   ],
 };

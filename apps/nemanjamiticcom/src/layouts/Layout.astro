@@ -1,6 +1,4 @@
 ---
-import '~/styles/tailwind.css';
-
 // Uncomment line below to activate View Transitions
 import { ViewTransitions } from 'astro:transitions';
 
@@ -15,6 +13,8 @@ import Favicons from '~/components/Favicons.astro';
 import { I18N } from '~/utils/config';
 
 import type { MetaData as MetaDataType } from '~/types';
+
+import '~/styles/tailwind.css';
 
 export interface Props {
   metadata?: MetaDataType;
