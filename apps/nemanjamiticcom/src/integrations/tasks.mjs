@@ -1,6 +1,9 @@
 import fs from 'node:fs';
 import os from 'node:os';
 
+// Generation of project sitemap based on your routes.
+// Not apps/nemanjamiticcom/src/navigation.js
+
 // custom integration
 const tasksIntegration = () => {
   let config;

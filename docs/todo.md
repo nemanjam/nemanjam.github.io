@@ -129,3 +129,25 @@ PUBLIC_SITE_HOSTNAME=https://nemanjamitic.com
 - functions dont return types
 - css colors in config?
 - js code in script tags, theme...
+- prettier sort imports
+- ts absolute paths imports
+- move components to packages, remove unneeded
+- rename to BaseLayout
+
+#### From readme
+
+- images - `public/` directory if they do not require any transformation or in the `assets/ directory`` if they are imported directly
+- rtl - right to left, arabic language
+- unpic generates query parmas for image url `bath.jpeg?width=800&height=600&crop=center`
+
+```ts
+import { transformUrl } from 'unpic';
+const url = transformUrl({
+  url: 'https://cdn.shopify.com/static/sample-images/bath_grande_crop_center.jpeg',
+  width: 800,
+  height: 600,
+});
+
+console.log(url.toString());
+// https://cdn.shopify.com/static/sample-images/bath.jpeg?width=800&height=600&crop=center
+```
