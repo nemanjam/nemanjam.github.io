@@ -1,5 +1,6 @@
 import { getImage } from 'astro:assets';
-import { transformUrl, parseUrl } from 'unpic';
+
+import { parseUrl, transformUrl } from 'unpic';
 
 import type { ImageMetadata } from 'astro';
 import type { HTMLAttributes } from 'astro/types';

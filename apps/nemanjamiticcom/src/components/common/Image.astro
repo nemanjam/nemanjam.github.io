@@ -1,12 +1,12 @@
 ---
 import { findImage } from '~/utils/images';
 import {
-  getImagesOptimized,
   astroAsseetsOptimizer,
+  getImagesOptimized,
   unpicOptimizer,
-  type ImageProps,
-  type AttributesProps,
 } from '~/utils/images-optimization';
+
+import type { AttributesProps, ImageProps } from '~/utils/images-optimization';
 
 type Props = ImageProps;
 type ImageType = {

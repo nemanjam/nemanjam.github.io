@@ -136,6 +136,7 @@ PUBLIC_SITE_HOSTNAME=https://nemanjamitic.com
 - astro.config.ts, fix types in astro.config.ts and integration/tasks.ts
 - rewrite all types, config, etc
 - lib folder
+- mdx prettier fails
 
 #### From readme
 
@@ -145,6 +146,7 @@ PUBLIC_SITE_HOSTNAME=https://nemanjamitic.com
 
 ```ts
 import { transformUrl } from 'unpic';
+
 const url = transformUrl({
   url: 'https://cdn.shopify.com/static/sample-images/bath_grande_crop_center.jpeg',
   width: 800,

@@ -1,10 +1,11 @@
 ---
-import type { Content } from '~/types';
-import Headline from '../ui/Headline.astro';
-import WidgetWrapper from '../ui/WidgetWrapper.astro';
 import Image from '~/components/common/Image.astro';
 import Button from '~/components/ui/Button.astro';
+import Headline from '../ui/Headline.astro';
 import ItemGrid from '../ui/ItemGrid.astro';
+import WidgetWrapper from '../ui/WidgetWrapper.astro';
+
+import type { Content } from '~/types';
 
 const {
   title = await Astro.slots.render('title'),

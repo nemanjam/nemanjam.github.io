@@ -1,16 +1,18 @@
-import type { PaginateFunction } from 'astro';
 import { getCollection } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
-import type { Post } from '~/types';
+
 import { APP_BLOG } from '~/utils/config';
 import {
-  cleanSlug,
-  trimSlash,
   BLOG_BASE,
-  POST_PERMALINK_PATTERN,
   CATEGORY_BASE,
+  cleanSlug,
+  POST_PERMALINK_PATTERN,
   TAG_BASE,
+  trimSlash,
 } from './permalinks';
+
+import type { Post } from '~/types';
+import type { PaginateFunction } from 'astro';
+import type { CollectionEntry } from 'astro:content';
 
 const generatePermalink = async ({
   id,

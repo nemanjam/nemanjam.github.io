@@ -1,7 +1,6 @@
 import slugify from 'limax';
 
-import { SITE, APP_BLOG } from '~/utils/config';
-
+import { APP_BLOG, SITE } from '~/utils/config';
 import { trim } from '~/utils/utils';
 
 export const trimSlash = (s: string) => trim(trim(s, '/'));

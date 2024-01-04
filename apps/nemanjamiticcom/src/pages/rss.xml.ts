@@ -1,7 +1,7 @@
 import { getRssString } from '@astrojs/rss';
 
-import { SITE, METADATA, APP_BLOG } from '~/utils/config';
 import { fetchPosts } from '~/utils/blog';
+import { APP_BLOG, METADATA, SITE } from '~/utils/config';
 import { getPermalink } from '~/utils/permalinks';
 
 export const GET = async () => {

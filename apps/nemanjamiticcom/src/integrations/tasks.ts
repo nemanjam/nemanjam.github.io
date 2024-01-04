@@ -1,6 +1,7 @@
-import type { AstroIntegration } from 'astro';
 import fs from 'node:fs';
 import os from 'node:os';
+
+import type { AstroIntegration } from 'astro';
 
 // Generation of project sitemap based on your routes.
 // Not apps/nemanjamiticcom/src/navigation.js

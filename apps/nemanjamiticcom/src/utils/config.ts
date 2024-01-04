@@ -1,8 +1,9 @@
 import fs from 'fs';
+
+import dotenv from 'dotenv';
+import ejs from 'ejs';
 import yaml from 'js-yaml';
 import merge from 'lodash.merge';
-import ejs from 'ejs';
-import dotenv from 'dotenv';
 
 import type { MetaData } from '~/types';
 

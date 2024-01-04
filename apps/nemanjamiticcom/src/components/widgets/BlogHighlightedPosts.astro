@@ -1,11 +1,10 @@
 ---
-import { APP_BLOG } from '~/utils/config';
-
 import Grid from '~/components/blog/Grid.astro';
-
-import { getBlogPermalink } from '~/utils/permalinks';
-import { findPostsByIds } from '~/utils/blog';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import { findPostsByIds } from '~/utils/blog';
+import { APP_BLOG } from '~/utils/config';
+import { getBlogPermalink } from '~/utils/permalinks';
+
 import type { Widget } from '~/types';
 
 export interface Props extends Widget {

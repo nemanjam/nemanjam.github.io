@@ -1,18 +1,17 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import { defineConfig, squooshImageService } from 'astro/config';
-
-import sitemap from '@astrojs/sitemap';
-import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
 import partytown from '@astrojs/partytown';
+import sitemap from '@astrojs/sitemap';
+import tailwind from '@astrojs/tailwind';
 import icon from 'astro-icon';
-import tasks from './src/integrations/tasks';
+import { defineConfig, squooshImageService } from 'astro/config';
 
+import tasks from './src/integrations/tasks';
+import { ANALYTICS, SITE } from './src/utils/config.ts';
 import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin } from './src/utils/frontmatter.mjs';
 
-import { ANALYTICS, SITE } from './src/utils/config.ts';
 import type { AstroIntegration } from 'astro';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));

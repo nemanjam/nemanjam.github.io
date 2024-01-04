@@ -1,5 +1,6 @@
-import type { Config } from 'tailwindcss';
 import defaultTheme from 'tailwindcss/defaultTheme';
+
+import type { Config } from 'tailwindcss';
 
 /**
  * We want each package to be responsible for its own content.

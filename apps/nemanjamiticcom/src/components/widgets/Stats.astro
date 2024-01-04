@@ -1,8 +1,10 @@
 ---
-import type { Stats } from '~/types';
-import WidgetWrapper from '../ui/WidgetWrapper.astro';
-import Headline from '../ui/Headline.astro';
 import { Icon } from 'astro-icon/components';
+
+import Headline from '../ui/Headline.astro';
+import WidgetWrapper from '../ui/WidgetWrapper.astro';
+
+import type { Stats } from '~/types';
 
 const {
   title = await Astro.slots.render('title'),

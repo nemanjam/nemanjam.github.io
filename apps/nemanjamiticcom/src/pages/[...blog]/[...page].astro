@@ -1,13 +1,13 @@
 ---
-import type { InferGetStaticPropsType, GetStaticPaths } from 'astro';
-
-import Layout from '~/layouts/PageLayout.astro';
-import BlogList from '~/components/blog/List.astro';
 import Headline from '~/components/blog/Headline.astro';
+import BlogList from '~/components/blog/List.astro';
 import Pagination from '~/components/blog/Pagination.astro';
+import Layout from '~/layouts/PageLayout.astro';
 // import PostTags from "~/components/blog/Tags.astro";
 
 import { blogListRobots, getStaticPathsBlogList } from '~/utils/blog';
+
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
 
 export const prerender = true;
 
