@@ -4,10 +4,10 @@ import { APP_BLOG } from '~/utils/config';
 import { findImage } from '~/utils/images';
 import { getPermalink } from '~/utils/permalinks';
 
-import type { BlogPost } from '~/types/models/BlogPost';
+import type { Post } from '~/types/models/Post';
 
 export interface Props {
-  post: BlogPost;
+  post: Post;
 }
 
 const { post } = Astro.props;

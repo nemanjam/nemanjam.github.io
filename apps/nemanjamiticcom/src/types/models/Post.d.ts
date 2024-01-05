@@ -1,4 +1,4 @@
-interface BlogPost {
+interface Post {
   // required
   id: string;
   slug: string;
@@ -59,4 +59,4 @@ interface MetaDataTwitterRequired {
 }
 interface MetaDataTwitter extends Partial<MetaDataTwitterRequired> {}
 
-export type { BlogPost, MetaData };
+export type { Post, MetaData };

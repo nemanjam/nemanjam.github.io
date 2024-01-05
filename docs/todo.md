@@ -138,6 +138,8 @@ PUBLIC_SITE_HOSTNAME=https://nemanjamitic.com
 - lib folder
 - mdx prettier fails
 - it doesnt have pagination
+- move prop types
+- different collections and types in future, projects...
 
 #### From readme
 

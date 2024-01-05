@@ -8,11 +8,11 @@ import { findImage } from '~/utils/images';
 import { getPermalink } from '~/utils/permalinks';
 import { getFormattedDate } from '~/utils/utils';
 
-import type { BlogPost } from '~/types/models/BlogPost';
+import type { Post } from '~/types/models/Post';
 import type { ImageMetadata } from 'astro';
 
 export interface Props {
-  post: BlogPost;
+  post: Post;
 }
 
 const { post } = Astro.props;

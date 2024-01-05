@@ -10,7 +10,7 @@ import {
   trimSlash,
 } from './permalinks';
 
-import type { BlogPost } from '~/types/models/BlogPost';
+import type { Post } from '~/types/models/Post';
 import type { PaginateFunction } from 'astro';
 import type { CollectionEntry } from 'astro:content';
 
@@ -49,7 +49,7 @@ const generatePermalink = async ({
     .join('/');
 };
 
-const getNormalizedPost = async (post: CollectionEntry<'blog'>): Promise<BlogPost> => {
+const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> => {
   const { id, slug: rawSlug = '', data } = post;
   const { Content, remarkPluginFrontmatter } = await post.render();
 
@@ -99,8 +99,8 @@ const getNormalizedPost = async (post: CollectionEntry<'blog'>): Promise<BlogPos
   };
 };
 
-const load = async function (): Promise<Array<BlogPost>> {
-  const posts = await getCollection('blog');
+const load = async function (): Promise<Array<Post>> {
+  const posts = await getCollection('post');
   const normalizedPosts = posts.map(async (post) => await getNormalizedPost(post));
 
   const results = (await Promise.all(normalizedPosts))
@@ -110,12 +110,12 @@ const load = async function (): Promise<Array<BlogPost>> {
   return results;
 };
 
-let _posts: Array<BlogPost>;
+let _posts: Array<Post>;
 
 /** */
 export const isBlogEnabled = APP_BLOG.isEnabled;
 export const isBlogListRouteEnabled = APP_BLOG.list.isEnabled;
-export const isBlogPostRouteEnabled = APP_BLOG.post.isEnabled;
+export const isPostRouteEnabled = APP_BLOG.post.isEnabled;
 export const isBlogCategoryRouteEnabled = APP_BLOG.category.isEnabled;
 export const isBlogTagRouteEnabled = APP_BLOG.tag.isEnabled;
 
@@ -127,7 +127,7 @@ export const blogTagRobots = APP_BLOG.tag.robots;
 export const blogPostsPerPage = APP_BLOG?.postsPerPage;
 
 /** */
-export const fetchPosts = async (): Promise<Array<BlogPost>> => {
+export const fetchPosts = async (): Promise<Array<Post>> => {
   if (!_posts) {
     _posts = await load();
   }
@@ -136,13 +136,13 @@ export const fetchPosts = async (): Promise<Array<BlogPost>> => {
 };
 
 /** */
-export const findPostsBySlugs = async (slugs: Array<string>): Promise<Array<BlogPost>> => {
+export const findPostsBySlugs = async (slugs: Array<string>): Promise<Array<Post>> => {
   if (!Array.isArray(slugs)) return [];
 
   const posts = await fetchPosts();
 
   // slugs reduce, should be posts.filter
-  return posts.filter((post: BlogPost) => slugs.some((slug: string) => slug === post.slug));
+  return posts.filter((post: Post) => slugs.some((slug: string) => slug === post.slug));
 
   // return slugs.reduce(function (acc: Array<Post>, slug: string) {
   //   posts.some(function (post: Post) {
@@ -153,13 +153,13 @@ export const findPostsBySlugs = async (slugs: Array<string>): Promise<Array<Blog
 };
 
 /** */
-export const findPostsByIds = async (ids: Array<string>): Promise<Array<BlogPost>> => {
+export const findPostsByIds = async (ids: Array<string>): Promise<Array<Post>> => {
   if (!Array.isArray(ids)) return [];
 
   const posts = await fetchPosts();
 
-  return ids.reduce(function (r: Array<BlogPost>, id: string) {
-    posts.some(function (post: BlogPost) {
+  return ids.reduce(function (r: Array<Post>, id: string) {
+    posts.some(function (post: Post) {
       return id === post.id && r.push(post);
     });
     return r;
@@ -167,7 +167,7 @@ export const findPostsByIds = async (ids: Array<string>): Promise<Array<BlogPost
 };
 
 /** */
-export const findLatestPosts = async ({ count }: { count?: number }): Promise<Array<BlogPost>> => {
+export const findLatestPosts = async ({ count }: { count?: number }): Promise<Array<Post>> => {
   const _count = count || 4;
   const posts = await fetchPosts();
 
@@ -184,8 +184,8 @@ export const getStaticPathsBlogList = async ({ paginate }: { paginate: PaginateF
 };
 
 /** */
-export const getStaticPathsBlogPost = async () => {
-  if (!isBlogEnabled || !isBlogPostRouteEnabled) return [];
+export const getStaticPathsPost = async () => {
+  if (!isBlogEnabled || !isPostRouteEnabled) return [];
   return (await fetchPosts()).flatMap((post) => ({
     params: {
       blog: post.permalink,

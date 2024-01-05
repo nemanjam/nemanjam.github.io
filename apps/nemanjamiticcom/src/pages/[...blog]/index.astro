@@ -4,17 +4,17 @@ import merge from 'lodash.merge';
 import Layout from '~/layouts/PageLayout.astro';
 import SinglePost from '~/components/blog/SinglePost.astro';
 import ToBlogLink from '~/components/blog/ToBlogLink.astro';
-import { blogPostRobots, getStaticPathsBlogPost } from '~/utils/blog';
+import { blogPostRobots, getStaticPathsPost } from '~/utils/blog';
 import { findImage } from '~/utils/images';
 import { getCanonical, getPermalink } from '~/utils/permalinks';
 
-import type { MetaData } from '~/types/models/BlogPost';
+import type { MetaData } from '~/types/models/Post';
 import type { GetStaticPaths, ImageMetadata, InferGetStaticPropsType } from 'astro';
 
 export const prerender = true;
 
 export const getStaticPaths = (async () => {
-  return await getStaticPathsBlogPost();
+  return await getStaticPathsPost();
 }) satisfies GetStaticPaths;
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
