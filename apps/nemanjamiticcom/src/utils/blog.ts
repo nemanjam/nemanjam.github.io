@@ -49,7 +49,7 @@ const generatePermalink = async ({
     .join('/');
 };
 
-const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<BlogPost> => {
+const getNormalizedPost = async (post: CollectionEntry<'blog'>): Promise<BlogPost> => {
   const { id, slug: rawSlug = '', data } = post;
   const { Content, remarkPluginFrontmatter } = await post.render();
 
@@ -100,7 +100,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<BlogPos
 };
 
 const load = async function (): Promise<Array<BlogPost>> {
-  const posts = await getCollection('post');
+  const posts = await getCollection('blog');
   const normalizedPosts = posts.map(async (post) => await getNormalizedPost(post));
 
   const results = (await Promise.all(normalizedPosts))
