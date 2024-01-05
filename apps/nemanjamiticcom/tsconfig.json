@@ -8,6 +8,6 @@
       "~/*": ["src/*"]
     }
   },
-  "include": ["./"],
+  "include": ["**/*.ts", "**/*.tsx", "**/*.astro"],
   "exclude": ["dist", ",astro", "node_modules"]
 }

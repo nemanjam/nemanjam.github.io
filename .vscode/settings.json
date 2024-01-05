@@ -21,5 +21,6 @@
   "yaml.schemas": {
     "./apps/nemanjamiticcom/.vscode/config-schema.json": "./apps/nemanjamiticcom/src/config.yaml"
   },
-  "css.customData": ["./apps/nemanjamiticcom/.vscode/tailwind.json"]
+  "css.customData": ["./apps/nemanjamiticcom/.vscode/tailwind.json"],
+  "cSpell.words": ["astro"]
 }

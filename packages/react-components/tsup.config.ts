@@ -1,4 +1,6 @@
-import { defineConfig, Options } from 'tsup';
+import { defineConfig } from 'tsup';
+
+import type { Options } from 'tsup';
 
 export default defineConfig((options: Options) => ({
   treeshake: true,
