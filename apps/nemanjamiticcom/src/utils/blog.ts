@@ -10,7 +10,7 @@ import {
   trimSlash,
 } from './permalinks';
 
-import type { Post } from '~/types/models/Post';
+import type { BlogPost } from '~/types/models/BlogPost';
 import type { PaginateFunction } from 'astro';
 import type { CollectionEntry } from 'astro:content';
 
@@ -49,7 +49,7 @@ const generatePermalink = async ({
     .join('/');
 };
 
-const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> => {
+const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<BlogPost> => {
   const { id, slug: rawSlug = '', data } = post;
   const { Content, remarkPluginFrontmatter } = await post.render();
 
@@ -99,7 +99,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
   };
 };
 
-const load = async function (): Promise<Array<Post>> {
+const load = async function (): Promise<Array<BlogPost>> {
   const posts = await getCollection('post');
   const normalizedPosts = posts.map(async (post) => await getNormalizedPost(post));
 
@@ -110,7 +110,7 @@ const load = async function (): Promise<Array<Post>> {
   return results;
 };
 
-let _posts: Array<Post>;
+let _posts: Array<BlogPost>;
 
 /** */
 export const isBlogEnabled = APP_BLOG.isEnabled;
@@ -127,7 +127,7 @@ export const blogTagRobots = APP_BLOG.tag.robots;
 export const blogPostsPerPage = APP_BLOG?.postsPerPage;
 
 /** */
-export const fetchPosts = async (): Promise<Array<Post>> => {
+export const fetchPosts = async (): Promise<Array<BlogPost>> => {
   if (!_posts) {
     _posts = await load();
   }
@@ -136,13 +136,13 @@ export const fetchPosts = async (): Promise<Array<Post>> => {
 };
 
 /** */
-export const findPostsBySlugs = async (slugs: Array<string>): Promise<Array<Post>> => {
+export const findPostsBySlugs = async (slugs: Array<string>): Promise<Array<BlogPost>> => {
   if (!Array.isArray(slugs)) return [];
 
   const posts = await fetchPosts();
 
   // slugs reduce, should be posts.filter
-  return posts.filter((post: Post) => slugs.some((slug: string) => slug === post.slug));
+  return posts.filter((post: BlogPost) => slugs.some((slug: string) => slug === post.slug));
 
   // return slugs.reduce(function (acc: Array<Post>, slug: string) {
   //   posts.some(function (post: Post) {
@@ -153,13 +153,13 @@ export const findPostsBySlugs = async (slugs: Array<string>): Promise<Array<Post
 };
 
 /** */
-export const findPostsByIds = async (ids: Array<string>): Promise<Array<Post>> => {
+export const findPostsByIds = async (ids: Array<string>): Promise<Array<BlogPost>> => {
   if (!Array.isArray(ids)) return [];
 
   const posts = await fetchPosts();
 
-  return ids.reduce(function (r: Array<Post>, id: string) {
-    posts.some(function (post: Post) {
+  return ids.reduce(function (r: Array<BlogPost>, id: string) {
+    posts.some(function (post: BlogPost) {
       return id === post.id && r.push(post);
     });
     return r;
@@ -167,7 +167,7 @@ export const findPostsByIds = async (ids: Array<string>): Promise<Array<Post>> =
 };
 
 /** */
-export const findLatestPosts = async ({ count }: { count?: number }): Promise<Array<Post>> => {
+export const findLatestPosts = async ({ count }: { count?: number }): Promise<Array<BlogPost>> => {
   const _count = count || 4;
   const posts = await fetchPosts();
 

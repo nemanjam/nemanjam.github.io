@@ -137,6 +137,7 @@ PUBLIC_SITE_HOSTNAME=https://nemanjamitic.com
 - rewrite all types, config, etc
 - lib folder
 - mdx prettier fails
+- it doesnt have pagination
 
 #### From readme
 
