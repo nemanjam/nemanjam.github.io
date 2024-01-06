@@ -3,118 +3,27 @@ import fs from 'fs';
 import dotenv from 'dotenv';
 import ejs from 'ejs';
 import yaml from 'js-yaml';
-import merge from 'lodash.merge';
 
-import type { MetaData } from '~/types';
+import type { Config } from '~/types/config';
 
-// write zod validation for env vars
+// todo: write zod validation for env vars
 const envFileName = `.env.${process.env.NODE_ENV}`;
 dotenv.config({ path: envFileName });
 
-export interface SiteConfig {
-  name: string;
-  site?: string;
-  base?: string;
-  trailingSlash?: boolean;
-  googleSiteVerificationId?: string;
-}
-export interface MetaDataConfig extends Omit<MetaData, 'title'> {
-  title?: {
-    default: string;
-    template: string;
-  };
-}
-export interface I18NConfig {
-  language: string;
-  textDirection: string;
-  dateFormatter?: Intl.DateTimeFormat;
-}
-export interface AppBlogConfig {
-  isEnabled: boolean;
-  postsPerPage: number;
-  post: {
-    isEnabled: boolean;
-    permalink: string;
-    robots: {
-      index: boolean;
-      follow: boolean;
-    };
-  };
-  list: {
-    isEnabled: boolean;
-    pathname: string;
-    robots: {
-      index: boolean;
-      follow: boolean;
-    };
-  };
-  category: {
-    isEnabled: boolean;
-    pathname: string;
-    robots: {
-      index: boolean;
-      follow: boolean;
-    };
-  };
-  tag: {
-    isEnabled: boolean;
-    pathname: string;
-    robots: {
-      index: boolean;
-      follow: boolean;
-    };
-  };
-}
-export interface AnalyticsConfig {
-  vendors: {
-    googleAnalytics: {
-      id?: string;
-      partytown?: boolean;
-    };
-  };
-}
-// todo: put in function and write zod validation for env vars
-// merge .env vars and yaml
-const envContext = { site: { site: process.env.PUBLIC_SITE_HOSTNAME } };
-const configTemplate = fs.readFileSync('src/config.yaml', 'utf8');
-const configString = ejs.render(configTemplate, envContext);
-
-export interface Config {
-  site?: SiteConfig;
-  metadata?: MetaDataConfig;
-  i18n?: I18NConfig;
-  apps?: {
-    blog?: AppBlogConfig;
-  };
-  ui?: unknown;
-  analytics?: unknown;
-}
-
-const config = yaml.load(configString) as Config;
-
-// console.log('config', JSON.stringify(config, null, 2));
-
 const DEFAULT_SITE_NAME = 'Website';
 
-const getSite = () => {
-  const _default = {
+// todo: write zod validation for config.yaml, or move to ts
+const defaultConfig: Config = {
+  site: {
     name: DEFAULT_SITE_NAME,
     site: undefined,
     base: '/',
     trailingSlash: false,
-
     googleSiteVerificationId: '',
-  };
-
-  return merge({}, _default, config?.site ?? {}) as SiteConfig;
-};
-
-const getMetadata = () => {
-  const siteConfig = getSite();
-
-  const _default = {
+  },
+  metadata: {
     title: {
-      default: siteConfig?.name || DEFAULT_SITE_NAME,
+      default: DEFAULT_SITE_NAME,
       template: '%s',
     },
     description: '',
@@ -125,96 +34,192 @@ const getMetadata = () => {
     openGraph: {
       type: 'website',
     },
-  };
-
-  return merge({}, _default, config?.metadata ?? {}) as MetaDataConfig;
-};
-
-const getI18N = () => {
-  const _default = {
+  },
+  i18n: {
     language: 'en',
     textDirection: 'ltr',
-  };
-
-  const value = merge({}, _default, config?.i18n ?? {});
-
-  return Object.assign(value, {
-    dateFormatter: new Intl.DateTimeFormat(value.language, {
+    dateFormatter: new Intl.DateTimeFormat('en', {
       year: 'numeric',
       month: 'short',
       day: 'numeric',
       timeZone: 'UTC',
     }),
-  }) as I18NConfig;
-};
-
-const getAppBlog = () => {
-  const _default = {
-    isEnabled: false,
-    postsPerPage: 6,
-    post: {
-      isEnabled: true,
-      permalink: '/blog/%slug%',
-      robots: {
-        index: true,
-        follow: true,
+  },
+  apps: {
+    blog: {
+      isEnabled: false,
+      postsPerPage: 6,
+      post: {
+        isEnabled: true,
+        permalink: '/blog/%slug%',
+        robots: {
+          index: true,
+          follow: true,
+        },
+      },
+      list: {
+        isEnabled: true,
+        pathname: 'blog',
+        robots: {
+          index: true,
+          follow: true,
+        },
+      },
+      category: {
+        isEnabled: true,
+        pathname: 'category',
+        robots: {
+          index: true,
+          follow: true,
+        },
+      },
+      tag: {
+        isEnabled: true,
+        pathname: 'tag',
+        robots: {
+          index: false,
+          follow: true,
+        },
       },
     },
-    list: {
-      isEnabled: true,
-      pathname: 'blog',
-      robots: {
-        index: true,
-        follow: true,
-      },
-    },
-    category: {
-      isEnabled: true,
-      pathname: 'category',
-      robots: {
-        index: true,
-        follow: true,
-      },
-    },
-    tag: {
-      isEnabled: true,
-      pathname: 'tag',
-      robots: {
-        index: false,
-        follow: true,
-      },
-    },
-  };
-
-  return merge({}, _default, config?.apps?.blog ?? {}) as AppBlogConfig;
-};
-
-const getUI = () => {
-  const _default = {
+  },
+  ui: {
     theme: 'system',
     classes: {},
     tokens: {},
-  };
-
-  return merge({}, _default, config?.ui ?? {});
-};
-
-const getAnalytics = () => {
-  const _default = {
+  },
+  analytics: {
     vendors: {
       googleAnalytics: {
         id: undefined,
         partytown: true,
       },
     },
+  },
+} as const;
+
+const mergeConfig = (config: Config): Config => {
+  const mergedConfig: Config = {
+    ...(config.site && {
+      site: {
+        ...defaultConfig.site,
+        ...config.site,
+      },
+    }),
+    ...(config.metadata && {
+      metadata: {
+        ...defaultConfig.metadata,
+        ...config.metadata,
+        title: {
+          ...defaultConfig.metadata?.title,
+          ...config.metadata.title,
+          ...(config.site?.name && {
+            default: config.site.name,
+          }),
+        },
+        robots: {
+          ...defaultConfig.metadata?.robots,
+          ...config.metadata?.robots,
+        },
+        openGraph: {
+          ...defaultConfig.metadata?.openGraph,
+          ...config.metadata?.openGraph,
+        },
+      },
+    }),
+    ...(config.i18n && {
+      i18n: {
+        ...defaultConfig.i18n,
+        ...config.i18n,
+        dateFormatter: new Intl.DateTimeFormat(config.i18n.language, {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          timeZone: 'UTC',
+        }),
+      },
+    }),
+    ...(config.apps && {
+      apps: {
+        blog: {
+          ...defaultConfig.apps?.blog,
+          ...config.apps?.blog,
+          post: {
+            ...defaultConfig.apps?.blog.post,
+            ...config.apps?.blog.post,
+            robots: {
+              ...defaultConfig.apps?.blog.post.robots,
+              ...config.apps?.blog.post.robots,
+            },
+          },
+          list: {
+            ...defaultConfig.apps?.blog.list,
+            ...config.apps?.blog.list,
+            robots: {
+              ...defaultConfig.apps?.blog.list.robots,
+              ...config.apps?.blog.list.robots,
+            },
+          },
+          category: {
+            ...defaultConfig.apps?.blog.category,
+            ...config.apps?.blog.category,
+            robots: {
+              ...defaultConfig.apps?.blog.category.robots,
+              ...config.apps?.blog.category.robots,
+            },
+          },
+          tag: {
+            ...defaultConfig.apps?.blog.tag,
+            ...config.apps?.blog.tag,
+            robots: {
+              ...defaultConfig.apps?.blog.tag.robots,
+              ...config.apps?.blog.tag.robots,
+            },
+          },
+        },
+      },
+    }),
+    ...(config.ui && {
+      ui: {
+        ...defaultConfig.ui,
+        ...config.ui,
+      },
+    }),
+    ...(config.analytics && {
+      analytics: {
+        vendors: {
+          googleAnalytics: {
+            ...defaultConfig.analytics.vendors.googleAnalytics,
+            ...config.analytics.vendors.googleAnalytics,
+          },
+        },
+      },
+    }),
   };
 
-  return merge({}, _default, config?.analytics ?? {}) as AnalyticsConfig;
+  return mergedConfig;
 };
 
-export const SITE = getSite();
-export const I18N = getI18N();
-export const METADATA = getMetadata();
-export const APP_BLOG = getAppBlog();
-export const UI = getUI();
-export const ANALYTICS = getAnalytics();
+const loadConfig = (): Config => {
+  // merge .env vars and yaml
+  const envContext = { site: { site: process.env.PUBLIC_SITE_HOSTNAME } };
+  const configYamlTemplate = fs.readFileSync('src/config.yaml', 'utf8');
+
+  const configString = ejs.render(configYamlTemplate, envContext);
+  const config = yaml.load(configString) as Config;
+
+  // console.log('config', JSON.stringify(config, null, 2));
+
+  return config;
+};
+
+const loadedConfig = loadConfig();
+const config = mergeConfig(loadedConfig);
+
+// todo: temporary, single config object
+export const SITE = config.site;
+export const I18N = config.i18n;
+export const METADATA = config.metadata;
+export const APP_BLOG = config.apps?.blog;
+export const UI = config.ui;
+export const ANALYTICS = config.analytics;
