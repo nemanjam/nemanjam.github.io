@@ -8,7 +8,7 @@ interface Config {
   metadata: MetaDataConfig;
   i18n: I18NConfig;
   apps: { blog: AppBlogConfig };
-  ui: any;
+  ui: UIConfig;
   analytics: any;
 }
 // interface Config extends Partial<ConfigRequired> {}
@@ -81,6 +81,10 @@ interface AnalyticsConfig {
       partytown?: boolean;
     };
   };
+}
+
+interface UIConfig {
+  theme: 'system' | 'light' | 'dark' | 'light:only' | 'dark:only';
 }
 
 export type { Config };

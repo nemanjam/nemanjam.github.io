@@ -85,8 +85,6 @@ const defaultConfig: Config = {
   },
   ui: {
     theme: 'system',
-    classes: {},
-    tokens: {},
   },
   analytics: {
     vendors: {
