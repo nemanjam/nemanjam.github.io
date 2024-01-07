@@ -5,7 +5,7 @@ import ejs from 'ejs';
 import yaml from 'js-yaml';
 import merge from 'lodash.merge';
 
-import type { MetaData } from '~/types/models/Post';
+import type { MetaData } from '~/types/post';
 
 // write zod validation for env vars
 const envFileName = `.env.${process.env.NODE_ENV}`;

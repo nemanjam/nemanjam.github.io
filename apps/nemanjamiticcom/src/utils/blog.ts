@@ -10,7 +10,7 @@ import {
   trimSlash,
 } from './permalinks';
 
-import type { Post } from '~/types/models/Post';
+import type { Post } from '~/types/post';
 import type { PaginateFunction } from 'astro';
 import type { CollectionEntry } from 'astro:content';
 

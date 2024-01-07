@@ -1,4 +1,4 @@
-import type { MetaData } from '~/types/models/Post';
+import type { MetaData } from '~/types/post';
 
 // todo: these optional types arent optimal, this is config
 // these types arent used anywhere

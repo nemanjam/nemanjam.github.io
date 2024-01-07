@@ -140,6 +140,7 @@ PUBLIC_SITE_HOSTNAME=https://nemanjamitic.com
 - it doesnt have pagination
 - move prop types
 - different collections and types in future, projects...
+- review astro components (state) in other projects
 
 #### From readme
 
