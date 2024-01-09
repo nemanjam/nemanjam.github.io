@@ -1,9 +1,8 @@
 import slugify from 'limax';
 
-import { APP_BLOG, SITE } from '~/utils/config';
-import { trim } from '~/utils/utils';
+import { APP_BLOG, config, SITE } from '~/utils/config';
 
-export const trimSlash = (s: string) => trim(trim(s, '/'));
+export const trimSlash = (str: string) => str.replace(/^[\s/]+|[\s/]+$/g, '');
 
 const createPath = (...params: string[]) => {
   const paths = params
@@ -39,7 +38,7 @@ export const getCanonical = (path = ''): string | URL => {
 };
 
 export const getPermalink = (slug = '', type = 'page'): string => {
-  let permalink: string;
+  const path = config.apps.blog[type].pathname;
 
   switch (type) {
     case 'category':

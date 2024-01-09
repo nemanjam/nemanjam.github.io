@@ -1,3 +1,4 @@
+// md frontmatter
 interface Post {
   // required
   id: string;

@@ -212,7 +212,7 @@ const loadConfig = (): Config => {
 };
 
 const loadedConfig = loadConfig();
-const config = mergeConfig(loadedConfig);
+export const config = mergeConfig(loadedConfig);
 
 // todo: temporary, single config object
 export const SITE = config.site;
