@@ -1,0 +1,40 @@
+---
+import { Image } from 'astro:assets';
+import Content from './Content.astro';
+import HeaderLink from './HeaderLink.astro';
+import { SITE_TITLE } from '../config';
+import { ThemeSwitcher } from './ThemeSwitcher';
+import Avatar from '../images/avatar.jpg';
+---
+
+<Content>
+	<header>
+		<div class="grid grid-cols-1 items-center justify-between gap-2 py-4 md:grid-cols-2">
+			<h1 class="shrink-0">
+				<a
+					class="group flex flex-row items-center gap-2 whitespace-nowrap text-2xl font-bold text-blue-700 underline-offset-2 outline-none duration-100 hover:text-blue-900 focus:underline focus:decoration-4 focus:underline-offset-4 motion-safe:transition-all dark:text-blue-100 dark:hover:text-blue-300"
+					href="/"
+				>
+					<Image
+						loading="eager"
+						class="h-12 w-12 shrink-0 select-none overflow-hidden rounded-full group-focus-visible:ring-4 group-focus-visible:ring-blue-200 dark:group-focus-visible:ring-blue-500/40"
+						src={Avatar}
+						width={96}
+						height={96}
+						alt="Paul Armstrong’s profile picture"
+					/>
+					{SITE_TITLE}
+				</a>
+			</h1>
+			<nav class="select-none items-end" aria-label="Site navigation">
+				<ul class="flex flex-row flex-wrap justify-end gap-1">
+					<li><HeaderLink href="/blog/">Blog</HeaderLink></li>
+					<li><HeaderLink href="/about/">About</HeaderLink></li>
+					<li><HeaderLink href="/resume/">Résumé</HeaderLink></li>
+					<li><HeaderLink href="/labs/">Labs</HeaderLink></li>
+					<li class="shrink-0"><ThemeSwitcher client:load /></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+</Content>

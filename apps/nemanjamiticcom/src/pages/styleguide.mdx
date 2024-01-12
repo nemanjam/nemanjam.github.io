@@ -1,0 +1,184 @@
+---
+layout: '../layouts/Page.astro'
+title: Styleguide
+---
+
+import Picture from '../components/Picture.astro';
+import Aside from '../components/Aside.astro';
+import Details from '../components/Details.astro';
+import PageInfo from '../components/PageInfo.astro';
+import TocList from '../components/TocList.astro';
+
+<PageInfo file="/src/pages/styleguide.mdx" pubDate={new Date(Date.UTC(2022, 9, 11))} />
+
+Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in Astro.
+
+<aside class="prose-base mx-4 mb-4 rounded-xl border border-slate-200 bg-slate-100 px-4 py-1 text-slate-900 transition-colors duration-500 dark:border-slate-800 dark:bg-slate-900 sm:float-right sm:ml-8 sm:mr-0 sm:max-w-[50%] md:-mr-8 lg:-mr-32">
+  <h2 class="!mt-4">Table of contents</h2>
+  <TocList
+    headings={[
+      { text: 'Headings', slug: 'headings', depth: 0 },
+      { text: 'Paragraph', slug: 'paragraph', depth: 0 },
+      { text: 'Images', slug: 'images', depth: 0 },
+      { text: 'Blockquotes', slug: 'blockquotes', depth: 0 },
+      { text: 'Tables', slug: 'tables', depth: 0 },
+      { text: 'Code blocks', slug: 'code-blocks', depth: 0 },
+      { text: 'List Types', slug: 'list-types', depth: 0 },
+      { text: 'Other elements', slug: 'other-elements--abbr-sub-sup-kbd-mark', depth: 0 },
+      { text: 'Asides', slug: 'asides', depth: 0 },
+    ]}
+  />
+</aside>
+
+## Headings
+
+The following HTML `<h1>`—`<h6>` elements represent six levels of section headings. `<h1>` is the highest section level while `<h6>` is the lowest.
+
+# H1
+
+## H2
+
+### H3
+
+#### H4
+
+##### H5
+
+###### H6
+
+## Paragraph
+
+Xerum, quo qui aut unt expliquam qui dolut labo. Aque venitatiusda cum, voluptionse latur sitiae dolessi aut parist aut dollo enim qui voluptate ma dolestendit peritin re plis aut quas inctum laceat est volestemque commosa as cus endigna tectur, offic to cor sequas etum rerum idem sintibus eiur? Quianimin porecus evelectur, cum que nis nust voloribus ratem aut omnimi, sitatur? Quiatem. Nam, omnis sum am facea corem alique molestrunt et eos evelece arcillit ut aut eos eos nus, sin conecerem erum fuga. Ri oditatquam, ad quibus unda veliamenimin cusam et facea ipsamus es exerum sitate dolores editium rerore eost, temped molorro ratiae volorro te reribus dolorer sperchicium faceata tiustia prat.
+
+Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sapicia is sinveli squiatum, core et que aut hariosam ex eat.
+
+## Images
+
+<Picture src="/img/blog/twitter-lite/banner.png" widths={[480, 640, 1200, 1600]} width={3576} height={1328} alt="" />
+
+### Hero images
+
+<div class="lg:bustout">
+  <Picture
+    src="/img/blog/twitter-lite/banner.png"
+    class="!mt-0 w-full max-w-none"
+    widths={[480, 640, 1200, 1600]}
+    width={3576}
+    height={1328}
+    alt=""
+  />
+</div>
+
+## Blockquotes
+
+The blockquote element represents content that is quoted from another source, optionally with a citation which must be within a `footer` or `cite` element, and optionally with in-line changes such as annotations and abbreviations.
+
+#### Blockquote without attribution
+
+> Tiam, ad mint andaepu dandae nostion secatur sequo quae.
+> **Note** that you can use _Markdown syntax_ within a blockquote.
+
+#### Blockquote with attribution
+
+> Don't communicate by sharing memory, share memory by communicating.
+>
+> — <cite>Rob Pike[^1]</cite>
+
+[^1]: The above quote is excerpted from Rob Pike's [talk](https://www.youtube.com/watch?v=PAAkCSZUG1c) during Gopherfest, November 18, 2015.
+
+## Tables
+
+| Italics   | Bold     | Code   |
+| --------- | -------- | ------ |
+| _italics_ | **bold** | `code` |
+
+## Code blocks
+
+```html title="tacos.html" showLineNumbers {3-6} /charset/ /Test/
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Example HTML5 Document</title>
+  </head>
+  <body>
+    <p>Test</p>
+  </body>
+</html>
+```
+
+## List types
+
+#### Ordered list
+
+1. First item
+2. Second item
+3. Third item
+
+#### Unordered list
+
+- List item
+- Another item
+- And another item
+
+#### Nested list
+
+- Fruit
+  - Apple
+  - Orange
+  - Banana
+- Dairy
+  - Milk
+  - Cheese
+
+## Details
+
+<Details title="This is the summary">
+
+Here's some other content.
+
+</Details>
+
+## Other elements — abbr, sub, sup, kbd, mark
+
+<abbr title="Graphics Interchange Format">GIF</abbr> is a bitmap image format.
+
+H<sub>2</sub>O
+
+X<sup>n</sup> + Y<sup>n</sup> = Z<sup>n</sup>
+
+Press <kbd><kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>Delete</kbd></kbd> to end the session.
+
+Most <mark>salamanders</mark> are <del>nighttime</del> nocturnal, and hunt for insects, worms, and other small creatures.
+
+## Asides
+
+<Aside type="note">
+
+This is a note.
+
+</Aside>
+
+<Aside type="info">
+
+This is some extra info.
+
+</Aside>
+
+<Aside type="tip">
+
+There’s probably a hot tip here.
+
+</Aside>
+
+<Aside type="warning">
+
+You should heed this warning.
+
+</Aside>
+
+<Aside type="danger">
+
+A bit more serious than a warning.
+
+</Aside>

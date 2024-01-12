@@ -1,0 +1,15 @@
+---
+import clsx from 'clsx';
+export type Props = astroHTML.JSX.AnchorHTMLAttributes;
+
+const { class: className, ...props } = Astro.props;
+---
+
+<a
+	class={clsx(
+		'text-blue-600 no-underline underline-offset-2 outline-none transition-all duration-100 hover:underline hover:decoration-4 hover:underline-offset-4 focus:underline focus:decoration-4 focus:underline-offset-4 dark:text-blue-300',
+		className
+	)}
+	{...props}
+	><slot />
+</a>

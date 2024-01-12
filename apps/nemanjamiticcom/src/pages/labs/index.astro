@@ -1,0 +1,37 @@
+---
+import Page from '../../layouts/Page.astro';
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+
+const pages = (await getCollection('labs')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<Page content={{ title: 'Labs', description: 'Showcasing web experiments and projects from Paul Armstrong.' }}>
+	<p>A showcase of experiments and projects.</p>
+
+	<div class="not-prose">
+		<ul class="grid auto-cols-fr grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 md:grid-cols-3">
+			{
+				pages.map((page) => (
+					<li>
+						<a href={`/labs/${page.slug}/`} class="group h-full">
+							<div class="flex flex-col gap-2">
+								<div class="pointer-events-none flex h-full items-center justify-center justify-self-stretch overflow-hidden rounded border border-slate-200 bg-slate-100 group-hover:shadow group-hover:shadow-blue-500/30 group-active:shadow-inner dark:border-slate-600 dark:bg-slate-700">
+									<div class="w-full blur-[1px] grayscale transition duration-150 group-hover:blur-none group-hover:grayscale-0">
+										<Image src={page.data.heroImage} width={400} height={200} alt="" />
+									</div>
+								</div>
+								<div>
+									<div class="text-sm font-medium">{page.data.title}</div>
+									{page.data.description ? (
+										<div class="text-xs text-slate-500 dark:text-slate-400">{page.data.description}</div>
+									) : null}
+								</div>
+							</div>
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+</Page>

@@ -1,0 +1,53 @@
+---
+import Link from './Link.astro';
+
+export interface Props {
+	file?: string | undefined;
+	pubDate?: Date;
+	updatedDate?: Date | undefined;
+	readingTime?: { minutes: number; words: number } | undefined;
+}
+
+const { file, pubDate, updatedDate, readingTime } = Astro.props as Props;
+const dateFormatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeZone: 'UTC' }).format;
+---
+
+{
+	Boolean(pubDate || updatedDate || readingTime) && (
+		<aside
+			aria-label="Page information"
+			class="not-prose prose-sm mb-8 rounded-lg border border-slate-200 bg-slate-100 p-4 transition-colors duration-500 dark:border-slate-800 dark:bg-slate-900"
+			transition:animate="fade"
+		>
+			<ul class="flex flex-row flex-wrap justify-between gap-4 text-blue-900 dark:text-blue-100">
+				{pubDate && (
+					<li>
+						<b class="me-2 inline-block">Published:</b>
+						<time itemprop="datePublished" datetime={pubDate.toISOString().split('T')[0]}>
+							{dateFormatter(pubDate)}
+						</time>
+					</li>
+				)}
+				{updatedDate && (
+					<li>
+						<b class="me-2 inline-block">Last updated:</b>
+						<time itemprop="dateUpdated" datetime={updatedDate.toISOString().split('T')[0]}>
+							{dateFormatter(updatedDate)}
+						</time>
+					</li>
+				)}
+				{readingTime && (
+					<li>
+						<b class="me-2 inline-block">Reading time:</b> {Math.round(readingTime.minutes)} minutes,{' '}
+						{readingTime.words} words
+					</li>
+				)}
+				{file && (
+					<li>
+						<Link href={`https://github.com/paularmstrong/paularmstrong.dev/tree/main/${file}`}>Source</Link>
+					</li>
+				)}
+			</ul>
+		</aside>
+	)
+}

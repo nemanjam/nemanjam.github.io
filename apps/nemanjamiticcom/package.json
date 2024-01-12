@@ -1,0 +1,59 @@
+{
+  "name": "@apps/nemanjamiticcom",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "@astrojs/mdx": "^2.0.0",
+    "@astrojs/react": "^3.0.7",
+    "@astrojs/sitemap": "^3.0.3",
+    "@astrojs/solid-js": "^3.0.2",
+    "@astrojs/tailwind": "^5.0.3",
+    "@tailwindcss/typography": "^0.5.10",
+    "astro": "^4.0.3",
+    "astro-icon": "^0.8.2",
+    "clsx": "^2.0.0",
+    "debounce": "^2.0.0",
+    "feed": "^4.2.2",
+    "mdast-util-to-string": "^4.0.0",
+    "react": "^18.2.0",
+    "react-component-benchmark": "^2.0.0",
+    "react-dom": "^18.2.0",
+    "reading-time": "^1.5.0",
+    "rehype-pretty-code": "^0.12.0",
+    "sharp": "^0.32.6",
+    "solid-js": "^1.8.6",
+    "tailwind-clip-path": "^1.0.0",
+    "tailwindcss": "^3.3.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.3.1",
+    "@onerepo/plugin-eslint": "^0.6.4",
+    "@onerepo/plugin-prettier": "^0.5.4",
+    "@onerepo/plugin-typescript": "^0.3.4",
+    "@types/debounce": "^1.2.4",
+    "@types/mdast": "^4.0.3",
+    "@types/react": "^18.2.38",
+    "@types/react-dom": "^18.2.17",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "eslint": "^8.54.0",
+    "eslint-mdx": "^2.2.0",
+    "eslint-plugin-astro": "^0.30.0",
+    "eslint-plugin-mdx": "^2.2.0",
+    "eslint-plugin-tailwindcss": "^3.13.0",
+    "husky": "^8.0.3",
+    "netlify-cli": "^17.7.0",
+    "onerepo": "^0.15.2",
+    "prettier": "^3.1.0",
+    "prettier-plugin-astro": "^0.12.2",
+    "shiki": "^0.14.5",
+    "typescript": "^5.3.2"
+  },
+  "packageManager": "yarn@4.0.1",
+  "workspaces": [
+    "."
+  ],
+  "resolutions": {
+    "svgo": "2.8.0"
+  }
+}

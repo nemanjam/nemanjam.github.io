@@ -1,0 +1,54 @@
+---
+import { SITE_URL } from '../config';
+import { ViewTransitions } from 'astro:transitions';
+export interface Props {
+	title: string;
+	description: string;
+	image?: string | undefined;
+}
+
+const { title, description, image = '/img/og_image_small.jpg' } = Astro.props;
+---
+
+{/* Global Metadata */}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+
+<meta name="theme-color" content="#c1ddf9" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
+<link rel="apple-touch-icon" sizes="180x180" href={`${SITE_URL}/img/apple-touch-icon.png`} />
+<link rel="icon" type="image/png" sizes="32x32" href={`${SITE_URL}/img/favicon-32x32.png`} />
+<link rel="icon" type="image/png" sizes="16x16" href={`${SITE_URL}/img/favicon-16x16.png`} />
+<link rel="manifest" href={`${SITE_URL}/manifest.json`} />
+
+{/* Primary Meta Tags */}
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+
+{/* Feeds */}
+<link rel="alternate" type="application/rss+xml" title="RSS feed for paularmstrong.dev" href={`${SITE_URL}/feed.xml`} />
+<link rel="alternate" type="application/json" title="JSON feed for paularmstrong.dev" href={`${SITE_URL}/feed.json`} />
+<link rel="sitemap" type="application/xml" title="Sitemap" href={`${SITE_URL}/sitemap-index.xml`} />
+<link rel="author" href={`${SITE_URL}/humans.txt`} />
+
+{/* Open Graph / Facebook */}
+<meta property="og:type" content="website" />
+<meta property="og:url" content={Astro.url} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={new URL(image, Astro.url)} />
+
+{/* Twitter */}
+<meta property="twitter:card" content="summary" />
+<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+{/* Analytics */}
+<link rel="preconnect" href="https://gc.zgo.at" />
+<script async data-goatcounter="https://paularmstrong.goatcounter.com/count" src="https://gc.zgo.at/count.js"></script>
+<script src="https://js.sentry-cdn.com/9b133389b9a540e49f6c3f76ca7226bf.min.js" crossorigin="anonymous"></script>
+
+<ViewTransitions fallback="none" />

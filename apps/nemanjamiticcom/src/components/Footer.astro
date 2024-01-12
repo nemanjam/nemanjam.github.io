@@ -1,0 +1,66 @@
+---
+import { Icon } from 'astro-icon';
+import Button from './Button.astro';
+import { BackToTop } from './BackToTop';
+
+const today = new Date();
+---
+
+<footer
+	class="w-screen border-t border-slate-200 bg-slate-100 pt-8 transition-colors duration-500 dark:border-slate-800 dark:bg-slate-900"
+>
+	<div class="mx-4 flex max-w-4xl flex-col gap-10 md:mx-auto">
+		<div class="mb-4 flex flex-row flex-wrap items-center justify-between gap-y-4">
+			<p class="text-xs text-blue-800 transition-colors duration-500 dark:text-blue-200">
+				&copy;{today.getFullYear()} Paul Armstrong. All rights reserved.
+			</p>
+
+			<div class="flex grow flex-row justify-end">
+				<Button href="#top">
+					<Icon name="back-to-top" class="h-6 w-6 fill-current" />
+					{' '}Back to top
+				</Button>
+			</div>
+
+			<nav aria-label="Related content" class="grow select-none">
+				<ul class="flex flex-row flex-wrap gap-2 sm:justify-end">
+					<li>
+						<Button
+							href="https://mstdn.io/@paularmstrong"
+							target="_blank"
+							rel="me noreferrer noopener"
+							title="@paularmstrong on Mastodon, @paularmstrong@mstdn.io"
+						>
+							<Icon name="mastodon" class="h-6 w-6 fill-current" />
+							{' '}Mastodon
+						</Button>
+					</li>
+					<li>
+						<Button
+							href="https://github.com/paularmstrong"
+							target="_blank"
+							rel="me noreferrer noopener"
+							title="@paularmstrong on Github"
+						>
+							<Icon name="github" class="h-6 w-6 fill-current" />
+							{' '}Github
+						</Button>
+					</li>
+					<li>
+						<Button href="/feed.xml" title="RSS feed for paularmstrong.dev">
+							<Icon name="rss" class="h-6 w-6 fill-current" />
+							{' '}RSS Feed
+						</Button>
+					</li>
+					<li>
+						<Button href="/feed.json" title="JSON feed for paularmstrong.dev">
+							<Icon name="json" class="h-6 w-6 fill-current" />
+							{' '}JSON Feed
+						</Button>
+					</li>
+				</ul>
+			</nav>
+		</div>
+		<BackToTop client:only="solid-js" />
+	</div>
+</footer>
