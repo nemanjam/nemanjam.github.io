@@ -12,6 +12,7 @@ import { defineConfig } from 'astro/config';
 import rehypePrettyCode from 'rehype-pretty-code';
 
 import { remarkReadingTime } from './plugins/remark-reading-time.mjs';
+import { SITE_URL } from './src/config';
 
 const remarkPlugins = [remarkReadingTime];
 const rehypePlugins = [
@@ -65,7 +66,7 @@ const rehypePlugins = [
 
 /** @type {import('@types/astro').AstroUserConfig} */
 export default defineConfig({
-  site: 'https://nemanjamitic.com',
+  site: SITE_URL,
   trailingSlash: 'always',
   compressHTML: true,
   server: { port: 3000 },
@@ -85,9 +86,9 @@ export default defineConfig({
     }),
     sitemap({
       serialize(item) {
-        if (item.url.endsWith('nemanjamitic.com/')) {
+        if (item.url.endsWith(SITE_URL)) {
           item.priority = 1.0;
-        } else if (item.url.endsWith('nemanjamitic.com/blog/')) {
+        } else if (item.url.endsWith(`${SITE_URL}/blog/`)) {
           item.changefreq = 'daily';
           item.priority = 0.9;
         }
