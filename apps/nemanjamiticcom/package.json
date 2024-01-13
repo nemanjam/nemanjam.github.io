@@ -1,7 +1,17 @@
 {
   "name": "@apps/nemanjamiticcom",
-  "type": "module",
+  "version": "0.0.1",
   "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lint": "eslint-config",
+    "format": "prettier-config",
+    "check-types": "tsc --noEmit --pretty"
+  },
   "dependencies": {
     "@astrojs/mdx": "^2.0.0",
     "@astrojs/react": "^3.0.7",
@@ -26,34 +36,18 @@
     "tailwindcss": "^3.3.5"
   },
   "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/prettier-config": "*",
+    "@repo/typescript-config": "*",
     "@astrojs/check": "^0.3.1",
-    "@onerepo/plugin-eslint": "^0.6.4",
-    "@onerepo/plugin-prettier": "^0.5.4",
-    "@onerepo/plugin-typescript": "^0.3.4",
     "@types/debounce": "^1.2.4",
     "@types/mdast": "^4.0.3",
     "@types/react": "^18.2.38",
     "@types/react-dom": "^18.2.17",
-    "@typescript-eslint/eslint-plugin": "^6.13.0",
-    "@typescript-eslint/parser": "^6.13.0",
-    "eslint": "^8.54.0",
-    "eslint-mdx": "^2.2.0",
-    "eslint-plugin-astro": "^0.30.0",
-    "eslint-plugin-mdx": "^2.2.0",
-    "eslint-plugin-tailwindcss": "^3.13.0",
-    "husky": "^8.0.3",
-    "netlify-cli": "^17.7.0",
-    "onerepo": "^0.15.2",
-    "prettier": "^3.1.0",
-    "prettier-plugin-astro": "^0.12.2",
     "shiki": "^0.14.5",
     "typescript": "^5.3.2"
   },
-  "packageManager": "yarn@4.0.1",
-  "workspaces": [
-    "."
-  ],
-  "resolutions": {
-    "svgo": "2.8.0"
+  "engines": {
+    "node": ">=20.10.0"
   }
 }

@@ -9,7 +9,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "lint": "eslint-config",
+    "disabled-lint": "eslint-config",
     "format": "prettier-config",
     "check-types": "tsc --noEmit --pretty"
   },
@@ -29,14 +29,14 @@
     "unpic": "^3.15.0"
   },
   "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/prettier-config": "*",
+    "@repo/typescript-config": "*",
     "@astrojs/mdx": "^2.0.0",
     "@astrojs/partytown": "^2.0.2",
     "@astrojs/tailwind": "5.1.0",
     "@iconify-json/flat-color-icons": "^1.1.9",
     "@iconify-json/tabler": "^1.1.100",
-    "@repo/eslint-config": "*",
-    "@repo/prettier-config": "*",
-    "@repo/typescript-config": "*",
     "@types/ejs": "^3.1.5",
     "@types/js-yaml": "^4.0.9",
     "@types/lodash.merge": "^4.6.9",

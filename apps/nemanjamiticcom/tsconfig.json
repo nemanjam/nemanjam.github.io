@@ -1,12 +1,17 @@
 {
-	"extends": "astro/tsconfigs/strictest",
-	"compilerOptions": {
-		"allowJs": true,
-		"jsx": "preserve",
-		"jsxImportSource": "solid-js",
-		"baseUrl": ".",
-		"noEmit": true,
-		"skipLibCheck": true
-	},
-	"exclude": ["./dist/*"]
+  "extends": "@repo/typescript-config/base.json",
+  // redefine entire compilerOptions
+  "compilerOptions": {
+    "allowJs": true,
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "noEmit": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["src/*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx", "**/*.astro"],
+  "exclude": ["dist", ",astro", "node_modules"]
 }

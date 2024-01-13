@@ -12,6 +12,9 @@ module.exports = {
   // Configuration for JavaScript files
   extends: ['eslint:recommended', 'turbo', 'prettier'],
   rules: {},
+  globals: {
+    astroHTML: 'readonly',
+  },
   overrides: [
     {
       files: ['*.astro'],
