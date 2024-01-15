@@ -1,10 +1,14 @@
 ---
-import { SITE_URL } from '../config';
 import { ViewTransitions } from 'astro:transitions';
+
+import { SITE_URL } from '../config';
+
+import '@fontsource-variable/inter/index.css';
+
 export interface Props {
-	title: string;
-	description: string;
-	image?: string | undefined;
+  title: string;
+  description: string;
+  image?: string | undefined;
 }
 
 const { title, description, image = '/img/og_image_small.jpg' } = Astro.props;

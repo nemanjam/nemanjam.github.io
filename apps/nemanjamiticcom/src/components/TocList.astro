@@ -1,34 +1,35 @@
 ---
 import Link from './Link.astro';
+
 interface Heading {
-	text: string;
-	slug: string;
-	headings: Array<Heading>;
+  text: string;
+  slug: string;
+  headings: Array<Heading>;
 }
 export interface Props {
-	headings: Array<Heading>;
+  headings: Array<Heading>;
 }
 
 const { headings } = Astro.props as Props;
 ---
 
 <div class="prose-ol:!my-1 prose-li:!my-1">
-	<ol>
-		{
-			headings.map(({ slug, text, headings }) => (
-				<li>
-					<Link href={`#${slug}`}>{text}</Link>
-					{headings ? (
-						<ol class="list-[lower-alpha]">
-							{headings.map(({ slug, text }) => (
-								<li>
-									<Link href={`#${slug}`}>{text}</Link>
-								</li>
-							))}
-						</ol>
-					) : null}
-				</li>
-			))
-		}
-	</ol>
+  <ol>
+    {
+      headings.map(({ slug, text, headings }) => (
+        <li>
+          <Link href={`#${slug}`}>{text}</Link>
+          {headings ? (
+            <ol class="list-[lower-alpha]">
+              {headings.map(({ slug, text }) => (
+                <li>
+                  <Link href={`#${slug}`}>{text}</Link>
+                </li>
+              ))}
+            </ol>
+          ) : null}
+        </li>
+      ))
+    }
+  </ol>
 </div>
