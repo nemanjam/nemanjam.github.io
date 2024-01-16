@@ -1,39 +1,54 @@
 ---
 import Icon from 'astro-icon';
+
 import clsx from 'clsx';
+
 import Button from './Button.astro';
 
 export interface Props {
-	prevUrl?: string | undefined;
-	nextUrl?: string | undefined;
-	current: number;
-	total: number;
+  prevUrl?: string | undefined;
+  nextUrl?: string | undefined;
+  current: number;
+  total: number;
 }
 
 const { current, nextUrl, prevUrl, total } = Astro.props as Props;
 ---
 
 <nav role="navigation" aria-label="Pagination">
-	<ul class={clsx('grid w-full grid-cols-1 justify-between gap-x-12 gap-y-4', prevUrl && nextUrl && 'sm:grid-cols-2')}>
-		{
-			nextUrl ? (
-				<li class="order-last flex flex-row justify-end" aria-setsize={total} aria-posinset={current + 1}>
-					<Button href={nextUrl} class="inline-flex flex-row-reverse py-4">
-						<Icon name="arrow-right" class="h-6 w-6 shrink-0" />
-						<span class="text-right">Older posts</span>
-					</Button>
-				</li>
-			) : null
-		}
-		{
-			prevUrl ? (
-				<li class="order-first flex flex-row justify-start" aria-setsize={total} aria-posinset={current - 1}>
-					<Button href={prevUrl} class="inline-flex flex-row py-4">
-						<Icon name="arrow-left" class="h-6 w-6 shrink-0" />
-						<span>Newer posts</span>
-					</Button>
-				</li>
-			) : null
-		}
-	</ul>
+  <ul
+    class={clsx(
+      'grid w-full grid-cols-1 justify-between gap-x-12 gap-y-4',
+      prevUrl && nextUrl && 'sm:grid-cols-2'
+    )}
+  >
+    {
+      nextUrl ? (
+        <li
+          class="order-last flex flex-row justify-end"
+          aria-setsize={total}
+          aria-posinset={current + 1}
+        >
+          <Button href={nextUrl} class="inline-flex flex-row-reverse py-4">
+            <Icon name="arrow-right" class="h-6 w-6 shrink-0" />
+            <span class="text-right">Older posts</span>
+          </Button>
+        </li>
+      ) : null
+    }
+    {
+      prevUrl ? (
+        <li
+          class="order-first flex flex-row justify-start"
+          aria-setsize={total}
+          aria-posinset={current - 1}
+        >
+          <Button href={prevUrl} class="inline-flex flex-row py-4">
+            <Icon name="arrow-left" class="h-6 w-6 shrink-0" />
+            <span>Newer posts</span>
+          </Button>
+        </li>
+      ) : null
+    }
+  </ul>
 </nav>

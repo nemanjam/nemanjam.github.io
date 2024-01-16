@@ -3,7 +3,7 @@
  */
 module.exports = {
   plugins: ['prettier-plugin-astro', '@ianvs/prettier-plugin-sort-imports'],
-  printWidth: 120,
+  printWidth: 100,
   semi: true,
   singleQuote: true,
   tabWidth: 2,

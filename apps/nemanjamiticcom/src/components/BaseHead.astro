@@ -31,8 +31,18 @@ const { title, description, image = '/img/og_image_small.jpg' } = Astro.props;
 <meta name="description" content={description} />
 
 {/* Feeds */}
-<link rel="alternate" type="application/rss+xml" title="RSS feed for paularmstrong.dev" href={`${SITE_URL}/feed.xml`} />
-<link rel="alternate" type="application/json" title="JSON feed for paularmstrong.dev" href={`${SITE_URL}/feed.json`} />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  title="RSS feed for paularmstrong.dev"
+  href={`${SITE_URL}/feed.xml`}
+/>
+<link
+  rel="alternate"
+  type="application/json"
+  title="JSON feed for paularmstrong.dev"
+  href={`${SITE_URL}/feed.json`}
+/>
 <link rel="sitemap" type="application/xml" title="Sitemap" href={`${SITE_URL}/sitemap-index.xml`} />
 <link rel="author" href={`${SITE_URL}/humans.txt`} />
 
@@ -52,7 +62,12 @@ const { title, description, image = '/img/og_image_small.jpg' } = Astro.props;
 
 {/* Analytics */}
 <link rel="preconnect" href="https://gc.zgo.at" />
-<script async data-goatcounter="https://paularmstrong.goatcounter.com/count" src="https://gc.zgo.at/count.js"></script>
-<script src="https://js.sentry-cdn.com/9b133389b9a540e49f6c3f76ca7226bf.min.js" crossorigin="anonymous"></script>
+<script
+  async
+  data-goatcounter="https://paularmstrong.goatcounter.com/count"
+  src="https://gc.zgo.at/count.js"></script>
+<script
+  src="https://js.sentry-cdn.com/9b133389b9a540e49f6c3f76ca7226bf.min.js"
+  crossorigin="anonymous"></script>
 
 <ViewTransitions fallback="none" />

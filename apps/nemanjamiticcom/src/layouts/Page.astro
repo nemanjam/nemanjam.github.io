@@ -1,31 +1,31 @@
 ---
-import Base from './Base.astro';
 import PageInfo from '../components/PageInfo.astro';
 import Prose from '../components/Prose.astro';
+import Base from './Base.astro';
 
 export interface Props {
-	content: {
-		file?: string;
-		title: string;
-		description: string;
-		pubDate?: Date;
-		updatedDate?: Date;
-	};
+  content: {
+    file?: string;
+    title: string;
+    description: string;
+    pubDate?: Date;
+    updatedDate?: Date;
+  };
 }
 
 const {
-	content: { title, description, updatedDate, file },
+  content: { title, description, updatedDate, file },
 } = Astro.props;
 ---
 
 <Base title={title} description={description}>
-	<Prose>
-		<article>
-			<h1>{title}</h1>
+  <Prose>
+    <article>
+      <h1>{title}</h1>
 
-			<PageInfo file={file} updatedDate={updatedDate} />
+      <PageInfo file={file} updatedDate={updatedDate} />
 
-			<slot />
-		</article>
-	</Prose>
+      <slot />
+    </article>
+  </Prose>
 </Base>

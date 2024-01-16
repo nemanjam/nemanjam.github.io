@@ -1,31 +1,33 @@
 ---
-import type { Page, GetStaticPathsOptions } from 'astro';
-import { getCollection } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
-import { Image } from 'astro:assets';
 import { createMarkdownProcessor } from '@astrojs/markdown-remark';
-import type { MarkdownProcessorRenderResult } from '@astrojs/markdown-remark';
-import Link from '../../components/Link.astro';
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+
 import AuthorMeta from '../../components/AuthorMeta.astro';
-import Base from '../../layouts/Base.astro';
-import Prose from '../../components/Prose.astro';
+import Link from '../../components/Link.astro';
 import Pagination from '../../components/Pagination.astro';
+import Prose from '../../components/Prose.astro';
+import Base from '../../layouts/Base.astro';
 import { getPostSlug } from '../../modules/blog-post';
 
-export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-	const posts = (
-		await getCollection('blog', ({ data }) => {
-			return import.meta.env.DEV || !data.draft;
-		})
-	).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+import type { MarkdownProcessorRenderResult } from '@astrojs/markdown-remark';
+import type { GetStaticPathsOptions, Page } from 'astro';
+import type { CollectionEntry } from 'astro:content';
 
-	return paginate(posts, {
-		pageSize: 10,
-	});
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const posts = (
+    await getCollection('blog', ({ data }) => {
+      return import.meta.env.DEV || !data.draft;
+    })
+  ).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+  return paginate(posts, {
+    pageSize: 10,
+  });
 }
 
 type Props = {
-	page: Page<CollectionEntry<'blog'>>;
+  page: Page<CollectionEntry<'blog'>>;
 };
 
 const { render: renderMarkdown } = await createMarkdownProcessor({});
@@ -33,90 +35,100 @@ const { render: renderMarkdown } = await createMarkdownProcessor({});
 const { page } = Astro.props;
 const descriptions: Record<string, MarkdownProcessorRenderResult> = {};
 for (const post of page.data) {
-	if (typeof post === 'string') {
-		continue;
-	}
-	descriptions[post.data.title] = await renderMarkdown(post.data.description || '');
+  if (typeof post === 'string') {
+    continue;
+  }
+  descriptions[post.data.title] = await renderMarkdown(post.data.description || '');
 }
-const dateFormatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeZone: 'UTC' }).format;
+const dateFormatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeZone: 'UTC' })
+  .format;
 ---
 
 <Base title="Blog">
-	<Prose>
-		<h1>Blog</h1>
-		<p>
-			Rambling, ranting, and raving… But mostly just whatever seems important in the moment about JavaScript, frontend
-			development, and life surrounding me.
-		</p>
-	</Prose>
-	<section>
-		<AuthorMeta id="author" />
-		<ul class="flex flex-col gap-12">
-			{
-				page.data.map((post) => {
-					const { draft, pubDate, title, heroImage, heroAlt } = post.data;
+  <Prose>
+    <h1>Blog</h1>
+    <p>
+      Rambling, ranting, and raving… But mostly just whatever seems important in the moment about
+      JavaScript, frontend development, and life surrounding me.
+    </p>
+  </Prose>
+  <section>
+    <AuthorMeta id="author" />
+    <ul class="flex flex-col gap-12">
+      {
+        page.data.map((post) => {
+          const { draft, pubDate, title, heroImage, heroAlt } = post.data;
 
-					if (import.meta.env.PROD && draft) {
-						return null;
-					}
+          if (import.meta.env.PROD && draft) {
+            return null;
+          }
 
-					const slug = getPostSlug(post);
-					const date = dateFormatter(new Date(pubDate));
+          const slug = getPostSlug(post);
+          const date = dateFormatter(new Date(pubDate));
 
-					return (
-						<li
-							class="mb-4 grid grid-cols-6 gap-4"
-							itemscope
-							itemprop="blogPost"
-							itemtype="http://schema.org/Article"
-							itemref="author"
-						>
-							<time
-								class="text-right leading-8 text-slate-600 dark:text-slate-300"
-								datetime={pubDate.toISOString().split('T')[0]}
-								itemprop="datePublished"
-							>
-								{date}
-							</time>
-							<div class="col-span-5">
-								<h2>
-									<Link class="text-2xl text-purple-600 dark:text-purple-400" href={slug} itemprop="url">
-										<span
-											class="bg-gradient-to-br from-blue-700 to-purple-600 bg-clip-text font-bold text-transparent dark:from-blue-400 dark:to-purple-400"
-											itemprop="name headline"
-											transition:name={`title-${slug}`}
-										>
-											{title}
-										</span>
-										{draft ? <sup class="text-sm text-red-400">(draft)</sup> : null}
-										{heroImage ? (
-											<div class="my-2">
-												<Prose>
-													<Image
-														src={heroImage}
-														alt={heroAlt ?? ''}
-														width={640}
-														itemprop="image"
-														class="!mt-0 w-full max-w-none"
-														transition:name={`hero-${heroImage.src}`}
-													/>
-												</Prose>
-											</div>
-										) : null}
-									</Link>
-								</h2>
-								<Prose>
-									<div transition:name={`content-${slug}`}>
-										<Fragment set:html={descriptions[title]?.code ?? ''} />
-									</div>
-								</Prose>
-							</div>
-						</li>
-					);
-				})
-			}
-		</ul>
-	</section>
+          return (
+            <li
+              class="mb-4 grid grid-cols-6 gap-4"
+              itemscope
+              itemprop="blogPost"
+              itemtype="http://schema.org/Article"
+              itemref="author"
+            >
+              <time
+                class="text-right leading-8 text-slate-600 dark:text-slate-300"
+                datetime={pubDate.toISOString().split('T')[0]}
+                itemprop="datePublished"
+              >
+                {date}
+              </time>
+              <div class="col-span-5">
+                <h2>
+                  <Link
+                    class="text-2xl text-purple-600 dark:text-purple-400"
+                    href={slug}
+                    itemprop="url"
+                  >
+                    <span
+                      class="bg-gradient-to-br from-blue-700 to-purple-600 bg-clip-text font-bold text-transparent dark:from-blue-400 dark:to-purple-400"
+                      itemprop="name headline"
+                      transition:name={`title-${slug}`}
+                    >
+                      {title}
+                    </span>
+                    {draft ? <sup class="text-sm text-red-400">(draft)</sup> : null}
+                    {heroImage ? (
+                      <div class="my-2">
+                        <Prose>
+                          <Image
+                            src={heroImage}
+                            alt={heroAlt ?? ''}
+                            width={640}
+                            itemprop="image"
+                            class="!mt-0 w-full max-w-none"
+                            transition:name={`hero-${heroImage.src}`}
+                          />
+                        </Prose>
+                      </div>
+                    ) : null}
+                  </Link>
+                </h2>
+                <Prose>
+                  <div transition:name={`content-${slug}`}>
+                    <Fragment set:html={descriptions[title]?.code ?? ''} />
+                  </div>
+                </Prose>
+              </div>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </section>
 
-	<Pagination nextUrl={page.url.next} prevUrl={page.url.prev} current={page.currentPage} total={page.lastPage} />
+  <Pagination
+    nextUrl={page.url.next}
+    prevUrl={page.url.prev}
+    current={page.currentPage}
+    total={page.lastPage}
+  />
 </Base>

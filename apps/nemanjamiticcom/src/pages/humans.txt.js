@@ -1,7 +1,7 @@
 export function GET() {
-	const date = new Date();
-	return new Response(
-		`/* TEAM */
+  const date = new Date();
+  return new Response(
+    `/* TEAM */
 Author: Paul Armstrong
 Site: https://paularmstrong.dev
 Mastodon: @paularmstrong@mstdn.io
@@ -13,6 +13,6 @@ Twitter: @paularmstrong
 Last updated: ${date.toISOString().split('T')[0]}
 Software: Astro, Solid-js, Typescript, JavaScript, Markdown
 `,
-		{ status: 200, headers: { 'content-type': 'text/plain' } },
-	);
+    { status: 200, headers: { 'content-type': 'text/plain' } }
+  );
 }

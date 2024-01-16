@@ -2,16 +2,16 @@
 import { Image } from 'astro:assets';
 
 export interface Props {
-	class?: string;
-	src: string;
-	alt: string;
-	fetchPriority?: 'high' | 'low' | 'auto';
-	loading?: 'eager' | 'lazy';
-	widths: Array<number>;
-	width: number;
-	height: number;
-	itemprop?: string;
-	style?: string;
+  class?: string;
+  src: string;
+  alt: string;
+  fetchPriority?: 'high' | 'low' | 'auto';
+  loading?: 'eager' | 'lazy';
+  widths: Array<number>;
+  width: number;
+  height: number;
+  itemprop?: string;
+  style?: string;
 }
 
 const { width, height, src, ...props } = Astro.props as Props;

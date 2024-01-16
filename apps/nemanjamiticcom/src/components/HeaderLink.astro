@@ -1,16 +1,17 @@
 ---
 import Button from './Button.astro';
+
 import type { Props } from './Button.astro';
 
 // eslint-disable-next-line no-unused-vars
 const { slot, ...props } = Astro.props as Props;
 const isActive = Astro.url.pathname.startsWith(`${props.href}`);
 if (isActive) {
-	props['aria-current'] = 'page';
+  props['aria-current'] = 'page';
 }
 ---
 
 <Button {...props} class={isActive ? 'bg-slate-200/50 dark:bg-slate-800/50' : ''}>
-	<slot name="icon" />
-	<slot />
+  <slot name="icon" />
+  <slot />
 </Button>

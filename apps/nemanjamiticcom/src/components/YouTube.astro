@@ -2,9 +2,9 @@
 import clsx from 'clsx';
 
 export type Props = {
-	title: string;
-	code: string;
-	wide?: boolean;
+  title: string;
+  code: string;
+  wide?: boolean;
 };
 
 const { title, code, wide } = Astro.props;
@@ -14,10 +14,10 @@ const srcdoc = `<style>*{padding:0;margin:0;overflow:hidden}html,body{height:100
 ---
 
 <iframe
-	class={clsx('aspect-video w-full rounded-lg', wide && 'lg:bustout-sm')}
-	src={src}
-	title={title}
-	srcdoc={srcdoc}
-	frameborder="0"
-	allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-	allowfullscreen></iframe>
+  class={clsx('aspect-video w-full rounded-lg', wide && 'lg:bustout-sm')}
+  src={src}
+  title={title}
+  srcdoc={srcdoc}
+  frameborder="0"
+  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen></iframe>

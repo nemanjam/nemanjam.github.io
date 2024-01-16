@@ -4,7 +4,12 @@ import defaultTheme from 'tailwindcss/defaultTheme';
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['src/**/*.{astro,md,mdx,tsx}', 'blog/**/*.{md,mdx}', 'labs/**/*.{mdx,tsx,ts}', 'astro.config.mjs'],
+  content: [
+    'src/**/*.{astro,md,mdx,tsx}',
+    'blog/**/*.{md,mdx}',
+    'labs/**/*.{mdx,tsx,ts}',
+    'astro.config.mjs',
+  ],
   darkMode: 'class',
   plugins: [
     require('@tailwindcss/typography'),
@@ -35,15 +40,16 @@ module.exports = {
             color: theme('colors.slate.400'),
           },
         },
-        '.prose :where(div[data-rehype-pretty-code-fragment]):not(:where([class~="no-bustout"] *))': {
-          [`@media screen and (min-width: ${theme('screens.xl')})`]: {
-            marginLeft: 'calc(50% - 50vw)',
-            marginRight: 'calc(50% - 50vw)',
-            width: '60vw',
-            maxWidth: '1280px',
-            transform: 'translateX(calc(50vw - 50%))',
+        '.prose :where(div[data-rehype-pretty-code-fragment]):not(:where([class~="no-bustout"] *))':
+          {
+            [`@media screen and (min-width: ${theme('screens.xl')})`]: {
+              marginLeft: 'calc(50% - 50vw)',
+              marginRight: 'calc(50% - 50vw)',
+              width: '60vw',
+              maxWidth: '1280px',
+              transform: 'translateX(calc(50vw - 50%))',
+            },
           },
-        },
         '[data-rehype-pretty-code-title]': {
           width: 'max-content',
           borderWidth: theme('spacing.px'),
@@ -139,24 +145,36 @@ module.exports = {
       keyframes: (theme) => ({
         'ring-ping': {
           '0%': {
-            'box-shadow': `0 0 0 0 ${theme('colors.slate.100')}ff, 0 0 0 0 ${theme('colors.blue.500')}00`,
+            'box-shadow': `0 0 0 0 ${theme('colors.slate.100')}ff, 0 0 0 0 ${theme(
+              'colors.blue.500'
+            )}00`,
           },
           '5%': {
-            'box-shadow': `0 0 0 0px ${theme('colors.slate.100')}ff, 0 0 0 4px ${theme('colors.blue.500')}aa`,
+            'box-shadow': `0 0 0 0px ${theme('colors.slate.100')}ff, 0 0 0 4px ${theme(
+              'colors.blue.500'
+            )}aa`,
           },
           '20%, 100%': {
-            'box-shadow': `0 0 0 4px ${theme('colors.slate.100')}ff, 0 0 0 8px ${theme('colors.blue.500')}00`,
+            'box-shadow': `0 0 0 4px ${theme('colors.slate.100')}ff, 0 0 0 8px ${theme(
+              'colors.blue.500'
+            )}00`,
           },
         },
         'ring-ping-dark': {
           '0%': {
-            'box-shadow': `0 0 0 0 ${theme('colors.slate.900')}ff, 0 0 0 0 ${theme('colors.blue.500')}00`,
+            'box-shadow': `0 0 0 0 ${theme('colors.slate.900')}ff, 0 0 0 0 ${theme(
+              'colors.blue.500'
+            )}00`,
           },
           '5%': {
-            'box-shadow': `0 0 0 0px ${theme('colors.slate.900')}ff, 0 0 0 4px ${theme('colors.blue.500')}aa`,
+            'box-shadow': `0 0 0 0px ${theme('colors.slate.900')}ff, 0 0 0 4px ${theme(
+              'colors.blue.500'
+            )}aa`,
           },
           '20%, 100%': {
-            'box-shadow': `0 0 0 4px ${theme('colors.slate.900')}ff, 0 0 0 8px ${theme('colors.blue.500')}00`,
+            'box-shadow': `0 0 0 4px ${theme('colors.slate.900')}ff, 0 0 0 8px ${theme(
+              'colors.blue.500'
+            )}00`,
           },
         },
       }),

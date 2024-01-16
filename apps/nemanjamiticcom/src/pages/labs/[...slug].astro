@@ -1,23 +1,24 @@
 ---
 import { getCollection } from 'astro:content';
+
 import Labs from '../../layouts/Labs.astro';
 
 export async function getStaticPaths() {
-	const pages = await getCollection('labs');
-	return pages.map((page) => ({
-		params: { slug: page.slug },
-		props: { page },
-	}));
+  const pages = await getCollection('labs');
+  return pages.map((page) => ({
+    params: { slug: page.slug },
+    props: { page },
+  }));
 }
 
 const {
-	data: { title, description, heroImage },
-	render,
+  data: { title, description, heroImage },
+  render,
 } = Astro.props.page;
 
 const { Content } = await render();
 ---
 
 <Labs title={title} description={description} image={heroImage?.src}>
-	<Content />
+  <Content />
 </Labs>

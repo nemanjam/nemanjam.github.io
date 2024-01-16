@@ -1,153 +1,164 @@
 ---
-import { getCollection } from 'astro:content';
-import { Image } from 'astro:assets';
 import { createMarkdownProcessor } from '@astrojs/markdown-remark';
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+
 import Aside from '../../components/Aside.astro';
 import AuthorMeta from '../../components/AuthorMeta.astro';
-import Base from '../../layouts/Base.astro';
 import Link from '../../components/Link.astro';
 import PageInfo from '../../components/PageInfo.astro';
 import Prose from '../../components/Prose.astro';
-import TocList from '../../components/TocList.astro';
 import { Share, ShareLink } from '../../components/Share';
-import type { MarkdownHeading } from 'astro';
+import TocList from '../../components/TocList.astro';
+import Base from '../../layouts/Base.astro';
 import { getPostSlug, getRandomEntries } from '../../modules/blog-post';
 
-export async function getStaticPaths() {
-	const collection = await getCollection('blog', ({ data }) => {
-		return import.meta.env.DEV || !data.draft;
-	});
-	const posts = collection
-		.sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf())
-		.map((post) => {
-			const slug = getPostSlug(post);
-			return {
-				params: { slug },
-				props: { ...post, randomEntries: getRandomEntries(collection, 4, slug) },
-			};
-		});
+import type { MarkdownHeading } from 'astro';
 
-	return posts;
+export async function getStaticPaths() {
+  const collection = await getCollection('blog', ({ data }) => {
+    return import.meta.env.DEV || !data.draft;
+  });
+  const posts = collection
+    .sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf())
+    .map((post) => {
+      const slug = getPostSlug(post);
+      return {
+        params: { slug },
+        props: { ...post, randomEntries: getRandomEntries(collection, 4, slug) },
+      };
+    });
+
+  return posts;
 }
 
 const {
-	id,
-	data: { draft, title, pubDate, updatedDate, description, toc, heroImage, heroAlt, noHero },
-	render,
-	randomEntries,
+  id,
+  data: { draft, title, pubDate, updatedDate, description, toc, heroImage, heroAlt, noHero },
+  render,
+  randomEntries,
 } = Astro.props;
 const { slug } = Astro.params;
 
 const {
-	Content,
-	headings: postHeadings,
-	remarkPluginFrontmatter: { readingTime },
+  Content,
+  headings: postHeadings,
+  remarkPluginFrontmatter: { readingTime },
 } = await render();
 
 interface Heading extends MarkdownHeading {
-	headings: Array<Heading>;
+  headings: Array<Heading>;
 }
 
 const headings: Array<Heading> = [];
 const levels = [{ headings }];
 
 for (const h of postHeadings) {
-	const depth = h.depth - 2;
-	if (depth < 0 || depth > 1) {
-		continue;
-	}
-	levels[depth]!.headings = levels[depth]?.headings || [];
-	levels[depth]!.headings.push({ ...(levels[depth + 1] = { ...h, headings: [] }), headings: [] });
+  const depth = h.depth - 2;
+  if (depth < 0 || depth > 1) {
+    continue;
+  }
+  levels[depth]!.headings = levels[depth]?.headings || [];
+  levels[depth]!.headings.push({ ...(levels[depth + 1] = { ...h, headings: [] }), headings: [] });
 }
 
 const { render: renderMarkdown } = await createMarkdownProcessor({});
 
 const more = [];
 for (const entry of randomEntries) {
-	more.push({ ...entry, description: await renderMarkdown(entry.data.description ?? '') });
+  more.push({ ...entry, description: await renderMarkdown(entry.data.description ?? '') });
 }
 ---
 
 <Base title={title} description={description} image={heroImage?.src}>
-	<article class="mb-12" itemprop="blogPost" itemscope itemtype="http://schema.org/Article">
-		<meta itemprop="mainEntityOfPage" content={`${slug}`} />
-		<Prose>
-			<h1 itemprop="name headline" transition:name={`title-${slug!.replace(/.*\//, '')}`}>
-				{title}
-				{draft ? <sup class="text-red-400">(draft)</sup> : null}
-			</h1>
+  <article class="mb-12" itemprop="blogPost" itemscope itemtype="http://schema.org/Article">
+    <meta itemprop="mainEntityOfPage" content={`${slug}`} />
+    <Prose>
+      <h1 itemprop="name headline" transition:name={`title-${slug!.replace(/.*\//, '')}`}>
+        {title}
+        {draft ? <sup class="text-red-400">(draft)</sup> : null}
+      </h1>
 
-			<PageInfo file={`src/content/blog/${id}`} pubDate={pubDate} updatedDate={updatedDate} readingTime={readingTime} />
+      <PageInfo
+        file={`src/content/blog/${id}`}
+        pubDate={pubDate}
+        updatedDate={updatedDate}
+        readingTime={readingTime}
+      />
 
-			{
-				!noHero && heroImage?.src ? (
-					<div class="lg:bustout">
-						<Image
-							src={heroImage}
-							alt={heroAlt ?? ''}
-							fetchpriority="high"
-							loading="eager"
-							width={1280}
-							itemprop="image"
-							class="!mt-0 w-full max-w-none"
-							transition:name={`hero-${slug!.replace(/.*\//, '')}`}
-						/>
-					</div>
-				) : null
-			}
+      {
+        !noHero && heroImage?.src ? (
+          <div class="lg:bustout">
+            <Image
+              src={heroImage}
+              alt={heroAlt ?? ''}
+              fetchpriority="high"
+              loading="eager"
+              width={1280}
+              itemprop="image"
+              class="!mt-0 w-full max-w-none"
+              transition:name={`hero-${slug!.replace(/.*\//, '')}`}
+            />
+          </div>
+        ) : null
+      }
 
-			<AuthorMeta />
+      <AuthorMeta />
 
-			<div itemprop="articleBody" transition:name={`content-${slug!.replace(/.*\//, '')}`}>
-				{
-					toc ? (
-						<aside class="prose-base mx-4 mb-4 rounded-xl border border-slate-200 bg-slate-100 px-4 py-1 text-slate-900 transition-colors duration-500 dark:border-slate-800 dark:bg-slate-900 sm:float-right sm:ml-8 sm:mr-0 sm:max-w-[50%] md:-mr-8 lg:-mr-32">
-							<h2 class="!mt-4">Table of contents</h2>
-							<TocList headings={headings} />
-						</aside>
-					) : null
-				}
+      <div itemprop="articleBody" transition:name={`content-${slug!.replace(/.*\//, '')}`}>
+        {
+          toc ? (
+            <aside class="prose-base mx-4 mb-4 rounded-xl border border-slate-200 bg-slate-100 px-4 py-1 text-slate-900 transition-colors duration-500 dark:border-slate-800 dark:bg-slate-900 sm:float-right sm:ml-8 sm:mr-0 sm:max-w-[50%] md:-mr-8 lg:-mr-32">
+              <h2 class="!mt-4">Table of contents</h2>
+              <TocList headings={headings} />
+            </aside>
+          ) : null
+        }
 
-				<Content />
-			</div>
+        <Content />
+      </div>
 
-			<hr />
+      <hr />
 
-			<Aside title="Share your thoughts">
-				<div class="flex flex-col items-start gap-x-4 gap-y-0 sm:flex-row-reverse">
-					<div class="mt-4 justify-self-center">
-						<div class="w-28"><Share client:load title={title} url={`/blog/${slug}/`} /></div>
-					</div>
-					<p class="!mb-1 inline-flex shrink flex-wrap gap-x-1">
-						Since you’ve made it this far, hopefully you enjoyed reading! Please
-						<ShareLink client:load title={title} url={`/blog/${slug}/`}>share</ShareLink>
-						{' '}the post or <Link href="https://mstdn.io/@paularmstrong" target="_blank" rel="noopener noreferrer">
-							ping me on Mastodon
-						</Link>
-					</p>
-				</div>
-			</Aside>
-		</Prose>
-	</article>
+      <Aside title="Share your thoughts">
+        <div class="flex flex-col items-start gap-x-4 gap-y-0 sm:flex-row-reverse">
+          <div class="mt-4 justify-self-center">
+            <div class="w-28"><Share client:load title={title} url={`/blog/${slug}/`} /></div>
+          </div>
+          <p class="!mb-1 inline-flex shrink flex-wrap gap-x-1">
+            Since you’ve made it this far, hopefully you enjoyed reading! Please
+            <ShareLink client:load title={title} url={`/blog/${slug}/`}>share</ShareLink>
+            {' '}the post or <Link
+              href="https://mstdn.io/@paularmstrong"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ping me on Mastodon
+            </Link>
+          </p>
+        </div>
+      </Aside>
+    </Prose>
+  </article>
 
-	<aside class="select-none">
-		<Prose>
-			<h2 id="post-nav">More posts</h2>
-		</Prose>
+  <aside class="select-none">
+    <Prose>
+      <h2 id="post-nav">More posts</h2>
+    </Prose>
 
-		<ul class="flex flex-col gap-8">
-			{
-				more.map((entry) => (
-					<li>
-						<Link class="text-xl font-bold" href={`/blog/${getPostSlug(entry)}/`} itemprop="url">
-							{entry.data.title}
-						</Link>
-						<div class="prose prose-slate line-clamp-2 dark:prose-invert">
-							<Fragment set:html={entry.description.code ?? ''} />
-						</div>
-					</li>
-				))
-			}
-		</ul>
-	</aside>
+    <ul class="flex flex-col gap-8">
+      {
+        more.map((entry) => (
+          <li>
+            <Link class="text-xl font-bold" href={`/blog/${getPostSlug(entry)}/`} itemprop="url">
+              {entry.data.title}
+            </Link>
+            <div class="prose prose-slate line-clamp-2 dark:prose-invert">
+              <Fragment set:html={entry.description.code ?? ''} />
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </aside>
 </Base>
