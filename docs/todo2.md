@@ -7,3 +7,18 @@ src/content/blog/2022-10-14-tech-design-template.mdx
 
 import { Image } from 'astro:assets';
 <Image /> is for imported images from src/images/blog
+
+maybe :port breaks getStaticPaths slug route
+http://localhost:3000/
+
+solution:
+it was trailing slash /, damn, trivial
+http://localhost:3000/blog/2024-01-16-example-article-1/
+
+it was this in `astro.config.mjs`
+trailingSlash: 'always', // default 'ignore'
+
+---
+
+add .env file for dev and prod and vars
+pagination still not working [...page].astro blog/1 unhandled

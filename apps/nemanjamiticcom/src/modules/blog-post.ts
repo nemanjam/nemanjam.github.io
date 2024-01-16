@@ -9,16 +9,11 @@ export function getPostSlug(post: CollectionEntry<'blog'>) {
     slug,
     data: { pubDate },
   } = post;
-  return `${pubDate.getFullYear()}/${padTwo(pubDate.getUTCMonth() + 1)}/${padTwo(
-    pubDate.getUTCDate()
-  )}/${slug}`;
+  return `${pubDate.getFullYear()}-${padTwo(pubDate.getUTCMonth() + 1)}-${padTwo(pubDate.getUTCDate())}-${slug}`;
 }
 
-export function getRandomEntries(
-  posts: Array<CollectionEntry<'blog'>>,
-  count: number,
-  excludeSlug?: string
-) {
+// cant handle 1 article, rewrite this
+export function getRandomEntries(posts: Array<CollectionEntry<'blog'>>, count: number, excludeSlug?: string) {
   const shuffled = posts.slice(0).filter((e) => getPostSlug(e) !== excludeSlug);
   let i = shuffled.length - 1;
   const min = i - count;
