@@ -16,14 +16,12 @@ import type { CollectionEntry } from 'astro:content';
 
 // [page].astro and getStaticPaths because of pagination
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const posts = (
-    await getCollection('blog', ({ data }) => {
-      return import.meta.env.DEV || !data.draft;
-    })
-  ).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  const posts = await getCollection('blog', ({ data }) => import.meta.env.DEV || !data.draft);
+  const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
-  const page = paginate(posts, { pageSize: 2 });
-  return page;
+  const pagination = paginate(sortedPosts, { pageSize: 1 });
+  pagination.push({ params: { page: '1' }, props: pagination[0].props });
+  return pagination;
 }
 
 type Props = {
@@ -32,7 +30,9 @@ type Props = {
 
 const { render: renderMarkdown } = await createMarkdownProcessor({});
 
-const { page } = Astro.props; // page from pagination
+// page from pagination
+const { page } = Astro.props;
+
 const descriptions: Record<string, MarkdownProcessorRenderResult> = {};
 for (const post of page.data) {
   if (typeof post === 'string') {
@@ -40,15 +40,17 @@ for (const post of page.data) {
   }
   descriptions[post.data.title] = await renderMarkdown(post.data.description || '');
 }
-const dateFormatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeZone: 'UTC' }).format;
+
+const dateFormatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeZone: 'UTC' })
+  .format;
 ---
 
 <Base title="Blog">
   <Prose>
     <h1>Blog</h1>
     <p>
-      Rambling, ranting, and raving… But mostly just whatever seems important in the moment about JavaScript, frontend
-      development, and life surrounding me.
+      Rambling, ranting, and raving… But mostly just whatever seems important in the moment about
+      JavaScript, frontend development, and life surrounding me.
     </p>
   </Prose>
   <section>
@@ -82,7 +84,11 @@ const dateFormatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', ti
               </time>
               <div class="col-span-5">
                 <h2>
-                  <Link class="text-2xl text-purple-600 dark:text-purple-400" href={slug} itemprop="url">
+                  <Link
+                    class="text-2xl text-purple-600 dark:text-purple-400"
+                    href={slug}
+                    itemprop="url"
+                  >
                     <span
                       class="bg-gradient-to-br from-blue-700 to-purple-600 bg-clip-text font-bold text-transparent dark:from-blue-400 dark:to-purple-400"
                       itemprop="name headline"
@@ -120,5 +126,10 @@ const dateFormatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', ti
     </ul>
   </section>
 
-  <Pagination nextUrl={page.url.next} prevUrl={page.url.prev} current={page.currentPage} total={page.lastPage} />
+  <Pagination
+    nextUrl={page.url.next}
+    prevUrl={page.url.prev}
+    current={page.currentPage}
+    total={page.lastPage}
+  />
 </Base>

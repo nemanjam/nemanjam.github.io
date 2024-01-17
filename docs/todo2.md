@@ -20,5 +20,10 @@ trailingSlash: 'always', // default 'ignore'
 
 ---
 
-add .env file for dev and prod and vars
+add .env file for dev and prod and vars with zod validation
 pagination still not working [...page].astro blog/1 unhandled
+redesign navbar, color palette and all other components
+giscuss
+rewrite solid to react
+move components to monorepo
+tags, categories?

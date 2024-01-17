@@ -1,28 +1,39 @@
 import type { CollectionEntry } from 'astro:content';
 
-function padTwo(num: number) {
-  return `${num}`.padStart(2, '0');
-}
+const padTwo = (num: number) => `${num}`.padStart(2, '0');
 
-export function getPostSlug(post: CollectionEntry<'blog'>) {
+export const getPostSlug = (post: CollectionEntry<'blog'>) => {
   const {
     slug,
     data: { pubDate },
   } = post;
-  return `${pubDate.getFullYear()}-${padTwo(pubDate.getUTCMonth() + 1)}-${padTwo(pubDate.getUTCDate())}-${slug}`;
-}
 
-// cant handle 1 article, rewrite this
-export function getRandomEntries(posts: Array<CollectionEntry<'blog'>>, count: number, excludeSlug?: string) {
-  const shuffled = posts.slice(0).filter((e) => getPostSlug(e) !== excludeSlug);
-  let i = shuffled.length - 1;
-  const min = i - count;
-  while (i > min) {
-    const index = Math.floor((i + 1) * Math.random());
-    const temp = shuffled[index]!;
-    shuffled[index] = shuffled[i]!;
-    shuffled[i] = temp;
-    i -= 1;
-  }
-  return shuffled.slice(min);
-}
+  const year = pubDate.getFullYear();
+  const month = padTwo(pubDate.getUTCMonth() + 1);
+  const day = padTwo(pubDate.getUTCDate());
+
+  const resultSlug = `${year}-${month}-${day}-${slug}`;
+  return resultSlug;
+};
+
+/** Must handle empty array. */
+export const getRandomEntries = (
+  posts: Array<CollectionEntry<'blog'>>,
+  count: number,
+  excludeSlug?: string
+) => {
+  if (!(posts.length > 0)) return [];
+
+  const filteredPosts = posts.filter((post) => getPostSlug(post) !== excludeSlug);
+
+  if (!(filteredPosts.length > 0)) return [];
+
+  const shuffledPosts = filteredPosts
+    .map((value) => ({ value, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ value }) => value);
+
+  if (shuffledPosts.length < count) return shuffledPosts;
+
+  return shuffledPosts.slice(0, count);
+};

@@ -27,8 +27,7 @@ export async function getStaticPaths() {
 
       return {
         params: { slug },
-        // props: { ...post, randomEntries: getRandomEntries(collection, 4, slug) },
-        props: { ...post, randomEntries: [] },
+        props: { ...post, randomEntries: getRandomEntries(collection, 4, slug) },
       };
     });
 
@@ -82,7 +81,12 @@ for (const entry of randomEntries) {
         {draft ? <sup class="text-red-400">(draft)</sup> : null}
       </h1>
 
-      <PageInfo file={`src/content/blog/${id}`} pubDate={pubDate} updatedDate={updatedDate} readingTime={readingTime} />
+      <PageInfo
+        file={`src/content/blog/${id}`}
+        pubDate={pubDate}
+        updatedDate={updatedDate}
+        readingTime={readingTime}
+      />
 
       {
         !noHero && heroImage?.src ? (
@@ -126,7 +130,11 @@ for (const entry of randomEntries) {
           <p class="!mb-1 inline-flex shrink flex-wrap gap-x-1">
             Since you’ve made it this far, hopefully you enjoyed reading! Please
             <ShareLink client:load title={title} url={`/blog/${slug}/`}>share</ShareLink>
-            {' '}the post or <Link href="https://mstdn.io/@paularmstrong" target="_blank" rel="noopener noreferrer">
+            {' '}the post or <Link
+              href="https://mstdn.io/@paularmstrong"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               ping me on Mastodon
             </Link>
           </p>
