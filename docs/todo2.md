@@ -27,3 +27,4 @@ giscuss
 rewrite solid to react
 move components to monorepo
 tags, categories?
+extract tailwind from plugins to css files

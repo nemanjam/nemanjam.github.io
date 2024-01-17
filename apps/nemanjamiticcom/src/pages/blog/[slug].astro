@@ -52,14 +52,14 @@ interface Heading extends MarkdownHeading {
   headings: Array<Heading>;
 }
 
+// get subtitles for TOC
 const headings: Array<Heading> = [];
 const levels = [{ headings }];
 
 for (const h of postHeadings) {
   const depth = h.depth - 2;
-  if (depth < 0 || depth > 1) {
-    continue;
-  }
+  if (depth < 0 || depth > 1) continue;
+
   levels[depth]!.headings = levels[depth]?.headings || [];
   levels[depth]!.headings.push({ ...(levels[depth + 1] = { ...h, headings: [] }), headings: [] });
 }

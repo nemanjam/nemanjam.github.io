@@ -35,9 +35,8 @@ const { page } = Astro.props;
 
 const descriptions: Record<string, MarkdownProcessorRenderResult> = {};
 for (const post of page.data) {
-  if (typeof post === 'string') {
-    continue;
-  }
+  if (typeof post === 'string') continue;
+
   descriptions[post.data.title] = await renderMarkdown(post.data.description || '');
 }
 
