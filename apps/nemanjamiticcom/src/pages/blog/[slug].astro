@@ -36,7 +36,19 @@ export async function getStaticPaths() {
 
 const {
   id,
-  data: { draft, title, pubDate, updatedDate, description, toc, heroImage, heroAlt, noHero },
+  data: {
+    draft,
+    title,
+    pubDate,
+    updatedDate,
+    description,
+    toc,
+    heroImage,
+    heroAlt,
+    noHero,
+    category,
+    tags,
+  },
   render,
   randomEntries,
 } = Astro.props;
@@ -76,11 +88,20 @@ for (const entry of randomEntries) {
   <article class="mb-12" itemprop="blogPost" itemscope itemtype="http://schema.org/Article">
     <meta itemprop="mainEntityOfPage" content={`${slug}`} />
     <Prose>
+      {category && <p>{category}</p>}
       <h1 itemprop="name headline" transition:name={`title-${slug!.replace(/.*\//, '')}`}>
         {title}
         {draft ? <sup class="text-red-400">(draft)</sup> : null}
       </h1>
-
+      {
+        tags && tags.length > 0 && (
+          <div class="w-full md:w-auto flex flex-wrap gap-3">
+            {tags.map((tag) => (
+              <Link href="#">#{tag}</Link>
+            ))}
+          </div>
+        )
+      }
       <PageInfo
         file={`src/content/blog/${id}`}
         pubDate={pubDate}

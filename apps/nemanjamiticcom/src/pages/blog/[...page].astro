@@ -57,7 +57,7 @@ const dateFormatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', ti
     <ul class="flex flex-col gap-12">
       {
         page.data.map((post) => {
-          const { draft, pubDate, title, heroImage, heroAlt } = post.data;
+          const { draft, pubDate, title, heroImage, heroAlt, category, tags } = post.data;
 
           if (import.meta.env.PROD && draft) {
             return null;
@@ -96,6 +96,7 @@ const dateFormatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', ti
                       {title}
                     </span>
                     {draft ? <sup class="text-sm text-red-400">(draft)</sup> : null}
+                    {category && <Link href="#">{category}</Link>}
                     {heroImage ? (
                       <div class="my-2">
                         <Prose>
@@ -112,6 +113,13 @@ const dateFormatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', ti
                     ) : null}
                   </Link>
                 </h2>
+                {tags && tags.length > 0 && (
+                  <div class="w-full md:w-auto flex flex-wrap gap-3">
+                    {tags.map((tag) => (
+                      <Link href="#">#{tag}</Link>
+                    ))}
+                  </div>
+                )}
                 <Prose>
                   <div transition:name={`content-${slug}`}>
                     <Fragment set:html={descriptions[title]?.code ?? ''} />

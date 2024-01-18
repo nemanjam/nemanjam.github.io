@@ -13,6 +13,8 @@ export const collections = {
         title: z.string(),
         toc: z.boolean().optional(),
         updatedDate: z.coerce.date().optional(),
+        category: z.string().optional(),
+        tags: z.array(z.string()).optional(),
       }),
   }),
   labs: defineCollection({

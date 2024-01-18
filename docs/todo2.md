@@ -21,10 +21,16 @@ trailingSlash: 'always', // default 'ignore'
 ---
 
 add .env file for dev and prod and vars with zod validation
-pagination still not working [...page].astro blog/1 unhandled
+**\_\_**pagination still not working [...page].astro blog/1 unhandled
 redesign navbar, color palette and all other components
 giscuss
 rewrite solid to react
 move components to monorepo
 tags, categories?
 extract tailwind from plugins to css files
+it doesnt have og:image, must reuse it from other project
+also doesnt have search
+extract post card component
+print tags and category in PageInfo component in article
+for tags and categories use design from astrowind
+tags and category pages
