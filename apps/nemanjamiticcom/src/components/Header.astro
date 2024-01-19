@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 
-import { SITE_TITLE } from '../config';
+import Config from '../config';
 import Avatar from '../images/avatar.jpg';
 import Content from './Content.astro';
 import HeaderLink from './HeaderLink.astro';
@@ -24,7 +24,7 @@ import { ThemeSwitcher } from './ThemeSwitcher';
             height={96}
             alt="Paul Armstrong’s profile picture"
           />
-          {SITE_TITLE}
+          {Config.SITE_TITLE}
         </a>
       </h1>
       <nav class="select-none items-end" aria-label="Site navigation">
@@ -32,7 +32,7 @@ import { ThemeSwitcher } from './ThemeSwitcher';
           <li><HeaderLink href="/blog/">Blog</HeaderLink></li>
           <li><HeaderLink href="/about/">About</HeaderLink></li>
           <li><HeaderLink href="/resume/">Résumé</HeaderLink></li>
-          <li><HeaderLink href="/labs/">Labs</HeaderLink></li>
+          <li><HeaderLink href="/projects/">Projects</HeaderLink></li>
           <li class="shrink-0"><ThemeSwitcher client:load /></li>
         </ul>
       </nav>

@@ -3,9 +3,11 @@ import { getCollection } from 'astro:content';
 
 import { Feed } from 'feed';
 
-import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '../config';
+import Config from '../config';
 
 import type { Item } from 'feed';
+
+const { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } = Config;
 
 const author = {
   name: 'Paul Armstrong',

@@ -7,7 +7,7 @@ module.exports = {
   content: [
     'src/**/*.{astro,md,mdx,tsx}',
     'blog/**/*.{md,mdx}',
-    'labs/**/*.{mdx,tsx,ts}',
+    'projects/**/*.{mdx,tsx,ts}',
     'astro.config.mjs',
   ],
   darkMode: 'class',

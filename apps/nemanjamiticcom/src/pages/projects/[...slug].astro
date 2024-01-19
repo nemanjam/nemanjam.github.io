@@ -1,10 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
 
-import Labs from '../../layouts/Labs.astro';
+import Projects from '../../layouts/Projects.astro';
 
 export async function getStaticPaths() {
-  const pages = await getCollection('labs');
+  const pages = await getCollection('projects');
   return pages.map((page) => ({
     params: { slug: page.slug },
     props: { page },
@@ -19,6 +19,6 @@ const {
 const { Content } = await render();
 ---
 
-<Labs title={title} description={description} image={heroImage?.src}>
+<Projects title={title} description={description} image={heroImage?.src}>
   <Content />
-</Labs>
+</Projects>

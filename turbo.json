@@ -19,7 +19,7 @@
     "@apps/nemanjamiticcom#build": {
       "cache": false,
       "outputs": [],
-      "env": ["NODE_ENV", "PUBLIC_SITE_HOSTNAME"]
+      "env": ["NODE_ENV", "SITE_URL"]
     },
     "lint": {
       "dependsOn": ["^lint"]

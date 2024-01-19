@@ -200,7 +200,14 @@ declare module 'astro:content' {
   data: InferEntrySchema<"blog">
 } & { render(): Render[".mdx"] };
 };
-"labs": {
+"projects": {
+"example-project-1.mdx": {
+	id: "example-project-1.mdx";
+  slug: "example-project-1";
+  body: string;
+  collection: "projects";
+  data: InferEntrySchema<"projects">
+} & { render(): Render[".mdx"] };
 };
 
 	};

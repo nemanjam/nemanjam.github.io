@@ -1,6 +1,6 @@
 import { createSignal } from 'solid-js';
 
-import { SITE_URL } from '../config';
+import Config from '../config';
 import { addToast } from './Snackbar';
 
 import type { Component } from 'solid-js';
@@ -82,7 +82,7 @@ async function share(props: Props) {
       }
     }
   } else {
-    navigator.clipboard.writeText(`${SITE_URL}${props.url}`);
+    navigator.clipboard.writeText(`${Config.SITE_URL}${props.url}`);
     addToast('URL copied to clipboard!');
   }
 }
