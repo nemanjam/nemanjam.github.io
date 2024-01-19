@@ -12,7 +12,9 @@ import { defineConfig } from 'astro/config';
 import rehypePrettyCode from 'rehype-pretty-code';
 
 import { remarkReadingTime } from './plugins/remark-reading-time.mjs';
-import { SITE_URL } from './src/config';
+import Config from './src/config';
+
+const { SITE_URL } = Config;
 
 const remarkPlugins = [remarkReadingTime];
 const rehypePlugins = [
@@ -22,7 +24,11 @@ const rehypePlugins = [
       // this is shiki theme, not editor theme
       theme: JSON.parse(
         readFileSync(
-          path.join(fileURLToPath(import.meta.url), '..', './config/theme/moonlight-ii-custom.json'),
+          path.join(
+            fileURLToPath(import.meta.url),
+            '..',
+            './config/theme/moonlight-ii-custom.json'
+          ),
           'utf-8'
         )
       ),
@@ -35,7 +41,14 @@ const rehypePlugins = [
         if (!node.properties.className) {
           node.properties.className = [''];
         }
-        node.properties.className.push('inline-block', 'w-full', 'px-4', 'lg:px-8', 'border-l-4', 'border-transparent');
+        node.properties.className.push(
+          'inline-block',
+          'w-full',
+          'px-4',
+          'lg:px-8',
+          'border-l-4',
+          'border-transparent'
+        );
       },
       onVisitHighlightedLine(node) {
         if (!node.properties.className) {

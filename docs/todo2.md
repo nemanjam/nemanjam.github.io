@@ -34,3 +34,4 @@ extract post card component
 print tags and category in PageInfo component in article
 for tags and categories use design from astrowind
 tags and category pages
+add codesandbox embed
