@@ -20,8 +20,8 @@ trailingSlash: 'always', // default 'ignore'
 
 ---
 
-add .env file for dev and prod and vars with zod validation
-**\_\_**pagination still not working [...page].astro blog/1 unhandled
+-------- add .env file for dev and prod and vars with zod validation
+-------- pagination still not working [...page].astro blog/1 unhandled
 redesign navbar, color palette and all other components
 giscuss
 rewrite solid to react
@@ -35,3 +35,7 @@ print tags and category in PageInfo component in article
 for tags and categories use design from astrowind
 tags and category pages
 add codesandbox embed
+
+---
+
+global styles should be included in apps/nemanjamiticcom/src/components/BaseHead.astro
