@@ -35,6 +35,8 @@ print tags and category in PageInfo component in article
 for tags and categories use design from astrowind
 tags and category pages
 add codesandbox embed
+what in shared tailwind.config.ts what in blog? fix .js, .mjs, .ts for tailwind and postcss
+use styles from other theme
 
 ---
 

@@ -37,6 +37,7 @@ const config: Config = {
       fontFamily: {
         sans: ['Inter Variable', 'Inter', ...defaultTheme.fontFamily.sans],
       },
+      // not important, just share button
       keyframes: (theme) => ({
         'ring-ping': {
           '0%': {
@@ -84,10 +85,11 @@ const config: Config = {
             'code::after': { content: '""' },
           },
         },
+        // nonsense
         'a-img': {
           css: {
             'a:hover img': {
-              outline: `4px solid ${theme('colors.blue.500')}aa`,
+              outline: `4px solid ${theme('colors.blue.500')}`,
             },
           },
         },
