@@ -38,6 +38,7 @@ add codesandbox embed
 what in shared tailwind.config.ts what in blog? fix .js, .mjs, .ts for tailwind and postcss
 use styles from other theme
 search prose examples
+card, navbar
 
 ---
 

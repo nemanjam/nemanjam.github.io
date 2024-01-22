@@ -1,0 +1,86 @@
+---
+import { createMarkdownProcessor } from '@astrojs/markdown-remark';
+import { Image } from 'astro:assets';
+
+import { getPostSlug } from '../modules/blog-post';
+import { dateFormatter } from '../utils/datetime';
+import Link from './Link.astro';
+import Prose from './Prose.astro';
+
+import type { MarkdownProcessorRenderResult } from '@astrojs/markdown-remark';
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { draft, pubDate, title, heroImage, heroAlt, category, tags, description = '' } = post.data;
+
+const { render: renderMarkdown } = await createMarkdownProcessor({});
+const renderedDescription: MarkdownProcessorRenderResult = await renderMarkdown(description);
+
+const slug = getPostSlug(post);
+const date = dateFormatter(new Date(pubDate));
+---
+
+<li
+  class="mb-4 grid grid-cols-6 gap-4"
+  itemscope
+  itemprop="blogPost"
+  itemtype="http://schema.org/Article"
+  itemref="author"
+>
+  <time
+    class="text-right leading-8 text-slate-600 dark:text-slate-300"
+    datetime={pubDate.toISOString().split('T')[0]}
+    itemprop="datePublished"
+  >
+    {date}
+  </time>
+  <div class="col-span-5">
+    <h2>
+      <Link class="text-2xl text-purple-600 dark:text-purple-400" href={slug} itemprop="url">
+        <span
+          class="bg-gradient-to-br from-blue-700 to-purple-600 bg-clip-text font-bold text-transparent dark:from-blue-400 dark:to-purple-400"
+          itemprop="name headline"
+          transition:name={`title-${slug}`}
+        >
+          {title}
+        </span>
+        {draft && <sup class="text-sm text-red-400">(draft)</sup>}
+        {category && <Link href="#">{category}</Link>}
+        {
+          heroImage && (
+            <div class="my-2">
+              <Prose>
+                <Image
+                  src={heroImage}
+                  alt={heroAlt ?? ''}
+                  width={640}
+                  itemprop="image"
+                  class="!mt-0 w-full max-w-none"
+                  transition:name={`hero-${heroImage.src}`}
+                />
+              </Prose>
+            </div>
+          )
+        }
+      </Link>
+    </h2>
+    {
+      tags && tags.length > 0 && (
+        <div class="w-full md:w-auto flex flex-wrap gap-3">
+          {tags.map((tag) => (
+            <Link href="#">#{tag}</Link>
+          ))}
+        </div>
+      )
+    }
+    <Prose>
+      <div transition:name={`content-${slug}`}>
+        <Fragment set:html={renderedDescription.code} />
+      </div>
+    </Prose>
+  </div>
+</li>
