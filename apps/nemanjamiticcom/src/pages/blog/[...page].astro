@@ -6,6 +6,7 @@ import PostCard from '~/components/PostCard.astro';
 import AuthorMeta from '../../components/AuthorMeta.astro';
 import Pagination from '../../components/Pagination.astro';
 import Prose from '../../components/Prose.astro';
+import Config from '../../config';
 import Base from '../../layouts/Base.astro';
 
 import type { MarkdownProcessorRenderResult } from '@astrojs/markdown-remark';
@@ -14,10 +15,10 @@ import type { CollectionEntry } from 'astro:content';
 
 // [page].astro and getStaticPaths because of pagination
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const posts = await getCollection('blog', ({ data }) => import.meta.env.DEV || !data.draft);
+  const posts = await getCollection('blog', ({ data }) => !(import.meta.env.PROD && data.draft));
   const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
-  const pagination = paginate(sortedPosts, { pageSize: 1 });
+  const pagination = paginate(sortedPosts, { pageSize: Config.PAGE_SIZE }); // must take entire config here, interesting
   pagination.push({ params: { page: '1' }, props: pagination[0].props });
   return pagination;
 }
@@ -37,8 +38,6 @@ for (const post of page.data) {
 
   descriptions[post.data.title] = await renderMarkdown(post.data.description || '');
 }
-
-const publicPosts = page.data.filter((post) => !(import.meta.env.PROD && post.data.draft));
 ---
 
 <Base title="Blog">
@@ -52,7 +51,7 @@ const publicPosts = page.data.filter((post) => !(import.meta.env.PROD && post.da
   <section>
     <AuthorMeta id="author" />
     <ul class="flex flex-col gap-12">
-      {publicPosts.map((post) => <PostCard post={post} />)}
+      {page.data.map((post) => <PostCard post={post} />)}
     </ul>
   </section>
 
