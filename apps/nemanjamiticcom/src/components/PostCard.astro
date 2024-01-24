@@ -4,8 +4,8 @@ import { Image } from 'astro:assets';
 
 import { getPostSlug } from '../modules/blog-post';
 import { dateFormatter } from '../utils/datetime';
+import { getRandomLengthSubstring } from '../utils/strings';
 import Link from './Link.astro';
-import Prose from './Prose.astro';
 
 import type { MarkdownProcessorRenderResult } from '@astrojs/markdown-remark';
 import type { CollectionEntry } from 'astro:content';
@@ -20,14 +20,18 @@ const {
   pubDate,
   title,
   heroImage,
-  heroAlt,
+  heroAlt = '',
   category,
   tags = [],
   description = '',
 } = post.data;
 
+// prepare all data for render
+
 const { render: renderMarkdown } = await createMarkdownProcessor({});
-const renderedDescription: MarkdownProcessorRenderResult = await renderMarkdown(description);
+// ! this can break tags in markup
+const clippedDescription = getRandomLengthSubstring(description, 100, 50) + '...';
+const renderedDescription: MarkdownProcessorRenderResult = await renderMarkdown(clippedDescription);
 
 const slug = getPostSlug(post);
 const date = dateFormatter(new Date(pubDate));
@@ -39,19 +43,19 @@ const date = dateFormatter(new Date(pubDate));
 // tags
 ---
 
-<article class="flex gap-4 flex-col sm:flex-row">
+<article class="flex flex-col md:flex-row gap-4 md:gap-8 max-w-md md:max-w-none">
   {/* left column */}
 
   {/* image */}
   {
     heroImage && (
-      <div>
+      <div class="md:basis-1/3">
         <Image
           src={heroImage}
-          alt={heroAlt ?? ''}
+          alt={heroAlt}
           width={640}
           itemprop="image"
-          class="w-full"
+          class="w-full rounded-lg"
           transition:name={`hero-${heroImage.src}`}
         />
       </div>
@@ -59,11 +63,11 @@ const date = dateFormatter(new Date(pubDate));
   }
 
   {/* right column */}
-  <div class="flex flex-col">
+  <div class="flex flex-col md:basis-2/3 gap-2">
     {/* date, category */}
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-2 leading-4">
       <time
-        class="text-right leading-8 text-slate-600 dark:text-slate-300"
+        class="text-right text-slate-600 dark:text-slate-300"
         datetime={pubDate.toISOString().split('T')[0]}
         itemprop="datePublished"
       >
@@ -79,7 +83,7 @@ const date = dateFormatter(new Date(pubDate));
         itemprop="name headline"
         transition:name={`title-${slug}`}
       >
-        <span>{title}</span>
+        {title}
         {draft && <sup class="text-sm text-red-400">(draft)</sup>}
       </h2>
     </Link>

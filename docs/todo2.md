@@ -40,7 +40,10 @@ use styles from other theme
 search prose examples
 style card, navbar
 put Config in import.meta.env
+date-fns
 
 ---
 
 global styles should be included in apps/nemanjamiticcom/src/components/BaseHead.astro
+PostCard has standalone styles, doesn't depend on prose in page
+semantic html cheatsheet
