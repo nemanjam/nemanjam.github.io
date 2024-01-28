@@ -41,6 +41,20 @@ search prose examples
 style card, navbar
 put Config in import.meta.env
 date-fns
+make color palette for text, muted, active...
+// astro-paper
+https://github.com/satnaing/astro-paper/blob/main/src/styles/base.css
+https://github.com/satnaing/astro-paper/blob/main/tailwind.config.cjs
+
+---
+
+// astro-theme-cactus
+https://github.com/chrismwilliams/astro-theme-cactus/blob/main/src/styles/global.css
+https://github.com/chrismwilliams/astro-theme-cactus/blob/main/tailwind.config.ts
+
+// astrowind, trivial
+https://github.com/onwidget/astrowind/blob/main/src/components/CustomStyles.astro
+https://github.com/onwidget/astrowind/blob/main/tailwind.config.cjs
 
 ---
 
