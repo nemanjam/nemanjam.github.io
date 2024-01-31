@@ -45,12 +45,17 @@ make color palette for text, muted, active...
 // astro-paper
 https://github.com/satnaing/astro-paper/blob/main/src/styles/base.css
 https://github.com/satnaing/astro-paper/blob/main/tailwind.config.cjs
+extract all css in separate files and import them
 
 ---
 
 // astro-theme-cactus
 https://github.com/chrismwilliams/astro-theme-cactus/blob/main/src/styles/global.css
 https://github.com/chrismwilliams/astro-theme-cactus/blob/main/tailwind.config.ts
+
+// shadcn
+https://github.com/shadcn-ui/taxonomy/blob/main/styles/globals.css
+https://github.com/shadcn-ui/taxonomy/blob/main/tailwind.config.js
 
 // astrowind, trivial
 https://github.com/onwidget/astrowind/blob/main/src/components/CustomStyles.astro

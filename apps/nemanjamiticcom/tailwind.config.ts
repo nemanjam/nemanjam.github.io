@@ -37,6 +37,17 @@ const config: Config = {
       fontFamily: {
         sans: ['Inter Variable', 'Inter', ...defaultTheme.fontFamily.sans],
       },
+      colors: {
+        background: 'var(--theme-background)',
+        'selection-bg': 'var(--theme-selection-bg)',
+        'selection-text': 'var(--theme-selection-text)',
+        'gradient-from': 'var(--theme-gradient-from)',
+        'gradient-to': 'var(--theme-gradient-to)',
+        primary: 'var(--theme-primary)',
+        secondary: 'var(--theme-secondary)',
+        link: 'var(--theme-link)',
+        quote: 'var(--theme-quote)',
+      },
       // not important, just share button
       keyframes: (theme) => ({
         'ring-ping': {
