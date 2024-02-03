@@ -15,7 +15,7 @@ const config: Config = {
   darkMode: 'class',
   plugins: [
     require('@tailwindcss/typography'),
-    function ({ matchUtilities, theme }) {
+    ({ matchUtilities, theme }) => {
       matchUtilities(
         {
           tab: (value) => ({
@@ -49,7 +49,7 @@ const config: Config = {
         quote: 'var(--theme-quote)',
       },
       // not important, just share button
-      keyframes: (theme) => ({
+      keyframes: ({ theme }) => ({
         'ring-ping': {
           '0%': {
             'box-shadow': `0 0 0 0 ${theme('colors.slate.100')}ff, 0 0 0 0 ${theme(
@@ -89,7 +89,7 @@ const config: Config = {
         'ring-ping': 'ring-ping 2s linear infinite',
         'ring-ping-dark': 'ring-ping-dark 2s linear infinite',
       },
-      typography: (theme) => ({
+      typography: ({ theme }) => ({
         DEFAULT: {
           css: {
             'code::before': { content: '""' },

@@ -66,3 +66,9 @@ https://github.com/onwidget/astrowind/blob/main/tailwind.config.cjs
 global styles should be included in apps/nemanjamiticcom/src/components/BaseHead.astro
 PostCard has standalone styles, doesn't depend on prose in page
 semantic html cheatsheet
+
+---
+
+semantic colors for text and brand
+og images from cactus, paularmstrong has all components
+extract configurations in separate files from tailwind.config.ts
