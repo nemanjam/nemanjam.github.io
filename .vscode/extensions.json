@@ -17,6 +17,7 @@
     "tyriar.lorem-ipsum",
 
     "mhutchie.git-graph",
+    "eamodio.gitlens",
     "mikestead.dotenv",
     "ms-azuretools.vscode-docker",
 

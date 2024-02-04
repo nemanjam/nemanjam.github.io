@@ -14,7 +14,7 @@
     --theme-gradient-to: theme('colors.lime.300');
     --theme-primary: theme('colors.lime.500');
     --theme-secondary: theme('colors.orange.500');
-    --theme-link: theme('colors.blue.600');
+    --theme-link: theme('colors.blue.700');
     --theme-quote: 351deg 66% 48%;
   }
 

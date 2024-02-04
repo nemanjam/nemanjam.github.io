@@ -72,3 +72,9 @@ semantic html cheatsheet
 semantic colors for text and brand
 og images from cactus, paularmstrong has all components
 extract configurations in separate files from tailwind.config.ts
+
+---
+
+Link component only styles here, Astro Link component, other examples?
+style navbar
+organize <Prose /> usage
