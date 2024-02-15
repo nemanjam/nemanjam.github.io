@@ -1,35 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @layer base {
-  :root,
-  :root[data-theme='light'] {
-    --theme-background: theme('colors.slate.50');
-    --theme-selection-bg: theme('colors.purple.400/60');
-    /* text color is defined in prose-slate dark:prose-invert */
-    /* --theme-text: ... */
-    --theme-selection-text: theme('colors.slate.950');
-    --theme-gradient-from: theme('colors.lime.500');
-    --theme-gradient-to: theme('colors.lime.300');
-    --theme-primary: theme('colors.lime.500');
-    --theme-secondary: theme('colors.orange.500');
-    --theme-link: theme('colors.blue.700');
-    --theme-quote: 351deg 66% 48%;
-  }
-
-  :root[data-theme='dark'] {
-    --theme-background: theme('colors.slate.950');
-    --theme-selection-bg: theme('colors.purple.400/80');
-    --theme-selection-text: theme('colors.slate.950');
-    --theme-gradient-from: theme('colors.blue.400');
-    --theme-gradient-to: theme('colors.purple.500');
-    --theme-primary: theme('colors.purple.500');
-    --theme-secondary: theme('colors.red.500');
-    --theme-link: theme('colors.blue.400');
-    --theme-quote: 102deg 100% 86%;
-  }
-
   [id] {
     position: relative;
     z-index: 1;
@@ -105,44 +74,5 @@
     [data-rehype-pretty-code-caption] {
       margin-top: -theme('spacing.9');
     }
-  }
-}
-
-@layer utilities {
-  .no-bustout {
-  }
-
-  .bustout {
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    width: 80vw;
-    max-width: 1280px;
-    transform: translateX(calc(50vw - 50%));
-  }
-
-  .bustout-sm {
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    width: 60vw;
-    max-width: 1024px;
-    transform: translateX(calc(50vw - 50%));
-  }
-
-  .shape-circle {
-    aspect-ratio: 1;
-    shape-outside: circle(50%);
-    clip-path: circle(50%);
-    shape-margin: 1.25rem;
-    margin-left: 1.25rem;
-    margin-bottom: 1.25rem;
-    overflow: hidden;
-  }
-
-  .shape-half-tl {
-    clip-path: polygon(0 0, 0 100%, 100% 0);
-  }
-
-  .shape-half-br {
-    clip-path: polygon(100% 0, 0 100%, 100% 100%);
   }
 }

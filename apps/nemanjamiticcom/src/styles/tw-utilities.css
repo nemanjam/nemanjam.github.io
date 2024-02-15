@@ -1,0 +1,38 @@
+@layer utilities {
+  .no-bustout {
+  }
+
+  .bustout {
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    width: 80vw;
+    max-width: 1280px;
+    transform: translateX(calc(50vw - 50%));
+  }
+
+  .bustout-sm {
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    width: 60vw;
+    max-width: 1024px;
+    transform: translateX(calc(50vw - 50%));
+  }
+
+  .shape-circle {
+    aspect-ratio: 1;
+    shape-outside: circle(50%);
+    clip-path: circle(50%);
+    shape-margin: 1.25rem;
+    margin-left: 1.25rem;
+    margin-bottom: 1.25rem;
+    overflow: hidden;
+  }
+
+  .shape-half-tl {
+    clip-path: polygon(0 0, 0 100%, 100% 0);
+  }
+
+  .shape-half-br {
+    clip-path: polygon(100% 0, 0 100%, 100% 100%);
+  }
+}

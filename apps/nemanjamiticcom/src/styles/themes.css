@@ -1,0 +1,30 @@
+@layer base {
+  :root,
+  :root[data-theme='light'] {
+    --theme-background: theme('colors.slate.50');
+    /* text color is defined in prose-slate dark:prose-invert */
+    /* --theme-text: ... */
+    --theme-gradient-from: theme('colors.lime.500');
+    --theme-gradient-to: theme('colors.lime.300');
+    --theme-primary: theme('colors.lime.500');
+    --theme-secondary: theme('colors.orange.500');
+    --theme-link: theme('colors.blue.700');
+    --theme-quote: 351deg 66% 48%;
+
+    --theme-selection-bg: theme('colors.purple.400/60');
+    --theme-selection-text: theme('colors.slate.950');
+  }
+
+  :root[data-theme='dark'] {
+    --theme-background: theme('colors.slate.950');
+    --theme-gradient-from: theme('colors.blue.400');
+    --theme-gradient-to: theme('colors.purple.500');
+    --theme-primary: theme('colors.purple.500');
+    --theme-secondary: theme('colors.red.500');
+    --theme-link: theme('colors.blue.400');
+    --theme-quote: 102deg 100% 86%;
+
+    --theme-selection-bg: theme('colors.purple.400/80');
+    --theme-selection-text: theme('colors.slate.950');
+  }
+}
