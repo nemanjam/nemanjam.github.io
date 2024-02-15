@@ -1,0 +1,12 @@
+@layer base {
+  :root {
+    --color-dark: theme('colors.slate.900');
+    --color-dark-cloud: theme('colors.slate.800');
+    --color-dark-paper: theme('colors.slate.950');
+    --color-white: theme('colors.white');
+    --color-white-cloud: theme('colors.slate.50');
+    --color-gray: theme('colors.slate.400');
+    --color-blue: theme('colors.blue.500');
+    --color-orange: theme('colors.orange.400');
+  }
+}

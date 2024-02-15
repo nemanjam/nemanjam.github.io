@@ -2,7 +2,7 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-/* @import './variables.css'; */
+@import './variables.css';
 @import './themes.css';
 
 @import './tw-base.css';

@@ -13,19 +13,7 @@ const config: Config = {
     'astro.config.mjs',
   ],
   darkMode: 'class',
-  plugins: [
-    require('@tailwindcss/typography'),
-    ({ matchUtilities, theme }) => {
-      matchUtilities(
-        {
-          tab: (value) => ({
-            tabSize: value,
-          }),
-        },
-        { values: theme('tabSize') }
-      );
-    },
-  ],
+  plugins: [require('@tailwindcss/typography')],
   theme: {
     tabSize: {
       1: '1',
@@ -38,56 +26,12 @@ const config: Config = {
         sans: ['Inter Variable', 'Inter', ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        background: 'var(--theme-background)',
-        'selection-bg': 'var(--theme-selection-bg)',
-        'selection-text': 'var(--theme-selection-text)',
-        'gradient-from': 'var(--theme-gradient-from)',
-        'gradient-to': 'var(--theme-gradient-to)',
-        primary: 'var(--theme-primary)',
-        secondary: 'var(--theme-secondary)',
-        link: 'var(--theme-link)',
-        quote: 'var(--theme-quote)',
-      },
-      // not important, just share button
-      keyframes: ({ theme }) => ({
-        'ring-ping': {
-          '0%': {
-            'box-shadow': `0 0 0 0 ${theme('colors.slate.100')}ff, 0 0 0 0 ${theme(
-              'colors.blue.500'
-            )}00`,
-          },
-          '5%': {
-            'box-shadow': `0 0 0 0px ${theme('colors.slate.100')}ff, 0 0 0 4px ${theme(
-              'colors.blue.500'
-            )}aa`,
-          },
-          '20%, 100%': {
-            'box-shadow': `0 0 0 4px ${theme('colors.slate.100')}ff, 0 0 0 8px ${theme(
-              'colors.blue.500'
-            )}00`,
-          },
-        },
-        'ring-ping-dark': {
-          '0%': {
-            'box-shadow': `0 0 0 0 ${theme('colors.slate.900')}ff, 0 0 0 0 ${theme(
-              'colors.blue.500'
-            )}00`,
-          },
-          '5%': {
-            'box-shadow': `0 0 0 0px ${theme('colors.slate.900')}ff, 0 0 0 4px ${theme(
-              'colors.blue.500'
-            )}aa`,
-          },
-          '20%, 100%': {
-            'box-shadow': `0 0 0 4px ${theme('colors.slate.900')}ff, 0 0 0 8px ${theme(
-              'colors.blue.500'
-            )}00`,
-          },
-        },
-      }),
-      animation: {
-        'ring-ping': 'ring-ping 2s linear infinite',
-        'ring-ping-dark': 'ring-ping-dark 2s linear infinite',
+        background: 'var(--theme-color-page-background)',
+        primary: 'var(--theme-color-primary)',
+        secondary: 'var(--theme-color-secondary)',
+        link: 'var(--theme-color-link)',
+        'link-hover': 'var(--theme-color-link-hover)',
+        quote: 'var(--theme-color-quote)',
       },
       typography: ({ theme }) => ({
         DEFAULT: {

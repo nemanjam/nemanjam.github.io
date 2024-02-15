@@ -1,30 +1,50 @@
 @layer base {
   :root,
   :root[data-theme='light'] {
-    --theme-background: theme('colors.slate.50');
-    /* text color is defined in prose-slate dark:prose-invert */
-    /* --theme-text: ... */
-    --theme-gradient-from: theme('colors.lime.500');
-    --theme-gradient-to: theme('colors.lime.300');
-    --theme-primary: theme('colors.lime.500');
-    --theme-secondary: theme('colors.orange.500');
-    --theme-link: theme('colors.blue.700');
-    --theme-quote: 351deg 66% 48%;
+    --theme-color-white: var(--color-white);
+    --theme-color-primary: var(--color-blue);
+    --theme-color-secondary: var(--color-orange);
 
-    --theme-selection-bg: theme('colors.purple.400/60');
-    --theme-selection-text: theme('colors.slate.950');
+    --theme-color-prism-background: var(--color-white-cloud);
+
+    --theme-color-link: var(--color-blue);
+    --theme-color-link-hover: var(--color-orange);
+    --theme-color-quote: var(--color-gray);
+
+    --theme-color-page-border: var(--color-white-cloud);
+    --theme-color-page-background: var(--color-white);
+
+    --theme-color-sidebar-border: var(--color-white-cloud);
+    --theme-color-sidebar-border-fade: var(--color-white);
+    --theme-color-contacts-border: var(--color-white-cloud);
+    --theme-color-button-border: var(--color-white-cloud);
+
+    --theme-color-button-color: var(--color-dark);
+    --theme-color-theme-switcher: var(--color-dark-cloud);
+    --theme-color-theme-switcher-hover: var(--color-blue);
   }
 
   :root[data-theme='dark'] {
-    --theme-background: theme('colors.slate.950');
-    --theme-gradient-from: theme('colors.blue.400');
-    --theme-gradient-to: theme('colors.purple.500');
-    --theme-primary: theme('colors.purple.500');
-    --theme-secondary: theme('colors.red.500');
-    --theme-link: theme('colors.blue.400');
-    --theme-quote: 102deg 100% 86%;
+    --theme-color-white: var(--color-white);
+    --theme-color-primary: var(--color-blue);
+    --theme-color-secondary: var(--color-orange);
 
-    --theme-selection-bg: theme('colors.purple.400/80');
-    --theme-selection-text: theme('colors.slate.950');
+    --theme-color-prism-background: var(--color-dark-paper);
+
+    --theme-color-link: var(--color-blue);
+    --theme-color-link-hover: var(--color-orange);
+    --theme-color-quote: var(--color-gray);
+
+    --theme-color-page-border: var(--color-dark-cloud);
+    --theme-color-page-background: var(--color-dark);
+
+    --theme-color-sidebar-border: var(--color-dark-cloud);
+    --theme-color-sidebar-border-fade: var(--color-dark);
+    --theme-color-contacts-border: var(--color-dark-cloud);
+    --theme-color-button-border: var(--color-dark-cloud);
+
+    --theme-color-button-color: var(--color-white);
+    --theme-color-theme-switcher: var(--color-white-cloud);
+    --theme-color-theme-switcher-hover: var(--color-blue);
   }
 }
