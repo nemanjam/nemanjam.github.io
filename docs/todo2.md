@@ -89,3 +89,6 @@ card final styles, show all components in styleguide
 rewrite bustout float with negative margin
 style collapsible navbar, footer
 define semantic color palette
+read astro transitions docs transition:name={`content-${slug!.replace(/.*\//, '')}`}
+[...page].tsx and [slug].tsx handle getStaticPaths and page, extract components
+reuse og image generation https://github.com/paularmstrong/paularmstrong.dev/commit/e073bb5a20c94f91273f102f43445dce46115012

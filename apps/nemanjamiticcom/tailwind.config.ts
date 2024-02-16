@@ -32,6 +32,8 @@ const config: Config = {
         link: 'var(--theme-color-link)',
         'link-hover': 'var(--theme-color-link-hover)',
         quote: 'var(--theme-color-quote)',
+        muted: 'var(--theme-color-text-muted)',
+        'dark-muted': 'var(--theme-color-text-dark-muted)',
       },
       typography: ({ theme }) => ({
         DEFAULT: {

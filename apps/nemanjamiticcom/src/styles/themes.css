@@ -7,6 +7,9 @@
 
     --theme-color-prism-background: var(--color-white-cloud);
 
+    --theme-color-text-muted: var(--color-text-muted);
+    --theme-color-text-dark-muted: var(--color-text-dark-muted);
+
     --theme-color-link: var(--color-blue);
     --theme-color-link-hover: var(--color-orange);
     --theme-color-quote: var(--color-gray);

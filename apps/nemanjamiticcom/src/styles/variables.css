@@ -8,5 +8,9 @@
     --color-gray: theme('colors.slate.400');
     --color-blue: theme('colors.blue.500');
     --color-orange: theme('colors.orange.400');
+
+    /* text default / 66%, 700, 300 default*/
+    --color-text-muted: theme('colors.slate.600');
+    --color-text-dark-muted: theme('colors.slate.400');
   }
 }
