@@ -76,7 +76,6 @@ extract configurations in separate files from tailwind.config.ts
 ---
 
 Link component only styles here, Astro Link component, other examples?
-style navbar
 organize <Prose /> usage
 jedan prose u root srusi sav spacings i paddings
 
@@ -85,3 +84,8 @@ reuse color vars and semantic vars from alxshelepenok/gatsby-starter-lumen
 ---
 
 choose colors for category, links hover, visited
+dark:link styles
+card final styles, show all components in styleguide
+rewrite bustout float with negative margin
+style collapsible navbar, footer
+define semantic color palette
