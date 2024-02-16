@@ -1,19 +1,30 @@
 ---
 import clsx from 'clsx';
 
-export type Props = astroHTML.JSX.AnchorHTMLAttributes;
+export type Props = astroHTML.JSX.AnchorHTMLAttributes & {
+  variant?: 'default' | 'heading' | 'category';
+};
 
-const { class: className, ...props } = Astro.props;
+const { class: className, variant = 'default', ...props } = Astro.props;
 ---
 
 <a
   class={clsx(
     // link styles
-    'outline-none no-underline underline-offset-2 transition-all duration-100',
+    'no-underline decoration-1',
     // hover styles
-    'hover:underline hover:decoration-4 hover:underline-offset-4',
-    // focus styles
-    'focus:underline focus:decoration-4 focus:underline-offset-4',
+    // add visited:...
+    'hover:underline focus:underline active:underline',
+    // variants
+    {
+      'text-link hover:text-link-hover focus:text-link-hover active:text-link-hover':
+        variant === 'default',
+    },
+    {
+      'text-secondary hover:text-primary hover:no-underline focus:text-primary focus:no-underline active:text-primary active:no-underline':
+        variant === 'category',
+    },
+    { 'underline-offset-8': variant === 'heading' },
     className
   )}
   {...props}

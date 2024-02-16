@@ -81,3 +81,7 @@ organize <Prose /> usage
 jedan prose u root srusi sav spacings i paddings
 
 reuse color vars and semantic vars from alxshelepenok/gatsby-starter-lumen
+
+---
+
+choose colors for category, links hover, visited

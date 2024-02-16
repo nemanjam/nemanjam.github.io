@@ -20,10 +20,9 @@ import clsx from 'clsx';
     'prose-h1:mb-8 prose-h1:leading-tight',
     'prose-headings:text-primary',
 
-    // Links Styling
-    'prose-a:text-link prose-a:no-underline prose-a:underline-offset-2 prose-a:outline-none',
-    'prose-a:transition-all prose-a:duration-100 hover:prose-a:text-link-hover hover:prose-a:underline hover:prose-a:decoration-4 hover:prose-a:underline-offset-4',
-    'focus:prose-a:underline focus:prose-a:decoration-4 focus:prose-a:underline-offset-4',
+    // Links Styling, only for links in markdown
+    'prose-a:text-link prose-a:underline',
+    'hover:prose-a:text-link-hover focus:prose-a:text-link-hover active:prose-a:text-link-hover',
 
     // Code Blocks Styling
     'prose-code:rounded prose-code:px-1 prose-code:py-0.5 prose-code:text-sm prose-code:leading-none',
