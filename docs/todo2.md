@@ -92,3 +92,6 @@ define semantic color palette
 read astro transitions docs transition:name={`content-${slug!.replace(/.*\//, '')}`}
 [...page].tsx and [slug].tsx handle getStaticPaths and page, extract components
 reuse og image generation https://github.com/paularmstrong/paularmstrong.dev/commit/e073bb5a20c94f91273f102f43445dce46115012
+clean up layout container to be minimal, gledaj gotov html u browser
+style tag button
+set aspect ratio to image
