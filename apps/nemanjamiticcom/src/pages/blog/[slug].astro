@@ -9,12 +9,14 @@ import Link from '../../components/Link.astro';
 import PageInfo from '../../components/PageInfo.astro';
 import Prose from '../../components/Prose.astro';
 import { Share, ShareLink } from '../../components/Share';
-import TocList from '../../components/TocList.astro';
+import TocWidget from '../../components/TocWidget.astro';
 import Base from '../../layouts/Base.astro';
 import { getPostSlug, getRandomEntries } from '../../modules/blog-post';
 import { sortPostsByDateDesc } from '../../utils/post';
 
+import type { MarkdownProcessorRenderResult } from '@astrojs/markdown-remark';
 import type { MarkdownHeading } from 'astro';
+import type { CollectionEntry } from 'astro:content';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => {
@@ -59,32 +61,12 @@ const {
   remarkPluginFrontmatter: { readingTime },
 } = await render();
 
-/*
-transform array:
-{
-  depth: 2,
-  slug: 'commodo-commodo',
-  text: 'Commodo commodo',
-},
-
-to 2-dim array:
-{
-  slug: 'commodo-commodo',
-  text: 'Commodo commodo',
-  headings: {
-      slug: 'commodo-commodo',
-      text: 'Commodo commodo',
-      headings: [],
-  }
-},
-*/
-
 interface Heading extends Pick<MarkdownHeading, 'slug' | 'text'> {
-  headings: Array<Heading>;
+  headings: Heading[];
 }
 
 // get subtitles for TOC
-const headings: Array<Heading> = [];
+const headings: Heading[] = [];
 
 for (let index = 0; index < postHeadings.length; index++) {
   const { slug, text, depth } = postHeadings[index];
@@ -93,7 +75,7 @@ for (let index = 0; index < postHeadings.length; index++) {
 
   // get subsequent depth 3 subheadings
   // handle 2
-  const subHeadings: Array<Heading> = [];
+  const subHeadings: Heading[] = [];
 
   // handle 3+
   while (index + 1 < postHeadings.length && postHeadings[index + 1].depth > 2) {
@@ -112,11 +94,17 @@ for (let index = 0; index < postHeadings.length; index++) {
   headings.push({ slug, text, headings: subHeadings });
 }
 
-const { render: renderMarkdown } = await createMarkdownProcessor({});
+// more posts with rendered md description
+type CollectionEntryWithRenderedDescription = CollectionEntry<'blog'> & {
+  description: MarkdownProcessorRenderResult;
+};
 
-const more = [];
+const { render: renderMarkdown } = await createMarkdownProcessor();
+
+const morePosts: CollectionEntryWithRenderedDescription[] = [];
 for (const entry of randomEntries) {
-  more.push({ ...entry, description: await renderMarkdown(entry.data.description ?? '') });
+  const description = await renderMarkdown(entry.data.description ?? '');
+  morePosts.push({ ...entry, description });
 }
 ---
 
@@ -146,7 +134,7 @@ for (const entry of randomEntries) {
       />
 
       {
-        !noHero && heroImage?.src ? (
+        !noHero && heroImage?.src && (
           <div class="lg:bustout">
             <Image
               src={heroImage}
@@ -159,26 +147,21 @@ for (const entry of randomEntries) {
               transition:name={`hero-${slug!.replace(/.*\//, '')}`}
             />
           </div>
-        ) : null
+        )
       }
 
       <AuthorMeta />
 
+      {/* table of contents */}
       <div itemprop="articleBody" transition:name={`content-${slug!.replace(/.*\//, '')}`}>
-        {
-          toc && (
-            <aside class="prose-base mx-4 mb-4 rounded-xl border border-slate-200 bg-slate-100 px-4 py-1 text-slate-900 transition-colors duration-500 dark:border-slate-800 dark:bg-slate-900 sm:float-right sm:ml-8 sm:mr-0 sm:max-w-[50%] md:-mr-8 lg:-mr-32">
-              <h2 class="!mt-4">Table of contents</h2>
-              <TocList headings={headings} />
-            </aside>
-          )
-        }
+        {toc && <TocWidget headings={headings} />}
 
         <Content />
       </div>
 
       <hr />
 
+      {/* share alert, extract in component */}
       <Aside title="Share your thoughts">
         <div class="flex flex-col items-start gap-x-4 gap-y-0 sm:flex-row-reverse">
           <div class="mt-4 justify-self-center">
@@ -200,6 +183,7 @@ for (const entry of randomEntries) {
     </Prose>
   </article>
 
+  {/* more posts, extract in component */}
   <aside class="select-none">
     <Prose>
       <h2 id="post-nav">More posts</h2>
@@ -207,13 +191,13 @@ for (const entry of randomEntries) {
 
     <ul class="flex flex-col gap-8">
       {
-        more.map((entry) => (
+        morePosts.map((entry) => (
           <li>
             <Link class="text-xl font-bold" href={`/blog/${getPostSlug(entry)}/`} itemprop="url">
               {entry.data.title}
             </Link>
             <div class="prose prose-slate line-clamp-2 dark:prose-invert">
-              <Fragment set:html={entry.description.code ?? ''} />
+              <Fragment set:html={entry.description.code} />
             </div>
           </li>
         ))

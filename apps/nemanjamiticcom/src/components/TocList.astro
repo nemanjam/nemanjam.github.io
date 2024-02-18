@@ -1,13 +1,13 @@
 ---
 import Link from './Link.astro';
 
-interface Heading {
+export interface Heading {
   text: string;
   slug: string;
   headings: Array<Heading>;
 }
-export interface Props {
-  headings: Array<Heading>;
+interface Props {
+  headings: Heading[];
 }
 
 const { headings } = Astro.props as Props;

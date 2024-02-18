@@ -95,3 +95,11 @@ reuse og image generation https://github.com/paularmstrong/paularmstrong.dev/com
 clean up layout container to be minimal, gledaj gotov html u browser
 style tag button
 set aspect ratio to image
+
+src/pages/blog/[slug].astro
+share alert, extract in component
+more posts, extract in component
+make skeletons
+lot of work on styling
+twMerge
+dupli tailwind css u browser?

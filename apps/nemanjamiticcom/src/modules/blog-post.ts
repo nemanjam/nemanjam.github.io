@@ -18,10 +18,10 @@ export const getPostSlug = (post: CollectionEntry<'blog'>) => {
 
 /** Must handle empty array. */
 export const getRandomEntries = (
-  posts: Array<CollectionEntry<'blog'>>,
+  posts: CollectionEntry<'blog'>[],
   count: number,
   excludeSlug?: string
-) => {
+): CollectionEntry<'blog'>[] => {
   if (!(posts.length > 0)) return [];
 
   const filteredPosts = posts.filter((post) => getPostSlug(post) !== excludeSlug);
