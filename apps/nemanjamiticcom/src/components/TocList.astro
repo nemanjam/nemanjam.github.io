@@ -13,21 +13,23 @@ export interface Props {
 const { headings } = Astro.props as Props;
 ---
 
+{/* prints two levels deep */}
+
 <div class="prose-ol:!my-1 prose-li:!my-1">
   <ol>
     {
-      headings.map(({ slug, text, headings }) => (
+      headings.map(({ slug, text, headings: subHeadings }) => (
         <li>
           <Link href={`#${slug}`}>{text}</Link>
-          {headings ? (
+          {subHeadings?.length > 0 && (
             <ol class="list-[lower-alpha]">
-              {headings.map(({ slug, text }) => (
+              {subHeadings.map(({ slug, text }) => (
                 <li>
                   <Link href={`#${slug}`}>{text}</Link>
                 </li>
               ))}
             </ol>
-          ) : null}
+          )}
         </li>
       ))
     }

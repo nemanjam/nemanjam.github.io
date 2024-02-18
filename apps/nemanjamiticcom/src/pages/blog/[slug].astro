@@ -12,26 +12,25 @@ import { Share, ShareLink } from '../../components/Share';
 import TocList from '../../components/TocList.astro';
 import Base from '../../layouts/Base.astro';
 import { getPostSlug, getRandomEntries } from '../../modules/blog-post';
+import { sortPostsByDateDesc } from '../../utils/post';
 
 import type { MarkdownHeading } from 'astro';
 
 export async function getStaticPaths() {
-  const collection = await getCollection('blog', ({ data }) => {
+  const posts = await getCollection('blog', ({ data }) => {
     return import.meta.env.DEV || !data.draft;
   });
 
-  const posts = collection
-    .sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf())
-    .map((post) => {
-      const slug = getPostSlug(post);
+  const paths = sortPostsByDateDesc(posts).map((post) => {
+    const slug = getPostSlug(post);
 
-      return {
-        params: { slug },
-        props: { ...post, randomEntries: getRandomEntries(collection, 4, slug) },
-      };
-    });
+    return {
+      params: { slug },
+      props: { ...post, randomEntries: getRandomEntries(posts, 4, slug) },
+    };
+  });
 
-  return posts;
+  return paths;
 }
 
 const {
@@ -60,20 +59,57 @@ const {
   remarkPluginFrontmatter: { readingTime },
 } = await render();
 
-interface Heading extends MarkdownHeading {
+/*
+transform array:
+{
+  depth: 2,
+  slug: 'commodo-commodo',
+  text: 'Commodo commodo',
+},
+
+to 2-dim array:
+{
+  slug: 'commodo-commodo',
+  text: 'Commodo commodo',
+  headings: {
+      slug: 'commodo-commodo',
+      text: 'Commodo commodo',
+      headings: [],
+  }
+},
+*/
+
+interface Heading extends Pick<MarkdownHeading, 'slug' | 'text'> {
   headings: Array<Heading>;
 }
 
 // get subtitles for TOC
 const headings: Array<Heading> = [];
-const levels = [{ headings }];
 
-for (const h of postHeadings) {
-  const depth = h.depth - 2;
-  if (depth < 0 || depth > 1) continue;
+for (let index = 0; index < postHeadings.length; index++) {
+  const { slug, text, depth } = postHeadings[index];
 
-  levels[depth]!.headings = levels[depth]?.headings || [];
-  levels[depth]!.headings.push({ ...(levels[depth + 1] = { ...h, headings: [] }), headings: [] });
+  if (depth !== 2) continue;
+
+  // get subsequent depth 3 subheadings
+  // handle 2
+  const subHeadings: Array<Heading> = [];
+
+  // handle 3+
+  while (index + 1 < postHeadings.length && postHeadings[index + 1].depth > 2) {
+    index++;
+
+    // take only depth 3
+    if (postHeadings[index].depth !== 3) continue;
+
+    subHeadings.push({
+      slug: postHeadings[index].slug,
+      text: postHeadings[index].text,
+      headings: [],
+    });
+  }
+
+  headings.push({ slug, text, headings: subHeadings });
 }
 
 const { render: renderMarkdown } = await createMarkdownProcessor({});
@@ -130,12 +166,12 @@ for (const entry of randomEntries) {
 
       <div itemprop="articleBody" transition:name={`content-${slug!.replace(/.*\//, '')}`}>
         {
-          toc ? (
+          toc && (
             <aside class="prose-base mx-4 mb-4 rounded-xl border border-slate-200 bg-slate-100 px-4 py-1 text-slate-900 transition-colors duration-500 dark:border-slate-800 dark:bg-slate-900 sm:float-right sm:ml-8 sm:mr-0 sm:max-w-[50%] md:-mr-8 lg:-mr-32">
               <h2 class="!mt-4">Table of contents</h2>
               <TocList headings={headings} />
             </aside>
-          ) : null
+          )
         }
 
         <Content />
