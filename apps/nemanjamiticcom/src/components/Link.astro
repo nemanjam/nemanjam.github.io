@@ -2,7 +2,7 @@
 import clsx from 'clsx';
 
 export type Props = astroHTML.JSX.AnchorHTMLAttributes & {
-  variant?: 'default' | 'heading' | 'category';
+  variant?: 'default' | 'heading' | 'category' | 'tag';
 };
 
 const { class: className, variant = 'default', ...props } = Astro.props;
@@ -20,11 +20,15 @@ const { class: className, variant = 'default', ...props } = Astro.props;
       'text-link hover:text-link-hover focus:text-link-hover active:text-link-hover':
         variant === 'default',
     },
+    { 'underline-offset-8': variant === 'heading' },
     {
       'text-secondary hover:text-primary hover:no-underline focus:text-primary focus:no-underline active:text-primary active:no-underline':
         variant === 'category',
     },
-    { 'underline-offset-8': variant === 'heading' },
+    {
+      'bg-gray-200 dark:bg-slate-700 inline-block px-2 py-0.5 lowercase hover:no-underline hover:text-primary focus:no-underline focus:text-primary  active:no-underline active:text-primary ':
+        variant === 'tag',
+    },
     className
   )}
   {...props}

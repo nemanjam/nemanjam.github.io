@@ -103,3 +103,13 @@ make skeletons
 lot of work on styling
 twMerge
 dupli tailwind css u browser?
+radix themes maybe? radix with astro?
+
+---
+
+responsive navbar
+https://github.dev/Taofiqq/navbar-react-css
+https://blog.logrocket.com/create-responsive-navbar-react-css/
+
+decide semantic colors for links, tags, neutral... and choose colors
+black, white, gray, primary

@@ -108,7 +108,13 @@ const date = dateFormatter(new Date(pubDate));
 
     {/* tags */}
     <div class="flex flex-wrap gap-2">
-      {tags.map((tag) => <Link href="#">#{tag}</Link>)}
+      {
+        tags.map((tag) => (
+          <Link variant="tag" href="#">
+            #{tag}
+          </Link>
+        ))
+      }
     </div>
   </div>
 </article>

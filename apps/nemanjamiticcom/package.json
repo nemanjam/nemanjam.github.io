@@ -35,14 +35,15 @@
     "sharp": "^0.32.6",
     "solid-js": "^1.8.6",
     "tailwind-clip-path": "^1.0.0",
+    "tailwind-merge": "^2.2.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {
     "@astrojs/check": "^0.3.1",
     "@repo/eslint-config": "*",
     "@repo/prettier-config": "*",
-    "@repo/typescript-config": "*",
     "@repo/tailwind-config": "*",
+    "@repo/typescript-config": "*",
     "@types/debounce": "^1.2.4",
     "@types/mdast": "^4.0.3",
     "@types/react": "^18.2.38",
