@@ -22,14 +22,23 @@ const config: Config = {
         sans: ['Inter Variable', 'Inter', ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        background: 'var(--theme-color-page-background)',
-        primary: 'var(--theme-color-primary)',
-        secondary: 'var(--theme-color-secondary)',
-        link: 'var(--theme-color-link)',
-        'link-hover': 'var(--theme-color-link-hover)',
-        quote: 'var(--theme-color-quote)',
-        muted: 'var(--theme-color-text-muted)',
-        'dark-muted': 'var(--theme-color-text-dark-muted)',
+        // background
+        'base-100': 'var(--base-100)',
+        'base-200': 'var(--base-200)',
+        'base-300': 'var(--base-300)',
+        'base-code': 'var(--base-code)',
+        // text
+        content: 'var(--content)',
+        headings: 'var(--headings)',
+        captions: 'var(--captions)',
+        links: 'var(--links)',
+        'links-hover': 'var(--links-hover)',
+        'links-visited': 'var(--links-visited)',
+        // brand
+        primary: 'var(--primary)',
+        'primary-content': 'var(--primary-content)',
+        secondary: 'var(--secondary)',
+        'secondary-content': 'var(--secondary-content)',
       },
       typography: ({ theme }) => ({
         DEFAULT: {

@@ -17,7 +17,7 @@ const { class: className, variant = 'default', ...props } = Astro.props;
     'hover:underline focus:underline active:underline',
     // variants
     {
-      'text-link hover:text-link-hover focus:text-link-hover active:text-link-hover':
+      'text-links hover:text-links-hover focus:text-links-hover active:text-links-hover visited:text-links-hover':
         variant === 'default',
     },
     { 'underline-offset-8': variant === 'heading' },
