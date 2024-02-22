@@ -113,3 +113,5 @@ https://blog.logrocket.com/create-responsive-navbar-react-css/
 
 decide semantic colors for links, tags, neutral... and choose colors
 black, white, gray, primary
+add tag and category to info alert
+fix markup in blog/[slug].astro

@@ -69,7 +69,7 @@ const date = dateFormatter(new Date(pubDate));
     {/* date, category */}
     <div class="flex items-center gap-2 leading-4 uppercase font-semibold">
       <time
-        class="text-muted dark:text-dark-muted"
+        class="text-captions"
         datetime={pubDate.toISOString().split('T')[0]}
         itemprop="datePublished"
       >
@@ -98,10 +98,7 @@ const date = dateFormatter(new Date(pubDate));
 
     {/* description, can have markdown */}
     <Prose>
-      <div
-        transition:name={`content-${slug}`}
-        class="prose-p:my-0 leading-normal text-muted dark:text-dark-muted"
-      >
+      <div transition:name={`content-${slug}`} class="prose-p:my-0 leading-normal text-captions">
         <Fragment set:html={renderedDescription.code} />
       </div>
     </Prose>
