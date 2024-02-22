@@ -31,14 +31,20 @@ const config: Config = {
         content: 'var(--content)',
         headings: 'var(--headings)',
         captions: 'var(--captions)',
-        links: 'var(--links)',
-        'links-hover': 'var(--links-hover)',
-        'links-visited': 'var(--links-visited)',
+        links: {
+          DEFAULT: 'var(--links)',
+          hover: 'var(--links-hover)',
+          visited: 'var(--links-visited)',
+        },
         // brand
-        primary: 'var(--primary)',
-        'primary-content': 'var(--primary-content)',
-        secondary: 'var(--secondary)',
-        'secondary-content': 'var(--secondary-content)',
+        primary: {
+          DEFAULT: 'var(--primary)',
+          content: 'var(--primary-content)',
+        },
+        secondary: {
+          DEFAULT: 'var(--secondary)',
+          content: 'var(--secondary-content)',
+        },
       },
       typography: ({ theme }) => ({
         DEFAULT: {
