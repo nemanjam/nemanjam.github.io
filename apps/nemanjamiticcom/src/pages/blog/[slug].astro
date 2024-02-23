@@ -3,12 +3,12 @@ import { createMarkdownProcessor } from '@astrojs/markdown-remark';
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 
-import Aside from '../../components/Aside.astro';
 import AuthorMeta from '../../components/AuthorMeta.astro';
 import Link from '../../components/Link.astro';
+import MorePosts from '../../components/MorePosts.astro';
 import PageInfo from '../../components/PageInfo.astro';
 import Prose from '../../components/Prose.astro';
-import { Share, ShareLink } from '../../components/Share';
+import SharePost from '../../components/SharePost.astro';
 import TocWidget from '../../components/TocWidget.astro';
 import Base from '../../layouts/Base.astro';
 import { getPostSlug, getRandomEntries } from '../../modules/blog-post';
@@ -95,7 +95,7 @@ for (let index = 0; index < postHeadings.length; index++) {
 }
 
 // more posts with rendered md description
-type CollectionEntryWithRenderedDescription = CollectionEntry<'blog'> & {
+export type CollectionEntryWithRenderedDescription = CollectionEntry<'blog'> & {
   description: MarkdownProcessorRenderResult;
 };
 
@@ -108,20 +108,31 @@ for (const entry of randomEntries) {
 }
 ---
 
+{/* clean up all of this */}
 <Base title={title} description={description} image={heroImage?.src}>
   <article class="mb-12" itemprop="blogPost" itemscope itemtype="http://schema.org/Article">
     <meta itemprop="mainEntityOfPage" content={`${slug}`} />
+    {
+      category && (
+        <div class="leading-4 uppercase font-semibold">
+          <Link href="#" variant="category">
+            {category}
+          </Link>
+        </div>
+      )
+    }
     <Prose>
-      {category && <p>{category}</p>}
       <h1 itemprop="name headline" transition:name={`title-${slug!.replace(/.*\//, '')}`}>
         {title}
         {draft ? <sup class="text-red-400">(draft)</sup> : null}
       </h1>
       {
         tags && tags.length > 0 && (
-          <div class="w-full md:w-auto flex flex-wrap gap-3">
+          <div class="flex flex-wrap gap-2">
             {tags.map((tag) => (
-              <Link href="#">#{tag}</Link>
+              <Link variant="tag" href="#">
+                #{tag}
+              </Link>
             ))}
           </div>
         )
@@ -158,50 +169,11 @@ for (const entry of randomEntries) {
 
         <Content />
       </div>
-
       <hr />
 
-      {/* share alert, extract in component */}
-      <Aside title="Share your thoughts">
-        <div class="flex flex-col items-start gap-x-4 gap-y-0 sm:flex-row-reverse">
-          <div class="mt-4 justify-self-center">
-            <div class="w-28"><Share client:load title={title} url={`/blog/${slug}/`} /></div>
-          </div>
-          <p class="!mb-1 inline-flex shrink flex-wrap gap-x-1">
-            Since you’ve made it this far, hopefully you enjoyed reading! Please
-            <ShareLink client:load title={title} url={`/blog/${slug}/`}>share</ShareLink>
-            {' '}the post or <Link
-              href="https://mstdn.io/@paularmstrong"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              ping me on Mastodon
-            </Link>
-          </p>
-        </div>
-      </Aside>
+      <SharePost title={title} slug={slug} />
     </Prose>
   </article>
 
-  {/* more posts, extract in component */}
-  <aside class="select-none">
-    <Prose>
-      <h2 id="post-nav">More posts</h2>
-    </Prose>
-
-    <ul class="flex flex-col gap-8">
-      {
-        morePosts.map((entry) => (
-          <li>
-            <Link class="text-xl font-bold" href={`/blog/${getPostSlug(entry)}/`} itemprop="url">
-              {entry.data.title}
-            </Link>
-            <div class="prose prose-slate line-clamp-2 dark:prose-invert">
-              <Fragment set:html={entry.description.code} />
-            </div>
-          </li>
-        ))
-      }
-    </ul>
-  </aside>
+  <MorePosts morePosts={morePosts} />
 </Base>

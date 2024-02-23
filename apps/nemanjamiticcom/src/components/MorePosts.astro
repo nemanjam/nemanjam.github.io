@@ -1,0 +1,35 @@
+---
+import { getPostSlug } from '../modules/blog-post';
+import Link from './Link.astro';
+import Prose from './Prose.astro';
+
+import type { CollectionEntryWithRenderedDescription } from '../pages/blog/[slug].astro';
+
+export interface Props {
+  morePosts: CollectionEntryWithRenderedDescription[];
+}
+
+const { morePosts } = Astro.props;
+---
+
+{/* extracted, fix styles and markup */}
+<aside class="select-none">
+  <Prose>
+    <h2 id="post-nav">More posts</h2>
+  </Prose>
+
+  <ul class="flex flex-col gap-8">
+    {
+      morePosts.map((entry) => (
+        <li>
+          <Link class="text-xl font-bold" href={`/blog/${getPostSlug(entry)}/`} itemprop="url">
+            {entry.data.title}
+          </Link>
+          <div class="prose prose-slate line-clamp-2 dark:prose-invert">
+            <Fragment set:html={entry.description.code} />
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</aside>

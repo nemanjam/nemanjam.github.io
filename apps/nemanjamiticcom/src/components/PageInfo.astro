@@ -1,20 +1,23 @@
 ---
+import { dateFormatter } from '~/utils/datetime';
 import Link from './Link.astro';
 
-export interface Props {
-  file?: string | undefined;
-  pubDate?: Date;
-  updatedDate?: Date | undefined;
-  readingTime?: { minutes: number; words: number } | undefined;
+interface RequiredProps {
+  file: string;
+  pubDate: Date;
+  updatedDate: Date;
+  readingTime: { minutes: number; words: number };
 }
 
+export interface Props extends Partial<RequiredProps> {}
+
 const { file, pubDate, updatedDate, readingTime } = Astro.props as Props;
-const dateFormatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeZone: 'UTC' })
-  .format;
+
+const shouldDisplay = Object.values(Astro.props).some(Boolean);
 ---
 
 {
-  Boolean(pubDate || updatedDate || readingTime) && (
+  shouldDisplay && (
     <aside
       aria-label="Page information"
       class="not-prose prose-sm mb-8 rounded-lg border border-slate-200 bg-slate-100 p-4 transition-colors duration-500 dark:border-slate-800 dark:bg-slate-900"
@@ -45,7 +48,7 @@ const dateFormatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', ti
         )}
         {file && (
           <li>
-            <Link href={`https://github.com/paularmstrong/paularmstrong.dev/tree/main/${file}`}>
+            <Link href={`https://github.com/nemanjam/nemanjam.github.io/tree/main/${file}`}>
               Source
             </Link>
           </li>
