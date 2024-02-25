@@ -6,7 +6,8 @@ import { getPostSlug } from '../modules/blog-post';
 import { dateFormatter } from '../utils/datetime';
 import { getRandomLengthSubstring } from '../utils/strings';
 import Link from './Link.astro';
-import Prose from './Prose.astro';
+import Heading from './ui/Heading.astro';
+import Text from './ui/Text.astro';
 
 import type { MarkdownProcessorRenderResult } from '@astrojs/markdown-remark';
 import type { CollectionEntry } from 'astro:content';
@@ -85,23 +86,17 @@ const date = dateFormatter(new Date(pubDate));
     </div>
 
     {/* title */}
-    <h2
-      class="text-3xl font-bold flex gap-2"
-      itemprop="name headline"
-      transition:name={`title-${slug}`}
-    >
-      <Link href={slug} itemprop="url" variant="heading">
+    <Link href={slug} itemprop="url">
+      <Heading as="h2" transitionName={`title-${slug}`}>
         {title}
         {draft && <sup class="text-sm text-red-400">(draft)</sup>}
-      </Link>
-    </h2>
+      </Heading>
+    </Link>
 
     {/* description, can have markdown */}
-    <Prose>
-      <div transition:name={`content-${slug}`} class="prose-p:my-0 leading-normal text-captions">
-        <Fragment set:html={renderedDescription.code} />
-      </div>
-    </Prose>
+    <Text transitionName={`content-${slug}`} as="div" color="captions">
+      <Fragment set:html={renderedDescription.code} />
+    </Text>
 
     {/* tags */}
     <div class="flex flex-wrap gap-2">

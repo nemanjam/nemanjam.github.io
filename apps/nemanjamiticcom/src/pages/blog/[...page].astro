@@ -5,7 +5,8 @@ import { getCollection } from 'astro:content';
 import PostCard from '~/components/PostCard.astro';
 import AuthorMeta from '../../components/AuthorMeta.astro';
 import Pagination from '../../components/Pagination.astro';
-import Prose from '../../components/Prose.astro';
+import Heading from '../../components/ui/Heading.astro';
+import Text from '../../components/ui/Text.astro';
 import Config from '../../config';
 import Base from '../../layouts/Base.astro';
 import { sortPostsByDateDesc } from '../../utils/post';
@@ -42,18 +43,19 @@ for (const post of page.data) {
 ---
 
 <Base title="Blog">
-  <Prose>
-    <h1>Blog</h1>
-    <p>
+  <div>
+    <Heading as="h1" align="center">Blog 1</Heading>
+    <Text>
       Mostly just whatever seems important in the moment about JavaScript, frontend development, and
       life surrounding me.
-    </p>
-  </Prose>
+    </Text>
+  </div>
+
   <section>
     <AuthorMeta id="author" />
-    <ul class="flex flex-col items-center gap-16">
+    <div class="flex flex-col items-center gap-16">
       {page.data.map((post) => <PostCard post={post} />)}
-    </ul>
+    </div>
   </section>
 
   <Pagination

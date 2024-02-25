@@ -163,8 +163,8 @@ for (const entry of randomEntries) {
 
       <AuthorMeta />
 
-      {/* table of contents */}
       <div itemprop="articleBody" transition:name={`content-${slug!.replace(/.*\//, '')}`}>
+        {/* table of contents */}
         {toc && <TocWidget headings={headings} />}
 
         <Content />
