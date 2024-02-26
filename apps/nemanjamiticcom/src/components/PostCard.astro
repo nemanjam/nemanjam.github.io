@@ -3,7 +3,7 @@ import { createMarkdownProcessor } from '@astrojs/markdown-remark';
 import { Image } from 'astro:assets';
 
 import { getPostSlug } from '../modules/blog-post';
-import { formatDate } from '../utils/datetime';
+import { formatDate, formatDateIso } from '../utils/datetime';
 import { getRandomLengthSubstring } from '../utils/strings';
 import Link from './Link.astro';
 import TagList from './TagList.astro';
@@ -37,7 +37,6 @@ const clippedDescription = getRandomLengthSubstring(description, 100, 50) + '...
 const renderedDescription: MarkdownProcessorRenderResult = await renderMarkdown(clippedDescription);
 
 const slug = getPostSlug(post);
-const date = formatDate(new Date(pubDate));
 
 // image
 // date, category
@@ -71,16 +70,12 @@ const date = formatDate(new Date(pubDate));
     <div class="flex flex-col gap-2">
       {/* date, category */}
       <div class="flex items-center gap-2 leading-4 uppercase font-semibold">
-        <time
-          class="text-captions"
-          datetime={pubDate.toISOString().split('T')[0]}
-          itemprop="datePublished"
-        >
-          {date}
+        <time class="text-captions" datetime={formatDateIso(pubDate)} itemprop="datePublished">
+          {formatDate(pubDate)}
         </time>
         {
           category && (
-            <Link href="#" variant="category">
+            <Link href="#" variant="secondary">
               {category}
             </Link>
           )
@@ -89,7 +84,7 @@ const date = formatDate(new Date(pubDate));
 
       {/* title */}
       <Heading as="h2" transitionName={`title-${slug}`}>
-        <Link href={slug} itemprop="url">
+        <Link href={slug} variant="transparent">
           {title}
           {draft && <sup class="text-sm text-red-400">(draft)</sup>}
         </Link>

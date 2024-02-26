@@ -17,6 +17,8 @@
     --color-purple-700: theme('colors.purple.700');
     --color-orange: theme('colors.orange.400');
 
+    /* todo: fix unique colors */
+
     /* dark */
     /* background */
     --color-dark-slate-800: theme('colors.slate.800');

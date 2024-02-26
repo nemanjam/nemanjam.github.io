@@ -2,10 +2,10 @@
 import clsx from 'clsx';
 
 export type Props = astroHTML.JSX.AnchorHTMLAttributes & {
-  variant?: 'default' | 'category';
+  variant?: 'primary' | 'secondary' | 'transparent';
 };
 
-const { class: className, variant = 'default', ...props } = Astro.props;
+const { class: className, variant = 'primary', ...props } = Astro.props;
 ---
 
 <a
@@ -18,11 +18,14 @@ const { class: className, variant = 'default', ...props } = Astro.props;
     // variants
     {
       'text-links hover:text-links-hover focus:text-links-hover active:text-links-hover visited:text-links-visited':
-        variant === 'default',
+        variant === 'primary',
     },
     {
       'text-secondary hover:text-primary hover:no-underline focus:text-primary focus:no-underline active:text-primary active:no-underline':
-        variant === 'category',
+        variant === 'secondary',
+    },
+    {
+      '': variant === 'transparent',
     },
     className
   )}
