@@ -1,0 +1,22 @@
+---
+import clsx from 'clsx';
+
+import Tag from './Tag.astro';
+
+export interface Props extends astroHTML.JSX.BaseHTMLAttributes {
+  tags: string[];
+  marginY?: boolean;
+}
+
+const { tags = [], marginY = false, class: className, ...props } = Astro.props;
+---
+
+{
+  Array.isArray(tags) && (
+    <div class={clsx('flex flex-wrap gap-2', { 'my-4': marginY }, className)} {...props}>
+      {tags.map((tag) => (
+        <Tag href="#">#{tag}</Tag>
+      ))}
+    </div>
+  )
+}

@@ -1,0 +1,19 @@
+---
+import clsx from 'clsx';
+
+export type Props = astroHTML.JSX.AnchorHTMLAttributes;
+
+const { class: className, ...props } = Astro.props;
+---
+
+<a
+  class={clsx(
+    'not-prose text-base',
+    'bg-slate-200 inline-block px-2 py-0.5 lowercase no-underline rounded-tag',
+    'hover:bg-slate-300 focus:bg-slate-300 active:bg-slate-300',
+    className
+  )}
+  {...props}
+>
+  <slot />
+</a>

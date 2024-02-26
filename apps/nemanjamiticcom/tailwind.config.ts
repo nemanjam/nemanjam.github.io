@@ -46,6 +46,11 @@ const config: Config = {
           content: 'var(--secondary-content)',
         },
       },
+      borderRadius: {
+        box: 'var(--rounded-box)',
+        button: 'var(--rounded-button)',
+        tag: 'var(--rounded-tag)',
+      },
       typography: ({ theme }) => ({
         DEFAULT: {
           css: {

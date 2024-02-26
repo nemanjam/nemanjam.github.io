@@ -3,7 +3,6 @@ import { createMarkdownProcessor } from '@astrojs/markdown-remark';
 import { getCollection } from 'astro:content';
 
 import PostCard from '~/components/PostCard.astro';
-import AuthorMeta from '../../components/AuthorMeta.astro';
 import Pagination from '../../components/Pagination.astro';
 import Heading from '../../components/ui/Heading.astro';
 import Text from '../../components/ui/Text.astro';
@@ -44,7 +43,7 @@ for (const post of page.data) {
 
 <Base title="Blog">
   <div>
-    <Heading as="h1" align="center">Blog 1</Heading>
+    <Heading as="h1" align="center">Blog</Heading>
     <Text>
       Mostly just whatever seems important in the moment about JavaScript, frontend development, and
       life surrounding me.
@@ -52,7 +51,6 @@ for (const post of page.data) {
   </div>
 
   <section>
-    <AuthorMeta id="author" />
     <div class="flex flex-col items-center gap-16">
       {page.data.map((post) => <PostCard post={post} />)}
     </div>

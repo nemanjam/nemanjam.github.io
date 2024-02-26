@@ -6,6 +6,7 @@ import { getPostSlug } from '../modules/blog-post';
 import { dateFormatter } from '../utils/datetime';
 import { getRandomLengthSubstring } from '../utils/strings';
 import Link from './Link.astro';
+import TagList from './TagList.astro';
 import Heading from './ui/Heading.astro';
 import Text from './ui/Text.astro';
 
@@ -66,47 +67,41 @@ const date = dateFormatter(new Date(pubDate));
   }
 
   {/* right column */}
-  <div class="flex flex-col md:basis-2/3 gap-2">
-    {/* date, category */}
-    <div class="flex items-center gap-2 leading-4 uppercase font-semibold">
-      <time
-        class="text-captions"
-        datetime={pubDate.toISOString().split('T')[0]}
-        itemprop="datePublished"
-      >
-        {date}
-      </time>
-      {
-        category && (
-          <Link href="#" variant="category">
-            {category}
-          </Link>
-        )
-      }
-    </div>
+  <div class="flex flex-col justify-between md:basis-2/3">
+    <div class="flex flex-col gap-2">
+      {/* date, category */}
+      <div class="flex items-center gap-2 leading-4 uppercase font-semibold">
+        <time
+          class="text-captions"
+          datetime={pubDate.toISOString().split('T')[0]}
+          itemprop="datePublished"
+        >
+          {date}
+        </time>
+        {
+          category && (
+            <Link href="#" variant="category">
+              {category}
+            </Link>
+          )
+        }
+      </div>
 
-    {/* title */}
-    <Link href={slug} itemprop="url">
+      {/* title */}
       <Heading as="h2" transitionName={`title-${slug}`}>
-        {title}
-        {draft && <sup class="text-sm text-red-400">(draft)</sup>}
+        <Link href={slug} itemprop="url">
+          {title}
+          {draft && <sup class="text-sm text-red-400">(draft)</sup>}
+        </Link>
       </Heading>
-    </Link>
 
-    {/* description, can have markdown */}
-    <Text transitionName={`content-${slug}`} as="div" color="captions">
-      <Fragment set:html={renderedDescription.code} />
-    </Text>
+      {/* description, can have markdown */}
+      <Text transitionName={`content-${slug}`} as="div" color="captions">
+        <Fragment set:html={renderedDescription.code} />
+      </Text>
+    </div>
 
     {/* tags */}
-    <div class="flex flex-wrap gap-2">
-      {
-        tags.map((tag) => (
-          <Link variant="tag" href="#">
-            #{tag}
-          </Link>
-        ))
-      }
-    </div>
+    <TagList tags={tags} />
   </div>
 </article>

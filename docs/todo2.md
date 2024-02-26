@@ -117,9 +117,9 @@ black, white, gray, primary
 add tag and category to info alert
 clean up and fix markup in blog/[slug].astro
 use radix-ui primitives for all components
-add date-fns and write util functions
 heading component from radix-ui
 extract components, widgets folder
-class variance authority maybe
+class_ variance authority maybe
+add date-fns and write util functions
 
 ```

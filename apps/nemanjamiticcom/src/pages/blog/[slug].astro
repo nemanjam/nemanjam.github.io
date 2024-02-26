@@ -9,6 +9,7 @@ import MorePosts from '../../components/MorePosts.astro';
 import PageInfo from '../../components/PageInfo.astro';
 import Prose from '../../components/Prose.astro';
 import SharePost from '../../components/SharePost.astro';
+import TagList from '../../components/TagList.astro';
 import TocWidget from '../../components/TocWidget.astro';
 import Base from '../../layouts/Base.astro';
 import { getPostSlug, getRandomEntries } from '../../modules/blog-post';
@@ -48,7 +49,7 @@ const {
     heroAlt,
     noHero,
     category,
-    tags,
+    tags = [],
   },
   render,
   randomEntries,
@@ -126,17 +127,7 @@ for (const entry of randomEntries) {
         {title}
         {draft ? <sup class="text-red-400">(draft)</sup> : null}
       </h1>
-      {
-        tags && tags.length > 0 && (
-          <div class="flex flex-wrap gap-2">
-            {tags.map((tag) => (
-              <Link variant="tag" href="#">
-                #{tag}
-              </Link>
-            ))}
-          </div>
-        )
-      }
+      <TagList tags={tags} marginY />
       <PageInfo
         file={`src/content/blog/${id}`}
         pubDate={pubDate}
