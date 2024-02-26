@@ -1,3 +1,4 @@
+```tsx
 // name blog files like this
 src/content/blog/2022-10-14-tech-design-template.mdx
 
@@ -102,7 +103,7 @@ more posts, extract in component
 make skeletons
 lot of work on styling
 twMerge
-dupli tailwind css u browser?
+    dupli tailwind css u browser? - solved, applyBaseStyles: false in astro.config.mjs
 radix themes maybe? radix with astro?
 
 ---
@@ -120,3 +121,5 @@ add date-fns and write util functions
 heading component from radix-ui
 extract components, widgets folder
 class variance authority maybe
+
+```
