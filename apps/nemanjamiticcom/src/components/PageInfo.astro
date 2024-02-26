@@ -1,5 +1,5 @@
 ---
-import { dateFormatter } from '~/utils/datetime';
+import { formatDate } from '~/utils/datetime';
 import Link from './Link.astro';
 
 interface RequiredProps {
@@ -28,7 +28,7 @@ const shouldDisplay = Object.values(Astro.props).some(Boolean);
           <li>
             <b class="me-2 inline-block">Published:</b>
             <time itemprop="datePublished" datetime={pubDate.toISOString().split('T')[0]}>
-              {dateFormatter(pubDate)}
+              {formatDate(pubDate)}
             </time>
           </li>
         )}
@@ -36,7 +36,7 @@ const shouldDisplay = Object.values(Astro.props).some(Boolean);
           <li>
             <b class="me-2 inline-block">Last updated:</b>
             <time itemprop="dateUpdated" datetime={updatedDate.toISOString().split('T')[0]}>
-              {dateFormatter(updatedDate)}
+              {formatDate(updatedDate)}
             </time>
           </li>
         )}

@@ -19,10 +19,12 @@
     "@astrojs/solid-js": "^3.0.2",
     "@astrojs/tailwind": "^5.0.3",
     "@fontsource-variable/inter": "^5.0.16",
+    "@radix-ui/react-aspect-ratio": "^1.0.2",
     "@tailwindcss/typography": "^0.5.10",
     "astro": "^4.0.3",
     "astro-icon": "^0.8.2",
     "clsx": "^2.0.0",
+    "date-fns": "^3.3.1",
     "debounce": "^2.0.0",
     "dotenv": "^16.3.1",
     "feed": "^4.2.2",
@@ -36,8 +38,7 @@
     "solid-js": "^1.8.6",
     "tailwind-clip-path": "^1.0.0",
     "tailwind-merge": "^2.2.1",
-    "zod": "^3.22.4",
-    "@radix-ui/react-aspect-ratio": "^1.0.2"
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@astrojs/check": "^0.3.1",

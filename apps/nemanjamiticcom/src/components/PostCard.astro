@@ -3,7 +3,7 @@ import { createMarkdownProcessor } from '@astrojs/markdown-remark';
 import { Image } from 'astro:assets';
 
 import { getPostSlug } from '../modules/blog-post';
-import { dateFormatter } from '../utils/datetime';
+import { formatDate } from '../utils/datetime';
 import { getRandomLengthSubstring } from '../utils/strings';
 import Link from './Link.astro';
 import TagList from './TagList.astro';
@@ -37,7 +37,7 @@ const clippedDescription = getRandomLengthSubstring(description, 100, 50) + '...
 const renderedDescription: MarkdownProcessorRenderResult = await renderMarkdown(clippedDescription);
 
 const slug = getPostSlug(post);
-const date = dateFormatter(new Date(pubDate));
+const date = formatDate(new Date(pubDate));
 
 // image
 // date, category

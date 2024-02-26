@@ -120,6 +120,6 @@ use radix-ui primitives for all components
 heading component from radix-ui
 extract components, widgets folder
 class_ variance authority maybe
-add date-fns and write util functions
-
+    add date-fns and write util functions
+fix theme switch
 ```
