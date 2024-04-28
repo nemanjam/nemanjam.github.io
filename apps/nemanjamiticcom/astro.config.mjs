@@ -7,6 +7,7 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import solid from '@astrojs/solid-js';
 import tailwind from '@astrojs/tailwind';
+import icon from 'astro-icon';
 import { defineConfig } from 'astro/config';
 
 import rehypePrettyCode from 'rehype-pretty-code';
@@ -99,6 +100,7 @@ export default defineConfig({
         return item;
       },
     }),
+    icon(),
   ],
   markdown: {
     remarkPlugins,

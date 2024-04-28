@@ -25,11 +25,11 @@
     "clean": "yarn clean:nm & yarn clean:t"
   },
   "devDependencies": {
+    "@manypkg/cli": "^0.21.4",
     "@repo/eslint-config": "*",
     "@repo/prettier-config": "*",
     "@repo/tailwind-config": "*",
     "@repo/typescript-config": "*",
-    "@manypkg/cli": "^0.21.4",
     "turbo": "^1.13.3"
   },
   "packageManager": "yarn@1.22.19",
