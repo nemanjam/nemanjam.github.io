@@ -9,14 +9,14 @@
     "check-types": "tsc --noEmit --pretty"
   },
   "dependencies": {
-    "web-vitals": "^3.1.1"
+    "web-vitals": "^3.5.2"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
     "@repo/prettier-config": "*",
     "@repo/tailwind-config": "*",
     "@repo/typescript-config": "*",
-    "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.31"
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38"
   }
 }

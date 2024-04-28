@@ -18,14 +18,14 @@
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
+    "@repo/prettier-config": "*",
     "@repo/tailwind-config": "*",
     "@repo/typescript-config": "*",
-    "@repo/prettier-config": "*",
-    "@types/react": "^18.2.38",
-    "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.31",
-    "react": "^18.2.0",
-    "tsup": "^8.0.1",
-    "typescript": "^5.3.2"
+    "@types/react": "^18.3.1",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "react": "^18.3.1",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.5"
   }
 }

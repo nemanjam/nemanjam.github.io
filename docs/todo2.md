@@ -122,4 +122,8 @@ extract components, widgets folder
 class_ variance authority maybe
     add date-fns and write util functions
 fix theme switch
+
+
+// another example astro blog shadcn
+https://github.com/mickasmt/astro-nomy
 ```
