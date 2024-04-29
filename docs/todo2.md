@@ -126,4 +126,11 @@ fix theme switch
 
 // another example astro blog shadcn
 https://github.com/mickasmt/astro-nomy
+
+// serbian, bezveze, prazno
+https://github.com/ekmas/minimal
+
+-----------
+za local state mora react ili solid
+for state between pages nanostore with localStorage
 ```

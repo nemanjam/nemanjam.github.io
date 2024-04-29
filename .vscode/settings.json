@@ -25,7 +25,7 @@
   "files.associations": {
     "*.mdx": "markdown"
   },
-  "gitlens.currentLine.enabled": false,
+  // "gitlens.currentLine.enabled": false,
   "yaml.schemas": {
     "./apps/nemanjamiticcom/.vscode/config-schema.json": "./apps/nemanjamiticcom/src/config.yaml"
   },
