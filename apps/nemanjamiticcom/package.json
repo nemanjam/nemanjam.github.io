@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.5.10",
+    "@iconify-json/mdi": "^1.1.66",
     "@repo/eslint-config": "*",
     "@repo/prettier-config": "*",
     "@repo/tailwind-config": "*",

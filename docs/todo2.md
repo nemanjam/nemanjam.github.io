@@ -133,4 +133,7 @@ https://github.com/ekmas/minimal
 -----------
 za local state mora react ili solid
 for state between pages nanostore with localStorage
+
+// fixes Image component
+yarn add sharp --ignore-engines
 ```

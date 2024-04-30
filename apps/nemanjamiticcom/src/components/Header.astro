@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 import { Image } from 'astro:assets';
 
 import Config from '../config';
@@ -6,10 +7,29 @@ import Avatar from '../images/avatar.jpg';
 import Content from './Content.astro';
 import HeaderLink from './HeaderLink.astro';
 import { ThemeSwitcher } from './ThemeSwitcher';
+
+const menuItems: Array<{ title: string; path: string }> = [
+  {
+    title: 'Blog',
+    path: '/blog/',
+  },
+  {
+    title: 'About',
+    path: '/about/',
+  },
+  {
+    title: 'Resume',
+    path: '/resume/',
+  },
+  {
+    title: 'Projects',
+    path: '/projects/',
+  },
+];
 ---
 
 <Content>
-  <header id="main-header">
+  <header id="main-header" class="group">
     <div class="grid grid-cols-1 items-center justify-between gap-2 py-4 md:grid-cols-2">
       <h1 class="shrink-0">
         <a
@@ -22,17 +42,20 @@ import { ThemeSwitcher } from './ThemeSwitcher';
             src={Avatar}
             width={96}
             height={96}
-            alt="Paul Armstrong’s profile picture"
+            alt="Profile picture"
           />
           {Config.SITE_TITLE}
         </a>
       </h1>
       <nav class="select-none items-end" aria-label="Site navigation">
-        <ul class="flex flex-row flex-wrap justify-end gap-1">
-          <li><HeaderLink href="/blog/">Blog</HeaderLink></li>
-          <li><HeaderLink href="/about/">About</HeaderLink></li>
-          <li><HeaderLink href="/resume/">Resume</HeaderLink></li>
-          <li><HeaderLink href="/projects/">Projects</HeaderLink></li>
+        <ul class="flex flex-row flex-wrap justify-end gap-1 group-[.menu-open]:flex-col">
+          {
+            menuItems.map(({ title, path }) => (
+              <li>
+                <HeaderLink href={path}>{title}</HeaderLink>
+              </li>
+            ))
+          }
           <li class="shrink-0"><ThemeSwitcher client:load /></li>
         </ul>
       </nav>
@@ -43,7 +66,7 @@ import { ThemeSwitcher } from './ThemeSwitcher';
           aria-label="Open main menu"
           type="button"
         >
-          mobile menu
+          <Icon name="mdi:hamburger-menu" class="h-6 w-6" />
         </button>
       </mobile-button>
     </div>
