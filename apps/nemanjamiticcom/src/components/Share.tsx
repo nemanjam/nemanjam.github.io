@@ -23,7 +23,7 @@ export const Share: Component<Props> = (props) => {
       setShared(false);
     }, 5_000);
   };
-  0.5;
+
   return (
     <button
       tabIndex={0}

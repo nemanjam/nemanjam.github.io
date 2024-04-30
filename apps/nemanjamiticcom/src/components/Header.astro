@@ -9,7 +9,7 @@ import { ThemeSwitcher } from './ThemeSwitcher';
 ---
 
 <Content>
-  <header>
+  <header id="main-header">
     <div class="grid grid-cols-1 items-center justify-between gap-2 py-4 md:grid-cols-2">
       <h1 class="shrink-0">
         <a
@@ -31,11 +31,46 @@ import { ThemeSwitcher } from './ThemeSwitcher';
         <ul class="flex flex-row flex-wrap justify-end gap-1">
           <li><HeaderLink href="/blog/">Blog</HeaderLink></li>
           <li><HeaderLink href="/about/">About</HeaderLink></li>
-          <li><HeaderLink href="/resume/">Résumé</HeaderLink></li>
+          <li><HeaderLink href="/resume/">Resume</HeaderLink></li>
           <li><HeaderLink href="/projects/">Projects</HeaderLink></li>
           <li class="shrink-0"><ThemeSwitcher client:load /></li>
         </ul>
       </nav>
+      <mobile-button>
+        <button
+          aria-expanded="false"
+          aria-haspopup="menu"
+          aria-label="Open main menu"
+          type="button"
+        >
+          mobile menu
+        </button>
+      </mobile-button>
     </div>
   </header>
 </Content>
+
+<script>
+  class MobileNavBtn extends HTMLElement {
+    private headerEl: HTMLElement;
+    private menuOpen: boolean;
+    private mobileButtonEl: HTMLButtonElement;
+
+    toggleMobileMenu = () => {
+      this.headerEl.classList.toggle('menu-open');
+      this.menuOpen = !this.menuOpen;
+      this.mobileButtonEl.setAttribute('aria-expanded', this.menuOpen.toString());
+    };
+
+    constructor() {
+      super();
+      this.headerEl = document.getElementById('main-header')!;
+      this.mobileButtonEl = this.querySelector('button') as HTMLButtonElement;
+      this.menuOpen = false;
+
+      this.mobileButtonEl.addEventListener('click', this.toggleMobileMenu);
+    }
+  }
+
+  customElements.define('mobile-button', MobileNavBtn);
+</script>
