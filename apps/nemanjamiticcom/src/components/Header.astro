@@ -2,6 +2,8 @@
 import { Icon } from 'astro-icon/components';
 import { Image } from 'astro:assets';
 
+import clsx from 'clsx';
+
 import Config from '../config';
 import Avatar from '../images/avatar.jpg';
 import Content from './Content.astro';
@@ -30,25 +32,50 @@ const menuItems: Array<{ title: string; path: string }> = [
 
 <Content>
   <header id="main-header" class="group">
-    <div class="grid grid-cols-1 items-center justify-between gap-2 py-4 md:grid-cols-2">
-      <h1 class="shrink-0">
-        <a
-          class="group flex flex-row items-center gap-2 whitespace-nowrap text-2xl font-bold text-blue-700 underline-offset-2 outline-none duration-100 hover:text-blue-900 focus:underline focus:decoration-4 focus:underline-offset-4 motion-safe:transition-all dark:text-blue-100 dark:hover:text-blue-300"
-          href="/"
-        >
-          <Image
-            loading="eager"
-            class="h-12 w-12 shrink-0 select-none overflow-hidden rounded-full group-focus-visible:ring-4 group-focus-visible:ring-blue-200 dark:group-focus-visible:ring-blue-500/40"
-            src={Avatar}
-            width={96}
-            height={96}
-            alt="Profile picture"
-          />
-          {Config.SITE_TITLE}
-        </a>
-      </h1>
-      <nav class="select-none items-end" aria-label="Site navigation">
-        <ul class="flex flex-row flex-wrap justify-end gap-1 group-[.menu-open]:flex-col">
+    <div
+      class={clsx(
+        'flex gap-2 py-4',
+        'group-[.menu-open]:flex-col',
+        'md:justify-between md:items-center md:!flex-row'
+      )}
+    >
+      {/* mobile nav */}
+      <div class="w-full flex justify-between items-center">
+        <h1 class="shrink-0">
+          <a
+            class="group flex flex-row items-center gap-2 whitespace-nowrap text-2xl font-bold text-blue-700 underline-offset-2 outline-none duration-100 hover:text-blue-900 focus:underline focus:decoration-4 focus:underline-offset-4 motion-safe:transition-all dark:text-blue-100 dark:hover:text-blue-300"
+            href="/"
+          >
+            <Image
+              loading="eager"
+              class="h-12 w-12 shrink-0 select-none overflow-hidden rounded-full group-focus-visible:ring-4 group-focus-visible:ring-blue-200 dark:group-focus-visible:ring-blue-500/40"
+              src={Avatar}
+              width={96}
+              height={96}
+              alt="Profile picture"
+            />
+            {Config.SITE_TITLE}
+          </a>
+        </h1>
+        <mobile-button class="md:hidden">
+          <button
+            aria-expanded="false"
+            aria-haspopup="menu"
+            aria-label="Open main menu"
+            type="button"
+            class="group"
+          >
+            <Icon name="mdi:hamburger-menu" class="h-6 w-6 group-aria-expanded:hidden" />
+            <Icon name="mdi:close" class="h-6 w-6 hidden group-aria-expanded:block" />
+          </button>
+        </mobile-button>
+      </div>
+      {/* nav items */}
+      <nav
+        class="select-none hidden md:block group-[.menu-open]:block"
+        aria-label="Site navigation"
+      >
+        <ul class="flex gap-1 group-[.menu-open]:flex-col md:!flex-row">
           {
             menuItems.map(({ title, path }) => (
               <li>
@@ -59,16 +86,6 @@ const menuItems: Array<{ title: string; path: string }> = [
           <li class="shrink-0"><ThemeSwitcher client:load /></li>
         </ul>
       </nav>
-      <mobile-button>
-        <button
-          aria-expanded="false"
-          aria-haspopup="menu"
-          aria-label="Open main menu"
-          type="button"
-        >
-          <Icon name="mdi:hamburger-menu" class="h-6 w-6" />
-        </button>
-      </mobile-button>
     </div>
   </header>
 </Content>
