@@ -136,4 +136,10 @@ for state between pages nanostore with localStorage
 
 // fixes Image component
 yarn add sharp --ignore-engines
+
+widths of all pages and navbar and responsive
+HeaderLinks remove buttons
+black typography, hover, underline, semantic colors, color palette, text, links
+post info
+improve monorepo
 ```

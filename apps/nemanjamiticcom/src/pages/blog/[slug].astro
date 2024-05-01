@@ -26,10 +26,11 @@ export async function getStaticPaths() {
 
   const paths = sortPostsByDateDesc(posts).map((post) => {
     const slug = getPostSlug(post);
+    const randomEntries = getRandomEntries(posts, 4, slug);
 
     return {
       params: { slug },
-      props: { ...post, randomEntries: getRandomEntries(posts, 4, slug) },
+      props: { ...post, randomEntries },
     };
   });
 
