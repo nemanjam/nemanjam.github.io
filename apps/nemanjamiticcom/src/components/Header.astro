@@ -2,8 +2,6 @@
 import { Icon } from 'astro-icon/components';
 import { Image } from 'astro:assets';
 
-import clsx from 'clsx';
-
 import Config from '../config';
 import Avatar from '../images/avatar.jpg';
 import Content from './Content.astro';
@@ -33,11 +31,7 @@ const menuItems: Array<{ title: string; path: string }> = [
 <Content>
   <header id="main-header" class="group">
     <div
-      class={clsx(
-        'flex gap-2 py-4',
-        'group-[.menu-open]:flex-col',
-        'md:justify-between md:items-center md:!flex-row'
-      )}
+      class="flex gap-2 py-4 group-[.menu-open]:flex-col md:justify-between md:items-center md:!flex-row"
     >
       {/* mobile nav */}
       <div class="w-full flex justify-between items-center">
