@@ -140,6 +140,15 @@ yarn add sharp --ignore-engines
 widths of all pages and navbar and responsive
 HeaderLinks remove buttons
 black typography, hover, underline, semantic colors, color palette, text, links
-post info
+tailwind config, layer components
+post info component
 improve monorepo
+extract blog from monorepo and separate
+    extract functions and jsx in pages/blog/[slug].astro
+
+tags and categories pages
+tags, categories links
+projects, resume md pages
+fix console hydration errors
+prettier remove unused imports
 ```

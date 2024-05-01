@@ -1,16 +1,14 @@
 ---
-import { createMarkdownProcessor } from '@astrojs/markdown-remark';
 import { getCollection } from 'astro:content';
 
-import PostCard from '~/components/PostCard.astro';
 import Pagination from '../../components/Pagination.astro';
+import PostCard from '../../components/PostCard.astro';
 import Heading from '../../components/ui/Heading.astro';
 import Text from '../../components/ui/Text.astro';
 import Config from '../../config';
 import Base from '../../layouts/Base.astro';
-import { sortPostsByDateDesc } from '../../utils/post';
+import { sortPostsByDateDesc } from '../../modules/blog-post';
 
-import type { MarkdownProcessorRenderResult } from '@astrojs/markdown-remark';
 import type { GetStaticPathsOptions, Page } from 'astro';
 import type { CollectionEntry } from 'astro:content';
 
@@ -28,17 +26,8 @@ type Props = {
   page: Page<CollectionEntry<'blog'>>;
 };
 
-const { render: renderMarkdown } = await createMarkdownProcessor({});
-
 // page from pagination
 const { page } = Astro.props;
-
-const descriptions: Record<string, MarkdownProcessorRenderResult> = {};
-for (const post of page.data) {
-  if (typeof post === 'string') continue;
-
-  descriptions[post.data.title] = await renderMarkdown(post.data.description || '');
-}
 ---
 
 <Base title="Blog">

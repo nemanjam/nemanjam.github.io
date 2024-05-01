@@ -1,6 +1,12 @@
+import { renderMarkdown } from '~/utils/markdown';
+
+import type { MarkdownProcessorRenderResult } from '@astrojs/markdown-remark';
+import type { MarkdownHeading } from 'astro';
 import type { CollectionEntry } from 'astro:content';
 
 const padTwo = (num: number) => `${num}`.padStart(2, '0');
+
+/*-------------------------------- Post slug ------------------------------*/
 
 export const getPostSlug = (post: CollectionEntry<'blog'>) => {
   const {
@@ -16,8 +22,10 @@ export const getPostSlug = (post: CollectionEntry<'blog'>) => {
   return resultSlug;
 };
 
+/*-------------------------------- random Posts ------------------------------*/
+
 /** Must handle empty array. */
-export const getRandomEntries = (
+export const getRandomPosts = (
   posts: CollectionEntry<'blog'>[],
   count: number,
   excludeSlug?: string
@@ -36,4 +44,68 @@ export const getRandomEntries = (
   if (shuffledPosts.length < count) return shuffledPosts;
 
   return shuffledPosts.slice(0, count);
+};
+
+/*-------------------------------- sort ------------------------------*/
+
+export const sortPostsByDateDesc = (posts: CollectionEntry<'blog'>[]) =>
+  posts.slice().sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+/*-------------------------------- Toc headings ------------------------------*/
+
+export interface Heading extends Pick<MarkdownHeading, 'slug' | 'text'> {
+  headings: Heading[];
+}
+
+export const getHeadingsForTableOfContents = (postHeadings: MarkdownHeading[]): Heading[] => {
+  // get subtitles for TOC
+  const headings: Heading[] = [];
+
+  for (let index = 0; index < postHeadings.length; index++) {
+    const { slug, text, depth } = postHeadings[index];
+
+    if (depth !== 2) continue;
+
+    // get subsequent depth 3 subheadings
+    // handle 2
+    const subHeadings: Heading[] = [];
+
+    // handle 3+
+    while (index + 1 < postHeadings.length && postHeadings[index + 1].depth > 2) {
+      index++;
+
+      // take only depth 3
+      if (postHeadings[index].depth !== 3) continue;
+
+      subHeadings.push({
+        slug: postHeadings[index].slug,
+        text: postHeadings[index].text,
+        headings: [],
+      });
+    }
+
+    headings.push({ slug, text, headings: subHeadings });
+  }
+
+  return headings;
+};
+
+/*-------------------------------- More posts ------------------------------*/
+
+// more posts with rendered md description
+export type CollectionEntryWithRenderedDescription = CollectionEntry<'blog'> & {
+  description: MarkdownProcessorRenderResult;
+};
+
+export const getMorePostsWithRenderedMarkdownDescription = async (
+  posts: CollectionEntry<'blog'>[]
+): Promise<CollectionEntryWithRenderedDescription[]> => {
+  const morePosts: CollectionEntryWithRenderedDescription[] = [];
+
+  for (const post of posts) {
+    const description = await renderMarkdown(post.data.description ?? '');
+    morePosts.push({ ...post, description });
+  }
+
+  return morePosts;
 };

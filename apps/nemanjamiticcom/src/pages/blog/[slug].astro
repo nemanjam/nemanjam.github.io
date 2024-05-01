@@ -1,5 +1,4 @@
 ---
-import { createMarkdownProcessor } from '@astrojs/markdown-remark';
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 
@@ -12,12 +11,13 @@ import SharePost from '../../components/SharePost.astro';
 import TagList from '../../components/TagList.astro';
 import TocWidget from '../../components/TocWidget.astro';
 import Base from '../../layouts/Base.astro';
-import { getPostSlug, getRandomEntries } from '../../modules/blog-post';
-import { sortPostsByDateDesc } from '../../utils/post';
-
-import type { MarkdownProcessorRenderResult } from '@astrojs/markdown-remark';
-import type { MarkdownHeading } from 'astro';
-import type { CollectionEntry } from 'astro:content';
+import {
+  getHeadingsForTableOfContents,
+  getMorePostsWithRenderedMarkdownDescription,
+  getPostSlug,
+  getRandomPosts,
+  sortPostsByDateDesc,
+} from '../../modules/blog-post';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => {
@@ -26,88 +26,39 @@ export async function getStaticPaths() {
 
   const paths = sortPostsByDateDesc(posts).map((post) => {
     const slug = getPostSlug(post);
-    const randomEntries = getRandomEntries(posts, 4, slug);
+    const randomPosts = getRandomPosts(posts, 4, slug);
 
     return {
       params: { slug },
-      props: { ...post, randomEntries },
+      props: { ...post, randomPosts },
     };
   });
 
   return paths;
 }
 
+const { id, data, render, randomPosts } = Astro.props;
 const {
-  id,
-  data: {
-    draft,
-    title,
-    pubDate,
-    updatedDate,
-    description,
-    toc,
-    heroImage,
-    heroAlt,
-    noHero,
-    category,
-    tags = [],
-  },
-  render,
-  randomEntries,
-} = Astro.props;
+  draft,
+  title,
+  pubDate,
+  updatedDate,
+  description,
+  toc,
+  heroImage,
+  heroAlt,
+  noHero,
+  category,
+  tags = [],
+} = data;
+
 const { slug } = Astro.params;
 
-const {
-  Content,
-  headings: postHeadings,
-  remarkPluginFrontmatter: { readingTime },
-} = await render();
+const { Content, headings: postHeadings, remarkPluginFrontmatter } = await render();
+const { readingTime } = remarkPluginFrontmatter;
 
-interface Heading extends Pick<MarkdownHeading, 'slug' | 'text'> {
-  headings: Heading[];
-}
-
-// get subtitles for TOC
-const headings: Heading[] = [];
-
-for (let index = 0; index < postHeadings.length; index++) {
-  const { slug, text, depth } = postHeadings[index];
-
-  if (depth !== 2) continue;
-
-  // get subsequent depth 3 subheadings
-  // handle 2
-  const subHeadings: Heading[] = [];
-
-  // handle 3+
-  while (index + 1 < postHeadings.length && postHeadings[index + 1].depth > 2) {
-    index++;
-
-    // take only depth 3
-    if (postHeadings[index].depth !== 3) continue;
-
-    subHeadings.push({
-      slug: postHeadings[index].slug,
-      text: postHeadings[index].text,
-      headings: [],
-    });
-  }
-
-  headings.push({ slug, text, headings: subHeadings });
-}
-
-// more posts with rendered md description
-export type CollectionEntryWithRenderedDescription = CollectionEntry<'blog'> & {
-  description: MarkdownProcessorRenderResult;
-};
-
-const { render: renderMarkdown } = await createMarkdownProcessor();
-
-const morePosts: CollectionEntryWithRenderedDescription[] = [];
-for (const entry of randomEntries) {
-  const description = await renderMarkdown(entry.data.description ?? '');
-  morePosts.push({ ...entry, description });
-}
+const headings = getHeadingsForTableOfContents(postHeadings);
+const morePosts = await getMorePostsWithRenderedMarkdownDescription(randomPosts);
 ---
 
 {/* clean up all of this */}

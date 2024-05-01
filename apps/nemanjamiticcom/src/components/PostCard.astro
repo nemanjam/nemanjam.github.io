@@ -1,16 +1,15 @@
 ---
-import { createMarkdownProcessor } from '@astrojs/markdown-remark';
 import { Image } from 'astro:assets';
 
 import { getPostSlug } from '../modules/blog-post';
 import { formatDate, formatDateIso } from '../utils/datetime';
+import { renderMarkdown } from '../utils/markdown';
 import { getRandomLengthSubstring } from '../utils/strings';
 import Link from './Link.astro';
 import TagList from './TagList.astro';
 import Heading from './ui/Heading.astro';
 import Text from './ui/Text.astro';
 
-import type { MarkdownProcessorRenderResult } from '@astrojs/markdown-remark';
 import type { CollectionEntry } from 'astro:content';
 
 export interface Props {
@@ -31,10 +30,9 @@ const {
 
 // prepare all data for render
 
-const { render: renderMarkdown } = await createMarkdownProcessor({});
 // ! this can break tags in markup
 const clippedDescription = getRandomLengthSubstring(description, 100, 50) + '...';
-const renderedDescription: MarkdownProcessorRenderResult = await renderMarkdown(clippedDescription);
+const renderedDescription = await renderMarkdown(clippedDescription);
 
 const slug = getPostSlug(post);
 
