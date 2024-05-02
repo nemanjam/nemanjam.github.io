@@ -152,9 +152,12 @@ projects, resume md pages
 fix console hydration errors
 prettier remove unused imports
 metadata, og image
-add updatedDate to frontmatter
+add updatedDate to frontmatter and to schema
+default description empty string, improve zod schema
 tsconfig path aliases @
 extract types folder
 put images in folder beside markdown files
 put default instead of optional in zod schema
+breadcrumb component for tags and categories
+meta for each page - title...
 ```

@@ -1,5 +1,13 @@
 import { defineCollection, z } from 'astro:content';
 
+/** lowercase tags for routes */
+const removeDuplicatesAndToLowerCase = (items: string[]) => {
+  if (!items.length) return items;
+  const lowercaseItems = items.map((str) => str.toLowerCase());
+  const distinctItems = new Set(lowercaseItems);
+  return Array.from(distinctItems);
+};
+
 export const collections = {
   blog: defineCollection({
     schema: ({ image }) =>
@@ -14,7 +22,7 @@ export const collections = {
         toc: z.boolean().optional(),
         updatedDate: z.coerce.date().optional(),
         category: z.string().optional(),
-        tags: z.array(z.string()).optional(),
+        tags: z.array(z.string()).default([]).transform(removeDuplicatesAndToLowerCase),
       }),
   }),
   project: defineCollection({

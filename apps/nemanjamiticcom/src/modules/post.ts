@@ -108,7 +108,7 @@ export const getMorePostsWithRenderedMarkdownDescription = async (
 /*-------------------------------- tags ------------------------------*/
 
 export const getAllTags = (posts: Array<CollectionEntry<'blog'>>): string[] => {
-  const allTags = posts.flatMap((post) => [...(post.data.tags ?? [])]);
+  const allTags = posts.flatMap((post) => [...post.data.tags]);
   return allTags;
 };
 

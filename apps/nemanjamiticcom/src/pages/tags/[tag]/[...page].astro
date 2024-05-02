@@ -1,0 +1,51 @@
+---
+import Pagination, { getPaginationPropsFromPage } from '../../../components/Pagination.astro';
+import PostCard from '../../../components/PostCard.astro';
+import Heading from '../../../components/ui/Heading.astro';
+import Config from '../../../config';
+import Base from '../../../layouts/Base.astro';
+import { getAllEntries } from '../../../modules/common';
+import { getUniqueTags } from '../../../modules/post';
+
+import type { GetStaticPathsOptions, Page } from 'astro';
+import type { CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const sortedPosts = await getAllEntries('blog');
+
+  const uniqueTags = getUniqueTags(sortedPosts);
+
+  const pagination = uniqueTags.flatMap((tag) => {
+    const filteredPosts = sortedPosts.filter((post) => post.data.tags.includes(tag));
+    const tagPagination = paginate(filteredPosts, { pageSize: Config.PAGE_SIZE, params: { tag } });
+    return tagPagination;
+  });
+
+  pagination.push({ ...pagination[0], params: { ...pagination[0].params, page: '1' } });
+  return pagination;
+}
+
+type Props = {
+  page: Page<CollectionEntry<'blog'>>;
+};
+
+const { page } = Astro.props;
+const { tag } = Astro.params;
+
+const paginationProps = getPaginationPropsFromPage(page);
+const title = `Tag: #${tag}`;
+---
+
+<Base title={title}>
+  <div>
+    <Heading as="h1" align="center">{title}</Heading>
+  </div>
+
+  <section>
+    <div class="flex flex-col items-center gap-16">
+      {page.data.map((post) => <PostCard post={post} />)}
+    </div>
+  </section>
+
+  <Pagination {...paginationProps} />
+</Base>
