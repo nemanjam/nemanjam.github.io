@@ -156,4 +156,5 @@ add updatedDate to frontmatter
 tsconfig path aliases @
 extract types folder
 put images in folder beside markdown files
+put default instead of optional in zod schema
 ```

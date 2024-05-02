@@ -160,8 +160,6 @@ declare module 'astro:content' {
   data: InferEntrySchema<"project">
 } & { render(): Render[".mdx"] };
 };
-"projects": {
-};
 
 	};
 

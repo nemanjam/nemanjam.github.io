@@ -3,20 +3,33 @@ import clsx from 'clsx';
 
 import Tag from './Tag.astro';
 
+import type { TagWithCount } from '../modules/post';
+
 export interface Props extends astroHTML.JSX.BaseHTMLAttributes {
-  tags: string[];
+  tags: string[] | TagWithCount[];
   marginY?: boolean;
+  // variant
 }
 
 const { tags = [], marginY = false, class: className, ...props } = Astro.props;
+const tagLinks = tags.map((tagItem) => {
+  const tagLink =
+    typeof tagItem === 'string'
+      ? { href: `/tags/${tagItem}`, text: `#${tagItem}` }
+      : { href: `/tags/${tagItem.tag}`, text: `#${tagItem.tag}(${tagItem.count})` };
+
+  return tagLink;
+});
 ---
 
 {
-  Array.isArray(tags) && (
-    <div class={clsx('flex flex-wrap gap-2', { 'my-4': marginY }, className)} {...props}>
-      {tags.map((tag) => (
-        <Tag href="#">#{tag}</Tag>
+  tagLinks.length > 0 && (
+    <ul class={clsx('flex flex-wrap gap-2', { 'my-4': marginY }, className)} {...props}>
+      {tagLinks.map(({ href, text }) => (
+        <li>
+          <Tag href={href}>{text}</Tag>
+        </li>
       ))}
-    </div>
+    </ul>
   )
 }

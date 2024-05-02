@@ -104,3 +104,43 @@ export const getMorePostsWithRenderedMarkdownDescription = async (
 
   return morePosts;
 };
+
+/*-------------------------------- tags ------------------------------*/
+
+export const getAllTags = (posts: Array<CollectionEntry<'blog'>>): string[] => {
+  const allTags = posts.flatMap((post) => [...(post.data.tags ?? [])]);
+  return allTags;
+};
+
+export const getUniqueTags = (posts: Array<CollectionEntry<'blog'>>): string[] => {
+  const uniqueTags = [...new Set([...getAllTags(posts)])];
+  return uniqueTags;
+};
+
+export interface TagWithCount {
+  tag: string;
+  count: number;
+}
+
+export const getSortedUniqueTagsWithCount = (
+  posts: Array<CollectionEntry<'blog'>>
+): TagWithCount[] => {
+  // must have duplicated tags here to calc count
+  const allTags = getAllTags(posts);
+
+  if (!(allTags.length > 0)) return [];
+
+  const tagsMap = allTags.reduce(
+    (acc, tag) => {
+      const index = acc.findIndex((item) => item.tag === tag);
+      if (index === -1) return [...acc, { tag, count: 0 }];
+
+      acc[index].count++;
+      return acc;
+    },
+    <TagWithCount[]>[]
+  );
+
+  const sortedTagsMap = tagsMap.slice().sort((a, b) => b.count - a.count);
+  return sortedTagsMap;
+};
