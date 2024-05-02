@@ -1,0 +1,26 @@
+---
+import Link from '../../components/Link.astro';
+import Heading from '../../components/ui/Heading.astro';
+import Base from '../../layouts/Base.astro';
+import { getAllEntries } from '../../modules/common';
+import { getSortedUniqueCategoriesWithCount } from '../../modules/post';
+
+const posts = await getAllEntries('blog');
+const categoriesWithCount = getSortedUniqueCategoriesWithCount(posts);
+---
+
+<Base title="Categories">
+  <Heading as="h1" align="center">Categories</Heading>
+
+  <section>
+    <ul class="flex flex-wrap gap-2">
+      {
+        categoriesWithCount.map(({ category, count }) => (
+          <li>
+            <Link href={`/categories/${category}`}>{`${category}(${count})`}</Link>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Base>

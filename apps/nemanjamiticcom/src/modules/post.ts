@@ -108,8 +108,8 @@ export const getMorePostsWithRenderedMarkdownDescription = async (
 /*-------------------------------- tags ------------------------------*/
 
 export const getAllTags = (posts: Array<CollectionEntry<'blog'>>): string[] => {
-  const allTags = posts.flatMap((post) => [...post.data.tags]);
-  return allTags;
+  const tags = posts.flatMap((post) => [...post.data.tags]);
+  return tags;
 };
 
 export const getUniqueTags = (posts: Array<CollectionEntry<'blog'>>): string[] => {
@@ -122,15 +122,13 @@ export interface TagWithCount {
   count: number;
 }
 
-export const getSortedUniqueTagsWithCount = (
-  posts: Array<CollectionEntry<'blog'>>
-): TagWithCount[] => {
+export const getSortedUniqueTagsWithCount = (posts: CollectionEntry<'blog'>[]): TagWithCount[] => {
   // must have duplicated tags here to calc count
-  const allTags = getAllTags(posts);
+  const tags = getAllTags(posts);
 
-  if (!(allTags.length > 0)) return [];
+  if (!(tags.length > 0)) return [];
 
-  const tagsMap = allTags.reduce(
+  const tagsWithCount = tags.reduce(
     (acc, tag) => {
       const index = acc.findIndex((item) => item.tag === tag);
       if (index === -1) return [...acc, { tag, count: 0 }];
@@ -141,6 +139,38 @@ export const getSortedUniqueTagsWithCount = (
     <TagWithCount[]>[]
   );
 
-  const sortedTagsMap = tagsMap.slice().sort((a, b) => b.count - a.count);
-  return sortedTagsMap;
+  const sortedTagsWithCount = tagsWithCount.slice().sort((a, b) => b.count - a.count);
+  return sortedTagsWithCount;
+};
+
+/*-------------------------------- categories ------------------------------*/
+
+export const getAllCategories = (posts: Array<CollectionEntry<'blog'>>): string[] =>
+  posts.map((post) => post.data.category).filter(Boolean) as string[];
+
+export const getUniqueCategories = (posts: Array<CollectionEntry<'blog'>>): string[] => {
+  const uniqueCategories = [...new Set([...getAllCategories(posts)])];
+  return uniqueCategories;
+};
+
+export interface CategoryWithCount {
+  category: string;
+  count: number;
+}
+
+export const getSortedUniqueCategoriesWithCount = (
+  posts: CollectionEntry<'blog'>[]
+): CategoryWithCount[] => {
+  const categories = getAllCategories(posts);
+  if (!(categories.length > 0)) return [];
+
+  const uniqueCategories = getUniqueCategories(posts);
+
+  const categoriesWithCount = uniqueCategories.map((category) => {
+    const count = categories.filter((item) => item === category).length;
+    return { category, count };
+  });
+
+  const sortedCategoriesWithCount = categoriesWithCount.slice().sort((a, b) => b.count - a.count);
+  return sortedCategoriesWithCount;
 };

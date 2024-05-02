@@ -5,20 +5,22 @@ import Heading from '../../../components/ui/Heading.astro';
 import Config from '../../../config';
 import Base from '../../../layouts/Base.astro';
 import { getAllEntries } from '../../../modules/common';
-import { getUniqueTags } from '../../../modules/post';
+import { getUniqueCategories } from '../../../modules/post';
 
 import type { GetStaticPathsOptions, Page } from 'astro';
 import type { CollectionEntry } from 'astro:content';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const sortedPosts = await getAllEntries('blog');
+  const posts = await getAllEntries('blog');
+  const uniqueCategories = getUniqueCategories(posts);
 
-  const uniqueTags = getUniqueTags(sortedPosts);
-
-  const pagination = uniqueTags.flatMap((tag) => {
-    const filteredPosts = sortedPosts.filter((post) => post.data.tags.includes(tag));
-    const tagPagination = paginate(filteredPosts, { pageSize: Config.PAGE_SIZE, params: { tag } });
-    return tagPagination;
+  const pagination = uniqueCategories.flatMap((category) => {
+    const filteredPosts = posts.filter((post) => post.data.category?.includes(category));
+    const categoryPagination = paginate(filteredPosts, {
+      pageSize: Config.PAGE_SIZE,
+      params: { category },
+    });
+    return categoryPagination;
   });
 
   pagination.push({ ...pagination[0], params: { ...pagination[0].params, page: '1' } });
@@ -30,10 +32,10 @@ type Props = {
 };
 
 const { page } = Astro.props;
-const { tag } = Astro.params;
+const { category } = Astro.params;
 
 const paginationProps = getPaginationPropsFromPage(page);
-const title = `Tag: ${tag}`;
+const title = `Category: ${category}`;
 ---
 
 <Base title={title}>
