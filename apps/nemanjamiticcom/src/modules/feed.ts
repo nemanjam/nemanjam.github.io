@@ -1,9 +1,9 @@
 import { createMarkdownProcessor } from '@astrojs/markdown-remark';
-import { getCollection } from 'astro:content';
 
 import { Feed } from 'feed';
 
 import Config from '../config';
+import { getAllPosts } from './post';
 
 import type { Item } from 'feed';
 
@@ -34,15 +34,11 @@ export const feed = new Feed({
   author,
 });
 
-const rawPosts = (
-  await getCollection('blog', ({ data }) => {
-    return import.meta.env.DEV || !data.draft;
-  })
-).sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+const sortedRawPosts = await getAllPosts();
 
 const { render: renderMarkdown } = await createMarkdownProcessor({});
 
-for (const post of rawPosts) {
+for (const post of sortedRawPosts) {
   const match = post.slug.match(/^(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})-(?<slug>.+)/);
   if (!match || !post.slug || post.data.draft) {
     continue;

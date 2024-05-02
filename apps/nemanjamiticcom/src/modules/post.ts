@@ -1,4 +1,4 @@
-import { renderMarkdown } from '~/utils/markdown';
+import { renderMarkdown } from '../utils/markdown';
 
 import type { MarkdownProcessorRenderResult } from '@astrojs/markdown-remark';
 import type { MarkdownHeading } from 'astro';
@@ -45,11 +45,6 @@ export const getRandomPosts = (
 
   return shuffledPosts.slice(0, count);
 };
-
-/*-------------------------------- sort ------------------------------*/
-
-export const sortPostsByDateDesc = (posts: CollectionEntry<'blog'>[]) =>
-  posts.slice().sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 /*-------------------------------- Toc headings ------------------------------*/
 

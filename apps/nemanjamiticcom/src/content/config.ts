@@ -17,7 +17,7 @@ export const collections = {
         tags: z.array(z.string()).optional(),
       }),
   }),
-  projects: defineCollection({
+  project: defineCollection({
     schema: ({ image }) =>
       z.object({
         description: z.string().optional(),

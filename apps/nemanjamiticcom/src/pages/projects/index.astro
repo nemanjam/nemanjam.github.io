@@ -1,12 +1,10 @@
 ---
 import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
 
 import Page from '../../layouts/Page.astro';
+import { getAllEntries } from '../../modules/common';
 
-const pages = (await getCollection('projects')).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
+const pages = await getAllEntries('project');
 ---
 
 <Page

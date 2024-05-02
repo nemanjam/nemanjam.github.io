@@ -1,9 +1,9 @@
 ---
-import { getPostSlug } from '../modules/blog-post';
+import { getPostSlug } from '../modules/post';
 import Link from './Link.astro';
 import Prose from './Prose.astro';
 
-import type { CollectionEntryWithRenderedDescription } from '../pages/blog/[slug].astro';
+import type { CollectionEntryWithRenderedDescription } from '../modules/post';
 
 export interface Props {
   morePosts: CollectionEntryWithRenderedDescription[];

@@ -1,21 +1,18 @@
 ---
-import { getCollection } from 'astro:content';
-
 import Pagination from '../../components/Pagination.astro';
 import PostCard from '../../components/PostCard.astro';
 import Heading from '../../components/ui/Heading.astro';
 import Text from '../../components/ui/Text.astro';
 import Config from '../../config';
 import Base from '../../layouts/Base.astro';
-import { sortPostsByDateDesc } from '../../modules/blog-post';
+import { getAllEntries } from '../../modules/common';
 
 import type { GetStaticPathsOptions, Page } from 'astro';
 import type { CollectionEntry } from 'astro:content';
 
 // [page].astro and getStaticPaths because of pagination
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const posts = await getCollection('blog', ({ data }) => !(import.meta.env.PROD && data.draft));
-  const sortedPosts = sortPostsByDateDesc(posts);
+  const sortedPosts = await getAllEntries('blog');
 
   const pagination = paginate(sortedPosts, { pageSize: Config.PAGE_SIZE }); // must take entire config here, interesting
   pagination.push({ params: { page: '1' }, props: pagination[0].props });

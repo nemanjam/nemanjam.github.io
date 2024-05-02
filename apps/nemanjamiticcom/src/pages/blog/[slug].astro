@@ -1,6 +1,5 @@
 ---
 import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
 
 import AuthorMeta from '../../components/AuthorMeta.astro';
 import Link from '../../components/Link.astro';
@@ -11,22 +10,20 @@ import SharePost from '../../components/SharePost.astro';
 import TagList from '../../components/TagList.astro';
 import TocWidget from '../../components/TocWidget.astro';
 import Base from '../../layouts/Base.astro';
+import { getAllEntries } from '../../modules/common';
 import {
   getHeadingsForTableOfContents,
   getMorePostsWithRenderedMarkdownDescription,
   getPostSlug,
   getRandomPosts,
-  sortPostsByDateDesc,
-} from '../../modules/blog-post';
+} from '../../modules/post';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog', ({ data }) => {
-    return import.meta.env.DEV || !data.draft;
-  });
+  const sortedPosts = await getAllEntries('blog');
 
-  const paths = sortPostsByDateDesc(posts).map((post) => {
+  const paths = sortedPosts.map((post) => {
     const slug = getPostSlug(post);
-    const randomPosts = getRandomPosts(posts, 4, slug);
+    const randomPosts = getRandomPosts(sortedPosts, 4, slug);
 
     return {
       params: { slug },

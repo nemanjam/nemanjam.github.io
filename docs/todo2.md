@@ -143,7 +143,7 @@ black typography, hover, underline, semantic colors, color palette, text, links
 tailwind config, layer components
 post info component
 improve monorepo
-extract blog from monorepo and separate
+extract blog from monorepo and separate, github actions
     extract functions and jsx in pages/blog/[slug].astro
 
 tags and categories pages
@@ -151,4 +151,9 @@ tags, categories links
 projects, resume md pages
 fix console hydration errors
 prettier remove unused imports
+metadata, og image
+add updatedDate to frontmatter
+tsconfig path aliases @
+extract types folder
+put images in folder beside markdown files
 ```

@@ -1,10 +1,10 @@
 ---
-import { getCollection } from 'astro:content';
-
 import Projects from '../../layouts/Projects.astro';
+import { getAllEntries } from '../../modules/common';
 
 export async function getStaticPaths() {
-  const pages = await getCollection('projects');
+  const pages = await getAllEntries('project');
+
   return pages.map((page) => ({
     params: { slug: page.slug },
     props: { page },
