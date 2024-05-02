@@ -15,7 +15,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const uniqueCategories = getUniqueCategories(posts);
 
   const pagination = uniqueCategories.flatMap((category) => {
-    const filteredPosts = posts.filter((post) => post.data.category?.includes(category));
+    const filteredPosts = posts.filter((post) => post.data.category === category);
     const categoryPagination = paginate(filteredPosts, {
       pageSize: Config.PAGE_SIZE,
       params: { category },
