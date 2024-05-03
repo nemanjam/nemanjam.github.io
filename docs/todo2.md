@@ -164,5 +164,9 @@ put images in folder beside markdown files
 add updatedDate to frontmatter and to schema
 default description empty string, improve zod schema
 put default instead of optional in zod schema
+hashnode, dev.to za dizajn
+table of contents and image width in blog post
+astro transitions
+clean up my ui/Text ui/Heading components - te su za sajt? gde nije prose md, bolje @layer
 ----
 ```

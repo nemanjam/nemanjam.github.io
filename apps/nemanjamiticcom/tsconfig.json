@@ -7,9 +7,19 @@
     "jsxImportSource": "solid-js",
     "noEmit": true,
     "skipLibCheck": true,
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {
-      "~/*": ["src/*"]
+      "@/components/*": ["components/*"],
+      "@/content/*": ["content/*"],
+      "@/icons/*": ["icons/*"],
+      "@/images/*": ["images/*"],
+      "@/labs/*": ["labs/*"],
+      "@/layouts/*": ["layouts/*"],
+      "@/modules/*": ["modules/*"],
+      "@/pages/*": ["pages/*"],
+      "@/styles/*": ["styles/*"],
+      "@/utils/*": ["utils/*"],
+      "@/config": ["config.ts"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.astro"],
