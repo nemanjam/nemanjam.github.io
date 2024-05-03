@@ -5,17 +5,17 @@
   .bustout {
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
+    transform: translateX(calc(50vw - 50%));
     width: 80vw;
     max-width: 1280px;
-    transform: translateX(calc(50vw - 50%));
   }
 
   .bustout-sm {
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
+    transform: translateX(calc(50vw - 50%));
     width: 60vw;
     max-width: 1024px;
-    transform: translateX(calc(50vw - 50%));
   }
 
   .shape-circle {

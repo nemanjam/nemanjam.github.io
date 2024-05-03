@@ -1,3 +1,5 @@
+/* add typography styles for my components here, same as prose-slate, h1, h2, body... */
+
 @layer base {
   [id] {
     position: relative;
