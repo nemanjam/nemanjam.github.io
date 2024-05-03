@@ -37,9 +37,9 @@ export const getRandomPosts = (
   if (!(filteredPosts.length > 0)) return [];
 
   const shuffledPosts = filteredPosts
-    .map((value) => ({ value, sort: Math.random() }))
+    .map((post) => ({ post, sort: Math.random() }))
     .sort((a, b) => a.sort - b.sort)
-    .map(({ value }) => value);
+    .map(({ post }) => post);
 
   if (shuffledPosts.length < count) return shuffledPosts;
 

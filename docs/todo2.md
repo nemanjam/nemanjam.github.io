@@ -146,18 +146,23 @@ improve monorepo
 extract blog from monorepo and separate, github actions
     extract functions and jsx in pages/blog/[slug].astro
 
-tags and categories pages
-tags, categories links
+    tags and categories pages
+    tags, categories links
+breadcrumb component for tags and categories
 projects, resume md pages
 fix console hydration errors
 prettier remove unused imports
+----
 metadata, og image
-add updatedDate to frontmatter and to schema
-default description empty string, improve zod schema
+meta for each page - title...
+sitemap.xml
+----
 tsconfig path aliases @
 extract types folder
 put images in folder beside markdown files
+----
+add updatedDate to frontmatter and to schema
+default description empty string, improve zod schema
 put default instead of optional in zod schema
-breadcrumb component for tags and categories
-meta for each page - title...
+----
 ```
