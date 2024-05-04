@@ -11,6 +11,7 @@
     "dev": "turbo run dev --parallel",
     "dev:nmc": "turbo run @apps/nemanjamiticcom#dev",
     "build:nmc": "turbo run @apps/nemanjamiticcom#build",
+    "sync:nmc": "turbo run @apps/nemanjamiticcom#sync",
     "manypkg:check": "manypkg check",
     "manypkg:fix": "manypkg fix",
     "lint": "turbo run lint",

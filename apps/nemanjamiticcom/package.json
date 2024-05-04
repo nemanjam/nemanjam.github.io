@@ -8,6 +8,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "sync": "astro sync",
     "lint": "eslint-config",
     "format": "prettier-config",
     "check-types": "tsc --noEmit --pretty"
