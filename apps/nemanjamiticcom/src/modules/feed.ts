@@ -3,7 +3,7 @@ import { createMarkdownProcessor } from '@astrojs/markdown-remark';
 import { Feed } from 'feed';
 
 import Config from '../config';
-import { getAllPosts } from './post';
+import { getAllEntries } from './common';
 
 import type { Item } from 'feed';
 
@@ -34,7 +34,7 @@ export const feed = new Feed({
   author,
 });
 
-const sortedRawPosts = await getAllPosts();
+const sortedRawPosts = await getAllEntries('blog');
 
 const { render: renderMarkdown } = await createMarkdownProcessor({});
 
