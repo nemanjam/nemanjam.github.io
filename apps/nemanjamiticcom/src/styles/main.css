@@ -6,5 +6,6 @@
 @import './themes.css';
 
 @import './tw-base.css';
+@import './code-block.css';
 /* @import './tw-components.css'; */
 @import './tw-utilities.css';

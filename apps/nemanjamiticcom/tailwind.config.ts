@@ -17,6 +17,11 @@ const config: Config = {
       4: '4',
       8: '8',
     },
+    // must not use extend, will add xs to the end
+    screens: {
+      xs: '475px',
+      ...defaultTheme.screens,
+    },
     extend: {
       fontFamily: {
         sans: ['Inter Variable', 'Inter', ...defaultTheme.fontFamily.sans],

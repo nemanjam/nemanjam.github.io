@@ -169,4 +169,8 @@ table of contents and image width in blog post
 astro transitions
 clean up my ui/Text ui/Heading components - te su za sajt? gde nije prose md, bolje @layer
 ----
+add few color themes, and design css to support it
+zapravo i routed pages (about, home...) use markdown and prose
+neka description bude string, a ne nested html da moze bez prose
+zapravo i pages su u .mdx, jako malo p i h1, h2 su van mdx i prose, samo navbar i par komponenti
 ```
