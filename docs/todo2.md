@@ -173,4 +173,11 @@ add few color themes, and design css to support it
 zapravo i routed pages (about, home...) use markdown and prose
 neka description bude string, a ne nested html da moze bez prose
 zapravo i pages su u .mdx, jako malo p i h1, h2 su van mdx i prose, samo navbar i par komponenti
+1 tag (h1, p) - css klasa, vise html tagova - komponenta // zapazi
+extract routes constants
+rename blog collection to post, post, project
+replace relative paths in imports
+implement projects layout
+extract getStaticPaths body
+handle layouts and metadata properly
 ```

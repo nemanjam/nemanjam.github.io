@@ -15,7 +15,9 @@ export interface Props {
   total: number;
 }
 
-export const getPaginationPropsFromPage = (page: Page<CollectionEntry<'blog'>>): Props => ({
+export const getPaginationPropsFromPage = (
+  page: Page<CollectionEntry<'blog' | 'project'>>
+): Props => ({
   nextUrl: page.url.next,
   prevUrl: page.url.prev,
   current: page.currentPage,

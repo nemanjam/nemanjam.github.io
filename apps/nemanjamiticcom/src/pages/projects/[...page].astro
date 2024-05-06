@@ -1,0 +1,68 @@
+---
+import { Image } from 'astro:assets';
+
+import PageLayout from '@/layouts/Page.astro';
+import Pagination, { getPaginationPropsFromPage } from '@/components/Pagination.astro';
+import Config from '../../config';
+import { getAllEntries } from '../../modules/common';
+
+import type { GetStaticPathsOptions, Page } from 'astro';
+import type { CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const sortedProjects = await getAllEntries('project');
+
+  const pagination = paginate(sortedProjects, { pageSize: Config.PAGE_SIZE });
+  pagination.push({ params: { page: '1' }, props: pagination[0].props });
+  return pagination;
+}
+
+type Props = {
+  page: Page<CollectionEntry<'project'>>;
+};
+
+// page from pagination
+const { page } = Astro.props;
+
+const paginationProps = getPaginationPropsFromPage(page);
+---
+
+{/* list, no pagination */}
+
+<PageLayout
+  content={{
+    title: 'Projects',
+    description: 'Showcasing web experiments and projects from Paul Armstrong.',
+  }}
+>
+  <p>A showcase of experiments and projects.</p>
+
+  <div class="not-prose">
+    <ul class="grid auto-cols-fr grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 md:grid-cols-3">
+      {
+        page.data.map((project) => (
+          <li>
+            <a href={`/projects/${project.slug}/`} class="group h-full">
+              <div class="flex flex-col gap-2">
+                <div class="pointer-events-none flex h-full items-center justify-center justify-self-stretch overflow-hidden rounded border border-slate-200 bg-slate-100 group-hover:shadow group-hover:shadow-blue-500/30 group-active:shadow-inner dark:border-slate-600 dark:bg-slate-700">
+                  <div class="w-full blur-[1px] grayscale transition duration-150 group-hover:blur-none group-hover:grayscale-0">
+                    <Image src={project.data.heroImage} width={400} height={200} alt="" />
+                  </div>
+                </div>
+                <div>
+                  <div class="text-sm font-medium">{project.data.title}</div>
+                  {project.data.description ? (
+                    <div class="text-xs text-slate-500 dark:text-slate-400">
+                      {project.data.description}
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <Pagination {...paginationProps} />
+  </div>
+</PageLayout>
