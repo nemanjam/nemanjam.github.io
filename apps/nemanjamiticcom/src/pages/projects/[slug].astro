@@ -5,10 +5,12 @@ import Projects from '../../layouts/Projects.astro';
 export async function getStaticPaths() {
   const pages = await getAllProjects();
 
-  return pages.map((page) => ({
+  const paths = pages.map((page) => ({
     params: { slug: page.slug },
     props: { page },
   }));
+
+  return paths;
 }
 
 const {

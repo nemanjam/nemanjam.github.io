@@ -4,14 +4,14 @@ import Link from './Link.astro';
 
 interface RequiredProps {
   file: string;
-  pubDate: Date;
+  publishDate: Date;
   updatedDate: Date;
   readingTime: { minutes: number; words: number };
 }
 
 export interface Props extends Partial<RequiredProps> {}
 
-const { file, pubDate, updatedDate, readingTime } = Astro.props as Props;
+const { file, publishDate, updatedDate, readingTime } = Astro.props as Props;
 
 const shouldDisplay = Object.values(Astro.props).some(Boolean);
 ---
@@ -24,11 +24,11 @@ const shouldDisplay = Object.values(Astro.props).some(Boolean);
       transition:animate="fade"
     >
       <ul class="flex flex-row flex-wrap justify-between gap-4 text-blue-900 dark:text-blue-100">
-        {pubDate && (
+        {publishDate && (
           <li>
             <b class="me-2 inline-block">Published:</b>
-            <time itemprop="datePublished" datetime={formatDateIso(pubDate)}>
-              {formatDate(pubDate)}
+            <time itemprop="datePublished" datetime={formatDateIso(publishDate)}>
+              {formatDate(publishDate)}
             </time>
           </li>
         )}

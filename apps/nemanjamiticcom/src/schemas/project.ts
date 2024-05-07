@@ -5,7 +5,7 @@ import type { SchemaContext } from 'astro:content';
 export const projectSchema = ({ image }: SchemaContext) =>
   z.object({
     title: z.string(),
-    pubDate: z.coerce.date(),
+    publishDate: z.coerce.date(),
     description: z.string().optional(),
     heroImage: image(),
     herAlt: z.string().optional(),

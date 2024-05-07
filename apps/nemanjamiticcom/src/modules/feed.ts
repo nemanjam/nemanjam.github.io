@@ -57,10 +57,10 @@ for (const post of sortedRawPosts) {
     description,
     id: url,
     link: url,
-    date: post.data.pubDate,
-    published: post.data.pubDate,
+    date: post.data.publishDate,
+    published: post.data.publishDate,
     author: [author],
-    copyright: copyright(post.data.pubDate),
+    copyright: copyright(post.data.publishDate),
     content,
   };
   if (post.data.heroImage?.src) {

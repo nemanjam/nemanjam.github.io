@@ -161,7 +161,7 @@ sitemap.xml
 extract types folder
 put images in folder beside markdown files
 ----
-add updatedDate to frontmatter and to schema
+    add updatedDate to frontmatter and to schema
 default description empty string, improve zod schema
 put default instead of optional in zod schema
 hashnode, dev.to za dizajn komponenti
@@ -174,14 +174,14 @@ zapravo i routed pages (about, home...) use markdown and prose
 neka description bude string, a ne nested html da moze bez prose
 zapravo i pages su u .mdx, jako malo p i h1, h2 su van mdx i prose, samo navbar i par komponenti
 1 tag (h1, p) - css klasa, vise html tagova - komponenta // zapazi
-extract routes constants
-rename blog collection to post, post, project
+    extract routes constants
+    rename blog collection to post, post, project
 replace relative paths in imports
 implement projects layout
-extract getStaticPaths body
+    extract getStaticPaths body // not possible, it has filters and logic
 handle layouts and metadata properly
 line-clamp-3 for description
-write stylesheet as blog post, cactus
+write styleguide as blog post, cactus
 images folder?
 loaders and skeletons
 fix layouts structure
@@ -201,13 +201,13 @@ import { Picture } from "astro:assets"; ??
 -----
 // paularmstrong.dev
 astro transitions
-mermaid md plugin for diagrams
+mermaid md plugin for diagrams, client <script />
 plugins/remark-mermaid.ts
 "mermaid": "^10.8.0",
 "rehype-mermaid": "^2.1.0",
 visual je prilika za originalan blog, lydia hallie
 -------------
-image as object in post schema
+image as object in post schema, arg in function_, maybe not bad
 reminder - run yarn sync:nmc when updating schemas or types
 nijedan nema routing /blog/tags/[tag] svi imaju /tags/[tag]
 zapravo samo astrowind ima nested tags i categories rute

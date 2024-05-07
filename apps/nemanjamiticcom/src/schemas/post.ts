@@ -15,7 +15,7 @@ const removeDuplicatesAndToLowerCase = (items: string[]) => {
 // schema and collection are separate
 export const postSchema = ({ image }: SchemaContext) =>
   z.object({
-    pubDate: z.coerce.date(),
+    publishDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
     title: z.string(),
     description: z.string().optional(),

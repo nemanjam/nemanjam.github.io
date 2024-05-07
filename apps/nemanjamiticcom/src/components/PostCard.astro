@@ -21,7 +21,7 @@ export interface Props {
 const { post } = Astro.props;
 const {
   draft,
-  pubDate,
+  publishDate,
   title,
   heroImage,
   heroAlt = '',
@@ -70,8 +70,8 @@ const slug = getPostSlug(post);
     <div class="flex flex-col gap-2">
       {/* date, category */}
       <div class="flex items-center gap-2 leading-4 uppercase font-semibold">
-        <time class="text-captions" datetime={formatDateIso(pubDate)} itemprop="datePublished">
-          {formatDate(pubDate)}
+        <time class="text-captions" datetime={formatDateIso(publishDate)} itemprop="datePublished">
+          {formatDate(publishDate)}
         </time>
         {
           category && (

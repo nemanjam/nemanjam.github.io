@@ -38,7 +38,7 @@ const { id, data, render, randomPosts } = Astro.props;
 const {
   draft,
   title,
-  pubDate,
+  publishDate,
   updatedDate,
   description,
   toc,
@@ -79,7 +79,7 @@ const morePosts = await getMorePostsWithRenderedMarkdownDescription(randomPosts)
       <TagList tags={tags} marginY />
       <PageInfo
         file={`src/content/blog/${id}`}
-        pubDate={pubDate}
+        publishDate={publishDate}
         updatedDate={updatedDate}
         readingTime={readingTime}
       />

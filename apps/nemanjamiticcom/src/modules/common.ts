@@ -8,7 +8,7 @@ export interface GetAllEntriesOptions {
   skipSort?: boolean;
 }
 
-/** Sorts by pubDate desc by default. */
+/** Sorts by publishDate desc by default. */
 export const getAllEntries = async <T extends CollectionKey>(
   collectionName: T,
   options?: GetAllEntriesOptions
@@ -26,7 +26,7 @@ export const getAllEntries = async <T extends CollectionKey>(
   return sortedEntries;
 };
 
-/*-------------------------------- sort by pubDate ------------------------------*/
+/*-------------------------------- sort by publishDate ------------------------------*/
 
 export const sortEntriesByDateDesc = <T extends CollectionKey>(entries: CollectionEntry<T>[]) =>
-  entries.slice().sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  entries.slice().sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());

@@ -18,12 +18,12 @@ export const getAllPosts = () => getAllEntries(COLLECTIONS.POST);
 export const getPostSlug = (post: PostCollection) => {
   const {
     slug,
-    data: { pubDate },
+    data: { publishDate },
   } = post;
 
-  const year = pubDate.getFullYear();
-  const month = padTwo(pubDate.getUTCMonth() + 1);
-  const day = padTwo(pubDate.getUTCDate());
+  const year = publishDate.getFullYear();
+  const month = padTwo(publishDate.getUTCMonth() + 1);
+  const day = padTwo(publishDate.getUTCDate());
 
   const resultSlug = `${year}-${month}-${day}-${slug}`;
   return resultSlug;
