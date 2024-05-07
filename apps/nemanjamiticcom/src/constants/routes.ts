@@ -1,15 +1,15 @@
 export const ROUTES = {
-  SITE: {
-    HOME: '/',
-    BLOG: '/blog/',
-    PROJECTS: '/projects/',
-    ABOUT: '/about/',
-    TAGS: '/blog/tags/',
-    CATEGORIES: '/blog/categories/',
-    DRAFTS: '/blog/drafts/',
-    _404: '/404/',
-    _500: '/500/',
-  },
+  HOME: '/',
+  BLOG: '/blog/',
+  PROJECTS: '/projects/',
+  ABOUT: '/about/',
+  RESUME: '/resume/',
+  // make it /blog/tags/
+  TAGS: '/tags/',
+  CATEGORIES: '/categories/',
+  DRAFTS: '/drafts/',
+  _404: '/404/',
+  _500: '/500/',
   STATIC: {
     IMAGES: '/images/',
   },

@@ -206,4 +206,7 @@ plugins/remark-mermaid.ts
 "mermaid": "^10.8.0",
 "rehype-mermaid": "^2.1.0",
 visual je prilika za originalan blog, lydia hallie
+-------------
+image as object in post schema
+reminder - run yarn sync:nmc when updating schemas or types
 ```

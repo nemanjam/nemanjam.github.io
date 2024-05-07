@@ -10,8 +10,8 @@ import SharePost from '../../components/SharePost.astro';
 import TagList from '../../components/TagList.astro';
 import TocWidget from '../../components/TocWidget.astro';
 import Base from '../../layouts/Base.astro';
-import { getAllEntries } from '../../modules/common';
 import {
+  getAllPosts,
   getHeadingsForTableOfContents,
   getMorePostsWithRenderedMarkdownDescription,
   getPostSlug,
@@ -19,7 +19,7 @@ import {
 } from '../../modules/post';
 
 export async function getStaticPaths() {
-  const sortedPosts = await getAllEntries('blog');
+  const sortedPosts = await getAllPosts();
 
   const paths = sortedPosts.map((post) => {
     const slug = getPostSlug(post);

@@ -1,3 +1,5 @@
+import { ROUTES } from './routes';
+
 export interface NavigationItem {
   title: string;
   path: string;
@@ -6,26 +8,26 @@ export interface NavigationItem {
 export const NAVIGATION_ITEMS: NavigationItem[] = [
   {
     title: 'Blog',
-    path: '/blog/',
+    path: ROUTES.BLOG,
   },
   {
     title: 'Projects',
-    path: '/projects/',
+    path: ROUTES.PROJECTS,
   },
   {
     title: 'Tags',
-    path: '/tags/',
+    path: ROUTES.TAGS,
   },
   {
     title: 'Categories',
-    path: '/categories/',
+    path: ROUTES.CATEGORIES,
   },
   {
     title: 'About',
-    path: '/about/',
+    path: ROUTES.ABOUT,
   },
   {
     title: 'Resume',
-    path: '/resume/',
+    path: ROUTES.RESUME,
   },
 ] as const;

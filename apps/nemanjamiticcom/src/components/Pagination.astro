@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import Button from './Button.astro';
 
 import type { Page } from 'astro';
-import type { CollectionEntry } from 'astro:content';
+import type { AnyCollection } from '../types/common';
 
 export interface Props {
   prevUrl?: string | undefined;
@@ -15,9 +15,7 @@ export interface Props {
   total: number;
 }
 
-export const getPaginationPropsFromPage = (
-  page: Page<CollectionEntry<'blog' | 'project'>>
-): Props => ({
+export const getPaginationPropsFromPage = (page: Page<AnyCollection>): Props => ({
   nextUrl: page.url.next,
   prevUrl: page.url.prev,
   current: page.currentPage,

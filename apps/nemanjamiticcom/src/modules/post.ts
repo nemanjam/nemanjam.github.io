@@ -1,14 +1,21 @@
+import { COLLECTIONS } from 'constants/collections';
+
 import { renderMarkdown } from '../utils/markdown';
+import { getAllEntries } from './common';
 
 import type { MarkdownProcessorRenderResult } from '@astrojs/markdown-remark';
 import type { MarkdownHeading } from 'astro';
-import type { CollectionEntry } from 'astro:content';
+import type { PostCollection } from '../types/post';
 
 const padTwo = (num: number) => `${num}`.padStart(2, '0');
 
+/*-------------------------------- getAllPosts ------------------------------*/
+
+export const getAllPosts = () => getAllEntries(COLLECTIONS.POST);
+
 /*-------------------------------- Post slug ------------------------------*/
 
-export const getPostSlug = (post: CollectionEntry<'blog'>) => {
+export const getPostSlug = (post: PostCollection) => {
   const {
     slug,
     data: { pubDate },
@@ -26,10 +33,10 @@ export const getPostSlug = (post: CollectionEntry<'blog'>) => {
 
 /** Must handle empty array. */
 export const getRandomPosts = (
-  posts: CollectionEntry<'blog'>[],
+  posts: PostCollection[],
   count: number,
   excludeSlug?: string
-): CollectionEntry<'blog'>[] => {
+): PostCollection[] => {
   if (!(posts.length > 0)) return [];
 
   const filteredPosts = posts.filter((post) => getPostSlug(post) !== excludeSlug);
@@ -88,12 +95,12 @@ export const getHeadingsForTableOfContents = (postHeadings: MarkdownHeading[]): 
 /*-------------------------------- More posts ------------------------------*/
 
 // more posts with rendered md description
-export type CollectionEntryWithRenderedDescription = CollectionEntry<'blog'> & {
+export type CollectionEntryWithRenderedDescription = PostCollection & {
   description: MarkdownProcessorRenderResult;
 };
 
 export const getMorePostsWithRenderedMarkdownDescription = async (
-  posts: CollectionEntry<'blog'>[]
+  posts: PostCollection[]
 ): Promise<CollectionEntryWithRenderedDescription[]> => {
   const morePosts: CollectionEntryWithRenderedDescription[] = [];
 
@@ -107,12 +114,12 @@ export const getMorePostsWithRenderedMarkdownDescription = async (
 
 /*-------------------------------- tags ------------------------------*/
 
-export const getAllTags = (posts: Array<CollectionEntry<'blog'>>): string[] => {
+export const getAllTags = (posts: PostCollection[]): string[] => {
   const tags = posts.flatMap((post) => [...post.data.tags]);
   return tags;
 };
 
-export const getUniqueTags = (posts: Array<CollectionEntry<'blog'>>): string[] => {
+export const getUniqueTags = (posts: PostCollection[]): string[] => {
   const uniqueTags = [...new Set([...getAllTags(posts)])];
   return uniqueTags;
 };
@@ -122,7 +129,7 @@ export interface TagWithCount {
   count: number;
 }
 
-export const getSortedUniqueTagsWithCount = (posts: CollectionEntry<'blog'>[]): TagWithCount[] => {
+export const getSortedUniqueTagsWithCount = (posts: PostCollection[]): TagWithCount[] => {
   // must have duplicated tags here to calc count
   const tags = getAllTags(posts);
 
@@ -131,7 +138,7 @@ export const getSortedUniqueTagsWithCount = (posts: CollectionEntry<'blog'>[]): 
   const tagsWithCount = tags.reduce(
     (acc, tag) => {
       const index = acc.findIndex((item) => item.tag === tag);
-      if (index === -1) return [...acc, { tag, count: 0 }];
+      if (index === -1) return [...acc, { tag, count: 1 }];
 
       acc[index].count++;
       return acc;
@@ -145,10 +152,10 @@ export const getSortedUniqueTagsWithCount = (posts: CollectionEntry<'blog'>[]): 
 
 /*-------------------------------- categories ------------------------------*/
 
-export const getAllCategories = (posts: Array<CollectionEntry<'blog'>>): string[] =>
+export const getAllCategories = (posts: PostCollection[]): string[] =>
   posts.map((post) => post.data.category).filter(Boolean) as string[];
 
-export const getUniqueCategories = (posts: Array<CollectionEntry<'blog'>>): string[] => {
+export const getUniqueCategories = (posts: PostCollection[]): string[] => {
   const uniqueCategories = [...new Set([...getAllCategories(posts)])];
   return uniqueCategories;
 };
@@ -159,7 +166,7 @@ export interface CategoryWithCount {
 }
 
 export const getSortedUniqueCategoriesWithCount = (
-  posts: CollectionEntry<'blog'>[]
+  posts: PostCollection[]
 ): CategoryWithCount[] => {
   const categories = getAllCategories(posts);
   if (!(categories.length > 0)) return [];

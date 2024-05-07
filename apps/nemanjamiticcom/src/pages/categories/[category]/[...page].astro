@@ -4,14 +4,13 @@ import PostCard from '../../../components/PostCard.astro';
 import Heading from '../../../components/ui/Heading.astro';
 import { CONFIG } from '../../../config';
 import Base from '../../../layouts/Base.astro';
-import { getAllEntries } from '../../../modules/common';
-import { getUniqueCategories } from '../../../modules/post';
+import { getAllPosts, getUniqueCategories } from '../../../modules/post';
 
 import type { GetStaticPathsOptions, Page } from 'astro';
-import type { CollectionEntry } from 'astro:content';
+import type { PostCollection } from '../../../types/post';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const posts = await getAllEntries('blog');
+  const posts = await getAllPosts();
   const uniqueCategories = getUniqueCategories(posts);
 
   const pagination = uniqueCategories.flatMap((category) => {
@@ -28,7 +27,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 }
 
 type Props = {
-  page: Page<CollectionEntry<'blog'>>;
+  page: Page<PostCollection>;
 };
 
 const { page } = Astro.props;

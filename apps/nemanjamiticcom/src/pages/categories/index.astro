@@ -2,10 +2,9 @@
 import Link from '../../components/Link.astro';
 import Heading from '../../components/ui/Heading.astro';
 import Base from '../../layouts/Base.astro';
-import { getAllEntries } from '../../modules/common';
-import { getSortedUniqueCategoriesWithCount } from '../../modules/post';
+import { getAllPosts, getSortedUniqueCategoriesWithCount } from '../../modules/post';
 
-const posts = await getAllEntries('blog');
+const posts = await getAllPosts();
 const categoriesWithCount = getSortedUniqueCategoriesWithCount(posts);
 ---
 

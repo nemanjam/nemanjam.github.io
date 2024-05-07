@@ -5,14 +5,14 @@ import Heading from '../../components/ui/Heading.astro';
 import Text from '../../components/ui/Text.astro';
 import { CONFIG } from '../../config';
 import Base from '../../layouts/Base.astro';
-import { getAllEntries } from '../../modules/common';
+import { getAllPosts } from '../../modules/post';
 
 import type { GetStaticPathsOptions, Page } from 'astro';
-import type { CollectionEntry } from 'astro:content';
+import type { PostCollection } from '../../types/post';
 
 // [page].astro and getStaticPaths because of pagination
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const sortedPosts = await getAllEntries('blog');
+  const sortedPosts = await getAllPosts();
 
   const pagination = paginate(sortedPosts, { pageSize: CONFIG.PAGE_SIZE }); // must take entire config here, interesting
   pagination.push({ params: { page: '1' }, props: pagination[0].props });
@@ -20,7 +20,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 }
 
 type Props = {
-  page: Page<CollectionEntry<'blog'>>;
+  page: Page<PostCollection>;
 };
 
 // page from pagination

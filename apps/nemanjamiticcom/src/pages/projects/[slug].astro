@@ -1,9 +1,9 @@
 ---
+import { getAllProjects } from '@/modules/project';
 import Projects from '../../layouts/Projects.astro';
-import { getAllEntries } from '../../modules/common';
 
 export async function getStaticPaths() {
-  const pages = await getAllEntries('project');
+  const pages = await getAllProjects();
 
   return pages.map((page) => ({
     params: { slug: page.slug },

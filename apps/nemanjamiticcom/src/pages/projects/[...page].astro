@@ -1,16 +1,16 @@
 ---
 import { Image } from 'astro:assets';
 
+import { getAllProjects } from '@/modules/project';
 import PageLayout from '@/layouts/Page.astro';
 import Pagination, { getPaginationPropsFromPage } from '@/components/Pagination.astro';
 import { CONFIG } from '../../config';
-import { getAllEntries } from '../../modules/common';
 
 import type { GetStaticPathsOptions, Page } from 'astro';
-import type { CollectionEntry } from 'astro:content';
+import type { ProjectCollection } from '../../types/project';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const sortedProjects = await getAllEntries('project');
+  const sortedProjects = await getAllProjects();
 
   const pagination = paginate(sortedProjects, { pageSize: CONFIG.PAGE_SIZE });
   pagination.push({ params: { page: '1' }, props: pagination[0].props });
@@ -18,7 +18,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 }
 
 type Props = {
-  page: Page<CollectionEntry<'project'>>;
+  page: Page<ProjectCollection>;
 };
 
 // page from pagination

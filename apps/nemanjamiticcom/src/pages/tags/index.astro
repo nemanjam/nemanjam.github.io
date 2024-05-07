@@ -2,10 +2,10 @@
 import TagList from '../../components/TagList.astro';
 import Heading from '../../components/ui/Heading.astro';
 import Base from '../../layouts/Base.astro';
-import { getAllEntries } from '../../modules/common';
-import { getSortedUniqueTagsWithCount } from '../../modules/post';
+import { getAllPosts, getSortedUniqueTagsWithCount } from '../../modules/post';
 
-const allPosts = await getAllEntries('blog');
+const allPosts = await getAllPosts();
+
 const tagsWithCount = getSortedUniqueTagsWithCount(allPosts);
 ---
 

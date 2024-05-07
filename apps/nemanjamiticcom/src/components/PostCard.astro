@@ -10,10 +10,10 @@ import TagList from './TagList.astro';
 import Heading from './ui/Heading.astro';
 import Text from './ui/Text.astro';
 
-import type { CollectionEntry } from 'astro:content';
+import type { PostCollection } from '../types/post';
 
 export interface Props {
-  post: CollectionEntry<'blog'>;
+  post: PostCollection;
 }
 
 const { post } = Astro.props;
