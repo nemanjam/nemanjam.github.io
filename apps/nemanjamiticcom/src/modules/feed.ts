@@ -3,6 +3,7 @@ import { createMarkdownProcessor } from '@astrojs/markdown-remark';
 import { Feed } from 'feed';
 
 import { CONFIG } from '../config';
+import { ROUTES } from '../constants/routes';
 import { getAllPosts } from './post';
 
 import type { Item } from 'feed';
@@ -45,7 +46,7 @@ for (const post of sortedRawPosts) {
   }
   const slug = Object.values(match.groups!).join('/');
 
-  const url = `${SITE_URL}/blog/${slug}/`;
+  const url = `${SITE_URL}${ROUTES.BLOG}${slug}/`;
   const { code: description } = await renderMarkdown(
     `${post.data.description || ''}\n\n[Continue reading…](${url})`
   );

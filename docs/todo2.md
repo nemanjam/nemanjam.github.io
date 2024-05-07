@@ -209,4 +209,6 @@ visual je prilika za originalan blog, lydia hallie
 -------------
 image as object in post schema
 reminder - run yarn sync:nmc when updating schemas or types
+nijedan nema routing /blog/tags/[tag] svi imaju /tags/[tag]
+zapravo samo astrowind ima nested tags i categories rute
 ```

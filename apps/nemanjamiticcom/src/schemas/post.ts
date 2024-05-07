@@ -1,20 +1,8 @@
 import { z } from 'astro:content';
 
+import { TAGS } from '../constants/collections';
+
 import type { SchemaContext } from 'astro:content';
-
-const validTags = [
-  'next.js',
-  'react',
-  'astro',
-  'node',
-  'javascript',
-  'css',
-  'python',
-  'devops',
-  'self-hosting',
-];
-
-const validCategories = ['tutorials', 'tips-and-tricks', 'news', 'showcases', 'tools', 'resources'];
 
 /** lowercase tags for routes */
 const removeDuplicatesAndToLowerCase = (items: string[]) => {
@@ -41,10 +29,8 @@ export const postSchema = ({ image }: SchemaContext) =>
     tags: z
       .array(
         z.string().refine(
-          (tag) => validTags.includes(tag),
-          (tag) => ({
-            message: `'${tag}' is not a valid tag.\nAllowed tags are [ ${validTags.join(', ')} ]\nYou can add more tags in ${import.meta.filename}`,
-          })
+          (tag) => TAGS.includes(tag),
+          (tag) => ({ message: `Invalid tag: ${tag} in the markdown.` })
         )
       )
       // .transform(removeDuplicatesAndToLowerCase) // fix this later

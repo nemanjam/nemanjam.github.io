@@ -1,4 +1,5 @@
 ---
+import { ROUTES } from '../constants/routes';
 import { getPostSlug } from '../modules/post';
 import Link from './Link.astro';
 import Prose from './Prose.astro';
@@ -22,7 +23,11 @@ const { morePosts } = Astro.props;
     {
       morePosts.map((entry) => (
         <li>
-          <Link class="text-xl font-bold" href={`/blog/${getPostSlug(entry)}/`} itemprop="url">
+          <Link
+            class="text-xl font-bold"
+            href={`${ROUTES.BLOG}${getPostSlug(entry)}/`}
+            itemprop="url"
+          >
             {entry.data.title}
           </Link>
           <div class="prose prose-slate line-clamp-2 dark:prose-invert">

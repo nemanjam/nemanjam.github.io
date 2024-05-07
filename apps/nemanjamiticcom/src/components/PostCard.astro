@@ -1,6 +1,8 @@
 ---
 import { Image } from 'astro:assets';
 
+import { ROUTES } from 'constants/routes';
+
 import { getPostSlug } from '../modules/post';
 import { formatDate, formatDateIso } from '../utils/datetime';
 import { renderMarkdown } from '../utils/markdown';
@@ -73,7 +75,7 @@ const slug = getPostSlug(post);
         </time>
         {
           category && (
-            <Link href="#" variant="secondary">
+            <Link href={`${ROUTES.CATEGORIES}${category}`} variant="secondary">
               {category}
             </Link>
           )
@@ -82,6 +84,7 @@ const slug = getPostSlug(post);
 
       {/* title */}
       <Heading as="h2" transitionName={`title-${slug}`}>
+        {/* fix relative path here from tags and categories */}
         <Link href={slug} variant="transparent">
           {title}
           {draft && <sup class="text-sm text-red-400">(draft)</sup>}

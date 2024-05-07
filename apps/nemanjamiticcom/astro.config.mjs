@@ -9,6 +9,7 @@ import { defineConfig } from 'astro/config';
 import { rehypePlugins } from './plugins/rehype-pretty-code.mjs';
 import { remarkReadingTime } from './plugins/remark-reading-time.mjs';
 import { CONFIG } from './src/config';
+import { ROUTES } from './src/constants/routes';
 
 const { SITE_URL } = CONFIG;
 
@@ -39,7 +40,7 @@ export default defineConfig({
       serialize(item) {
         if (item.url.endsWith(SITE_URL)) {
           item.priority = 1.0;
-        } else if (item.url.endsWith(`${SITE_URL}/blog/`)) {
+        } else if (item.url.endsWith(`${SITE_URL}${ROUTES.BLOG}`)) {
           item.changefreq = 'daily';
           item.priority = 0.9;
         }
