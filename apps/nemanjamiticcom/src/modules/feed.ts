@@ -2,12 +2,12 @@ import { createMarkdownProcessor } from '@astrojs/markdown-remark';
 
 import { Feed } from 'feed';
 
-import Config from '../config';
+import { CONFIG } from '../config';
 import { getAllEntries } from './common';
 
 import type { Item } from 'feed';
 
-const { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } = Config;
+const { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } = CONFIG;
 
 const author = {
   name: 'Paul Armstrong',

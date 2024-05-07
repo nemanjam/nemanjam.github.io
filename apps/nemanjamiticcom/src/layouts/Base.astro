@@ -6,7 +6,7 @@ import Header from '../components/Header.astro';
 import SiteWrapper from '../components/SiteWrapper.astro';
 import SkipToMain from '../components/SkipToMain.astro';
 import { Snackbar } from '../components/Snackbar';
-import Config from '../config';
+import { CONFIG } from '../config';
 
 export interface Props {
   title?: string | undefined;
@@ -15,7 +15,7 @@ export interface Props {
 }
 const { title, description, image } = Astro.props;
 
-const { SITE_DESCRIPTION, SITE_TITLE } = Config;
+const { SITE_DESCRIPTION, SITE_TITLE } = CONFIG;
 ---
 
 <html class="scroll-pt-8 scroll-smooth md:scroll-pt-16" lang="en">

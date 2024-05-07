@@ -2,38 +2,12 @@
 import { Icon } from 'astro-icon/components';
 import { Image } from 'astro:assets';
 
-import Config from '../config';
+import { CONFIG } from '../config';
+import { NAVIGATION_ITEMS } from '../constants/navigation';
 import Avatar from '../images/avatar.jpg';
 import Content from './Content.astro';
 import HeaderLink from './HeaderLink.astro';
 import { ThemeSwitcher } from './ThemeSwitcher';
-
-const menuItems: Array<{ title: string; path: string }> = [
-  {
-    title: 'Blog',
-    path: '/blog/',
-  },
-  {
-    title: 'Tags',
-    path: '/tags/',
-  },
-  {
-    title: 'Categories',
-    path: '/categories/',
-  },
-  {
-    title: 'About',
-    path: '/about/',
-  },
-  {
-    title: 'Resume',
-    path: '/resume/',
-  },
-  {
-    title: 'Projects',
-    path: '/projects/',
-  },
-];
 ---
 
 <Content>
@@ -56,7 +30,7 @@ const menuItems: Array<{ title: string; path: string }> = [
               height={96}
               alt="Profile picture"
             />
-            {Config.SITE_TITLE}
+            {CONFIG.SITE_TITLE}
           </a>
         </h1>
         <mobile-button class="md:hidden">
@@ -79,7 +53,7 @@ const menuItems: Array<{ title: string; path: string }> = [
       >
         <ul class="flex gap-1 group-[.menu-open]:flex-col md:!flex-row">
           {
-            menuItems.map(({ title, path }) => (
+            NAVIGATION_ITEMS.map(({ title, path }) => (
               <li>
                 <HeaderLink href={path}>{title}</HeaderLink>
               </li>

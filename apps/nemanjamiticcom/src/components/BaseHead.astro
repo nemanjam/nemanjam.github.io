@@ -1,12 +1,12 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
 
-import Config from '../config';
+import { CONFIG } from '../config';
 
 import '@fontsource-variable/inter/index.css';
 import '../styles/main.css';
 
-const { SITE_URL } = Config;
+const { SITE_URL } = CONFIG;
 
 export interface Props {
   title: string;

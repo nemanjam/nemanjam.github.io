@@ -8,9 +8,9 @@ import { defineConfig } from 'astro/config';
 
 import { rehypePlugins } from './plugins/rehype-pretty-code.mjs';
 import { remarkReadingTime } from './plugins/remark-reading-time.mjs';
-import Config from './src/config';
+import { CONFIG } from './src/config';
 
-const { SITE_URL } = Config;
+const { SITE_URL } = CONFIG;
 
 const remarkPlugins = [remarkReadingTime];
 

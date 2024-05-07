@@ -3,7 +3,7 @@ import Pagination, { getPaginationPropsFromPage } from '../../components/Paginat
 import PostCard from '../../components/PostCard.astro';
 import Heading from '../../components/ui/Heading.astro';
 import Text from '../../components/ui/Text.astro';
-import Config from '../../config';
+import { CONFIG } from '../../config';
 import Base from '../../layouts/Base.astro';
 import { getAllEntries } from '../../modules/common';
 
@@ -14,7 +14,7 @@ import type { CollectionEntry } from 'astro:content';
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const sortedPosts = await getAllEntries('blog');
 
-  const pagination = paginate(sortedPosts, { pageSize: Config.PAGE_SIZE }); // must take entire config here, interesting
+  const pagination = paginate(sortedPosts, { pageSize: CONFIG.PAGE_SIZE }); // must take entire config here, interesting
   pagination.push({ params: { page: '1' }, props: pagination[0].props });
   return pagination;
 }

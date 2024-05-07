@@ -2,7 +2,7 @@
 import Pagination, { getPaginationPropsFromPage } from '../../../components/Pagination.astro';
 import PostCard from '../../../components/PostCard.astro';
 import Heading from '../../../components/ui/Heading.astro';
-import Config from '../../../config';
+import { CONFIG } from '../../../config';
 import Base from '../../../layouts/Base.astro';
 import { getAllEntries } from '../../../modules/common';
 import { getUniqueCategories } from '../../../modules/post';
@@ -17,7 +17,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const pagination = uniqueCategories.flatMap((category) => {
     const filteredPosts = posts.filter((post) => post.data.category === category);
     const categoryPagination = paginate(filteredPosts, {
-      pageSize: Config.PAGE_SIZE,
+      pageSize: CONFIG.PAGE_SIZE,
       params: { category },
     });
     return categoryPagination;

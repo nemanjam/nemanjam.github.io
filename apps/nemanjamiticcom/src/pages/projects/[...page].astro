@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 
 import PageLayout from '@/layouts/Page.astro';
 import Pagination, { getPaginationPropsFromPage } from '@/components/Pagination.astro';
-import Config from '../../config';
+import { CONFIG } from '../../config';
 import { getAllEntries } from '../../modules/common';
 
 import type { GetStaticPathsOptions, Page } from 'astro';
@@ -12,7 +12,7 @@ import type { CollectionEntry } from 'astro:content';
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const sortedProjects = await getAllEntries('project');
 
-  const pagination = paginate(sortedProjects, { pageSize: Config.PAGE_SIZE });
+  const pagination = paginate(sortedProjects, { pageSize: CONFIG.PAGE_SIZE });
   pagination.push({ params: { page: '1' }, props: pagination[0].props });
   return pagination;
 }
