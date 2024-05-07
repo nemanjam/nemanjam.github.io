@@ -1,5 +1,6 @@
+import { postSchema } from '@/schemas/post';
+
 import type { CollectionEntry, z } from 'astro:content';
-import type { postSchema } from '../schemas/post';
 
 export type Post = z.infer<ReturnType<typeof postSchema>> & {
   readingTime: string;

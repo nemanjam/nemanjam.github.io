@@ -1,6 +1,6 @@
 ---
 import { getAllProjects } from '@/modules/project';
-import Projects from '../../layouts/Projects.astro';
+import Projects from '@/layouts/Projects.astro';
 
 export async function getStaticPaths() {
   const pages = await getAllProjects();

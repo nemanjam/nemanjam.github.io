@@ -1,6 +1,6 @@
 import { z } from 'astro:content';
 
-import { TAGS } from '../constants/collections';
+import { TAGS } from '@/constants/collections';
 
 import type { SchemaContext } from 'astro:content';
 

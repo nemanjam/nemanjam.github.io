@@ -8,4 +8,7 @@ light code theme
 blog designs from telegram
 theme icon
 relocate to assets folder, icons, images
+images beside article md
+twMerge instead of clsx
+date-fns umesto pad for getSlug
 ```

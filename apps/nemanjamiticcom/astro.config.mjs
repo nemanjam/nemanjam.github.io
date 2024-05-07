@@ -6,8 +6,10 @@ import tailwind from '@astrojs/tailwind';
 import icon from 'astro-icon';
 import { defineConfig } from 'astro/config';
 
+// must use relative imports, and their entire import subtrees
 import { rehypePlugins } from './plugins/rehype-pretty-code.mjs';
 import { remarkReadingTime } from './plugins/remark-reading-time.mjs';
+// all relative imports in subtree
 import { CONFIG } from './src/config';
 import { ROUTES } from './src/constants/routes';
 

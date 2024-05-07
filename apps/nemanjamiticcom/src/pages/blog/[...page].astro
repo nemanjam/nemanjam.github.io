@@ -1,14 +1,14 @@
 ---
-import Pagination, { getPaginationPropsFromPage } from '../../components/Pagination.astro';
-import PostCard from '../../components/PostCard.astro';
-import Heading from '../../components/ui/Heading.astro';
-import Text from '../../components/ui/Text.astro';
-import { CONFIG } from '../../config';
-import Base from '../../layouts/Base.astro';
-import { getAllPosts } from '../../modules/post';
+import { getAllPosts } from '@/modules/post';
+import Base from '@/layouts/Base.astro';
+import Pagination, { getPaginationPropsFromPage } from '@/components/Pagination.astro';
+import PostCard from '@/components/PostCard.astro';
+import Heading from '@/components/ui/Heading.astro';
+import Text from '@/components/ui/Text.astro';
+import { CONFIG } from '@/config';
 
+import type { PostCollection } from '@/types/post';
 import type { GetStaticPathsOptions, Page } from 'astro';
-import type { PostCollection } from '../../types/post';
 
 // [page].astro and getStaticPaths because of pagination
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {

@@ -3,10 +3,10 @@ import { Icon } from 'astro-icon/components';
 
 import clsx from 'clsx';
 
-import Button from './Button.astro';
+import Button from '@/components/Button.astro';
 
+import type { AnyCollection } from '@/types/common';
 import type { Page } from 'astro';
-import type { AnyCollection } from '../types/common';
 
 export interface Props {
   prevUrl?: string | undefined;

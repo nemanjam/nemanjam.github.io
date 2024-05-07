@@ -1,11 +1,10 @@
-import { COLLECTIONS } from 'constants/collections';
+import { getAllEntries } from '@/modules/common';
+import { COLLECTIONS } from '@/constants/collections';
+import { renderMarkdown } from '@/utils/markdown';
 
-import { renderMarkdown } from '../utils/markdown';
-import { getAllEntries } from './common';
-
+import type { PostCollection } from '@/types/post';
 import type { MarkdownProcessorRenderResult } from '@astrojs/markdown-remark';
 import type { MarkdownHeading } from 'astro';
-import type { PostCollection } from '../types/post';
 
 const padTwo = (num: number) => `${num}`.padStart(2, '0');
 

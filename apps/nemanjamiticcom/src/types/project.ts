@@ -1,5 +1,6 @@
+import { projectSchema } from '@/schemas/project';
+
 import type { CollectionEntry, z } from 'astro:content';
-import type { projectSchema } from '../schemas/project';
 
 export type Project = z.infer<ReturnType<typeof projectSchema>>;
 

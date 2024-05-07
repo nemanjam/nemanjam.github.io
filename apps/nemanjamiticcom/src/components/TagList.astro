@@ -1,9 +1,9 @@
 ---
 import clsx from 'clsx';
 
-import Tag from './Tag.astro';
+import Tag from '@/components/Tag.astro';
 
-import type { TagWithCount } from '../modules/post';
+import type { TagWithCount } from '@/modules/post';
 
 export interface Props extends astroHTML.JSX.BaseHTMLAttributes {
   tags: string[] | TagWithCount[];

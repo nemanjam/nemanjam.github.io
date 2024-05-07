@@ -2,9 +2,9 @@ import { createMarkdownProcessor } from '@astrojs/markdown-remark';
 
 import { Feed } from 'feed';
 
-import { CONFIG } from '../config';
-import { ROUTES } from '../constants/routes';
-import { getAllPosts } from './post';
+import { getAllPosts } from '@/modules/post';
+import { ROUTES } from '@/constants/routes';
+import { CONFIG } from '@/config';
 
 import type { Item } from 'feed';
 

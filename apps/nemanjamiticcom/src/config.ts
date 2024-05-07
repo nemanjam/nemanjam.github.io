@@ -1,3 +1,5 @@
+// all relative imports in config subtree
+
 import { configSchema } from './schemas/config';
 import { validateConfig } from './utils/config';
 

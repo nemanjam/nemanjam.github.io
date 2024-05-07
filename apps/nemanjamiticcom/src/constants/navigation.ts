@@ -1,4 +1,4 @@
-import { ROUTES } from './routes';
+import { ROUTES } from '@/constants/routes';
 
 export interface NavigationItem {
   title: string;

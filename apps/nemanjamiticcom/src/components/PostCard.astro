@@ -1,18 +1,17 @@
 ---
 import { Image } from 'astro:assets';
 
-import { ROUTES } from 'constants/routes';
+import { getPostSlug } from '@/modules/post';
+import Link from '@/components/Link.astro';
+import TagList from '@/components/TagList.astro';
+import Heading from '@/components/ui/Heading.astro';
+import Text from '@/components/ui/Text.astro';
+import { ROUTES } from '@/constants/routes';
+import { formatDate, formatDateIso } from '@/utils/datetime';
+import { renderMarkdown } from '@/utils/markdown';
+import { getRandomLengthSubstring } from '@/utils/strings';
 
-import { getPostSlug } from '../modules/post';
-import { formatDate, formatDateIso } from '../utils/datetime';
-import { renderMarkdown } from '../utils/markdown';
-import { getRandomLengthSubstring } from '../utils/strings';
-import Link from './Link.astro';
-import TagList from './TagList.astro';
-import Heading from './ui/Heading.astro';
-import Text from './ui/Text.astro';
-
-import type { PostCollection } from '../types/post';
+import type { PostCollection } from '@/types/post';
 
 export interface Props {
   post: PostCollection;

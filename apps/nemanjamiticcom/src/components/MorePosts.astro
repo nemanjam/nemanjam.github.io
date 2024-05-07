@@ -1,10 +1,10 @@
 ---
-import { ROUTES } from '../constants/routes';
-import { getPostSlug } from '../modules/post';
-import Link from './Link.astro';
-import Prose from './Prose.astro';
+import { getPostSlug } from '@/modules/post';
+import Link from '@/components/Link.astro';
+import Prose from '@/components/Prose.astro';
+import { ROUTES } from '@/constants/routes';
 
-import type { CollectionEntryWithRenderedDescription } from '../modules/post';
+import type { CollectionEntryWithRenderedDescription } from '@/modules/post';
 
 export interface Props {
   morePosts: CollectionEntryWithRenderedDescription[];

@@ -10,6 +10,7 @@
     "baseUrl": "src",
     "paths": {
       "@/components/*": ["components/*"],
+      "@/constants/*": ["constants/*"],
       "@/content/*": ["content/*"],
       "@/icons/*": ["icons/*"],
       "@/images/*": ["images/*"],
@@ -17,7 +18,9 @@
       "@/layouts/*": ["layouts/*"],
       "@/modules/*": ["modules/*"],
       "@/pages/*": ["pages/*"],
+      "@/schemas/*": ["schemas/*"],
       "@/styles/*": ["styles/*"],
+      "@/types/*": ["types/*"],
       "@/utils/*": ["utils/*"],
       "@/config": ["config.ts"]
     }

@@ -1,7 +1,7 @@
 import { createSignal } from 'solid-js';
 
-import { CONFIG } from '../config';
-import { addToast } from './Snackbar';
+import { addToast } from '@/components/Snackbar';
+import { CONFIG } from '@/config';
 
 import type { Component } from 'solid-js';
 

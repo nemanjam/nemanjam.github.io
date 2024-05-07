@@ -1,5 +1,5 @@
-import { COLLECTIONS } from '../constants/collections';
-import { getAllEntries } from './common';
+import { getAllEntries } from '@/modules/common';
+import { COLLECTIONS } from '@/constants/collections';
 
 /*-------------------------------- getAllProjects ------------------------------*/
 
