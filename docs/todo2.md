@@ -180,4 +180,30 @@ replace relative paths in imports
 implement projects layout
 extract getStaticPaths body
 handle layouts and metadata properly
+line-clamp-3 for description
+write stylesheet as blog post, cactus
+images folder?
+loaders and skeletons
+fix layouts structure
+----
+post - astrowind, cactus
+blog - astro-paper
+description string without md - astrowind, cactus, astropaper
+----
+// billyle.dev, najbolje
+tags validation
+schemas/post, posts/, config
+autoresize image from unsplash setImageProviderParams()
+types
+image u frontmatter mu je ogImage i hero image
+ima autogenerate ogImage with hero image and text
+import { Picture } from "astro:assets"; ??
+-----
+// paularmstrong.dev
+astro transitions
+mermaid md plugin for diagrams
+plugins/remark-mermaid.ts
+"mermaid": "^10.8.0",
+"rehype-mermaid": "^2.1.0",
+visual je prilika za originalan blog, lydia hallie
 ```
