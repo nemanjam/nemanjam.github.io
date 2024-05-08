@@ -2,6 +2,7 @@
 import clsx from 'clsx';
 
 import Tag from '@/components/Tag.astro';
+import { ROUTES } from '@/constants/routes';
 
 import type { TagWithCount } from '@/modules/post';
 
@@ -15,8 +16,8 @@ const { tags = [], marginY = false, class: className, ...props } = Astro.props;
 const tagLinks = tags.map((tagItem) => {
   const tagLink =
     typeof tagItem === 'string'
-      ? { href: `/tags/${tagItem}`, text: `#${tagItem}` }
-      : { href: `/tags/${tagItem.tag}`, text: `#${tagItem.tag}(${tagItem.count})` };
+      ? { href: `${ROUTES.TAGS}${tagItem}`, text: `#${tagItem}` }
+      : { href: `${ROUTES.TAGS}${tagItem.tag}`, text: `#${tagItem.tag}(${tagItem.count})` };
 
   return tagLink;
 });

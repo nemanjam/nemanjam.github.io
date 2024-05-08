@@ -3,7 +3,9 @@ import { Image } from 'astro:assets';
 
 import { getAllProjects } from '@/modules/project';
 import PageLayout from '@/layouts/Page.astro';
+import Link from '@/components/Link.astro';
 import Pagination, { getPaginationPropsFromPage } from '@/components/Pagination.astro';
+import { ROUTES } from '@/constants/routes';
 import { CONFIG } from '@/config';
 
 import type { ProjectCollection } from '@/types/project';
@@ -42,7 +44,7 @@ const paginationProps = getPaginationPropsFromPage(page);
       {
         page.data.map((project) => (
           <li>
-            <a href={`/projects/${project.slug}/`} class="group h-full">
+            <Link href={`${ROUTES.PROJECTS}${project.slug}`} class="group h-full">
               <div class="flex flex-col gap-2">
                 <div class="pointer-events-none flex h-full items-center justify-center justify-self-stretch overflow-hidden rounded border border-slate-200 bg-slate-100 group-hover:shadow group-hover:shadow-blue-500/30 group-active:shadow-inner dark:border-slate-600 dark:bg-slate-700">
                   <div class="w-full blur-[1px] grayscale transition duration-150 group-hover:blur-none group-hover:grayscale-0">
@@ -58,7 +60,7 @@ const paginationProps = getPaginationPropsFromPage(page);
                   ) : null}
                 </div>
               </div>
-            </a>
+            </Link>
           </li>
         ))
       }

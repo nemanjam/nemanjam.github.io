@@ -84,7 +84,7 @@ const slug = getPostSlug(post);
       {/* title */}
       <Heading as="h2" transitionName={`title-${slug}`}>
         {/* fix relative path here from tags and categories */}
-        <Link href={slug} variant="transparent">
+        <Link href={`${ROUTES.BLOG}${slug}`} variant="transparent">
           {title}
           {draft && <sup class="text-sm text-red-400">(draft)</sup>}
         </Link>
