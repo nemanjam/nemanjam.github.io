@@ -15,6 +15,9 @@ extract getLinks functions for href
 ProjectCard component
 ProjectGrid, PostList
 vector hero, 3d grafika
+navbar fullwidth
+giscus comments
+----
 analiziraj layouts u ostalim
 <Section />  za vertical sections, flex-col
 <Container /> za horizontalno centriranje i padding
@@ -34,14 +37,17 @@ main
 h1
 prose - moze klasa, plus <Prose />
 article
-sections - vertical flex-col
+sections, rows - vertical flex-col
 // post item
+hero image
 prose
 PageInfo
 share
 more posts
 // list, grid - post (all, tags, categories), project
 h1, desc
+nema prose
+pagination
 // FullWidth (Project, Labs)
 no container
 ```
