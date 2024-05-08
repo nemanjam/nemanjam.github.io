@@ -9,11 +9,10 @@
     "skipLibCheck": true,
     "baseUrl": "src",
     "paths": {
+      "@/assets/*": ["assets/*"],
       "@/components/*": ["components/*"],
       "@/constants/*": ["constants/*"],
       "@/content/*": ["content/*"],
-      "@/icons/*": ["icons/*"],
-      "@/images/*": ["images/*"],
       "@/labs/*": ["labs/*"],
       "@/layouts/*": ["layouts/*"],
       "@/modules/*": ["modules/*"],

@@ -152,16 +152,16 @@ declare module 'astro:content' {
 } & { render(): Render[".mdx"] };
 };
 "project": {
-"example-project-1.mdx": {
-	id: "example-project-1.mdx";
-  slug: "example-project-1";
+"2024-02-13-example-project-1.mdx": {
+	id: "2024-02-13-example-project-1.mdx";
+  slug: "2024-02-13-example-project-1";
   body: string;
   collection: "project";
   data: InferEntrySchema<"project">
 } & { render(): Render[".mdx"] };
-"example-project-2.mdx": {
-	id: "example-project-2.mdx";
-  slug: "example-project-2";
+"2024-02-15-example-project-2.mdx": {
+	id: "2024-02-15-example-project-2.mdx";
+  slug: "2024-02-15-example-project-2";
   body: string;
   collection: "project";
   data: InferEntrySchema<"project">

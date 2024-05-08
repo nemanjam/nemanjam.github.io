@@ -50,7 +50,9 @@ export default defineConfig({
         return item;
       },
     }),
-    icon(),
+    icon({
+      iconDir: 'src/assets/icons',
+    }),
   ],
   markdown: {
     remarkPlugins,

@@ -43,8 +43,7 @@ module.exports = {
     '<TYPES>^[.]',
     '^@/types',
     '',
-    '^@/images',
-    '^@/icons',
+    '^@/assets',
     '^@/styles',
   ],
 };
