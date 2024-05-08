@@ -191,13 +191,14 @@ blog - astro-paper
 description string without md - astrowind, cactus, astropaper
 ----
 // billyle.dev, najbolje
+animacije tranform, 3d
 tags validation
 schemas/post, posts/, config
 autoresize image from unsplash setImageProviderParams()
 types
 image u frontmatter mu je ogImage i hero image
 ima autogenerate ogImage with hero image and text
-import { Picture } from "astro:assets"; ??
+import { Picture, Image } from "astro:assets"; ??
 -----
 // paularmstrong.dev
 astro transitions
