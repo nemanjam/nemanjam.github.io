@@ -13,4 +13,5 @@ twMerge instead of clsx
 date-fns umesto pad for getSlug
 extract getLinks functions for href
 ProjectCard component
+analiziraj layouts u ostalim
 ```

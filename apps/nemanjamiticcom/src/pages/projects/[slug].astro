@@ -1,6 +1,6 @@
 ---
 import { getAllProjects } from '@/modules/project';
-import Projects from '@/layouts/Projects.astro';
+import ProjectLayout from '@/layouts/Project.astro';
 
 export async function getStaticPaths() {
   const pages = await getAllProjects();
@@ -23,6 +23,6 @@ const { Content } = await render();
 
 {/* project page */}
 
-<Projects title={title} description={description} image={heroImage?.src}>
+<ProjectLayout title={title} description={description} image={heroImage?.src}>
   <Content />
-</Projects>
+</ProjectLayout>
