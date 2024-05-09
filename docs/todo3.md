@@ -17,6 +17,7 @@ ProjectGrid, PostList
 vector hero, 3d grafika
 navbar fullwidth
 giscus comments
+image loader with blur
 ----
 analiziraj layouts u ostalim
 <Section />  za vertical sections, flex-col
@@ -30,7 +31,7 @@ Labs layout - u .md stavlja container i kolone, za proizvoljnu sirinu // zapazi
 import Container from '../../components/Content.astro';
 ------
 // base
-meta head
+meta head - title, description, ogImage
 container - center, max-width, padding, responsive
 main
 // page - za .md stranice
@@ -39,9 +40,10 @@ prose - moze klasa, plus <Prose />
 article
 sections, rows - vertical flex-col
 // post item
-hero image
+hero image,
+h1 title, // nema description ovde
+PageInfo - category, tags, author, date, reading time
 prose
-PageInfo
 share
 more posts
 // list, grid - post (all, tags, categories), project
