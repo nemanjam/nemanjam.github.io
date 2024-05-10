@@ -1,6 +1,6 @@
 import { z } from 'astro:content';
 
-import { TAGS } from '@/constants/collections';
+import { DEFAULTS_POST, TAGS } from '@/constants/collections';
 
 import type { SchemaContext } from 'astro:content';
 
@@ -12,6 +12,8 @@ const removeDuplicatesAndToLowerCase = (items: string[]) => {
   return Array.from(distinctItems);
 };
 
+const { DRAFT, NO_HERO, HERO_IMAGE, HERO_ALT, TOC, CATEGORY } = DEFAULTS_POST;
+
 // schema and collection are separate
 export const postSchema = ({ image }: SchemaContext) =>
   z.object({
@@ -19,13 +21,13 @@ export const postSchema = ({ image }: SchemaContext) =>
     updatedDate: z.coerce.date().optional(),
     title: z.string(),
     description: z.string().optional(),
-    draft: z.boolean().optional(),
     // convert img to object
-    noHero: z.boolean().optional(),
-    heroImage: image().optional(),
-    heroAlt: z.string().optional(),
-    toc: z.boolean().optional(),
-    category: z.string().optional(),
+    noHero: z.boolean().default(NO_HERO),
+    heroImage: image().default(HERO_IMAGE),
+    heroAlt: z.string().default(HERO_ALT),
+    toc: z.boolean().default(TOC),
+    draft: z.boolean().default(DRAFT),
+    category: z.string().default(CATEGORY),
     tags: z
       .array(
         z.string().refine(

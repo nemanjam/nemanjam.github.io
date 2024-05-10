@@ -14,7 +14,6 @@ import MorePosts from '@/components/MorePosts.astro';
 import PostMeta from '@/components/PostMeta.astro';
 import Prose from '@/components/Prose.astro';
 import SharePost from '@/components/SharePost.astro';
-import TagList from '@/components/TagList.astro';
 import TocWidget from '@/components/TocWidget.astro';
 
 export async function getStaticPaths() {
@@ -71,18 +70,16 @@ const postMetaProps = {
     {/* hero image */}
     {
       !noHero && heroImage?.src && (
-        <div class="lg:bustout">
-          <Image
-            src={heroImage}
-            alt={heroAlt ?? ''}
-            fetchpriority="high"
-            loading="eager"
-            width={1280}
-            itemprop="image"
-            class="!mt-0 w-full max-w-none"
-            transition:name={`hero-${slug!.replace(/.*\//, '')}`}
-          />
-        </div>
+        <Image
+          src={heroImage}
+          alt={heroAlt ?? ''}
+          fetchpriority="high"
+          loading="eager"
+          width={1280}
+          itemprop="image"
+          class="!mt-0 w-full max-w-none"
+          transition:name={`hero-${slug!.replace(/.*\//, '')}`}
+        />
       )
     }
     <Prose>

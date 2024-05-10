@@ -46,3 +46,17 @@ export const CATEGORIES = [
     icon: 'mdi:book-open-variant-outline',
   },
 ];
+
+export const DEFAULTS_POST = {
+  NO_HERO: false,
+  HERO_IMAGE: {
+    src: 'images/default/default-hero-image.jpg',
+    height: 800,
+    width: 600,
+    format: 'jpg',
+  },
+  HERO_ALT: 'Hero image',
+  DRAFT: false,
+  CATEGORY: CATEGORIES[0].name,
+  TOC: true,
+} as const;

@@ -6,14 +6,12 @@ import { CATEGORIES } from '@/constants/collections';
 import { ROUTES } from '@/constants/routes';
 import { formatDate, formatDateIso } from '@/utils/datetime';
 
-interface RequiredProps {
+interface Props {
   publishDate: Date;
-  category: string;
-  readingTimeInMinutes: number;
-  updatedDate: Date;
+  category?: string;
+  readingTimeInMinutes?: number;
+  updatedDate?: Date;
 }
-
-export interface Props extends Partial<RequiredProps> {}
 
 const { category, publishDate, updatedDate, readingTimeInMinutes } = Astro.props;
 
