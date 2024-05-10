@@ -1,17 +1,15 @@
 ---
 import { getAllPosts, getSortedUniqueCategoriesWithCount } from '@/modules/post';
-import Base from '@/layouts/Base.astro';
+import List from '@/layouts/List.astro';
 import Link from '@/components/Link.astro';
-import Heading from '@/components/ui/Heading.astro';
 import { ROUTES } from '@/constants/routes';
 
 const posts = await getAllPosts();
 const categoriesWithCount = getSortedUniqueCategoriesWithCount(posts);
+const layoutProps = { title: 'Categories' };
 ---
 
-<Base title="Categories">
-  <Heading as="h1" align="center">Categories</Heading>
-
+<List {...layoutProps}>
   <section>
     <ul class="flex flex-wrap gap-2">
       {
@@ -23,4 +21,4 @@ const categoriesWithCount = getSortedUniqueCategoriesWithCount(posts);
       }
     </ul>
   </section>
-</Base>
+</List>

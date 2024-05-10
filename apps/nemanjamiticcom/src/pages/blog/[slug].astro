@@ -8,7 +8,7 @@ import {
   getPostSlug,
   getRandomPosts,
 } from '@/modules/post';
-import Base from '@/layouts/Base.astro';
+import Centered from '@/layouts/Centered.astro';
 import AuthorMeta from '@/components/AuthorMeta.astro';
 import MorePosts from '@/components/MorePosts.astro';
 import PostMeta from '@/components/PostMeta.astro';
@@ -64,15 +64,15 @@ const postMetaProps = {
 ---
 
 {/* clean up all of this */}
-<Base title={title} description={description} image={heroImage?.src}>
+<Centered title={title} description={description} image={heroImage.src}>
   <article class="mb-12" itemprop="blogPost" itemscope itemtype="http://schema.org/Article">
     <meta itemprop="mainEntityOfPage" content={`${slug}`} />
     {/* hero image */}
     {
-      !noHero && heroImage?.src && (
+      !noHero && heroImage.src && (
         <Image
           src={heroImage}
-          alt={heroAlt ?? ''}
+          alt={heroAlt}
           fetchpriority="high"
           loading="eager"
           width={1280}
@@ -105,4 +105,4 @@ const postMetaProps = {
   </article>
 
   <MorePosts morePosts={morePosts} />
-</Base>
+</Centered>

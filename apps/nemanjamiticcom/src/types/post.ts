@@ -5,5 +5,5 @@ export type PostCollection = CollectionEntry<'post'>;
 // other frontmatter props are in post.data...
 // readingTimes is in post.readingTimes
 export type Post = PostCollection & {
-  readingTime: string;
+  readingTime: number;
 };

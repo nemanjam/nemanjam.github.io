@@ -1,27 +1,26 @@
 ---
-import Base from '@/layouts/Base.astro';
+import Centered from '@/layouts/Centered.astro';
 import Prose from '@/components/Prose.astro';
+import Text from '@/components/ui/Text.astro';
 
-export interface Props {
-  content: {
-    file?: string;
-    title: string;
-    description: string;
-    publishDate?: Date;
-    updatedDate?: Date;
-  };
-}
+import type { BaseProps } from '@/layouts/Base.astro';
 
-const {
-  content: { title, description, updatedDate, file },
-} = Astro.props;
+export interface Props extends BaseProps {}
+
+const props = Astro.props;
+const { title, description } = Astro.props;
 ---
 
-<Base title={title} description={description}>
+<Centered {...props}>
   <Prose>
-    <article>
+    <header>
       <h1>{title}</h1>
+      <Text>
+        {description}
+      </Text>
+    </header>
+    <article>
       <slot />
     </article>
   </Prose>
-</Base>
+</Centered>

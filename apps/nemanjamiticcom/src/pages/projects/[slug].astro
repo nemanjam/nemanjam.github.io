@@ -1,6 +1,6 @@
 ---
 import { getAllProjects } from '@/modules/project';
-import ProjectLayout from '@/layouts/Project.astro';
+import Centered from '@/layouts/Centered.astro';
 
 export async function getStaticPaths() {
   const pages = await getAllProjects();
@@ -13,16 +13,12 @@ export async function getStaticPaths() {
   return paths;
 }
 
-const {
-  data: { title, description, heroImage },
-  render,
-} = Astro.props.page;
+const { data, render } = Astro.props.page;
+const { heroImage } = data;
 
 const { Content } = await render();
 ---
 
-{/* project page */}
-
-<ProjectLayout title={title} description={description} image={heroImage?.src}>
+<Centered {...data} image={heroImage.src}>
   <Content />
-</ProjectLayout>
+</Centered>

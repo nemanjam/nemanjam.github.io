@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 
 import { getAllProjects } from '@/modules/project';
-import PageLayout from '@/layouts/Page.astro';
+import List from '@/layouts/List.astro';
 import Link from '@/components/Link.astro';
 import Pagination, { getPaginationPropsFromPage } from '@/components/Pagination.astro';
 import { ROUTES } from '@/constants/routes';
@@ -27,18 +27,16 @@ type Props = {
 const { page } = Astro.props;
 
 const paginationProps = getPaginationPropsFromPage(page);
+
+const layoutProps = {
+  title: 'Projects',
+  description: 'A showcase of experiments and projects.',
+};
 ---
 
 {/* list, no pagination */}
 
-<PageLayout
-  content={{
-    title: 'Projects',
-    description: 'Showcasing web experiments and projects from Paul Armstrong.',
-  }}
->
-  <p>A showcase of experiments and projects.</p>
-
+<List {...layoutProps}>
   <div class="not-prose">
     <ul class="grid auto-cols-fr grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 md:grid-cols-3">
       {
@@ -67,4 +65,4 @@ const paginationProps = getPaginationPropsFromPage(page);
     </ul>
     <Pagination {...paginationProps} />
   </div>
-</PageLayout>
+</List>

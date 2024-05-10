@@ -59,4 +59,5 @@ add all components to styleguide
 hero image full width
 hashnode PostItem card with details
 header in layout, ListLayout, PostLayout, PageLayout, FullWidthLayout
+fix active navbar item
 ```

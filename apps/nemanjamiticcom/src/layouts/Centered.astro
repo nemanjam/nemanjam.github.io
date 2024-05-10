@@ -1,0 +1,16 @@
+---
+import Base from '@/layouts/Base.astro';
+import Container from '@/components/Container.astro';
+
+import type { BaseProps } from '@/layouts/Base.astro';
+
+export interface Props extends BaseProps {}
+
+const props = Astro.props;
+---
+
+<Base {...props}>
+  <Container>
+    <slot />
+  </Container>
+</Base>
