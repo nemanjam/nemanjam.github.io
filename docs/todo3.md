@@ -42,7 +42,7 @@ sections, rows - vertical flex-col
 // post item
 hero image,
 h1 title, // nema description ovde
-PageInfo - category, tags, author, date, reading time
+PageInfo - category, tags, author, date, reading time - PostMeta
 prose
 share
 more posts

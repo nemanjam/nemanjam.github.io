@@ -1,0 +1,53 @@
+---
+import { Icon } from 'astro-icon/components';
+
+import Link from '@/components/Link.astro';
+import { CATEGORIES } from '@/constants/collections';
+import { ROUTES } from '@/constants/routes';
+import { formatDate, formatDateIso } from '@/utils/datetime';
+
+interface RequiredProps {
+  publishDate: Date;
+  category: string;
+  readingTimeInMinutes: number;
+  updatedDate: Date;
+}
+
+export interface Props extends Partial<RequiredProps> {}
+
+const { category, publishDate, updatedDate, readingTimeInMinutes } = Astro.props as Props;
+
+const categoryIcon = CATEGORIES.find((item) => item.name === category)?.icon;
+
+const shouldDisplay = Object.values(Astro.props).some(Boolean);
+---
+
+{
+  shouldDisplay && (
+    <p aria-label="Post meta" class="not-prose flex flex-row flex-wrap items-center gap-2">
+        {publishDate && (      
+            <Icon name="mdi:access-time" />
+            <time itemprop="datePublished" datetime={formatDateIso(publishDate)}>
+              {formatDate(publishDate)}
+            </time>        
+        )}
+        {category && (  
+          <span>·</span>     
+            <Icon name={categoryIcon} />
+            <Link href={`${ROUTES.CATEGORIES}${category}`}>{category}</Link>       
+        )}
+        {readingTimeInMinutes && (    
+          <span>·</span>     
+            <Icon name="mdi:timer-sand" />
+            <span>{`${Math.round(readingTimeInMinutes)} minutes`}</span>     
+        )}
+        {updatedDate && (    
+            <span>·</span>     
+            <Icon name="mdi:edit-outline" />
+            <time itemprop="dateUpdated" datetime={formatDateIso(updatedDate)}>
+              {formatDate(updatedDate)}
+            </time>         
+        )}
+    </p>
+  )
+}
