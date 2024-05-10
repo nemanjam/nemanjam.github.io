@@ -42,7 +42,8 @@ sections, rows - vertical flex-col
 // post item
 hero image,
 h1 title, // nema description ovde
-PageInfo - category, tags, author, date, reading time - PostMeta
+PostMeta - category, tags, author, date, reading time
+TagList
 prose
 share
 more posts
@@ -52,4 +53,10 @@ nema prose
 pagination
 // FullWidth (Project, Labs)
 no container
+-----------
+twMerge, class_ variants authority
+add all components to styleguide
+hero image full width
+hashnode PostItem card with details
+header in layout, ListLayout, PostLayout, PageLayout, FullWidthLayout
 ```

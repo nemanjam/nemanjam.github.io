@@ -3,11 +3,11 @@ import { Image } from 'astro:assets';
 
 import { getPostSlug } from '@/modules/post';
 import Link from '@/components/Link.astro';
+import PostMeta from '@/components/PostMeta.astro';
 import TagList from '@/components/TagList.astro';
 import Heading from '@/components/ui/Heading.astro';
 import Text from '@/components/ui/Text.astro';
 import { ROUTES } from '@/constants/routes';
-import { formatDate, formatDateIso } from '@/utils/datetime';
 import { renderMarkdown } from '@/utils/markdown';
 import { getRandomLengthSubstring } from '@/utils/strings';
 
@@ -36,6 +36,11 @@ const clippedDescription = getRandomLengthSubstring(description, 100, 50) + '...
 const renderedDescription = await renderMarkdown(clippedDescription);
 
 const slug = getPostSlug(post);
+
+const postMetaProps = {
+  category,
+  publishDate,
+};
 
 // image
 // date, category
@@ -67,19 +72,7 @@ const slug = getPostSlug(post);
   {/* right column */}
   <div class="flex flex-col justify-between md:basis-2/3">
     <div class="flex flex-col gap-2">
-      {/* date, category */}
-      <div class="flex items-center gap-2 leading-4 uppercase font-semibold">
-        <time class="text-captions" datetime={formatDateIso(publishDate)} itemprop="datePublished">
-          {formatDate(publishDate)}
-        </time>
-        {
-          category && (
-            <Link href={`${ROUTES.CATEGORIES}${category}`} variant="secondary">
-              {category}
-            </Link>
-          )
-        }
-      </div>
+      <PostMeta {...postMetaProps} />
 
       {/* title */}
       <Heading as="h2" transitionName={`title-${slug}`}>

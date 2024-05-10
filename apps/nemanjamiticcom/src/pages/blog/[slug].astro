@@ -33,7 +33,7 @@ export async function getStaticPaths() {
   return paths;
 }
 
-const { id, data, render, randomPosts } = Astro.props;
+const { data, render, randomPosts } = Astro.props;
 const {
   draft,
   title,
@@ -68,30 +68,30 @@ const postMetaProps = {
 <Base title={title} description={description} image={heroImage?.src}>
   <article class="mb-12" itemprop="blogPost" itemscope itemtype="http://schema.org/Article">
     <meta itemprop="mainEntityOfPage" content={`${slug}`} />
+    {/* hero image */}
+    {
+      !noHero && heroImage?.src && (
+        <div class="lg:bustout">
+          <Image
+            src={heroImage}
+            alt={heroAlt ?? ''}
+            fetchpriority="high"
+            loading="eager"
+            width={1280}
+            itemprop="image"
+            class="!mt-0 w-full max-w-none"
+            transition:name={`hero-${slug!.replace(/.*\//, '')}`}
+          />
+        </div>
+      )
+    }
     <Prose>
-      <PostMeta {...postMetaProps} />
       <h1 itemprop="name headline" transition:name={`title-${slug!.replace(/.*\//, '')}`}>
         {title}
         {draft ? <sup class="text-red-400">(draft)</sup> : null}
       </h1>
-      <TagList tags={tags} marginY />
-
-      {
-        !noHero && heroImage?.src && (
-          <div class="lg:bustout">
-            <Image
-              src={heroImage}
-              alt={heroAlt ?? ''}
-              fetchpriority="high"
-              loading="eager"
-              width={1280}
-              itemprop="image"
-              class="!mt-0 w-full max-w-none"
-              transition:name={`hero-${slug!.replace(/.*\//, '')}`}
-            />
-          </div>
-        )
-      }
+      <PostMeta {...postMetaProps} />
+      <!-- <TagList tags={tags} marginY /> -->
 
       <AuthorMeta />
 

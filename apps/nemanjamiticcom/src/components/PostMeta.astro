@@ -15,7 +15,7 @@ interface RequiredProps {
 
 export interface Props extends Partial<RequiredProps> {}
 
-const { category, publishDate, updatedDate, readingTimeInMinutes } = Astro.props as Props;
+const { category, publishDate, updatedDate, readingTimeInMinutes } = Astro.props;
 
 const categoryIcon = CATEGORIES.find((item) => item.name === category)?.icon;
 
@@ -38,7 +38,7 @@ const shouldDisplay = Object.values(Astro.props).some(Boolean);
         )}
         {readingTimeInMinutes && (    
           <span>·</span>     
-            <Icon name="mdi:timer-sand" />
+            <Icon name="mdi:book-open-blank-variant-outline" />
             <span>{`${Math.round(readingTimeInMinutes)} minutes`}</span>     
         )}
         {updatedDate && (    
