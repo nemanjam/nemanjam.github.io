@@ -1,16 +1,18 @@
 ---
-import { getAllPosts, getUniqueCategories } from '@/modules/post';
+import { getAllPosts, getPostsWithReadingTimeFromPosts, getUniqueCategories } from '@/modules/post';
 import Base from '@/layouts/Base.astro';
 import Pagination, { getPaginationPropsFromPage } from '@/components/Pagination.astro';
 import PostList from '@/components/PostList.astro';
 import Heading from '@/components/ui/Heading.astro';
 import { CONFIG } from '@/config';
 
-import type { PostCollection } from '@/types/post';
-import type { GetStaticPathsOptions, Page } from 'astro';
+import type { Post } from '@/types/post';
+import type { GetStaticPathsOptions } from 'astro';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const posts = await getAllPosts();
+  const sortedPosts = await getAllPosts();
+  const posts: Post[] = await getPostsWithReadingTimeFromPosts(sortedPosts);
+
   const uniqueCategories = getUniqueCategories(posts);
 
   const pagination = uniqueCategories.flatMap((category) => {
@@ -26,14 +28,8 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   return pagination;
 }
 
-type Props = {
-  page: Page<PostCollection>;
-};
-
 const { page } = Astro.props;
 const { category } = Astro.params;
-
-const posts = page.data;
 
 const paginationProps = getPaginationPropsFromPage(page);
 const title = `Category: ${category}`;

@@ -2,7 +2,7 @@ import { getAllEntries } from '@/modules/common';
 import { COLLECTIONS } from '@/constants/collections';
 import { renderMarkdown } from '@/utils/markdown';
 
-import type { PostCollection } from '@/types/post';
+import type { Post, PostCollection } from '@/types/post';
 import type { MarkdownProcessorRenderResult } from '@astrojs/markdown-remark';
 import type { MarkdownHeading } from 'astro';
 
@@ -11,6 +11,22 @@ const padTwo = (num: number) => `${num}`.padStart(2, '0');
 /*-------------------------------- getAllPosts ------------------------------*/
 
 export const getAllPosts = () => getAllEntries(COLLECTIONS.POST);
+
+export const getPostsWithReadingTimeFromPosts = async (
+  posts: PostCollection[]
+): Promise<Post[]> => {
+  const readingTimePromises = posts.map(async (post) => {
+    const { remarkPluginFrontmatter } = await post.render();
+    const { readingTime } = remarkPluginFrontmatter;
+    return { readingTime };
+  });
+  const readingTimes = await Promise.all(readingTimePromises);
+
+  // other frontmatter props are in post.data...
+  // readingTimes is in post.readingTimes
+  const postsWithReadingTime = posts.map((post, index) => ({ ...post, ...readingTimes[index] }));
+  return postsWithReadingTime;
+};
 
 /*-------------------------------- Post slug ------------------------------*/
 

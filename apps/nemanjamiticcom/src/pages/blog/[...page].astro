@@ -1,5 +1,5 @@
 ---
-import { getAllPosts } from '@/modules/post';
+import { getAllPosts, getPostsWithReadingTimeFromPosts } from '@/modules/post';
 import Base from '@/layouts/Base.astro';
 import Pagination, { getPaginationPropsFromPage } from '@/components/Pagination.astro';
 import PostList from '@/components/PostList.astro';
@@ -7,21 +7,19 @@ import Heading from '@/components/ui/Heading.astro';
 import Text from '@/components/ui/Text.astro';
 import { CONFIG } from '@/config';
 
-import type { PostCollection } from '@/types/post';
-import type { GetStaticPathsOptions, Page } from 'astro';
+import type { Post } from '@/types/post';
+import type { GetStaticPathsOptions } from 'astro';
 
 // [page].astro and getStaticPaths because of pagination
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const sortedPosts = await getAllPosts();
 
-  const pagination = paginate(sortedPosts, { pageSize: CONFIG.PAGE_SIZE }); // must take entire config here, interesting
+  const posts: Post[] = await getPostsWithReadingTimeFromPosts(sortedPosts);
+
+  const pagination = paginate(posts, { pageSize: CONFIG.PAGE_SIZE }); // must take entire config here, interesting
   pagination.push({ params: { page: '1' }, props: pagination[0].props });
   return pagination;
 }
-
-type Props = {
-  page: Page<PostCollection>;
-};
 
 // page from pagination
 const { page } = Astro.props;

@@ -9,11 +9,11 @@ import { formatDate, formatDateIso } from '@/utils/datetime';
 interface Props {
   publishDate: Date;
   category?: string;
-  readingTimeInMinutes?: number;
+  readingTime?: number;
   updatedDate?: Date;
 }
 
-const { category, publishDate, updatedDate, readingTimeInMinutes } = Astro.props;
+const { category, publishDate, updatedDate, readingTime } = Astro.props;
 
 const categoryIcon = CATEGORIES.find((item) => item.name === category)?.icon;
 
@@ -34,10 +34,10 @@ const shouldDisplay = Object.values(Astro.props).some(Boolean);
             <Icon name={categoryIcon} />
             <Link href={`${ROUTES.CATEGORIES}${category}`}>{category}</Link>       
         )}
-        {readingTimeInMinutes && (    
+        {readingTime && (    
           <span>·</span>     
             <Icon name="mdi:book-open-blank-variant-outline" />
-            <span>{`${Math.round(readingTimeInMinutes)} minutes`}</span>     
+            <span>{`${Math.round(readingTime)} minutes`}</span>     
         )}
         {updatedDate && (    
             <span>·</span>     

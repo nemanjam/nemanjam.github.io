@@ -1,10 +1,10 @@
 ---
 import PostItem from '@/components/PostItem.astro';
 
-import type { PostCollection } from '@/types/post';
+import type { Post } from '@/types/post';
 
 export interface Props {
-  posts: PostCollection[];
+  posts: Post[];
 }
 
 const { posts } = Astro.props;

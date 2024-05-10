@@ -1,6 +1,5 @@
 ---
 import Base from '@/layouts/Base.astro';
-import PageInfo from '@/components/PageInfo.astro';
 import Prose from '@/components/Prose.astro';
 
 export interface Props {
@@ -22,9 +21,6 @@ const {
   <Prose>
     <article>
       <h1>{title}</h1>
-
-      <PageInfo file={file} updatedDate={updatedDate} />
-
       <slot />
     </article>
   </Prose>

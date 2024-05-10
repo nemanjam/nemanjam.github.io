@@ -6,7 +6,7 @@ interface RequiredProps {
   file: string;
   publishDate: Date;
   updatedDate: Date;
-  readingTime: { minutes: number; words: number };
+  readingTime: number;
 }
 
 export interface Props extends Partial<RequiredProps> {}
@@ -42,8 +42,7 @@ const shouldDisplay = Object.values(Astro.props).some(Boolean);
         )}
         {readingTime && (
           <li>
-            <b class="me-2 inline-block">Reading time:</b> {Math.round(readingTime.minutes)}{' '}
-            minutes, {readingTime.words} words
+            <b class="me-2 inline-block">Reading time:</b> {Math.round(readingTime)} minutes
           </li>
         )}
         {file && (
