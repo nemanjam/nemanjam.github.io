@@ -60,4 +60,8 @@ hero image full width
 hashnode PostItem card with details
 header in layout, ListLayout, PostLayout, PageLayout, FullWidthLayout
 fix active navbar item
+baseline for layout, w-screen, min-h-screen, tagovi, prouci
+breadcrumb for navigation
+responsive fonts
+<main /> full height screen - header - footer
 ```
