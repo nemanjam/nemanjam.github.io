@@ -64,4 +64,5 @@ baseline for layout, w-screen, min-h-screen, tagovi, prouci
 breadcrumb for navigation
 responsive fonts
 <main /> full height screen - header - footer
+asChild for Container and Prose
 ```

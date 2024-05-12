@@ -1,6 +1,5 @@
 ---
 import Base from '@/layouts/Base.astro';
-import Container from '@/components/Container.astro';
 
 import type { BaseProps } from '@/layouts/Base.astro';
 
@@ -10,7 +9,7 @@ const props = Astro.props;
 ---
 
 <Base {...props}>
-  <Container>
+  <main id="main" class="flex-grow w-full max-w-4xl md:mx-auto px-4 lg:px-0 border border-red-500">
     <slot />
-  </Container>
+  </main>
 </Base>

@@ -30,9 +30,7 @@ const titleTag = title ? `${title} • ${SITE_TITLE}` : SITE_TITLE;
     )}
   >
     <Header />
-    <main id="main" class="flex-grow">
-      <slot />
-    </main>
+    <slot />
     <Footer />
     <Snackbar client:idle />
   </body>
