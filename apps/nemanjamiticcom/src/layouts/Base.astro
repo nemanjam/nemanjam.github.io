@@ -1,4 +1,6 @@
 ---
+import clsx from 'clsx';
+
 import BaseHead from '@/components/BaseHead.astro';
 import Footer from '@/components/Footer.astro';
 import Header from '@/components/Header.astro';
@@ -14,19 +16,21 @@ export interface BaseProps {
 const { SITE_DESCRIPTION, SITE_TITLE } = CONFIG;
 
 const { title, description = SITE_DESCRIPTION, image } = Astro.props as BaseProps;
+const titleTag = title ? `${title} • ${SITE_TITLE}` : SITE_TITLE;
 ---
 
 <html class="scroll-pt-8 scroll-smooth md:scroll-pt-16" lang="en">
-  <BaseHead
-    title={title ? `${title} • ${SITE_TITLE}` : SITE_TITLE}
-    description={description}
-    image={image}
-  />
+  <BaseHead title={titleTag} description={description} image={image} />
   <body
-    class="bg-base-100 transition-colors duration-500 selection:bg-purple-400/60 dark:selection:bg-purple-400/80 dark:selection:text-slate-950"
+    class={clsx(
+      'flex flex-col min-h-screen',
+      'bg-base-100',
+      'transition-colors duration-500',
+      'selection:bg-purple-400/60 dark:selection:bg-purple-400/80 dark:selection:text-slate-950'
+    )}
   >
     <Header />
-    <main id="main">
+    <main id="main" class="flex-grow">
       <slot />
     </main>
     <Footer />
