@@ -8,5 +8,7 @@ const props = Astro.props;
 ---
 
 <Base {...props}>
-  <slot />
+  <main id="main" class="flex-grow w-full">
+    <slot />
+  </main>
 </Base>

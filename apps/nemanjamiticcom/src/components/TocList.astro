@@ -4,7 +4,7 @@ import Link from '@/components/Link.astro';
 export interface Heading {
   text: string;
   slug: string;
-  headings: Array<Heading>;
+  headings: Heading[];
 }
 interface Props {
   headings: Heading[];

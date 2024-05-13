@@ -8,7 +8,7 @@ import {
   getPostSlug,
   getRandomPosts,
 } from '@/modules/post';
-import Centered from '@/layouts/Centered.astro';
+import FullWidth from '@/layouts/FullWidth.astro';
 import AuthorMeta from '@/components/AuthorMeta.astro';
 import MorePosts from '@/components/MorePosts.astro';
 import PostMeta from '@/components/PostMeta.astro';
@@ -64,24 +64,29 @@ const postMetaProps = {
 ---
 
 {/* clean up all of this */}
-<Centered title={title} description={description} image={heroImage.src}>
-  <article class="mb-12" itemprop="blogPost" itemscope itemtype="http://schema.org/Article">
+<FullWidth title={title} description={description} image={heroImage.src}>
+  {/* hero image */}
+  {
+    !noHero && (
+      <Image
+        src={heroImage}
+        alt={heroAlt}
+        fetchpriority="high"
+        loading="eager"
+        width={1280}
+        itemprop="image"
+        class="block w-full h-32 md:h-80 object-cover"
+        transition:name={`hero-${slug!.replace(/.*\//, '')}`}
+      />
+    )
+  }
+  <article
+    class="max-w-4xl md:mx-auto px-4 lg:px-0 py-10 md:py-20"
+    itemprop="blogPost"
+    itemscope
+    itemtype="http://schema.org/Article"
+  >
     <meta itemprop="mainEntityOfPage" content={`${slug}`} />
-    {/* hero image */}
-    {
-      !noHero && heroImage.src && (
-        <Image
-          src={heroImage}
-          alt={heroAlt}
-          fetchpriority="high"
-          loading="eager"
-          width={1280}
-          itemprop="image"
-          class="!mt-0 w-full max-w-none"
-          transition:name={`hero-${slug!.replace(/.*\//, '')}`}
-        />
-      )
-    }
     <Prose>
       <h1 itemprop="name headline" transition:name={`title-${slug!.replace(/.*\//, '')}`}>
         {title}
@@ -105,4 +110,4 @@ const postMetaProps = {
   </article>
 
   <MorePosts morePosts={morePosts} />
-</Centered>
+</FullWidth>
