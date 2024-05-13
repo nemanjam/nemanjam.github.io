@@ -130,6 +130,9 @@ https://github.com/mickasmt/astro-nomy
 // serbian, bezveze, prazno
 https://github.com/ekmas/minimal
 
+// semantic colors explained
+https://github.com/treefarmstudio/odyssey-theme
+
 -----------
 za local state mora react ili solid
 for state between pages nanostore with localStorage

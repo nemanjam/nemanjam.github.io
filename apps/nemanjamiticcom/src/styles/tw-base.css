@@ -11,22 +11,6 @@
     color: var(--content);
   }
 
-  /* 
-  h1 {
-    @apply text-xl xs:text-2xl font-bold;
-    color: var(--headings);
-  }
-
-  h2 {
-    @apply text-lg xs:text-xl font-bold;
-    color: var(--headings);
-  }
-   */
-
-  .prose {
-    @apply outline outline-blue-500;
-  }
-
   h1:not(:is(.prose *) h1) {
     color: var(--headings);
     @apply text-4xl font-bold mb-8 lg:text-5xl;
@@ -36,8 +20,6 @@
   h2:not(:is(.prose *) h2) {
     color: var(--headings);
     @apply text-2xl font-bold mb-4;
-    /*  */
-    @apply outline outline-red-500;
   }
 
   /*
