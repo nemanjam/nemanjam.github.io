@@ -1,6 +1,5 @@
 ---
 import Centered from '@/layouts/Centered.astro';
-import Text from '@/components/ui/Text.astro';
 
 import type { BaseProps } from '@/layouts/Base.astro';
 
@@ -12,9 +11,9 @@ const { title, description } = Astro.props;
 ---
 
 <Centered {...props}>
-  <h1>{title}</h1>
-  <Text>
-    {description}
-  </Text>
-  <slot />
+  <article class="py-10 md:py-20">
+    <h1>{title}</h1>
+    {description && <p>{description}</p>}
+    <slot />
+  </article>
 </Centered>

@@ -1,23 +1,17 @@
 ---
 import Centered from '@/layouts/Centered.astro';
 import Prose from '@/components/Prose.astro';
-import Text from '@/components/ui/Text.astro';
 
 import type { BaseProps } from '@/layouts/Base.astro';
 
 export interface Props extends BaseProps {}
 
 const props = Astro.props;
-const { title, description } = Astro.props;
 ---
 
 <Centered {...props}>
   <Prose>
-    <h1>{title}</h1>
-    <Text>
-      {description}
-    </Text>
-    <article>
+    <article class="py-10 md:py-20">
       <slot />
     </article>
   </Prose>

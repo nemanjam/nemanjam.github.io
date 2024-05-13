@@ -86,9 +86,9 @@ const postMetaProps = {
       </Heading>
 
       {/* description, can have markdown */}
-      <Text transitionName={`content-${slug}`} as="div" color="captions">
+      <div>
         <Fragment set:html={renderedDescription.code} />
-      </Text>
+      </div>
     </div>
 
     {/* tags */}

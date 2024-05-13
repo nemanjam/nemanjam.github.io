@@ -29,7 +29,7 @@
 
   h1:not(:is(.prose *) h1) {
     color: var(--headings);
-    @apply text-4xl font-bold mb-8;
+    @apply text-4xl font-bold mb-8 lg:text-5xl;
   }
 
   /* all h2 that dont have .prose parent */
