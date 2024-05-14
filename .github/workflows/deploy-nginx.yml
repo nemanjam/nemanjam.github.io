@@ -40,7 +40,7 @@ jobs:
 
       # fix this for turbo
       - name: Build nemanjamiticcom
-        run: yarn build:nmc
+        run: yarn build
 
       - name: Clean up website dir
         uses: appleboy/ssh-action@master
@@ -65,10 +65,10 @@ jobs:
           username: ${{ secrets.REMOTE_USERNAME }}
           key: ${{ secrets.REMOTE_KEY_ED25519 }}
           port: ${{ secrets.REMOTE_PORT }}
-          source: 'apps/nemanjamiticcom/dist/'
+          source: 'dist/'
           target: '/home/ubuntu/traefik-proxy/apps/nmc-nginx-with-volume/website'
-          # remove apps/nemanjamiticcom/dist path segments
-          strip_components: 3
+          # remove /dist path segment
+          strip_components: 1
 
           # remove website dir
           # not good, must restart nginx docker every time
