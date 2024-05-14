@@ -20,6 +20,7 @@ permissions:
   pages: write
   id-token: write
 
+# set env vars in Github settings here
 env:
   SITE_URL: 'https://nemanjam.github.io'
 
