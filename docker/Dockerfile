@@ -1,7 +1,5 @@
 # Dockerfile from Astro docs
 
-# adjust for monorepo
-
 FROM node:20.10.0-slim AS base
 WORKDIR /app
 

@@ -67,4 +67,7 @@ responsive fonts
 asChild for Container and Prose
 ----
 update github actions after monorepo
+print commit hash and message in html, node package_
+analytics in BaseHead with goatcounter.com and sentry
+add author email, social networks, name to constants
 ```

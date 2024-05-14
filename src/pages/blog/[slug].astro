@@ -9,7 +9,6 @@ import {
   getRandomPosts,
 } from '@/modules/post';
 import FullWidth from '@/layouts/FullWidth.astro';
-import AuthorMeta from '@/components/AuthorMeta.astro';
 import MorePosts from '@/components/MorePosts.astro';
 import PostMeta from '@/components/PostMeta.astro';
 import Prose from '@/components/Prose.astro';
@@ -94,8 +93,6 @@ const postMetaProps = {
       </h1>
       <PostMeta {...postMetaProps} />
       <!-- <TagList tags={tags} marginY /> -->
-
-      <AuthorMeta />
 
       <div itemprop="articleBody" transition:name={`content-${slug!.replace(/.*\//, '')}`}>
         {/* table of contents */}

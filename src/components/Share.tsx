@@ -72,7 +72,7 @@ async function share(props: Props) {
   if (typeof navigator.share === 'function') {
     try {
       await navigator.share({
-        text: props.text || `${props.title} • Paul Armstrong`,
+        text: props.text || `${props.title} • John Doe`,
         title: props.title,
         url: props.url,
       });

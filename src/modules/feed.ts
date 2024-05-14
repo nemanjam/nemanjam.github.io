@@ -11,12 +11,11 @@ import type { Item } from 'feed';
 const { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } = CONFIG;
 
 const author = {
-  name: 'Paul Armstrong',
-  email: 'me@paularmstrong.dev',
+  name: 'Nemanja Mitic',
+  email: 'email@email.com',
   link: `${SITE_URL}/about`,
 };
-const copyright = (date: Date) =>
-  `&copy;${date.getFullYear()} Paul Armstrong. All rights reserved.`;
+const copyright = (date: Date) => `&copy;${date.getFullYear()} copyright text`;
 
 export const feed = new Feed({
   title: SITE_TITLE,

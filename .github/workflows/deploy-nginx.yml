@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 env:
-  PUBLIC_SITE_HOSTNAME: 'https://nemanjamitic.com'
+  SITE_URL: 'https://nemanjamitic.com'
 
 jobs:
   deploy:

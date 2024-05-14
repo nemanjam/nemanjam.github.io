@@ -6,7 +6,10 @@ import { CONFIG } from '@/config';
 import '@fontsource-variable/inter/index.css';
 import '@/styles/main.css';
 
+import { trimHttpProtocol } from '@/utils/strings';
+
 const { SITE_URL } = CONFIG;
+const domain = trimHttpProtocol(SITE_URL);
 
 export interface Props {
   title: string;
@@ -53,13 +56,13 @@ const { title, description, image = '/images/favicons/og_image_small.jpg' } = As
   <link
     rel="alternate"
     type="application/rss+xml"
-    title="RSS feed for paularmstrong.dev"
+    title={`RSS feed for ${domain}`}
     href={`${SITE_URL}/feed.xml`}
   />
   <link
     rel="alternate"
     type="application/json"
-    title="JSON feed for paularmstrong.dev"
+    title={`JSON feed for ${domain}`}
     href={`${SITE_URL}/feed.json`}
   />
   <link
@@ -68,7 +71,6 @@ const { title, description, image = '/images/favicons/og_image_small.jpg' } = As
     title="Sitemap"
     href={`${SITE_URL}/sitemap-index.xml`}
   />
-  <link rel="author" href={`${SITE_URL}/humans.txt`} />
 
   {/* Open Graph / Facebook */}
   <meta property="og:type" content="website" />
@@ -85,14 +87,13 @@ const { title, description, image = '/images/favicons/og_image_small.jpg' } = As
   <meta property="twitter:image" content={new URL(image, Astro.url)} />
 
   {/* Analytics */}
-  <link rel="preconnect" href="https://gc.zgo.at" />
-  <script
-    async
-    data-goatcounter="https://paularmstrong.goatcounter.com/count"
-    src="https://gc.zgo.at/count.js"></script>
-  <script
-    src="https://js.sentry-cdn.com/9b133389b9a540e49f6c3f76ca7226bf.min.js"
-    crossorigin="anonymous"></script>
+  {
+    /* 
+  <link rel="preconnect" href="set-url-here" />
+  <script async data-goatcounter="set-url-here" src="set-url-here"></script>
+  <script src="set-url-here" crossorigin="anonymous"></script>
+  */
+  }
 
   <ViewTransitions fallback="none" />
 </head>

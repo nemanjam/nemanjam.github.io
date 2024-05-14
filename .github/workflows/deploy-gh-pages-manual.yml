@@ -1,4 +1,4 @@
-name: Deploy GitHub Pages
+name: Deploy to GitHub Pages manually
 
 on:
   push:
@@ -18,28 +18,14 @@ permissions:
   id-token: write
 
 env:
-  PUBLIC_SITE_HOSTNAME: 'https://nemanjam.github.io'
+  SITE_URL: 'https://nemanjam.github.io'
 
 jobs:
-  # build with astro action, no monorepo
-  # build:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout your repository using git
-  #       uses: actions/checkout@v3
-  #     - name: Install, build, and upload your site
-  #       uses: withastro/action@v1
-  #       # args for monorepo?
-  #       with:
-  #         path: apps/nemanjamiticcom
-  #         node-version: 20.10.0
-  #         package-manager: yarn@latest
-
-  build-monorepo:
+  build-manual:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
@@ -51,22 +37,22 @@ jobs:
       - name: Set up Node.js and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: '20.10.0'
+          node-version: '20.12.2'
           registry-url: 'https://registry.yarnpkg.com'
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
       - name: Build nemanjam.github.io
-        run: yarn build:nmc
+        run: yarn build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: ./apps/nemanjamiticcom/dist
+          path: ./dist
 
   deploy:
-    needs: build-monorepo
+    needs: build-manual
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -74,4 +60,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4

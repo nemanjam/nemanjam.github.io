@@ -14,7 +14,7 @@ on:
 env:
   IMAGE_NAME: ${{ github.repository }}
   # set this
-  PUBLIC_SITE_HOSTNAME: 'https://nemanjamitic.com'
+  SITE_URL: 'https://nemanjamitic.com'
 
 jobs:
   build:
