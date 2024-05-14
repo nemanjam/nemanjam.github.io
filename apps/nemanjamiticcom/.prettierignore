@@ -1,0 +1,8 @@
+dist
+node_modules
+.changeset
+yarn.yaml
+.turbo
+.vercel
+.astro
+# *.md

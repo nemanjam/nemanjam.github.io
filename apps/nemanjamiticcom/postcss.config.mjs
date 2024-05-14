@@ -1,1 +1,10 @@
-export { default } from '@repo/tailwind-config/postcss.config.js';
+const config = {
+  plugins: {
+    'postcss-import': {},
+    'tailwindcss/nesting': {},
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+
+export default config;

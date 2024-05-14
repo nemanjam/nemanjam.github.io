@@ -1,15 +1,11 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 
-import sharedConfig from '@repo/tailwind-config/tailwind.config.ts';
-
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
-  presets: [sharedConfig],
   content: ['src/**/*.{astro,md,mdx,tsx}', 'astro.config.mjs'],
   darkMode: ['class', '[data-theme="dark"]'],
-  // from sharedConfig packages/tailwind-config/tailwind.config.ts
-  // plugins: [require('@tailwindcss/typography')],
+  plugins: [require('@tailwindcss/typography')],
   theme: {
     tabSize: {
       1: '1',
