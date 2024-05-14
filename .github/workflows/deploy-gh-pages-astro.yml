@@ -38,7 +38,7 @@ jobs:
         with:
           path: ./
           node-version: 20.12.2
-          package-manager: yarn@latest
+          # package-manager: yarn@latest
 
   deploy:
     needs: build-astro
