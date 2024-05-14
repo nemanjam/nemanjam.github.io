@@ -35,10 +35,10 @@ jobs:
           fetch-depth: 1
       - name: Install, build, and upload your site output
         uses: withastro/action@v2
-        # with:
-        #   path: .
-        #   node-version: 20.12.2
-        #   package-manager: yarn@latest
+        with:
+          path: ./
+          node-version: 20.12.2
+          package-manager: yarn@latest
 
   deploy:
     needs: build-astro
