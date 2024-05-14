@@ -1,5 +1,31 @@
-// Yes this file is intentionally empty!
-// ---
-// Having a blank `tsconfig.json` file prevents TypeScript from crawling up your directory tree
-// and possibly picking up a parent `tsconfig.json` (which, unsurprisingly, is very hard to debug)
-{}
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "astro/tsconfigs/strict",
+  "display": "Default",
+  "esModuleInterop": true,
+  "compilerOptions": {
+    "allowJs": true,
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "noEmit": true,
+    "skipLibCheck": true,
+    "baseUrl": "src",
+    "paths": {
+      "@/assets/*": ["assets/*"],
+      "@/components/*": ["components/*"],
+      "@/constants/*": ["constants/*"],
+      "@/content/*": ["content/*"],
+      "@/labs/*": ["labs/*"],
+      "@/layouts/*": ["layouts/*"],
+      "@/modules/*": ["modules/*"],
+      "@/pages/*": ["pages/*"],
+      "@/schemas/*": ["schemas/*"],
+      "@/styles/*": ["styles/*"],
+      "@/types/*": ["types/*"],
+      "@/utils/*": ["utils/*"],
+      "@/config": ["config.ts"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx", "**/*.astro"],
+  "exclude": ["dist", ",astro", "node_modules"]
+}
