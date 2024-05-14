@@ -70,4 +70,9 @@ update github actions after monorepo
 print commit hash and message in html, node package_
 analytics in BaseHead with goatcounter.com and sentry
 add author email, social networks, name to constants
+
+----
+// fix sharp yarn
+// https://github.com/withastro/astro/issues/9345#issuecomment-1868330138
+pin to "sharp": "0.32.6",
 ```
