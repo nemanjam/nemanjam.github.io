@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
@@ -30,9 +30,9 @@ jobs:
           echo "github.ref -> {{ github.ref }}"
 
       - name: Set up Node.js and Yarn
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20.10.0'
+          node-version: '20.12.2'
           registry-url: 'https://registry.yarnpkg.com'
 
       - name: Install dependencies
