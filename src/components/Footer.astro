@@ -4,12 +4,13 @@ import { Icon } from 'astro-icon/components';
 import { BackToTop } from '@/components/BackToTop';
 import Button from '@/components/Button.astro';
 import { CONFIG } from '@/config';
+import { getLatestCommitInfo, getLatestCommitInfoAsString } from '@/utils/git';
 import { trimHttpProtocol } from '@/utils/strings';
 
 const { SITE_URL } = CONFIG;
 const domain = trimHttpProtocol(SITE_URL);
 
-const today = new Date();
+const commitInfo = getLatestCommitInfoAsString();
 ---
 
 <footer class="w-screen border-t border-base-300 bg-base-200 pt-8 transition-colors duration-500">
@@ -27,6 +28,7 @@ const today = new Date();
             >https://github.com/nemanjam/nemanjam.github.io#references</a
           >
         </p>
+        <p>{commitInfo}</p>
       </div>
       <div class="flex grow flex-row justify-end">
         <Button href="#top">
