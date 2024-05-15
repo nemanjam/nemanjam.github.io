@@ -7,7 +7,10 @@ FROM node:${NODE_VERSION}-slim AS base
 WORKDIR /app
 
 # install git
-RUN apt-get update && apt-get install git
+RUN apt-get update && apt-get install -y \
+    ca-certificates \
+    git \
+    && rm -rf /var/lib/apt/lists/*
 
 FROM base AS build
 COPY package.json yarn.lock ./
