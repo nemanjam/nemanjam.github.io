@@ -9,6 +9,12 @@ FROM base AS build
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 COPY . .
+
+# build time only env var
+ARG ARG_SITE_URL
+ENV SITE_URL=$ARG_SITE_URL
+RUN echo "SITE_URL=$SITE_URL"
+
 RUN yarn build
 
 FROM nginx:stable-alpine3.17-slim AS runtime

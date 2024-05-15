@@ -13,7 +13,6 @@ on:
 
 env:
   IMAGE_NAME: ${{ github.event.repository.name }}
-  # set this
   SITE_URL: 'https://docker.nemanjamitic.com'
 
 jobs:
@@ -58,6 +57,8 @@ jobs:
           context: ./
           # Dockerfile dir
           file: ./docker/Dockerfile
+          build-args: |
+            "ARG_SITE_URL=${{ env.SITE_URL }}"
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
           # disabled metadata step
