@@ -1,16 +1,18 @@
 # Dockerfile from Astro docs
 
 # cant use alpine for sharp images on arm
-ARG NODE_IMAGE=node:22.1.0-bookworm
+# dark thumbnails on both slim (doesn't have git) and bookworm (has git)
+# ARG NODE_IMAGE=node:22.1.0-bookworm
+ARG NODE_IMAGE=node:20.13.1-slim
 
 FROM ${NODE_IMAGE} AS base
 WORKDIR /app
 
-# install git
-# RUN apt-get update && apt-get install -y \
-#     ca-certificates \
-#     git \
-#     && rm -rf /var/lib/apt/lists/*
+# install git on slim
+RUN apt-get update && apt-get install -y \
+    ca-certificates \
+    git \
+    && rm -rf /var/lib/apt/lists/*
 
 FROM base AS build
 COPY package.json yarn.lock ./
