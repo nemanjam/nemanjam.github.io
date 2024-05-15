@@ -84,6 +84,9 @@ must use docker login in ssh for private image
 must use qemu and buildx for arm linux/arm64 docker image
 cant use node-alpine for sharp
 must add apt-get git in node-slim, for commit info in html on build
+must not add .git in dockerignore
 must add script_stop: false for non existing image in ssh deploy
+
+must use node 22 and sharp 33 everywhere
 
 ```
