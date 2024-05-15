@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME_WITH_TAG: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}
+  IMAGE_NAME_WITH_TAG: ${{ secrets.DOCKERHUB_USERNAME }}/nemanjam.github.io:latest
 
 jobs:
   deploy:
