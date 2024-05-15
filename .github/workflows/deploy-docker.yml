@@ -24,7 +24,8 @@ jobs:
           username: ${{ secrets.REMOTE_USERNAME }}
           key: ${{ secrets.REMOTE_KEY_ED25519 }}
           port: ${{ secrets.REMOTE_PORT }}
-          script_stop: true
+          # don't stop on errors
+          script_stop: false
           script: |
             cd /home/ubuntu/traefik-proxy/apps/nmc-docker
 
