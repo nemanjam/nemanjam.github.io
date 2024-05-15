@@ -59,6 +59,9 @@ jobs:
           # Dockerfile dir
           file: ./docker/Dockerfile
           push: true
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:buildcache
+          cache-to: type=inline
+
           tags: nemanjamitic/nemanjam.github.io:latest
           # tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
           # disabled metadata step
