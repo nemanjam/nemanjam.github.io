@@ -3,8 +3,8 @@
 # cant use alpine for sharp images on arm
 # dark thumbnails on both slim (doesn't have git) and bookworm (has git)
 # ARG NODE_IMAGE=node:22.1.0-bookworm
-# ARG NODE_IMAGE="--platform=linux/arm64 node:20.13.1-slim"
-ARG NODE_IMAGE="--platform=linux/arm64 node:22.1.0-slim"
+# ARG NODE_IMAGE=node:20.13.1-slim
+ARG NODE_IMAGE=node:22.1.0-slim
 
 FROM ${NODE_IMAGE} AS base
 WORKDIR /app
