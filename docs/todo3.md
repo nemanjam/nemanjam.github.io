@@ -87,6 +87,13 @@ must add apt-get git in node-slim, for commit info in html on build
 must not add .git in dockerignore
 must add script_stop: false for non existing image in ssh deploy
 
-must use node 22 and sharp 33 everywhere
+----
+node:22.1.0-bookworm - has git
+node:20.13.1-slim - doesnt have git
+sharp 0.32.6 - dark resized thumbnails in docker arm
+sharp 0.33.3 - must use --ignore-engines, ok thumbnails on arm
+// override
+RUN yarn add --arch=arm64 --platform=linux --libc=musl --ignore-engines sharp@0.33.3
+
 
 ```
