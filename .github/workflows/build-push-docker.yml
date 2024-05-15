@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: ${{ github.event.repository.name }}
   # set this
   SITE_URL: 'https://docker.nemanjamitic.com'
 
