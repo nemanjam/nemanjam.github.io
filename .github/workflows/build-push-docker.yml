@@ -31,6 +31,13 @@ jobs:
           git show -s --format='%h %s'
           echo "github.ref -> {{ github.ref }}"
 
+      # for arm image
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Docker metadata
         # disable this step
         if: false
@@ -57,6 +64,8 @@ jobs:
           context: ./
           # Dockerfile dir
           file: ./docker/Dockerfile
+          # available linux/amd64,linux/arm64
+          platforms: linux/arm64
           build-args: |
             "ARG_SITE_URL=${{ env.SITE_URL }}"
           push: true
