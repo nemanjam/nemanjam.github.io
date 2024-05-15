@@ -6,6 +6,9 @@ ARG NODE_VERSION=20.13.1
 FROM node:${NODE_VERSION}-slim AS base
 WORKDIR /app
 
+# install git
+RUN apt-get update && apt-get install git
+
 FROM base AS build
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
