@@ -31,10 +31,10 @@ jobs:
             echo "Old image tag: $(docker inspect --format '{{ index .RepoTags 0 }}' ${{ env.IMAGE_NAME_WITH_TAG }})"
             echo "Old image hash: $(docker inspect --format '{{ index .RepoDigests 0 }}' ${{ env.IMAGE_NAME_WITH_TAG }})"
 
-            docker-compose down
+            docker compose down
             docker image rm ${{ env.IMAGE_NAME_WITH_TAG }}
 
-            docker-compose up -d
+            docker compose up -d
 
             echo "New image tag: $(docker inspect --format '{{ index .RepoTags 0 }}' ${{ env.IMAGE_NAME_WITH_TAG }})"
             echo "New image hash: $(docker inspect --format '{{ index .RepoDigests 0 }}' ${{ env.IMAGE_NAME_WITH_TAG }})"
