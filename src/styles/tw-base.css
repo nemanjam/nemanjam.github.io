@@ -1,32 +1,39 @@
 /* add typography styles for my components here, same as prose-slate, h1, h2, body... */
 
 @layer base {
-  html {
-    @apply text-sm xs:text-base;
-  }
+  /* html {
+    @apply text-sm sm:text-base;
+  } */
 
   /* most content and text is in .mdx pages and collections with prose, p, h1, h2, a... */
 
   body {
     color: var(--content);
+    /* @apply text-sm sm:text-base lg:text-lg xl:text-xl 2xl:text-2xl; */
+    @apply text-sm sm:text-base;
   }
 
-  h1:not(:is(.prose *) h1) {
+  /* fontSize,  marginTop,  marginBottom,  lineHeight - needs to be set  */
+
+  h1 {
     color: var(--headings);
-    @apply text-4xl font-bold mb-8 lg:text-5xl;
+    @apply text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] xl:text-[4rem];
+    @apply font-extrabold;
   }
+
+  /* @apply mb-8; */
 
   /* all h2 that dont have .prose parent */
-  h2:not(:is(.prose *) h2) {
+  /* h2:not(:is(.prose *) h2) {
     color: var(--headings);
     @apply text-2xl font-bold mb-4;
-  }
+  } */
 
-  /*
   .prose {
     @apply outline outline-blue-500;
   }
 
+  /*
   h2 {
     @apply bg-green-200;
   }

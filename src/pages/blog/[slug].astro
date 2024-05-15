@@ -8,7 +8,7 @@ import {
   getPostSlug,
   getRandomPosts,
 } from '@/modules/post';
-import FullWidth from '@/layouts/FullWidth.astro';
+import Centered from '@/layouts/Centered.astro';
 import MorePosts from '@/components/MorePosts.astro';
 import PostMeta from '@/components/PostMeta.astro';
 import Prose from '@/components/Prose.astro';
@@ -63,29 +63,9 @@ const postMetaProps = {
 ---
 
 {/* clean up all of this */}
-<FullWidth title={title} description={description} image={heroImage.src}>
-  {/* hero image */}
-  {
-    !noHero && (
-      <Image
-        src={heroImage}
-        alt={heroAlt}
-        fetchpriority="high"
-        loading="eager"
-        width={1280}
-        itemprop="image"
-        class="block w-full h-32 md:h-80 object-cover"
-        transition:name={`hero-${slug!.replace(/.*\//, '')}`}
-      />
-    )
-  }
-  <article
-    class="max-w-4xl md:mx-auto px-4 lg:px-0 py-10 md:py-20"
-    itemprop="blogPost"
-    itemscope
-    itemtype="http://schema.org/Article"
-  >
-    <meta itemprop="mainEntityOfPage" content={`${slug}`} />
+<Centered title={title} description={description} image={heroImage.src}>
+  <article itemprop="blogPost" itemscope itemtype="http://schema.org/Article">
+    <meta itemprop="mainEntityOfPage" content={slug} />
     <Prose>
       <h1 itemprop="name headline" transition:name={`title-${slug!.replace(/.*\//, '')}`}>
         {title}
@@ -93,6 +73,22 @@ const postMetaProps = {
       </h1>
       <PostMeta {...postMetaProps} />
       <!-- <TagList tags={tags} marginY /> -->
+
+      {/* hero image */}
+      {
+        !noHero && (
+          <Image
+            src={heroImage}
+            alt={heroAlt}
+            fetchpriority="high"
+            loading="eager"
+            width={1280}
+            itemprop="image"
+            class="block w-full h-32 md:h-80 object-cover"
+            transition:name={`hero-${slug!.replace(/.*\//, '')}`}
+          />
+        )
+      }
 
       <div itemprop="articleBody" transition:name={`content-${slug!.replace(/.*\//, '')}`}>
         {/* table of contents */}
@@ -107,4 +103,4 @@ const postMetaProps = {
   </article>
 
   <MorePosts morePosts={morePosts} />
-</FullWidth>
+</Centered>

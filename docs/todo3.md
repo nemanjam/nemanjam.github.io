@@ -71,6 +71,7 @@ print commit hash and message in html, node package_
 analytics in BaseHead with goatcounter.com and sentry
 add author email, social networks, name to constants
 active item in navbar
+dark mode, fix dark: modifier
 ----
 // fix sharp yarn
 // https://github.com/withastro/astro/issues/9345#issuecomment-1868330138
@@ -100,5 +101,28 @@ RUN yarn add --arch=arm64 --platform=linux --libc=musl --ignore-engines sharp@0.
 // samo ovo bi radilo, ali ajde
 RUN yarn add --ignore-engines sharp
 
+-----------
+sm
+p - 14px
+h1 - 30/14em - 30px
 
+base
+p - 16px
+h1 - 36/16 - 36px
+
+lg
+p - 18
+h1 - 48/18 - 48px
+
+xl
+p - 20
+h1 - 56/20 - 56px
+
+2xl
+p - 24
+h1 - 64/24 - 64px
+
+
+
+window.getComputedStyle(document.querySelector('html')).fontSize;
 ```
