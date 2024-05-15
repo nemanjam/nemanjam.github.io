@@ -1,7 +1,5 @@
 
 .dockerignore
-.git/
-.gitignore
 .vscode/
 .github/
 docker-compose*
@@ -12,3 +10,7 @@ dist/
 docs/
 LICENSE
 README.md
+
+# must keep git for commit info in node.js
+# .git/
+# .gitignore
