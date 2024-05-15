@@ -59,7 +59,7 @@ jobs:
             ls -la
 
       - name: Copy dist folder to remote host
-        uses: appleboy/scp-action@master
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USERNAME }}

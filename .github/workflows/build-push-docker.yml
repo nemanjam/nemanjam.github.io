@@ -14,7 +14,7 @@ on:
 env:
   IMAGE_NAME: ${{ github.repository }}
   # set this
-  SITE_URL: 'https://nemanjamitic.com'
+  SITE_URL: 'https://docker.nemanjamitic.com'
 
 jobs:
   build:
@@ -33,8 +33,10 @@ jobs:
           echo "github.ref -> {{ github.ref }}"
 
       - name: Docker metadata
+        # disable this step
+        if: false
         id: metadata
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@v5
         with:
           images: ${{ env.IMAGE_NAME }}
           tags: |
@@ -43,19 +45,21 @@ jobs:
             type=raw,value={{sha}},enable=${{ github.ref_type != 'tag' }}
 
       - name: Log in to Docker Hub
-        uses: docker/login-action@v1
-        if: ${{ github.ref_type == 'tag' }}
+        uses: docker/login-action@v3
+        # if: ${{ github.ref_type == 'tag' }}
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v5
         with:
-          context: ./apps/nemanjamiticcom/
-
-          # build app is in Dockerfile
+          # src dir
+          context: ./
+          # Dockerfile dir
           file: ./docker/Dockerfile
           push: true
-          tags: ${{ steps.metadata.outputs.tags }}
-          labels: ${{ steps.metadata.outputs.labels }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+          # disabled metadata step
+          # tags: ${{ steps.metadata.outputs.tags }}
+          # labels: ${{ steps.metadata.outputs.labels }}

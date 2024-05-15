@@ -8,6 +8,9 @@ on:
 
   workflow_dispatch:
 
+env:
+  IMAGE_NAME_WITH_TAG: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.repository }}
+
 jobs:
   deploy:
     name: Deploy image from Dockerhub to remote host with ssh
@@ -15,7 +18,7 @@ jobs:
 
     steps:
       - name: Deploy latest image
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USERNAME }}
@@ -25,17 +28,17 @@ jobs:
           script: |
             cd /home/ubuntu/traefik-proxy/apps/nmc-docker
 
-            echo "Old image tag: $(docker inspect --format '{{ index .RepoTags 0 }}' nemanjamitic/nemanjamiticcom)"
-            echo "Old image hash: $(docker inspect --format '{{ index .RepoDigests 0 }}' nemanjamitic/nemanjamiticcom)"
+            echo "Old image tag: $(docker inspect --format '{{ index .RepoTags 0 }}' ${{ env.IMAGE_NAME_WITH_TAG }})"
+            echo "Old image hash: $(docker inspect --format '{{ index .RepoDigests 0 }}' ${{ env.IMAGE_NAME_WITH_TAG }})"
 
             docker-compose down
-            docker image rm nemanjamitic/nemanjamiticcom:latest
+            docker image rm ${{ env.IMAGE_NAME_WITH_TAG }}
 
             docker-compose up -d
 
-            echo "New image tag: $(docker inspect --format '{{ index .RepoTags 0 }}' nemanjamitic/nemanjamiticcom)"
-            echo "New image hash: $(docker inspect --format '{{ index .RepoDigests 0 }}' nemanjamitic/nemanjamiticcom)"
+            echo "New image tag: $(docker inspect --format '{{ index .RepoTags 0 }}' ${{ env.IMAGE_NAME_WITH_TAG }})"
+            echo "New image hash: $(docker inspect --format '{{ index .RepoDigests 0 }}' ${{ env.IMAGE_NAME_WITH_TAG }})"
 
                   
             # remove dangling images, optional
-            docker image prune -af
+            # docker image prune -af
