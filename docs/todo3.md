@@ -70,7 +70,7 @@ update github actions after monorepo
 print commit hash and message in html, node package_
 analytics in BaseHead with goatcounter.com and sentry
 add author email, social networks, name to constants
-
+active item in navbar
 ----
 // fix sharp yarn
 // https://github.com/withastro/astro/issues/9345#issuecomment-1868330138
@@ -82,18 +82,23 @@ can use nginx alpine without node for final prod image, 15mb
 must use arm1.nemanjamitic.com for correct dns
 must use docker login in ssh for private image
 must use qemu and buildx for arm linux/arm64 docker image
-cant use node-alpine for sharp
+cant use node-alpine for sharp // wrong, both alpine, slim and bookworm will work
 must add apt-get git in node-slim, for commit info in html on build
 must not add .git in dockerignore
 must add script_stop: false for non existing image in ssh deploy
 
 ----
+// sharp radi na alpine // ok
 node:22.1.0-bookworm - has git
 node:20.13.1-slim - doesnt have git
-sharp 0.32.6 - dark resized thumbnails in docker arm
+node:20.13.1-alpine - doesnt have git
+// to, 0.32 radi samo na x86, 0.33 radi i na arm ali mora -ignore-engines
+sharp 0.32.6 - black resized thumbnails in docker arm
 sharp 0.33.3 - must use --ignore-engines, ok thumbnails on arm
 // override
 RUN yarn add --arch=arm64 --platform=linux --libc=musl --ignore-engines sharp@0.33.3
+// samo ovo bi radilo, ali ajde
+RUN yarn add --ignore-engines sharp
 
 
 ```
