@@ -1,16 +1,16 @@
 # Dockerfile from Astro docs
 
-ARG NODE_VERSION=20.13.1
-
 # cant use alpine for sharp images on arm
-FROM node:${NODE_VERSION}-slim AS base
+ARG NODE_IMAGE=node:22.1.0-bookworm
+
+FROM ${NODE_IMAGE} AS base
 WORKDIR /app
 
 # install git
-RUN apt-get update && apt-get install -y \
-    ca-certificates \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+# RUN apt-get update && apt-get install -y \
+#     ca-certificates \
+#     git \
+#     && rm -rf /var/lib/apt/lists/*
 
 FROM base AS build
 COPY package.json yarn.lock ./

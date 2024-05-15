@@ -75,4 +75,15 @@ add author email, social networks, name to constants
 // fix sharp yarn
 // https://github.com/withastro/astro/issues/9345#issuecomment-1868330138
 pin to "sharp": "0.32.6",
+
+----
+// docker arm
+can use nginx alpine without node for final prod image, 15mb
+must use arm1.nemanjamitic.com for correct dns
+must use docker login in ssh for private image
+must use qemu and buildx for arm linux/arm64 docker image
+cant use node-alpine for sharp
+must add apt-get git in node-slim, for commit info in html on build
+must add script_stop: false for non existing image in ssh deploy
+
 ```
