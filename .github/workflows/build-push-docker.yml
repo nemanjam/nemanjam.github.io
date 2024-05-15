@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: nemanjam.github.io
+  IMAGE_NAME: ${{ github.event.repository.name }}
   # set this
   SITE_URL: 'https://docker.nemanjamitic.com'
 
@@ -59,7 +59,8 @@ jobs:
           # Dockerfile dir
           file: ./docker/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+          tags: nemanjamitic/nemanjam.github.io:latest
+          # tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
           # disabled metadata step
           # tags: ${{ steps.metadata.outputs.tags }}
           # labels: ${{ steps.metadata.outputs.labels }}
