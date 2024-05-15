@@ -2,10 +2,9 @@
 
 ARG NODE_VERSION=20.13.1
 
-FROM node:${NODE_VERSION}-alpine AS base
+# cant use alpine for sharp images on arm
+FROM node:${NODE_VERSION}-slim AS base
 WORKDIR /app
-# add git for reading commit info in node
-RUN apk add --no-cache git
 
 FROM base AS build
 COPY package.json yarn.lock ./
