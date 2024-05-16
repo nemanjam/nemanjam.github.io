@@ -125,4 +125,6 @@ h1 - 64/24 - 64px
 
 
 window.getComputedStyle(document.querySelector('html')).fontSize;
+clone hashnode, dev.to, responsive fonts, vertical margins, etc
+
 ```

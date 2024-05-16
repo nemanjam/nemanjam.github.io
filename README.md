@@ -1,5 +1,11 @@
 # nemanjam.github.io
 
+## Mirrors
+
+- https://nemanjamitic.com/
+- https://nmc-docker.arm1.nemanjamitic.com/
+- https://nemanjam.github.io/
+
 ## References
 
 - Starter project [paularmstrong/paularmstrong.dev](https://github.com/paularmstrong/paularmstrong.dev) , https://paularmstrong.dev/blog/
