@@ -45,6 +45,7 @@ export const ThemeSwitcher: Component = () => {
     doc.dataset.autoTheme = newAuto ? trueString : falseString;
     if (newTheme === dark) {
       // todo: handle data-theme="dark" attribute too
+      // this isnt persisted when change page, local storage
       doc.classList.add(dark);
     } else {
       doc.classList.remove(dark);

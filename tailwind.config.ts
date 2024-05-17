@@ -4,7 +4,8 @@ import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: ['src/**/*.{astro,md,mdx,tsx}', 'astro.config.mjs'],
-  darkMode: ['selector', '[data-theme="dark"]'],
+  // activates only dark: modifier, not color theme
+  darkMode: ['selector'],
   plugins: [require('@tailwindcss/typography')],
   theme: {
     tabSize: {

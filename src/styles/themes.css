@@ -30,7 +30,7 @@
 
   /* select both class="dark" and data-theme="dark" */
   :root.dark,
-  :root[data-theme='dark'] {
+  :root.dark[data-theme='dark'] {
     /* background */
     --base-100: var(--color-dark-slate-900);
     --base-200: var(--color-dark-slate-800);
