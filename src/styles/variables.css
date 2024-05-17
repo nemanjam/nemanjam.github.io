@@ -2,31 +2,34 @@
   :root {
     /* from prose-slate */
     /* background */
-    --color-white: theme('colors.white');
-    --color-slate-50: theme('colors.slate.50');
-    --color-slate-100: theme('colors.slate.100');
-    --color-slate-300: theme('colors.slate.300');
+    --var-color-white: theme('colors.white');
+    --var-color-slate-50: theme('colors.slate.50');
+    --var-color-slate-100: theme('colors.slate.100');
+    --var-color-slate-300: theme('colors.slate.300');
 
     /* content */
-    --color-slate-500: theme('colors.slate.500');
-    --color-slate-700: theme('colors.slate.700');
-    --color-slate-900: theme('colors.slate.900');
+    --var-color-slate-500: theme('colors.slate.500');
+    --var-color-slate-700: theme('colors.slate.700');
+    --var-color-slate-900: theme('colors.slate.900');
 
     /* primary, secondary... */
-    --color-blue-500: theme('colors.blue.500');
-    --color-purple-700: theme('colors.purple.700');
-    --color-orange: theme('colors.orange.400');
+    --var-color-blue-500: theme('colors.blue.500');
+    --var-color-blue-300: theme('colors.blue.300');
+    --var-color-purple-700: theme('colors.purple.700');
+    --var-color-orange: theme('colors.orange.400');
+    --var-color-green-600: theme('colors.green.600');
+    --var-color-green-300: theme('colors.green.300');
 
     /* todo: fix unique colors */
 
     /* dark */
     /* background */
-    --color-dark-slate-800: theme('colors.slate.800');
-    --color-dark-slate-900: theme('colors.slate.900');
-    --color-dark-slate-950: theme('colors.slate.950');
+    --var-color-dark-slate-800: theme('colors.slate.800');
+    --var-color-dark-slate-900: theme('colors.slate.900');
+    --var-color-dark-slate-950: theme('colors.slate.950');
 
     /* content */
-    --color-dark-slate-300: theme('colors.slate.300');
-    --color-dark-slate-400: theme('colors.slate.400');
+    --var-color-dark-slate-300: theme('colors.slate.300');
+    --var-color-dark-slate-400: theme('colors.slate.400');
   }
 }

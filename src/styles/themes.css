@@ -1,55 +1,62 @@
 @layer base {
-  :root,
-  :root[data-theme='light'] {
+  /* default-light */
+  :root {
     /* background */
-    --base-100: var(--color-white);
-    --base-200: var(--color-slate-50);
-    --base-300: var(--color-slate-100);
-    --base-code: var(--color-slate-300);
+    --th-base-100: var(--var-color-white);
+    --th-base-200: var(--var-color-slate-50);
+    --th-base-300: var(--var-color-slate-100);
+    --th-base-code: var(--var-color-slate-300);
 
     /* reused from tw-prose-xxx */
-    --content: var(--color-slate-700);
-    --headings: var(--color-slate-900);
-    --captions: var(--color-slate-500);
+    --th-content: var(--var-color-slate-700);
+    --th-headings: var(--var-color-slate-900);
+    --th-captions: var(--var-color-slate-500);
 
-    --links: var(--color-blue-500);
-    --links-hover: var(--color-orange);
-    --links-visited: var(--color-purple-700);
+    --th-links: var(--var-color-blue-500);
+    --th-links-hover: var(--var-color-orange);
+    --th-links-visited: var(--var-color-purple-700);
 
-    --primary: var(--color-blue-500);
-    --primary-content: var(--color-white);
+    --th-primary: var(--var-color-blue-500);
+    --th-primary-content: var(--var-color-white);
 
-    --secondary: var(--color-orange);
-    --secondary-content: var(--color-white);
+    --th-secondary: var(--var-color-orange);
+    --th-secondary-content: var(--var-color-white);
 
     /* border radius, default for all themes */
-    --rounded-box: 0.25rem;
-    --rounded-button: 0.125rem;
-    --rounded-tag: 0.125rem;
+    --th-rounded-box: 0.25rem;
+    --th-rounded-button: 0.125rem;
+    --th-rounded-tag: 0.125rem;
   }
 
-  /* select both class="dark" and data-theme="dark" */
-  :root.dark,
-  :root.dark[data-theme='dark'] {
+  /* default-dark */
+  :root.dark {
     /* background */
-    --base-100: var(--color-dark-slate-900);
-    --base-200: var(--color-dark-slate-800);
-    --base-300: var(--color-dark-slate-950);
-    --base-code: var(--color-slate-700);
+    --th-base-100: var(--var-color-dark-slate-900);
+    --th-base-200: var(--var-color-dark-slate-800);
+    --th-base-300: var(--var-color-dark-slate-950);
+    --th-base-code: var(--var-color-slate-700);
 
     /* reused from tw-prose-invert-xxx */
-    --content: var(--color-dark-slate-300);
-    --headings: var(--color-white);
-    --captions: var(--color-dark-slate-400);
+    --th-content: var(--var-color-dark-slate-300);
+    --th-headings: var(--var-color-white);
+    --th-captions: var(--var-color-dark-slate-400);
 
-    --links: var(--color-blue-500);
-    --links-hover: var(--color-orange);
-    --links-visited: var(--color-purple-700);
+    --th-links: var(--var-color-blue-500);
+    --th-links-hover: var(--var-color-orange);
+    --th-links-visited: var(--var-color-purple-700);
 
-    --primary: var(--color-blue-500);
-    --primary-content: var(--color-white);
+    --th-primary: var(--var-color-blue-300);
+    --th-primary-content: var(--var-color-white);
 
-    --secondary: var(--color-orange);
-    --secondary-content: var(--color-white);
+    --th-secondary: var(--var-color-orange);
+    --th-secondary-content: var(--var-color-white);
+  }
+
+  :root[data-theme='green-light'] {
+    --th-primary: var(--var-color-green-600);
+  }
+
+  :root.dark[data-theme='green-dark'] {
+    --th-primary: var(--var-color-green-300);
   }
 }

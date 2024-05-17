@@ -25,33 +25,33 @@ const config: Config = {
       },
       colors: {
         // background
-        'base-100': 'var(--base-100)',
-        'base-200': 'var(--base-200)',
-        'base-300': 'var(--base-300)',
-        'base-code': 'var(--base-code)',
+        'base-100': 'var(--th-base-100)',
+        'base-200': 'var(--th-base-200)',
+        'base-300': 'var(--th-base-300)',
+        'base-code': 'var(--th-base-code)',
         // text
-        content: 'var(--content)',
-        headings: 'var(--headings)',
-        captions: 'var(--captions)',
+        content: 'var(--th-content)',
+        headings: 'var(--th-headings)',
+        captions: 'var(--th-captions)',
         links: {
-          DEFAULT: 'var(--links)',
-          hover: 'var(--links-hover)',
-          visited: 'var(--links-visited)',
+          DEFAULT: 'var(--th-links)',
+          hover: 'var(--th-links-hover)',
+          visited: 'var(--th-links-visited)',
         },
         // brand
         primary: {
-          DEFAULT: 'var(--primary)',
-          content: 'var(--primary-content)',
+          DEFAULT: 'var(--th-primary)',
+          content: 'var(--th-primary-content)',
         },
         secondary: {
-          DEFAULT: 'var(--secondary)',
-          content: 'var(--secondary-content)',
+          DEFAULT: 'var(--th-secondary)',
+          content: 'var(--th-secondary-content)',
         },
       },
       borderRadius: {
-        box: 'var(--rounded-box)',
-        button: 'var(--rounded-button)',
-        tag: 'var(--rounded-tag)',
+        box: 'var(--th-rounded-box)',
+        button: 'var(--th-rounded-button)',
+        tag: 'var(--th-rounded-tag)',
       },
       typography: ({ theme }) => ({
         DEFAULT: {

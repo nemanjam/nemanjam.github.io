@@ -21,11 +21,11 @@ export const THEMES = [
   DEFAULT_THEMES.dark,
   {
     mode: MODES.light,
-    name: 'blue-light',
+    name: 'green-light',
   },
   {
     mode: MODES.dark,
-    name: 'blue-dark',
+    name: 'green-dark',
   },
 ] as const;
 
