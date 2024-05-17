@@ -13,7 +13,7 @@ export const TAGS = [
   'python',
   'devops',
   'self-hosting',
-];
+] as const;
 
 /** adjust this later */
 export const CATEGORIES = [
@@ -45,7 +45,7 @@ export const CATEGORIES = [
     name: 'resources',
     icon: 'mdi:book-open-variant-outline',
   },
-];
+] as const;
 
 export const DEFAULTS_POST = {
   NO_HERO: false,

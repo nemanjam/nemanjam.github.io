@@ -5,6 +5,7 @@ import BaseHead from '@/components/BaseHead.astro';
 import Footer from '@/components/Footer.astro';
 import Header from '@/components/Header.astro';
 import { Snackbar } from '@/components/Snackbar';
+import ThemeScript from '@/components/ThemeScript.astro';
 import { CONFIG } from '@/config';
 
 export interface BaseProps {
@@ -33,5 +34,6 @@ const titleTag = title ? `${title} • ${SITE_TITLE}` : SITE_TITLE;
     <slot />
     <Footer />
     <Snackbar client:idle />
+    <ThemeScript />
   </body>
 </html>

@@ -5,7 +5,7 @@ import { Image } from 'astro:assets';
 import clsx from 'clsx';
 
 import HeaderLink from '@/components/HeaderLink.astro';
-import { ThemeSwitcher } from '@/components/ThemeSwitcher';
+import ThemeToggle from '@/components/ThemeToggle.astro';
 import { NAVIGATION_ITEMS } from '@/constants/navigation';
 import { CONFIG } from '@/config';
 
@@ -62,7 +62,9 @@ import Avatar from '@/assets/images/avatar.jpg';
             </li>
           ))
         }
-        <li class="shrink-0"><ThemeSwitcher client:load /></li>
+        <li class="shrink-0">
+          <ThemeToggle />
+        </li>
       </ul>
     </nav>
   </div>

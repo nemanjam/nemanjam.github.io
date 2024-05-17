@@ -31,7 +31,7 @@ export const postSchema = ({ image }: SchemaContext) =>
     tags: z
       .array(
         z.string().refine(
-          (tag) => TAGS.includes(tag),
+          (tag) => TAGS.includes(tag as (typeof TAGS)[number]),
           (tag) => ({ message: `Invalid tag: ${tag} in the markdown.` })
         )
       )

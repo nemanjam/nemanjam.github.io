@@ -1,32 +1,28 @@
+---
+import * as themeConstants from '@/constants/themes';
+---
+
 {/* Inlined to avoid flash of white content. */}
-<script is:inline>
-  import { themes } from '@/constants/themes';
+<script is:inline define:vars={{ themeConstants }}>
+  const { LOCAL_STORAGE_THEME_KEY, MODES, THEME_ATTRIBUTE, THEME_CHANGE_EVENT, THEMES } =
+    themeConstants;
 
   // this is JavaScript, not TypeScript
-  const mode = {
-    dark: 'dark',
-    light: 'light',
-  };
-
-  const localStorageThemeKey = 'theme';
-  const defaultThemes = {
-    light: themes.find((theme) => theme.name === 'default-light'),
-    dark: themes.find((theme) => theme.name === 'default-dark'),
-  };
+  const defaultThemes = { light: THEMES[0], dark: THEMES[1] };
 
   const lightModePreference = window.matchMedia('(prefers-color-scheme: light)');
 
   // light is default
-  const getDefaultTheme = (themeMode) =>
-    themeMode === mode.dark ? defaultThemes.dark : defaultThemes.light;
+  const getMode = (themeMode) => (themeMode === MODES.dark ? MODES.dark : MODES.light);
+
+  const getDefaultTheme = (themeMode) => defaultThemes[getMode(themeMode)];
 
   const changeThemeMode = (themeMode) => {
     const storedTheme = getTheme();
 
     if (!storedTheme) return getDefaultTheme(themeMode);
 
-    const newMode = themeMode === mode.dark ? mode.dark : mode.light;
-    const newTheme = { ...storedTheme, mode: newMode };
+    const newTheme = { ...storedTheme, mode: getMode(themeMode) };
     return newTheme;
   };
 
@@ -36,35 +32,45 @@
     if (storedTheme) return storedTheme;
 
     // or fallback to browser default
-    const preferedMode = lightModePreference.matches ? mode.light : mode.dark;
+    const preferedMode = lightModePreference.matches ? MODES.light : MODES.dark;
     const defaultTheme = getDefaultTheme(preferedMode);
     return defaultTheme;
   };
 
   const getTheme = () => {
-    const storedTheme =
-      typeof localStorage !== 'undefined' && JSON.parse(localStorage.getItem(localStorageThemeKey));
+    const storedThemeString =
+      typeof localStorage !== 'undefined' && localStorage.getItem(LOCAL_STORAGE_THEME_KEY);
+
+    if (!storedThemeString) return null;
+
+    const storedTheme = JSON.parse(storedThemeString);
 
     // invalid theme
-    if (!(storedTheme && storedTheme.name && storedTheme.mode)) return null;
+    if (!(storedTheme && storedTheme.name && storedTheme.mode)) {
+      // clear stored invalid theme
+      localStorage.removeItem(LOCAL_STORAGE_THEME_KEY);
+      return null;
+    }
 
     return storedTheme;
   };
 
   const setTheme = (newTheme) => {
-    if (!themes.includes(newTheme))
+    const validatedTheme = THEMES.find(
+      (theme) => theme.name === newTheme.name && theme.mode === newTheme.mode
+    );
+
+    if (!validatedTheme)
       return console.warn(
-        `Invalid theme value '${JSON.stringify(newTheme)}' received. Expected ${JSON.stringify(themes)}.`
+        `Invalid theme value '${JSON.stringify(newTheme)}' received. Expected ${JSON.stringify(THEMES)}.`
       );
 
     const root = document.documentElement;
 
-    // handle both .dark and data-theme="dark-blue"
-
-    const isDarkMode = root.classList.contains(mode.dark);
+    const isDarkMode = root.classList.contains(MODES.dark);
     const existingTheme = {
-      name: root.getAttribute('data-theme'),
-      mode: isDarkMode ? mode.dark : mode.light,
+      name: root.getAttribute(THEME_ATTRIBUTE),
+      mode: isDarkMode ? MODES.dark : MODES.light,
     };
     const isExistingTheme =
       newTheme.name === existingTheme.name && newTheme.mode === existingTheme.mode;
@@ -73,17 +79,17 @@
     if (isExistingTheme) return;
 
     // update root class and data-theme
-    root.setAttribute('data-theme', newTheme.name);
-    if (newTheme.mode === mode.dark) {
+    root.setAttribute(THEME_ATTRIBUTE, newTheme.name);
+    if (newTheme.mode === MODES.dark) {
       // dark
-      if (!isDarkMode) root.classList.add(mode.dark);
+      if (!isDarkMode) root.classList.add(MODES.dark);
     } else {
       // light
-      if (isDarkMode) root.classList.remove(mode.dark);
+      if (isDarkMode) root.classList.remove(MODES.dark);
     }
 
     if (typeof localStorage !== 'undefined') {
-      localStorage.setItem(localStorageThemeKey, JSON.stringify(newTheme));
+      localStorage.setItem(LOCAL_STORAGE_THEME_KEY, JSON.stringify(newTheme));
     }
   };
 
@@ -94,11 +100,13 @@
   document.addEventListener('astro:after-swap', () => setTheme(getUserPreference()));
 
   // listen for theme-change custom event, fired in src/components/ThemeToggle.astro
-  document.addEventListener('theme-change', (event) => setTheme(event.detail.theme));
+  document.addEventListener(THEME_CHANGE_EVENT, (event) => {
+    setTheme(event.detail.theme);
+  });
 
   // listen for prefers-color-scheme change.
   lightModePreference.addEventListener('change', (event) => {
-    const newMode = event.matches ? mode.light : mode.dark;
+    const newMode = event.matches ? MODES.light : MODES.dark;
     const newTheme = changeThemeMode(newMode);
     setTheme(newTheme);
   });
