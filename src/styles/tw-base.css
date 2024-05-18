@@ -30,7 +30,7 @@
   } */
 
   .prose {
-    @apply outline outline-blue-500;
+    /* @apply outline outline-blue-500; */
   }
 
   /*

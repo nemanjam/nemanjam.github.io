@@ -1,0 +1,27 @@
+---
+import FullWidth from '@/layouts/FullWidth.astro';
+import Prose from '@/components/Prose.astro';
+
+import type { BaseProps } from '@/layouts/Base.astro';
+
+export interface Props extends BaseProps {}
+
+const props = Astro.props;
+---
+
+<FullWidth {...props}>
+  <article class="px-4 lg:px-0">
+    <figure class="w-full max-w-5xl md:mx-auto">
+      <slot name="hero-image" />
+    </figure>
+    <Prose>
+      <section class="w-full max-w-4xl md:mx-auto py-4 lg:py-8">
+        <slot name="hero-text" />
+        <slot name="content" />
+      </section>
+    </Prose>
+    <section class="w-full max-w-5xl md:mx-auto">
+      <slot name="more-posts" />
+    </section>
+  </article>
+</FullWidth>

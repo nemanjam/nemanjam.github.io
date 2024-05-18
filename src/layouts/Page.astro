@@ -10,9 +10,9 @@ const props = Astro.props;
 ---
 
 <Centered {...props}>
-  <Prose>
-    <article>
+  <article>
+    <Prose>
       <slot />
-    </article>
-  </Prose>
+    </Prose>
+  </article>
 </Centered>

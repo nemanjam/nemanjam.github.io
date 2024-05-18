@@ -14,9 +14,9 @@ FROM base AS build
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
-# override sharp 0.32.6 with 0.33.3
+# override sharp 0.32.6 with 0.33.3, fails without this
 RUN yarn remove sharp
-RUN yarn add --arch=arm64 --platform=linux --libc=musl --ignore-engines sharp@0.33.3
+RUN yarn add --arch=arm64 --platform=linux --libc=musl --ignore-engines sharp@0.33.4
 
 COPY . .
 
