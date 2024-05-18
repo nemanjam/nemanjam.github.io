@@ -135,6 +135,8 @@ https://github.com/treefarmstudio/odyssey-theme
 
 // dobar dizajn, shadows, gradients
 https://sayvio.ai/discover
+// to je odavde
+https://salient.tailwindui.com/
 
 -----------
 za local state mora react ili solid

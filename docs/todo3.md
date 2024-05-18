@@ -131,6 +131,6 @@ clone hashnode, dev.to, responsive fonts, vertical margins, etc
 // theme
 both selectors are needed, .dark za dark: modifier, data-theme za color temu
 darkMode: ['selector', '[data-theme="dark"]'],
-
+scroll broken in chrome, remove smooth css
 
 ```
