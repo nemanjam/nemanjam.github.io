@@ -138,6 +138,9 @@ https://sayvio.ai/discover
 // to je odavde
 https://salient.tailwindui.com/
 
+// linkedin blog posts, example
+https://www.linkedin.com/pulse/react-19-beta-now-available-npm-iii-amigoes-qpjke/
+
 -----------
 za local state mora react ili solid
 for state between pages nanostore with localStorage
