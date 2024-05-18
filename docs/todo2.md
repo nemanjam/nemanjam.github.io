@@ -133,6 +133,9 @@ https://github.com/ekmas/minimal
 // semantic colors explained
 https://github.com/treefarmstudio/odyssey-theme
 
+// dobar dizajn, shadows, gradients
+https://sayvio.ai/discover
+
 -----------
 za local state mora react ili solid
 for state between pages nanostore with localStorage
