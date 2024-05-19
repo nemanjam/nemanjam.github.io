@@ -202,7 +202,7 @@ blog - astro-paper
 description string without md - astrowind, cactus, astropaper
 ----
 // billyle.dev, najbolje
-animacije tranform, 3d
+animacije transform, 3d
 tags validation
 schemas/post, posts/, config
 autoresize image from unsplash setImageProviderParams()

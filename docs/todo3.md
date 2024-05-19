@@ -1,13 +1,13 @@
 ```ts
 // here
 my PageInfo component, reading time, date, tags...
-fix relative path in PostCard from tags and categories
+    fix relative path in PostCard from tags and categories
 navbar text colors, remove buttons
 astro.config.ts from paularmstrong
 light code theme
-blog designs from telegram
+blog designs from my telegram
 theme icon
-relocate to assets folder, icons, images
+    relocate to assets folder, icons, images
 images beside article md
 twMerge instead of clsx
 date-fns umesto pad for getSlug
@@ -132,5 +132,13 @@ clone hashnode, dev.to, responsive fonts, vertical margins, etc
 both selectors are needed, .dark za dark: modifier, data-theme za color temu
 darkMode: ['selector', '[data-theme="dark"]'],
 scroll broken in chrome, remove smooth css
+-------
+hashnode h1, h2, p...
+tailwindui gradients, linkedin blog
+move component to my-prose class_
+style tags
+procitaj transition docs
+navbar buttons to links
+add astro and fastapi in resume
 
 ```
