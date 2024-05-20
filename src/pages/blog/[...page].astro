@@ -31,8 +31,6 @@ const layoutProps = {
 ---
 
 <List {...layoutProps}>
-  <section>
-    <PostList posts={page.data} />
-  </section>
+  <PostList posts={page.data} />
   <Pagination {...paginationProps} />
 </List>

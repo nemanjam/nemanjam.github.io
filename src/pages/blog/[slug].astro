@@ -73,7 +73,7 @@ const postMetaProps = {
           fetchpriority="high"
           loading="eager"
           itemprop="image"
-          class="block max-w-full h-auto aspect-[16/7] object-cover"
+          class="block max-w-full h-auto aspect-[16/8] object-cover"
           widths={[320, 540, 720, 1024]}
           sizes="(max-width: 475px) 320px, (max-width: 720px) 540px, (max-width: 1280px) 720px, 1024px"
         />
@@ -89,7 +89,7 @@ const postMetaProps = {
     </h1>
 
     {/* description */}
-    {description && <h2 class="mt-0 mb-3 font-normal text-xl lg:text-2xl">{description}</h2>}
+    {description && <h2 class="font-normal text-xl lg:text-2xl tracking-tight">{description}</h2>}
 
     {/* meta */}
     <PostMeta {...postMetaProps} />

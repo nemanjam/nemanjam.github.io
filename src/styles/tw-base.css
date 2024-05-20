@@ -8,13 +8,14 @@
 @layer base {
   body {
     /* style base font in body, not in html so rem is unaffected */
+    /* not responsive font, will affect buttons, etc, all elements */
     color: var(--content);
-    @apply text-base sm:text-lg lg:text-xl;
+    /* @apply text-base sm:text-lg lg:text-xl; */
   }
 
   h1 {
     color: var(--headings);
-    @apply text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] xl:text-[4rem];
+    @apply text-3xl sm:text-4xl md:text-5xl;
     @apply font-extrabold;
   }
 

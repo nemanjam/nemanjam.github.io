@@ -140,5 +140,9 @@ style tags
 procitaj transition docs
 navbar buttons to links
 add astro and fastapi in resume
-
+close mobile header on md
+prose vec ima sve stilove kako treba, samo h1 ogranici na 48px jer je prose-xl
+umotaj sve u prose u Base layout, pa samo nekoliko slotova no-prose
+add colors and gradients to h1 maybe
+fix colors for all text
 ```

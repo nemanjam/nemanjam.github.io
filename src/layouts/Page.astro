@@ -1,6 +1,5 @@
 ---
 import Centered from '@/layouts/Centered.astro';
-import Prose from '@/components/Prose.astro';
 
 import type { BaseProps } from '@/layouts/Base.astro';
 
@@ -10,9 +9,7 @@ const props = Astro.props;
 ---
 
 <Centered {...props}>
-  <article>
-    <Prose>
-      <slot />
-    </Prose>
+  <article class="my-prose">
+    <slot />
   </article>
 </Centered>
