@@ -1,0 +1,15 @@
+/* prose override */
+@layer base {
+  .my-prose {
+    @apply prose prose-slate max-w-none dark:prose-invert;
+
+    /* responsive styling */
+    /* base */
+    @apply lg:prose-lg xl:prose-xl;
+    /* h1 */
+    @apply prose-h1:text-3xl md:prose-h1:text-4xl lg:prose-h1:text-5xl;
+
+    /* h1 */
+    @apply prose-h1:mb-4;
+  }
+}

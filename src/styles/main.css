@@ -6,6 +6,7 @@
 @import './themes.css';
 
 @import './tw-base.css';
+@import './my-prose.css';
 @import './code-block.css';
 /* @import './tw-components.css'; */
 @import './tw-utilities.css';

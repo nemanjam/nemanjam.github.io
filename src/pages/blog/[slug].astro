@@ -88,11 +88,11 @@ const postMetaProps = {
       {draft && <sup class="text-red-400">(draft)</sup>}
     </h1>
 
+    {/* description */}
+    {description && <h2 class="mt-0 mb-3 font-normal text-xl lg:text-2xl">{description}</h2>}
+
     {/* meta */}
     <PostMeta {...postMetaProps} />
-
-    {/* description */}
-    {description && <p class=" text-lg lg:text-2xl">{description}</p>}
   </Fragment>
 
   {/* section content */}
