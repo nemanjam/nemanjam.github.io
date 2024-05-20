@@ -1,21 +1,26 @@
 ---
 import Centered from '@/layouts/Centered.astro';
+import Pagination from '@/components/Pagination.astro';
 
+import type { PaginationProps } from '@/components/Pagination.astro';
 import type { BaseProps } from '@/layouts/Base.astro';
 
-export interface Props extends BaseProps {}
+export interface Props {
+  baseProps: BaseProps;
+  paginationProps?: PaginationProps;
+}
 
-const props = Astro.props;
-const { title, description } = Astro.props;
-// pagination
+const { paginationProps, baseProps } = Astro.props;
+const { title, description } = baseProps;
 ---
 
-<Centered {...props}>
+<Centered {...baseProps}>
   <article class="my-prose">
     <h1>{title}</h1>
     {description && <p class="mb-5">{description}</p>}
     <section class="not-prose">
       <slot />
+      {paginationProps && <Pagination {...paginationProps} />}
     </section>
   </article>
 </Centered>

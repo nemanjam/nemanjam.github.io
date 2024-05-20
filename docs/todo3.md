@@ -145,4 +145,7 @@ prose vec ima sve stilove kako treba, samo h1 ogranici na 48px jer je prose-xl
 umotaj sve u prose u Base layout, pa samo nekoliko slotova no-prose
 add colors and gradients to h1 maybe
 fix colors for all text
+fix json.parse for theme
+implement project list html
+extract pagination into layout
 ```

@@ -6,10 +6,10 @@ import { ROUTES } from '@/constants/routes';
 
 const posts = await getAllPosts();
 const categoriesWithCount = getSortedUniqueCategoriesWithCount(posts);
-const layoutProps = { title: 'Categories' };
+const baseProps = { title: 'Categories' };
 ---
 
-<List {...layoutProps}>
+<List {baseProps}>
   <section>
     <ul class="flex flex-wrap gap-2">
       {

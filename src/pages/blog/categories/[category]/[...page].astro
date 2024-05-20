@@ -1,9 +1,8 @@
 ---
 import { getAllPosts, getPostsWithReadingTimeFromPosts, getUniqueCategories } from '@/modules/post';
 import List from '@/layouts/List.astro';
-import Pagination, { getPaginationPropsFromPage } from '@/components/Pagination.astro';
+import { getPaginationPropsFromPage } from '@/components/Pagination.astro';
 import PostList from '@/components/PostList.astro';
-import Heading from '@/components/ui/Heading.astro';
 import { CONFIG } from '@/config';
 
 import type { Post } from '@/types/post';
@@ -32,10 +31,11 @@ const { page } = Astro.props;
 const { category } = Astro.params;
 
 const paginationProps = getPaginationPropsFromPage(page);
-const layoutProps = { title: `Category: ${category}` };
+const baseProps = { title: `Category: ${category}` };
+
+const layoutProps = { baseProps, paginationProps };
 ---
 
 <List {...layoutProps}>
   <PostList posts={page.data} />
-  <Pagination {...paginationProps} />
 </List>

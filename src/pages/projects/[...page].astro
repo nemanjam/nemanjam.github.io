@@ -4,7 +4,7 @@ import { Image } from 'astro:assets';
 import { getAllProjects } from '@/modules/project';
 import List from '@/layouts/List.astro';
 import Link from '@/components/Link.astro';
-import Pagination, { getPaginationPropsFromPage } from '@/components/Pagination.astro';
+import { getPaginationPropsFromPage } from '@/components/Pagination.astro';
 import { ROUTES } from '@/constants/routes';
 import { CONFIG } from '@/config';
 
@@ -28,13 +28,15 @@ const { page } = Astro.props;
 
 const paginationProps = getPaginationPropsFromPage(page);
 
-const layoutProps = {
+const baseProps = {
   title: 'Projects',
   description: 'A showcase of experiments and projects.',
 };
+
+const layoutProps = { baseProps, paginationProps };
 ---
 
-{/* list, no pagination */}
+{/* rewrite this html */}
 
 <List {...layoutProps}>
   <div class="not-prose">
@@ -63,6 +65,5 @@ const layoutProps = {
         ))
       }
     </ul>
-    <Pagination {...paginationProps} />
   </div>
 </List>

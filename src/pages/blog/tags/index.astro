@@ -6,10 +6,10 @@ import TagList from '@/components/TagList.astro';
 const allPosts = await getAllPosts();
 
 const tagsWithCount = getSortedUniqueTagsWithCount(allPosts);
-const layoutProps = { title: 'Tags' };
+const baseProps = { title: 'Tags' };
 ---
 
-<List {...layoutProps}>
+<List {baseProps}>
   <section>
     <div class="flex flex-col items-center gap-16">
       <TagList tags={tagsWithCount} />
