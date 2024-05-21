@@ -10,13 +10,16 @@ import { NAVIGATION_ITEMS } from '@/constants/navigation';
 import { CONFIG } from '@/config';
 
 import Avatar from '@/assets/images/avatar.jpg';
+
+// group-[.menu-open]: increases specificity everywhere
+// group-[.menu-open]:flex-col md:!flex-row, both on flex-direction
 ---
 
 <header id="main-header" class="group">
   <div
     class={clsx(
       'flex gap-2',
-      'group-[.menu-open]:flex-col md:flex-row md:justify-between md:items-center',
+      'group-[.menu-open]:flex-col md:!flex-row md:justify-between md:items-center',
       'max-w-7xl py-4 px-4 md:mx-auto'
     )}
   >
@@ -54,7 +57,7 @@ import Avatar from '@/assets/images/avatar.jpg';
 
     {/* nav items */}
     <nav class="select-none hidden md:block group-[.menu-open]:block" aria-label="Site navigation">
-      <ul class="flex gap-1 group-[.menu-open]:flex-col md:flex-row">
+      <ul class="flex gap-1 group-[.menu-open]:flex-col md:!flex-row">
         {
           NAVIGATION_ITEMS.map(({ title, path }) => (
             <li>

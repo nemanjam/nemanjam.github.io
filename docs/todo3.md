@@ -59,9 +59,9 @@ add all components to styleguide
 hero image full width
 hashnode PostItem card with details
 header in layout, ListLayout, PostLayout, PageLayout, FullWidthLayout
-fix active navbar item
+    fix active navbar item
 baseline for layout, w-screen, min-h-screen, tagovi, prouci
-breadcrumb for navigation
+breadcrumb for navigation, categories
 responsive fonts
 <main /> full height screen - header - footer
 asChild for Container and Prose
@@ -140,7 +140,11 @@ style tags
 procitaj transition docs
 navbar buttons to links
 add astro and fastapi in resume
-close mobile header on md
+-----
+    close mobile header on md
+// group-[.menu-open]: increases specificity everywhere
+// group-[.menu-open]:flex-col md:!flex-row, both on flex-direction
+-----
 prose vec ima sve stilove kako treba, samo h1 ogranici na 48px jer je prose-xl
 umotaj sve u prose u Base layout, pa samo nekoliko slotova no-prose
 add colors and gradients to h1 maybe
