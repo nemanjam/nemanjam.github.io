@@ -12,7 +12,8 @@
     "lint": "eslint-config",
     "format": "prettier-config",
     "clean": "rm -rf node_modules yarn.lock",
-    "check-types": "tsc --noEmit --pretty"
+    "check-types": "tsc --noEmit --pretty",
+    "deploy:nginx": "bash scripts/deploy-nginx-local.sh"
   },
   "dependencies": {
     "@astrojs/mdx": "^3.0.0",

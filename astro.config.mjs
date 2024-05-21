@@ -62,7 +62,7 @@ export default defineConfig({
   },
   vite: {
     build: {
-      sourcemap: true,
+      sourcemap: false,
     },
     ssr: {
       noExternal: ['react-component-benchmark'],
