@@ -148,6 +148,9 @@ https://github.com/simonswiss/simonswiss.com
 https://bloggrify.com/templates
 https://mistral.bloggrify.com/
 
+// related articles
+https://the-green-chronicle.esteban-soubiran.site/articles/the-organic-chronicles-transitioning-to-chemical-free-farming
+
 -----------
 za local state mora react ili solid
 for state between pages nanostore with localStorage
