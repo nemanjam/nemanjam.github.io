@@ -5,7 +5,6 @@ import { getPostSlug } from '@/modules/post';
 import Link from '@/components/Link.astro';
 import PostMeta from '@/components/PostMeta.astro';
 import TagList from '@/components/TagList.astro';
-import Heading from '@/components/ui/Heading.astro';
 import { ROUTES } from '@/constants/routes';
 import { renderMarkdown } from '@/utils/markdown';
 import { getRandomLengthSubstring } from '@/utils/strings';
@@ -76,13 +75,12 @@ const postMetaProps = {
       <PostMeta {...postMetaProps} />
 
       {/* title */}
-      <Heading as="h2" transitionName={`title-${slug}`}>
-        {/* fix relative path here from tags and categories */}
+      <h2>
         <Link href={`${ROUTES.BLOG}${slug}`} variant="transparent">
           {title}
           {draft && <sup class="text-sm text-red-400">(draft)</sup>}
         </Link>
-      </Heading>
+      </h2>
 
       {/* description, can have markdown */}
       <div>

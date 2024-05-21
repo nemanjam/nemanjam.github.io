@@ -17,7 +17,7 @@ export interface Props {
 
 export interface PaginationProps extends Props {}
 
-export const getPaginationPropsFromPage = (page: Page<AnyCollection>): Props => ({
+export const getPaginationPropsFromPage = (page: Page<AnyCollection>): PaginationProps => ({
   nextUrl: page.url.next,
   prevUrl: page.url.prev,
   current: page.currentPage,

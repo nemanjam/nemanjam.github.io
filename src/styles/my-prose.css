@@ -1,6 +1,6 @@
 /* prose override */
 @layer base {
-  .my-prose {
+  .my-prose:not(:where([class~='not-prose'], [class~='not-prose'] *)) {
     @apply prose prose-slate max-w-none dark:prose-invert;
 
     /* responsive styling */
@@ -10,5 +10,6 @@
     @apply prose-h1:text-3xl md:prose-h1:text-4xl lg:prose-h1:text-5xl;
 
     /* h1 */
+    /* @apply outline outline-pink-500; */
   }
 }

@@ -13,11 +13,11 @@ const props = Astro.props;
     <figure class="w-full max-w-5xl md:mx-auto">
       <slot name="hero-image" />
     </figure>
-    <section class="my-prose w-full max-w-4xl md:mx-auto px-4 lg:px-0 py-12 md:py-16">
+    <section class="w-full max-w-4xl md:mx-auto px-4 lg:px-0 py-12 md:py-16">
       <slot name="hero-text" />
       <slot name="content" />
     </section>
-    <section class="w-full max-w-5xl px-4 lg:px-0 md:mx-auto">
+    <section class="not-prose w-full max-w-5xl px-4 lg:px-0 md:mx-auto">
       <slot name="more-posts" />
     </section>
   </article>
