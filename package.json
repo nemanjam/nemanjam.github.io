@@ -13,7 +13,9 @@
     "format": "prettier-config",
     "clean": "rm -rf node_modules yarn.lock",
     "check-types": "tsc --noEmit --pretty",
-    "deploy:nginx": "bash scripts/deploy-nginx-local.sh"
+    "deploy:nginx": "bash scripts/deploy-nginx-local.sh",
+    "docker:build:arm": "add qemu here docker build -f ./docker/Dockerfile -t nemanjamitic/nemanjam.github.io --build-arg ARG_SITE_URL='https://nmc-docker.arm1.nemanjamitic.com' .",
+    "docker:push": "docker push nemanjamitic/nemanjam.github.io"
   },
   "dependencies": {
     "@astrojs/mdx": "^3.0.0",
