@@ -150,6 +150,20 @@ declare module 'astro:content' {
   collection: "post";
   data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
+"2024-01-19-example-article-3.mdx": {
+	id: "2024-01-19-example-article-3.mdx";
+  slug: "example-article-3";
+  body: string;
+  collection: "post";
+  data: InferEntrySchema<"post">
+} & { render(): Render[".mdx"] };
+"2024-01-20-example-article-4.mdx": {
+	id: "2024-01-20-example-article-4.mdx";
+  slug: "example-article-4";
+  body: string;
+  collection: "post";
+  data: InferEntrySchema<"post">
+} & { render(): Render[".mdx"] };
 };
 "project": {
 "2024-02-13-example-project-1.mdx": {
@@ -162,6 +176,13 @@ declare module 'astro:content' {
 "2024-02-15-example-project-2.mdx": {
 	id: "2024-02-15-example-project-2.mdx";
   slug: "2024-02-15-example-project-2";
+  body: string;
+  collection: "project";
+  data: InferEntrySchema<"project">
+} & { render(): Render[".mdx"] };
+"2024-02-16-example-project-3.mdx": {
+	id: "2024-02-16-example-project-3.mdx";
+  slug: "2024-02-16-example-project-3";
   body: string;
   collection: "project";
   data: InferEntrySchema<"project">

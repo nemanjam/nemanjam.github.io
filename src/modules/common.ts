@@ -8,12 +8,12 @@ export interface GetAllEntriesOptions {
   skipSort?: boolean;
 }
 
-/** Sorts by publishDate desc by default. */
+/** Sorts by publishDate desc by default. Newest on top. */
 export const getAllEntries = async <T extends CollectionKey>(
   collectionName: T,
   options?: GetAllEntriesOptions
 ): Promise<CollectionEntry<T>[]> => {
-  const { skipSort = true } = options ?? {};
+  const { skipSort = false } = options ?? {};
 
   const entries = await getCollection<T>(collectionName, ({ data }) => {
     const isProdAndDraft = import.meta.env.PROD && data.draft;

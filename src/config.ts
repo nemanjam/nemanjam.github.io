@@ -10,7 +10,7 @@ const configData: ConfigType = {
   SITE_URL: process.env.SITE_URL,
   SITE_TITLE: 'John Doe',
   SITE_DESCRIPTION: 'I am John Doe, eat at Joe',
-  PAGE_SIZE: 2,
+  PAGE_SIZE: 3,
   AUTHOR_NAME: 'Nemanja Mitic',
   AUTHOR_EMAIL: 'email@email.com',
   // github, linkedin...
