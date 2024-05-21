@@ -5,24 +5,27 @@ import Link from '@/components/Link.astro';
 import { CATEGORIES } from '@/constants/collections';
 import { ROUTES } from '@/constants/routes';
 import { formatDate, formatDateIso } from '@/utils/datetime';
+import { cn } from '@/utils/styles';
 
 interface Props {
   publishDate: Date;
   category?: string;
   readingTime?: number;
   updatedDate?: Date;
+  class?: string
 }
 
-const { category, publishDate, updatedDate, readingTime } = Astro.props;
+const { category, publishDate, updatedDate, readingTime, class: className } = Astro.props;
 
 const categoryIcon = CATEGORIES.find((item) => item.name === category)?.icon;
 
 const shouldDisplay = Object.values(Astro.props).some(Boolean);
+// add variance authority
 ---
 
 {
   shouldDisplay && (
-    <p aria-label="Post meta" class="flex flex-row flex-wrap items-center gap-2">
+    <p aria-label="Post meta" class={cn('flex flex-row flex-wrap items-center gap-2', className)}>
         {publishDate && (      
             <Icon name="mdi:access-time" />
             <time itemprop="datePublished" datetime={formatDateIso(publishDate)}>

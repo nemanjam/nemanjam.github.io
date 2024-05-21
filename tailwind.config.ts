@@ -1,4 +1,5 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
+import plugin from 'tailwindcss/plugin';
 
 import type { Config } from 'tailwindcss';
 
@@ -6,7 +7,12 @@ const config: Config = {
   content: ['src/**/*.{astro,md,mdx,tsx}', 'astro.config.mjs'],
   // activates only dark: modifier, not color theme
   darkMode: ['selector'],
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [
+    require('@tailwindcss/typography'),
+    plugin(({ addVariant }) => {
+      addVariant('not-last', '&:not(:last-child)');
+    }),
+  ],
   theme: {
     tabSize: {
       1: '1',

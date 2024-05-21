@@ -159,4 +159,6 @@ ul li PostList, ProjectList
 not-prose not working for my-prose
 not-prose fails for font-size, inherited from <main />, i za cn(proseClasses)
 keep all breakpoints in sync, prose-lg, h1 sizes, py layout
+add class_ variance authority
+
 ```

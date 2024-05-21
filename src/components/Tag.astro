@@ -9,8 +9,8 @@ const { class: className, ...props } = Astro.props;
 <a
   class={clsx(
     'text-base',
-    'bg-slate-200 inline-block px-2 py-0.5 lowercase no-underline rounded-tag',
-    'hover:bg-slate-300 focus:bg-slate-300 active:bg-slate-300',
+    'inline-block px-2 py-0.5 lowercase no-underline rounded-full',
+    'bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600',
     className
   )}
   {...props}
