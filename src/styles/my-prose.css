@@ -5,7 +5,7 @@
 
     /* responsive styling */
     /* all tags */
-    @apply md:prose-lg xl:prose-xl;
+    @apply md:prose-lg lg:prose-xl;
     /* limit just h1 */
     @apply prose-h1:text-3xl md:prose-h1:text-4xl lg:prose-h1:text-5xl;
 

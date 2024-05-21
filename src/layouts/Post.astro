@@ -10,10 +10,10 @@ const props = Astro.props;
 
 <FullWidth {...props}>
   <article>
-    <figure class="w-full max-w-5xl md:mx-auto">
+    <figure class="not-prose w-full max-w-5xl md:mx-auto">
       <slot name="hero-image" />
     </figure>
-    <section class="w-full max-w-4xl md:mx-auto px-4 lg:px-0 py-12 md:py-16">
+    <section class="w-full max-w-4xl md:mx-auto px-4 lg:px-0 py-12 lg:py-16">
       <slot name="hero-text" />
       <slot name="content" />
     </section>

@@ -141,7 +141,7 @@ https://salient.tailwindui.com/
 // linkedin blog posts, example
 https://www.linkedin.com/pulse/react-19-beta-now-available-npm-iii-amigoes-qpjke/
 
-// tailwind guy
+// tailwind guy, keystatic, very simple
 https://github.com/simonswiss/simonswiss.com
 
 -----------
