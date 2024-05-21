@@ -1,17 +1,24 @@
 ---
 import Button from '@/components/Button.astro';
+import { isActiveNavItem } from '@/utils/strings';
+import { cn } from '@/utils/styles';
 
 import type { Props } from '@/components/Button.astro';
 
 // eslint-disable-next-line no-unused-vars
 const { slot, ...props } = Astro.props as Props;
-const isActive = Astro.url.pathname.startsWith(`${props.href}`);
+
+const isActive = isActiveNavItem({
+  routePathname: Astro.url.pathname,
+  navItemHref: props.href as string,
+});
+
 if (isActive) {
   props['aria-current'] = 'page';
 }
 ---
 
-<Button {...props} class={isActive ? 'bg-slate-200/50 dark:bg-slate-800/50' : ''}>
+<Button {...props} class={cn({ 'bg-slate-200/50 dark:bg-slate-800/50': isActive })}>
   <slot name="icon" />
   <slot />
 </Button>
