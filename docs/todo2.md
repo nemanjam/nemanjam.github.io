@@ -141,8 +141,12 @@ https://salient.tailwindui.com/
 // linkedin blog posts, example
 https://www.linkedin.com/pulse/react-19-beta-now-available-npm-iii-amigoes-qpjke/
 
-// tailwind guy, keystatic, very simple
+// tailwind swiss guy, keystatic, very simple
 https://github.com/simonswiss/simonswiss.com
+
+// vue tailwind
+https://bloggrify.com/templates
+https://mistral.bloggrify.com/
 
 -----------
 za local state mora react ili solid
