@@ -3,13 +3,15 @@ import { getAllPosts, getSortedUniqueTagsWithCount } from '@/modules/post';
 import List from '@/layouts/List.astro';
 import TagList from '@/components/TagList.astro';
 
+import type { Metadata } from '@/types/common';
+
 const allPosts = await getAllPosts();
 
 const tagsWithCount = getSortedUniqueTagsWithCount(allPosts);
-const baseProps = { title: 'Tags' };
+const metadata: Metadata = { title: 'Tags' };
 ---
 
-<List {baseProps}>
+<List {metadata}>
   <section>
     <div class="flex flex-col items-center gap-16">
       <TagList tags={tagsWithCount} />

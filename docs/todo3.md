@@ -147,5 +147,7 @@ add colors and gradients to h1 maybe
 fix colors for all text
 fix json.parse for theme
 implement project list html
-extract pagination into layout
+    extract pagination into layout
+remove redundant section and article tags from layouts
+    extract Metadata type_ and fix Base layout props
 ```

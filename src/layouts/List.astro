@@ -5,16 +5,15 @@ import Pagination from '@/components/Pagination.astro';
 import type { PaginationProps } from '@/components/Pagination.astro';
 import type { BaseProps } from '@/layouts/Base.astro';
 
-export interface Props {
-  baseProps: BaseProps;
+export interface Props extends BaseProps {
   paginationProps?: PaginationProps;
 }
 
-const { paginationProps, baseProps } = Astro.props;
-const { title, description } = baseProps;
+const { paginationProps, metadata } = Astro.props;
+const { title, description } = metadata;
 ---
 
-<Centered {...baseProps}>
+<Centered {metadata}>
   <article class="my-prose">
     <h1>{title}</h1>
     {description && <p class="mb-5">{description}</p>}

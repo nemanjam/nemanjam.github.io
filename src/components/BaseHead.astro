@@ -8,17 +8,18 @@ import '@/styles/main.css';
 
 import { trimHttpProtocol } from '@/utils/strings';
 
+import type { Metadata } from '@/types/common';
+
 const { SITE_URL } = CONFIG;
 const domain = trimHttpProtocol(SITE_URL);
 
-export interface Props {
-  title: string;
-  description: string;
-  image?: string | undefined;
+export interface BaseHeadProps {
+  metadata: Metadata;
 }
 
 // set defualt here
-const { title, description, image = '/images/favicons/og_image_small.jpg' } = Astro.props;
+const { metadata } = Astro.props as BaseHeadProps;
+const { title, description, image = '/images/favicons/og_image_small.jpg' } = metadata;
 ---
 
 <head>

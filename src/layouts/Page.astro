@@ -1,14 +1,14 @@
 ---
 import Centered from '@/layouts/Centered.astro';
 
-import type { BaseProps } from '@/layouts/Base.astro';
+import type { Metadata } from '@/types/common';
 
-export interface Props extends BaseProps {}
+export interface Props extends Metadata {}
 
 const props = Astro.props;
 ---
 
-<Centered {...props}>
+<Centered metadata={props}>
   <article class="my-prose">
     <slot />
   </article>

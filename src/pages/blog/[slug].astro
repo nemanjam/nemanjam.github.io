@@ -14,6 +14,8 @@ import PostMeta from '@/components/PostMeta.astro';
 import SharePost from '@/components/SharePost.astro';
 import TocWidget from '@/components/TocWidget.astro';
 
+import type { Metadata } from '@/types/common';
+
 export async function getStaticPaths() {
   const sortedPosts = await getAllPosts();
 
@@ -59,10 +61,12 @@ const postMetaProps = {
   readingTime,
   updatedDate,
 };
+
+const metadata: Metadata = { title, description, image: heroImage.src };
 ---
 
 {/* clean up all of this */}
-<Post title={title} description={description} image={heroImage.src}>
+<Post {metadata}>
   <Fragment slot="hero-image">
     {/* hero image 1280x720 max, 16:9 */}
     {

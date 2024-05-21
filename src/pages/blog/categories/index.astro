@@ -4,12 +4,14 @@ import List from '@/layouts/List.astro';
 import Link from '@/components/Link.astro';
 import { ROUTES } from '@/constants/routes';
 
+import type { Metadata } from '@/types/common';
+
 const posts = await getAllPosts();
 const categoriesWithCount = getSortedUniqueCategoriesWithCount(posts);
-const baseProps = { title: 'Categories' };
+const metadata: Metadata = { title: 'Categories' };
 ---
 
-<List {baseProps}>
+<List {metadata}>
   <section>
     <ul class="flex flex-wrap gap-2">
       {

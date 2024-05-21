@@ -5,6 +5,7 @@ import { getPaginationPropsFromPage } from '@/components/Pagination.astro';
 import PostList from '@/components/PostList.astro';
 import { CONFIG } from '@/config';
 
+import type { Metadata } from '@/types/common';
 import type { Post } from '@/types/post';
 import type { GetStaticPathsOptions } from 'astro';
 
@@ -31,9 +32,9 @@ const { page } = Astro.props;
 const { category } = Astro.params;
 
 const paginationProps = getPaginationPropsFromPage(page);
-const baseProps = { title: `Category: ${category}` };
+const metadata: Metadata = { title: `Category: ${category}` };
 
-const layoutProps = { baseProps, paginationProps };
+const layoutProps = { metadata, paginationProps };
 ---
 
 <List {...layoutProps}>

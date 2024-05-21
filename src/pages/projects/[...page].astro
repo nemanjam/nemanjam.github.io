@@ -8,6 +8,7 @@ import { getPaginationPropsFromPage } from '@/components/Pagination.astro';
 import { ROUTES } from '@/constants/routes';
 import { CONFIG } from '@/config';
 
+import type { Metadata } from '@/types/common';
 import type { ProjectCollection } from '@/types/project';
 import type { GetStaticPathsOptions, Page } from 'astro';
 
@@ -28,12 +29,12 @@ const { page } = Astro.props;
 
 const paginationProps = getPaginationPropsFromPage(page);
 
-const baseProps = {
+const metadata: Metadata = {
   title: 'Projects',
   description: 'A showcase of experiments and projects.',
 };
 
-const layoutProps = { baseProps, paginationProps };
+const layoutProps = { metadata, paginationProps };
 ---
 
 {/* rewrite this html */}

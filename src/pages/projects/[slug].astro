@@ -2,6 +2,8 @@
 import { getAllProjects } from '@/modules/project';
 import Centered from '@/layouts/Centered.astro';
 
+import type { Metadata } from '@/types/common';
+
 export async function getStaticPaths() {
   const pages = await getAllProjects();
 
@@ -14,11 +16,12 @@ export async function getStaticPaths() {
 }
 
 const { data, render } = Astro.props.page;
-const { heroImage } = data;
+const { title, description, heroImage } = data;
+const metadata: Metadata = { title, description, image: heroImage.src };
 
 const { Content } = await render();
 ---
 
-<Centered {...data} image={heroImage.src}>
+<Centered {metadata}>
   <Content />
 </Centered>
