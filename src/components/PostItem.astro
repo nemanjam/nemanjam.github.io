@@ -47,9 +47,13 @@ const postMetaProps = {
 // title
 // desription
 // tags
+
+// for constant card height, line-clamp-x on description based on number of chars in title
 ---
 
-<article class="flex flex-col md:flex-row gap-4 py-4 lg:py-6 not-last:border-b border-base-300">
+<article
+  class="flex flex-col md:flex-row gap-4 py-4 lg:py-6 lg:gap-6 not-last:border-b border-base-300"
+>
   {/* left column */}
 
   {/* image */}
@@ -62,7 +66,7 @@ const postMetaProps = {
           widths={[320, 540, 720]}
           sizes="(max-width: 475px) 320px, (max-width: 720px) 540px, 720px"
           itemprop="image"
-          class="w-full max-h-80 md:max-h-none md:h-full md:w-auto object-cover rounded-box"
+          class="w-full max-h-72 min-h-48 md:max-h-none md:h-full md:w-auto object-cover rounded-box"
           transition:name={`hero-${heroImage.src}`}
         />
       </div>
