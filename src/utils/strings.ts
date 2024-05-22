@@ -48,3 +48,15 @@ export const isActiveNavItem = ({
 
   return isActive;
 };
+
+/**
+ * Example article 3 reprehenderit ipsum qui tempor - 48 chars
+ * h2 text-2xl
+ */
+export const isSingleLineTitle = (title: string): boolean => {
+  const SINGLE_LINE_TITLE_CHARS_LENGTH = 48 as const;
+
+  const result = title.length <= SINGLE_LINE_TITLE_CHARS_LENGTH;
+
+  return result;
+};

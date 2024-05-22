@@ -7,7 +7,8 @@ import PostMeta from '@/components/PostMeta.astro';
 import TagList from '@/components/TagList.astro';
 import { ROUTES } from '@/constants/routes';
 import { renderMarkdown } from '@/utils/markdown';
-import { getRandomLengthSubstring } from '@/utils/strings';
+import { getRandomLengthSubstring, isSingleLineTitle } from '@/utils/strings';
+import { cn } from '@/utils/styles';
 
 import type { Post } from '@/types/post';
 
@@ -42,13 +43,13 @@ const postMetaProps = {
   publishDate,
 };
 
+const isSingleLineTitleResult = isSingleLineTitle(title);
+
 // image
 // date, category
 // title
 // desription
 // tags
-
-// for constant card height, line-clamp-x on description based on number of chars in title
 ---
 
 <article
@@ -66,7 +67,7 @@ const postMetaProps = {
           widths={[320, 540, 720]}
           sizes="(max-width: 475px) 320px, (max-width: 720px) 540px, 720px"
           itemprop="image"
-          class="w-full max-h-72 min-h-48 md:max-h-none md:h-full md:w-auto object-cover rounded-box"
+          class="w-full max-h-72 min-h-481 md:max-h-none md:h-full md:w-auto object-cover rounded-box"
           transition:name={`hero-${heroImage.src}`}
         />
       </div>
@@ -86,7 +87,7 @@ const postMetaProps = {
     </h2>
 
     {/* description, can have markdown */}
-    <div class="text-base line-clamp-2 mb-3">
+    <div class={cn('text-base mb-3', isSingleLineTitleResult ? 'line-clamp-2' : 'line-clamp-1')}>
       <Fragment set:html={renderedDescription.code} />
     </div>
 
