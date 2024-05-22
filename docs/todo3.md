@@ -163,6 +163,7 @@ add class_ variance authority
 fix env files for docker
 docker build local je x86, more qemu, buildx
 links colors and styles
-PostItem - for constant card height, line-clamp-x on description based on number of chars in title
-
+    PostItem - for constant card height, line-clamp-x on description based on number of chars in title
+text hover transition
+limit to prose-lg 18px
 ```

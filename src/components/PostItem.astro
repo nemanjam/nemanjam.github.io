@@ -2,12 +2,11 @@
 import { Image } from 'astro:assets';
 
 import { getPostSlug } from '@/modules/post';
-import Link from '@/components/Link.astro';
 import PostMeta from '@/components/PostMeta.astro';
 import TagList from '@/components/TagList.astro';
 import { ROUTES } from '@/constants/routes';
 import { renderMarkdown } from '@/utils/markdown';
-import { getRandomLengthSubstring, isSingleLineTitle } from '@/utils/strings';
+import { getRandomLengthSubstring } from '@/utils/strings';
 import { cn } from '@/utils/styles';
 
 import type { Post } from '@/types/post';
@@ -38,12 +37,7 @@ const renderedDescription = await renderMarkdown(clippedDescription);
 
 const slug = getPostSlug(post);
 
-const postMetaProps = {
-  readingTime,
-  publishDate,
-};
-
-const isSingleLineTitleResult = isSingleLineTitle(title);
+const postMetaProps = { readingTime, publishDate };
 
 // image
 // date, category
@@ -79,7 +73,7 @@ const isSingleLineTitleResult = isSingleLineTitle(title);
     <PostMeta {...postMetaProps} class="text-sm text-captions" />
 
     {/* title */}
-    <h2 class="text-2xl font-bold break-words- line-clamp-2 mb-2">
+    <h2 class="text-2xl font-bold break-words line-clamp-2 mb-2">
       <a href={`${ROUTES.BLOG}${slug}`} class="link-heading">
         {title}
         {draft && <sup class="text-sm text-red-400">(draft)</sup>}
@@ -87,7 +81,7 @@ const isSingleLineTitleResult = isSingleLineTitle(title);
     </h2>
 
     {/* description, can have markdown */}
-    <div class={cn('text-base mb-3', isSingleLineTitleResult ? 'line-clamp-2' : 'line-clamp-1')}>
+    <div class={cn('text-base mb-3', title?.length <= 48 ? 'line-clamp-2' : 'line-clamp-1')}>
       <Fragment set:html={renderedDescription.code} />
     </div>
 
