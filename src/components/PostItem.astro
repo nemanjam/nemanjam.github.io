@@ -74,11 +74,11 @@ const postMetaProps = {
     <PostMeta {...postMetaProps} class="text-sm text-captions" />
 
     {/* title */}
-    <h2 class="text-2xl font-bold line-clamp-1 mb-2">
-      <Link href={`${ROUTES.BLOG}${slug}`} variant="transparent">
+    <h2 class="text-2xl font-bold break-words- line-clamp-2 mb-2">
+      <a href={`${ROUTES.BLOG}${slug}`} class="link-heading">
         {title}
         {draft && <sup class="text-sm text-red-400">(draft)</sup>}
-      </Link>
+      </a>
     </h2>
 
     {/* description, can have markdown */}
