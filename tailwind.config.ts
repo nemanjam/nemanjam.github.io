@@ -53,6 +53,14 @@ const config: Config = {
           DEFAULT: 'var(--th-secondary)',
           content: 'var(--th-secondary-content)',
         },
+        neutral: {
+          DEFAULT: 'var(--th-neutral)',
+          content: 'var(--th-neutral-content)',
+        },
+        accent: {
+          DEFAULT: 'var(--th-accent)',
+          content: 'var(--th-accent-content)',
+        },
       },
       borderRadius: {
         box: 'var(--th-rounded-box)',

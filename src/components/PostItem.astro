@@ -49,7 +49,7 @@ const postMetaProps = {
 // tags
 ---
 
-<article class="flex flex-col md:flex-row gap-4 py-4 lg:py-6 not-last:border-b border-base-code">
+<article class="flex flex-col md:flex-row gap-4 py-4 lg:py-6 not-last:border-b border-base-300">
   {/* left column */}
 
   {/* image */}
@@ -59,10 +59,10 @@ const postMetaProps = {
         <Image
           src={heroImage}
           alt={heroAlt}
-          width={500}
-          height={320}
+          widths={[320, 540, 720]}
+          sizes="(max-width: 475px) 320px, (max-width: 720px) 540px, 720px"
           itemprop="image"
-          class="w-full max-h-80 md:max-h-none md:h-full md:w-auto object-cover object-center rounded-md"
+          class="w-full max-h-80 md:max-h-none md:h-full md:w-auto object-cover rounded-md"
           transition:name={`hero-${heroImage.src}`}
         />
       </div>

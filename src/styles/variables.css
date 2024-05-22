@@ -3,9 +3,9 @@
     /* from prose-slate */
     /* background */
     --var-color-white: theme('colors.white');
-    --var-color-slate-50: theme('colors.slate.50');
-    --var-color-slate-100: theme('colors.slate.100');
+    --var-color-slate-200: theme('colors.slate.200');
     --var-color-slate-300: theme('colors.slate.300');
+    --var-color-slate-400: theme('colors.slate.400');
 
     /* content */
     --var-color-slate-500: theme('colors.slate.500');
@@ -19,6 +19,8 @@
     --var-color-orange: theme('colors.orange.400');
     --var-color-green-600: theme('colors.green.600');
     --var-color-green-300: theme('colors.green.300');
+    --var-color-teal-400: theme('colors.teal.400');
+    --var-color-teal-700: theme('colors.teal.700');
 
     /* todo: fix unique colors */
 
