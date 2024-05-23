@@ -193,6 +193,8 @@ accessibility, tab, focus, aria, nav, ul li, header, article
 icon link button
 use primary color so it makes sense
 extract all ui in components and render them in styleguide
-fix codeblocks style and find light theme
+fix codeblocks style and find light theme, highlight selected line
 reduce font-size and width PostListItems for balance with_ navbar, maybe blog heading and typography too
+add giscuss comments
+algolia search .md, later
 ```
