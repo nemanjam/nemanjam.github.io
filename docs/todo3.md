@@ -136,9 +136,10 @@ scroll broken in chrome, remove smooth css
 hashnode h1, h2, p...
 tailwindui gradients, linkedin blog
 move component to my-prose class_
-style tags
+    style tags
+style categories and tags list pages
 procitaj transition docs
-navbar buttons to links
+    navbar buttons to links
 add astro and fastapi in resume
 -----
     close mobile header on md
@@ -150,7 +151,7 @@ umotaj sve u prose u Base layout, pa samo nekoliko slotova no-prose
 add colors and gradients to h1 maybe
 fix colors for all text
     fix json.parse for theme
-implement project list html
+finish project list html
     extract pagination into layout
 remove redundant section and article tags from layouts
     extract Metadata type_ and fix Base layout props
@@ -162,16 +163,15 @@ keep all breakpoints in sync, prose-lg, h1 sizes, py layout
 add class_ variance authority
 fix env files for docker
 docker build local je x86, more qemu, buildx
-links colors and styles
+links colors and styles, uncomment visited later
     PostItem - for constant card height, line-clamp-x on description based on number of chars in title
 text hover transition
 limit to prose-lg 18px
 theme toggle icon sun
-fix MorePosts components
+fix MorePosts components, create cards
 fix Footer
 fix transform in Post schema
 extract widths and sizes for images in reusable object, for thumbnails, in constants/images
-pass slug from frontmatter, dont calc
 
 slug se explicitno prosledjuje samo u getStaticPaths koje nemaju paginate (bez [...page].astro)
 export async function getStaticPaths() {
@@ -184,7 +184,9 @@ export async function getStaticPaths() {
 
   return paths;
 }
-slug nepotreban u schemi, i calc od datuma, glupost
+    slug nepotreban u schemi, i calc od datuma, glupost
 use single Post or PostCollection type_ everywhere
 rewrite Pagination component
+find footer examples
+social links component for footer, array of objects and map
 ```

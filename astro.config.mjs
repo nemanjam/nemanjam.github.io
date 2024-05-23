@@ -20,9 +20,10 @@ const remarkPlugins = [remarkReadingTime];
 /** @type {import('@types/astro').AstroUserConfig} */
 export default defineConfig({
   site: SITE_URL,
-  // trailingSlash: 'always', // default 'ignore'
+  trailingSlash: 'ignore', // default
   compressHTML: true,
   server: { port: 3000 },
+  devToolbar: { enabled: false },
   integrations: [
     solid({
       include: ['src/**'],
