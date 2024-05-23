@@ -7,7 +7,7 @@ import { cn } from '@/utils/styles';
 import type { AnyCollection } from '@/types/common';
 import type { Page } from 'astro';
 
-export type Props = {
+export interface Props {
   url: {
     prev: Page<AnyCollection>['url']['prev'];
     next: Page<AnyCollection>['url']['next'];
@@ -15,7 +15,7 @@ export type Props = {
   };
   currentPage: Page<AnyCollection>['currentPage'];
   lastPage: Page<AnyCollection>['lastPage'];
-};
+}
 
 export interface PaginationProps extends Props {}
 
