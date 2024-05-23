@@ -1,4 +1,4 @@
-import { MODE_CLASS, MODES, THEME_ATTRIBUTE, THEMES } from '@/constants/themes';
+import { DEFAULT_THEMES, MODE_CLASS, MODES, THEME_ATTRIBUTE, THEMES } from '@/constants/themes';
 
 import type { Theme } from '@/constants/themes';
 
@@ -14,4 +14,20 @@ export const getCurrentTheme = () => {
 
   const currentTheme = THEMES.find((theme) => theme.name === themeName) as Theme;
   return currentTheme;
+};
+
+export const getNextTheme = () => {
+  const currentTheme = getCurrentTheme();
+
+  const currentIndex = THEMES.findIndex(
+    (theme) => currentTheme && currentTheme.name === theme.name
+  );
+
+  if (currentIndex === -1) {
+    const currentMode = getCurrentMode();
+    return DEFAULT_THEMES[currentMode];
+  }
+
+  const nextIndex = (currentIndex + 1) % THEMES.length;
+  return THEMES[nextIndex];
 };

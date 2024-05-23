@@ -43,7 +43,13 @@ import * as themeConstants from '@/constants/themes';
 
     if (!storedThemeString) return null;
 
-    const storedTheme = JSON.parse(storedThemeString);
+    let storedTheme;
+    try {
+      storedTheme = JSON.parse(storedThemeString);
+    } catch (error) {
+      localStorage.removeItem(LOCAL_STORAGE_THEME_KEY);
+      return null;
+    }
 
     // invalid theme
     if (!(storedTheme && storedTheme.name && storedTheme.mode)) {

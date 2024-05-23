@@ -154,7 +154,7 @@ implement project list html
     extract pagination into layout
 remove redundant section and article tags from layouts
     extract Metadata type_ and fix Base layout props
-improve PostItem image and rest
+    improve PostItem image and rest
 ul li PostList, ProjectList
 not-prose not working for my-prose
 not-prose fails for font-size, inherited from <main />, i za cn(proseClasses)
@@ -166,4 +166,5 @@ links colors and styles
     PostItem - for constant card height, line-clamp-x on description based on number of chars in title
 text hover transition
 limit to prose-lg 18px
+theme toggle icon sun
 ```
