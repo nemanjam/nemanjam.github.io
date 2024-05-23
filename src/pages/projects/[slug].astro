@@ -1,6 +1,6 @@
 ---
 import { getAllProjects } from '@/modules/project';
-import Centered from '@/layouts/Centered.astro';
+import Project from '@/layouts/Project.astro';
 
 import type { Metadata } from '@/types/common';
 
@@ -22,6 +22,6 @@ const metadata: Metadata = { title, description, image: heroImage.src };
 const { Content } = await render();
 ---
 
-<Centered {metadata}>
+<Project {metadata}>
   <Content />
-</Centered>
+</Project>

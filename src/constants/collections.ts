@@ -1,3 +1,6 @@
+import DefaultPostHeroImage from '@/assets/images/default/default-post-hero-image.jpg';
+import DefaultProjectHeroImage from '@/assets/images/default/default-project-hero-image.jpg';
+
 export const COLLECTIONS = {
   POST: 'post',
   PROJECT: 'project',
@@ -47,14 +50,19 @@ export const CATEGORIES = [
   },
 ] as const;
 
+// todo: use imported images here
 export const DEFAULTS_POST = {
   NO_HERO: false,
-  HERO_IMAGE: {
-    src: 'images/default/default-hero-image.jpg',
-    height: 800,
-    width: 600,
-    format: 'jpg',
-  },
+  HERO_IMAGE: DefaultPostHeroImage,
+  HERO_ALT: 'Hero image',
+  DRAFT: false,
+  CATEGORY: CATEGORIES[0].name,
+  TOC: true,
+} as const;
+
+export const DEFAULTS_PROJECT = {
+  NO_HERO: false,
+  HERO_IMAGE: DefaultProjectHeroImage,
   HERO_ALT: 'Hero image',
   DRAFT: false,
   CATEGORY: CATEGORIES[0].name,

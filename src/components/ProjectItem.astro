@@ -1,0 +1,36 @@
+---
+import { Image } from 'astro:assets';
+
+import { geSlugFromEntry } from '@/modules/common';
+import { ROUTES } from '@/constants/routes';
+
+import type { Project } from '@/types/project';
+
+export interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+
+const slug = geSlugFromEntry(project);
+const { title, description, heroImage, heroAlt } = project.data;
+---
+
+<article class="group">
+  <a href={`${ROUTES.PROJECTS}${slug}`} class="flex flex-col gap-2">
+    <div
+      class="blur-[1px] grayscale transition duration-150 group-hover:blur-none group-hover:grayscale-0"
+    >
+      <Image
+        src={heroImage}
+        alt={heroAlt}
+        widths={[320, 540, 720]}
+        sizes="(max-width: 475px) 320px, (max-width: 720px) 540px, 720px"
+      />
+    </div>
+    <div>
+      <div class="text-sm font-medium">{title}</div>
+      {description && <div class="text-xs text-captions">{description}</div>}
+    </div>
+  </a>
+</article>

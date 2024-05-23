@@ -149,7 +149,7 @@ prose vec ima sve stilove kako treba, samo h1 ogranici na 48px jer je prose-xl
 umotaj sve u prose u Base layout, pa samo nekoliko slotova no-prose
 add colors and gradients to h1 maybe
 fix colors for all text
-fix json.parse for theme
+    fix json.parse for theme
 implement project list html
     extract pagination into layout
 remove redundant section and article tags from layouts
@@ -167,4 +167,9 @@ links colors and styles
 text hover transition
 limit to prose-lg 18px
 theme toggle icon sun
+fix MorePosts components
+fix Footer
+fix transform in Post schema
+extract widths and sizes for images in reusable object, for thumbnails, in constants/images
+pass slug from frontmatter, dont calc
 ```

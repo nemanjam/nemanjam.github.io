@@ -1,12 +1,10 @@
-import { getAllEntries } from '@/modules/common';
+import { geSlugFromEntry, getAllEntries } from '@/modules/common';
 import { COLLECTIONS } from '@/constants/collections';
 import { renderMarkdown } from '@/utils/markdown';
 
 import type { Post, PostCollection } from '@/types/post';
 import type { MarkdownProcessorRenderResult } from '@astrojs/markdown-remark';
 import type { MarkdownHeading } from 'astro';
-
-const padTwo = (num: number) => `${num}`.padStart(2, '0');
 
 /*-------------------------------- getAllPosts ------------------------------*/
 
@@ -28,22 +26,6 @@ export const getPostsWithReadingTimeFromPosts = async (
   return postsWithReadingTime;
 };
 
-/*-------------------------------- Post slug ------------------------------*/
-
-export const getPostSlug = (post: PostCollection) => {
-  const {
-    slug,
-    data: { publishDate },
-  } = post;
-
-  const year = publishDate.getFullYear();
-  const month = padTwo(publishDate.getUTCMonth() + 1);
-  const day = padTwo(publishDate.getUTCDate());
-
-  const resultSlug = `${year}-${month}-${day}-${slug}`;
-  return resultSlug;
-};
-
 /*-------------------------------- random Posts ------------------------------*/
 
 /** Must handle empty array. */
@@ -54,7 +36,7 @@ export const getRandomPosts = (
 ): PostCollection[] => {
   if (!(posts.length > 0)) return [];
 
-  const filteredPosts = posts.filter((post) => getPostSlug(post) !== excludeSlug);
+  const filteredPosts = posts.filter((post) => geSlugFromEntry(post) !== excludeSlug);
 
   if (!(filteredPosts.length > 0)) return [];
 

@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 
-import { getPostSlug } from '@/modules/post';
+import { geSlugFromEntry } from '@/modules/common';
 import PostMeta from '@/components/PostMeta.astro';
 import TagList from '@/components/TagList.astro';
 import { ROUTES } from '@/constants/routes';
@@ -35,15 +35,9 @@ const {
 const clippedDescription = getRandomLengthSubstring(description, 100, 50) + '...';
 const renderedDescription = await renderMarkdown(clippedDescription);
 
-const slug = getPostSlug(post);
+const slug = geSlugFromEntry(post);
 
 const postMetaProps = { readingTime, publishDate };
-
-// image
-// date, category
-// title
-// desription
-// tags
 ---
 
 <article

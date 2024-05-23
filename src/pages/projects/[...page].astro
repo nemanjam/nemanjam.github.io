@@ -1,11 +1,8 @@
 ---
-import { Image } from 'astro:assets';
-
 import { getAllProjects } from '@/modules/project';
 import List from '@/layouts/List.astro';
-import Link from '@/components/Link.astro';
 import { getPaginationPropsFromPage } from '@/components/Pagination.astro';
-import { ROUTES } from '@/constants/routes';
+import ProjectList from '@/components/ProjectList.astro';
 import { CONFIG } from '@/config';
 
 import type { Metadata } from '@/types/common';
@@ -24,8 +21,8 @@ type Props = {
   page: Page<ProjectCollection>;
 };
 
-// page from pagination
 const { page } = Astro.props;
+const { data: projects } = page;
 
 const paginationProps = getPaginationPropsFromPage(page);
 
@@ -37,32 +34,6 @@ const metadata: Metadata = {
 const layoutProps = { metadata, paginationProps };
 ---
 
-{/* rewrite this html */}
-
 <List {...layoutProps}>
-  <ul class="grid auto-cols-fr grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 md:grid-cols-3">
-    {
-      page.data.map((project) => (
-        <li>
-          <Link href={`${ROUTES.PROJECTS}${project.slug}`} class="group h-full">
-            <div class="flex flex-col gap-2">
-              <div class="pointer-events-none flex h-full items-center justify-center justify-self-stretch overflow-hidden rounded border border-slate-200 bg-slate-100 group-hover:shadow group-hover:shadow-blue-500/30 group-active:shadow-inner dark:border-slate-600 dark:bg-slate-700">
-                <div class="w-full blur-[1px] grayscale transition duration-150 group-hover:blur-none group-hover:grayscale-0">
-                  <Image src={project.data.heroImage} width={400} height={200} alt="" />
-                </div>
-              </div>
-              <div>
-                <div class="text-sm font-medium">{project.data.title}</div>
-                {project.data.description ? (
-                  <div class="text-xs text-slate-500 dark:text-slate-400">
-                    {project.data.description}
-                  </div>
-                ) : null}
-              </div>
-            </div>
-          </Link>
-        </li>
-      ))
-    }
-  </ul>
+  <ProjectList {projects} />
 </List>

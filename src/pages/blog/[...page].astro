@@ -22,6 +22,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 
 // page from pagination
 const { page } = Astro.props;
+const { data: posts } = page;
 
 const paginationProps = getPaginationPropsFromPage(page);
 const metadata: Metadata = {
@@ -33,5 +34,5 @@ const layoutProps = { metadata, paginationProps };
 ---
 
 <List {...layoutProps}>
-  <PostList posts={page.data} />
+  <PostList posts={posts} />
 </List>

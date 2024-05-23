@@ -1,5 +1,5 @@
 ---
-import { getPostSlug } from '@/modules/post';
+import { geSlugFromEntry } from '@/modules/common';
 import Link from '@/components/Link.astro';
 import Prose from '@/components/Prose.astro';
 import { ROUTES } from '@/constants/routes';
@@ -25,7 +25,7 @@ const { morePosts } = Astro.props;
         <li>
           <Link
             class="text-xl font-bold"
-            href={`${ROUTES.BLOG}${getPostSlug(entry)}/`}
+            href={`${ROUTES.BLOG}${geSlugFromEntry(entry)}/`}
             itemprop="url"
           >
             {entry.data.title}
