@@ -1,7 +1,7 @@
 ---
 import { getAllProjects } from '@/modules/project';
 import List from '@/layouts/List.astro';
-import { getPaginationPropsFromPage } from '@/components/Pagination.astro';
+import { pickPaginationPropsFromPage } from '@/components/Pagination.astro';
 import ProjectList from '@/components/ProjectList.astro';
 import { CONFIG } from '@/config';
 
@@ -24,8 +24,7 @@ type Props = {
 const { page } = Astro.props;
 const { data: projects } = page;
 
-const paginationProps = getPaginationPropsFromPage(page);
-
+const paginationProps = pickPaginationPropsFromPage(page);
 const metadata: Metadata = {
   title: 'Projects',
   description: 'A showcase of experiments and projects.',

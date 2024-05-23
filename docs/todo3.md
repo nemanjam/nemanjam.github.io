@@ -186,4 +186,5 @@ export async function getStaticPaths() {
 }
 slug nepotreban u schemi, i calc od datuma, glupost
 use single Post or PostCollection type_ everywhere
+rewrite Pagination component
 ```

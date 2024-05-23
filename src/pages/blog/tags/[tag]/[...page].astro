@@ -1,7 +1,7 @@
 ---
 import { getAllPosts, getPostsWithReadingTimeFromPosts, getUniqueTags } from '@/modules/post';
 import List from '@/layouts/List.astro';
-import { getPaginationPropsFromPage } from '@/components/Pagination.astro';
+import { pickPaginationPropsFromPage } from '@/components/Pagination.astro';
 import PostList from '@/components/PostList.astro';
 import { CONFIG } from '@/config';
 
@@ -28,7 +28,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 const { page } = Astro.props;
 const { tag } = Astro.params;
 
-const paginationProps = getPaginationPropsFromPage(page);
+const paginationProps = pickPaginationPropsFromPage(page);
 const metadata: Metadata = { title: `Tag: ${tag}` };
 
 const layoutProps = { metadata, paginationProps };

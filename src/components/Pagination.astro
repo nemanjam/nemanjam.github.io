@@ -1,66 +1,68 @@
 ---
 import { Icon } from 'astro-icon/components';
 
-import clsx from 'clsx';
-
 import Button from '@/components/Button.astro';
+import { cn } from '@/utils/styles';
 
 import type { AnyCollection } from '@/types/common';
 import type { Page } from 'astro';
 
-export interface Props {
-  prevUrl?: string | undefined;
-  nextUrl?: string | undefined;
-  current: number;
-  total: number;
-}
+export type Props = {
+  url: {
+    prev: Page<AnyCollection>['url']['prev'];
+    next: Page<AnyCollection>['url']['next'];
+    current: Page<AnyCollection>['url']['current']; // unused
+  };
+  currentPage: Page<AnyCollection>['currentPage'];
+  lastPage: Page<AnyCollection>['lastPage'];
+};
 
 export interface PaginationProps extends Props {}
 
-export const getPaginationPropsFromPage = (page: Page<AnyCollection>): PaginationProps => ({
-  nextUrl: page.url.next,
-  prevUrl: page.url.prev,
-  current: page.currentPage,
-  total: page.lastPage,
+export const pickPaginationPropsFromPage = (page: Page<AnyCollection>): PaginationProps => ({
+  url: page.url,
+  currentPage: page.currentPage,
+  lastPage: page.lastPage,
 });
 
-const { current, nextUrl, prevUrl, total } = Astro.props as Props;
+const { url, currentPage, lastPage } = Astro.props as Props;
+const { prev, next } = url;
 ---
 
-<nav role="navigation" aria-label="Pagination">
-  <ul
-    class={clsx(
-      'grid w-full grid-cols-1 justify-between gap-x-12 gap-y-4',
-      prevUrl && nextUrl && 'sm:grid-cols-2'
-    )}
-  >
-    {
-      nextUrl ? (
-        <li
-          class="order-last flex flex-row justify-end"
-          aria-setsize={total}
-          aria-posinset={current + 1}
-        >
-          <Button href={nextUrl} class="inline-flex flex-row-reverse py-4">
-            <Icon name="arrow-right" class="h-6 w-6 shrink-0" />
-            <span class="text-right">Older posts</span>
-          </Button>
-        </li>
-      ) : null
-    }
-    {
-      prevUrl ? (
-        <li
-          class="order-first flex flex-row justify-start"
-          aria-setsize={total}
-          aria-posinset={current - 1}
-        >
-          <Button href={prevUrl} class="inline-flex flex-row py-4">
-            <Icon name="arrow-left" class="h-6 w-6 shrink-0" />
-            <span>Newer posts</span>
-          </Button>
-        </li>
-      ) : null
-    }
-  </ul>
-</nav>
+{
+  lastPage > 1 ? (
+    <nav role="navigation" aria-label="Pagination">
+      <ul
+        class={cn(
+          'grid w-full grid-cols-1 justify-between gap-x-12 gap-y-4',
+          prev && next && 'sm:grid-cols-2'
+        )}
+      >
+        {next && (
+          <li
+            class="order-last flex flex-row justify-end"
+            aria-setsize={lastPage}
+            aria-posinset={currentPage + 1}
+          >
+            <Button href={next} class="inline-flex flex-row-reverse py-4">
+              <Icon name="arrow-right" class="h-6 w-6 shrink-0" />
+              <span class="text-right">Older posts</span>
+            </Button>
+          </li>
+        )}
+        {prev && (
+          <li
+            class="order-first flex flex-row justify-start"
+            aria-setsize={lastPage}
+            aria-posinset={currentPage - 1}
+          >
+            <Button href={prev} class="inline-flex flex-row py-4">
+              <Icon name="arrow-left" class="h-6 w-6 shrink-0" />
+              <span>Newer posts</span>
+            </Button>
+          </li>
+        )}
+      </ul>
+    </nav>
+  ) : null
+}
