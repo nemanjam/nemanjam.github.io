@@ -191,4 +191,8 @@ find footer examples
 social links component for footer, array of objects and map
 accessibility, tab, focus, aria, nav, ul li, header, article
 icon link button
+use primary color so it makes sense
+extract all ui in components and render them in styleguide
+fix codeblocks style and find light theme
+reduce font-size and width PostListItems for balance with_ navbar, maybe blog heading and typography too
 ```

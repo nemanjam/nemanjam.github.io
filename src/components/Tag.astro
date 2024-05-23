@@ -1,5 +1,5 @@
 ---
-import clsx from 'clsx';
+import { cn } from '@/utils/styles';
 
 export type Props = astroHTML.JSX.AnchorHTMLAttributes;
 
@@ -7,7 +7,7 @@ const { class: className, ...props } = Astro.props;
 ---
 
 <a
-  class={clsx(
+  class={cn(
     'text-base',
     'inline-block px-2 py-0.5 lowercase no-underline rounded-tag',
     'bg-base-200 hover:bg-base-300',
