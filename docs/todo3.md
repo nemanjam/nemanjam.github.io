@@ -189,4 +189,6 @@ use single Post or PostCollection type_ everywhere
 rewrite Pagination component
 find footer examples
 social links component for footer, array of objects and map
+accessibility, tab, focus, aria, nav, ul li, header, article
+icon link button
 ```
