@@ -2,9 +2,6 @@ import { getCollection } from 'astro:content';
 
 import type { CollectionEntry, CollectionKey } from 'astro:content';
 
-// todo: replace this
-export const padTwo = (num: number) => `${num}`.padStart(2, '0');
-
 /*-------------------------------- all entries ------------------------------*/
 
 export interface GetAllEntriesOptions {
@@ -33,19 +30,3 @@ export const getAllEntries = async <T extends CollectionKey>(
 
 export const sortEntriesByDateDesc = <T extends CollectionKey>(entries: CollectionEntry<T>[]) =>
   entries.slice().sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
-
-/*------------------------ get slug, same for Post and Project ----------------------*/
-
-export const geSlugFromEntry = (entry: CollectionEntry<'post' | 'project'>): string => {
-  const { slug, data } = entry;
-  const { publishDate } = data;
-
-  const year = publishDate.getFullYear();
-  const month = padTwo(publishDate.getUTCMonth() + 1);
-  const day = padTwo(publishDate.getUTCDate());
-
-  const resultSlug = `${year}-${month}-${day}-${slug}`;
-  console.log('resultSlug', resultSlug);
-
-  return resultSlug;
-};

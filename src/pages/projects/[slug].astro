@@ -5,9 +5,9 @@ import Project from '@/layouts/Project.astro';
 import type { Metadata } from '@/types/common';
 
 export async function getStaticPaths() {
-  const pages = await getAllProjects();
+  const sortedProjects = await getAllProjects();
 
-  const paths = pages.map((page) => ({
+  const paths = sortedProjects.map((page) => ({
     params: { slug: page.slug },
     props: { page },
   }));

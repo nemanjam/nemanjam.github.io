@@ -1,5 +1,4 @@
 ---
-import { geSlugFromEntry } from '@/modules/common';
 import Link from '@/components/Link.astro';
 import Prose from '@/components/Prose.astro';
 import { ROUTES } from '@/constants/routes';
@@ -21,17 +20,13 @@ const { morePosts } = Astro.props;
 
   <ul class="flex flex-col gap-8">
     {
-      morePosts.map((entry) => (
+      morePosts.map((post) => (
         <li>
-          <Link
-            class="text-xl font-bold"
-            href={`${ROUTES.BLOG}${geSlugFromEntry(entry)}/`}
-            itemprop="url"
-          >
-            {entry.data.title}
+          <Link class="text-xl font-bold" href={`${ROUTES.BLOG}${post.slug}/`} itemprop="url">
+            {post.data.title}
           </Link>
           <div class="prose prose-slate line-clamp-2 dark:prose-invert">
-            <Fragment set:html={entry.description.code} />
+            <Fragment set:html={post.description.code} />
           </div>
         </li>
       ))

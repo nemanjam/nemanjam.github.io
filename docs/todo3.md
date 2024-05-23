@@ -172,4 +172,18 @@ fix Footer
 fix transform in Post schema
 extract widths and sizes for images in reusable object, for thumbnails, in constants/images
 pass slug from frontmatter, dont calc
+
+slug se explicitno prosledjuje samo u getStaticPaths koje nemaju paginate (bez [...page].astro)
+export async function getStaticPaths() {
+  const pages = await getAllProjects();
+
+  const paths = pages.map((page) => ({
+    params: { slug: page.slug },
+    props: { page },
+  }));
+
+  return paths;
+}
+slug nepotreban u schemi, i calc od datuma, glupost
+use single Post or PostCollection type_ everywhere
 ```

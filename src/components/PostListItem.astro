@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets';
 
-import { geSlugFromEntry } from '@/modules/common';
 import PostMeta from '@/components/PostMeta.astro';
 import TagList from '@/components/TagList.astro';
 import { ROUTES } from '@/constants/routes';
@@ -16,7 +15,7 @@ export interface Props {
 }
 
 const { post } = Astro.props;
-const { readingTime } = post;
+const { data, slug, readingTime } = post;
 
 const {
   draft,
@@ -27,15 +26,13 @@ const {
   // category,
   tags = [],
   description = '',
-} = post.data;
+} = data;
 
 // prepare all data for render
 
 // ! this can break tags in markup
 const clippedDescription = getRandomLengthSubstring(description, 100, 50) + '...';
 const renderedDescription = await renderMarkdown(clippedDescription);
-
-const slug = geSlugFromEntry(post);
 
 const postMetaProps = { readingTime, publishDate };
 ---

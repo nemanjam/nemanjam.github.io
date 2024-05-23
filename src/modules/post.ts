@@ -1,4 +1,4 @@
-import { geSlugFromEntry, getAllEntries } from '@/modules/common';
+import { getAllEntries } from '@/modules/common';
 import { COLLECTIONS } from '@/constants/collections';
 import { renderMarkdown } from '@/utils/markdown';
 
@@ -36,7 +36,7 @@ export const getRandomPosts = (
 ): PostCollection[] => {
   if (!(posts.length > 0)) return [];
 
-  const filteredPosts = posts.filter((post) => geSlugFromEntry(post) !== excludeSlug);
+  const filteredPosts = posts.filter((post) => post.slug !== excludeSlug);
 
   if (!(filteredPosts.length > 0)) return [];
 

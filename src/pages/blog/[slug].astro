@@ -20,7 +20,7 @@ export async function getStaticPaths() {
   const sortedPosts = await getAllPosts();
 
   const paths = sortedPosts.map((post) => {
-    const slug = geSlugFromEntry(post);
+    const { slug } = post;
     const randomPosts = getRandomPosts(sortedPosts, 4, slug);
 
     return {

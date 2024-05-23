@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets';
 
-import { geSlugFromEntry } from '@/modules/common';
 import { ROUTES } from '@/constants/routes';
 
 import type { Project } from '@/types/project';
@@ -12,8 +11,8 @@ export interface Props {
 
 const { project } = Astro.props;
 
-const slug = geSlugFromEntry(project);
-const { title, description, heroImage, heroAlt } = project.data;
+const { slug, data } = project;
+const { title, description, heroImage, heroAlt } = data;
 ---
 
 <article class="group">
