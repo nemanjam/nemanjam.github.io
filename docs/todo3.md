@@ -197,4 +197,9 @@ fix codeblocks style and find light theme, highlight selected line
 reduce font-size and width PostListItems for balance with_ navbar, maybe blog heading and typography too
 add giscuss comments
 algolia search .md, later
+more posts cards
+date and minutes read absolute div over card
+3xl and prose-lg looks good with navbar, list 660px
+footer two columns
+improve slots in Post layout
 ```
