@@ -214,4 +214,9 @@ LinkButton
 share widget
 404 page style
 pagination with numbers
+category div, MorePostsCard, Post
+move vertical padding to correct layout
+refactor Post layout
+remove config folder for code theme
+rename header to navigation
 ```

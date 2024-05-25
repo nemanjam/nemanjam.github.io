@@ -4,8 +4,6 @@ import { Image } from 'astro:assets';
 import PostMeta from '@/components/PostMeta.astro';
 import TagList from '@/components/TagList.astro';
 import { ROUTES } from '@/constants/routes';
-import { renderMarkdown } from '@/utils/markdown';
-import { getRandomLengthSubstring } from '@/utils/strings';
 import { cn } from '@/utils/styles';
 
 import type { Post } from '@/types/post';
@@ -22,17 +20,13 @@ const {
   publishDate,
   title,
   heroImage,
-  heroAlt = '',
+  heroAlt,
   // category,
   tags = [],
-  description = '',
+  description,
 } = data;
 
 // prepare all data for render
-
-// ! this can break tags in markup
-const clippedDescription = getRandomLengthSubstring(description, 100, 50) + '...';
-const renderedDescription = await renderMarkdown(clippedDescription);
 
 const postMetaProps = { readingTime, publishDate };
 ---
@@ -52,7 +46,7 @@ const postMetaProps = { readingTime, publishDate };
           widths={[320, 540, 720]}
           sizes="(max-width: 475px) 320px, (max-width: 720px) 540px, 720px"
           itemprop="image"
-          class="w-full max-h-72 min-h-48 md:max-h-none md:h-full md:w-auto object-cover rounded-box"
+          class="w-full max-h-48 min-h-40 md:max-h-none md:h-full md:w-auto object-cover rounded-box"
           transition:name={`hero-${heroImage.src}`}
         />
       </div>
@@ -71,10 +65,13 @@ const postMetaProps = { readingTime, publishDate };
       </a>
     </h2>
 
-    {/* description, can have markdown */}
-    <div class={cn('text-base mb-3', title?.length <= 48 ? 'line-clamp-2' : 'line-clamp-1')}>
-      <Fragment set:html={renderedDescription.code} />
-    </div>
+    {
+      description && (
+        <p class={cn('text-base mb-3', title?.length <= 48 ? 'line-clamp-2' : 'line-clamp-1')}>
+          {description}
+        </p>
+      )
+    }
 
     {/* tags */}
     <TagList tags={tags} class="mt-auto" />
