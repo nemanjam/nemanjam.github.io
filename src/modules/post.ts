@@ -1,10 +1,13 @@
 import { getAllEntries } from '@/modules/common';
 import { COLLECTIONS } from '@/constants/collections';
+import { CONFIG } from '@/config';
 import { renderMarkdown } from '@/utils/markdown';
 
 import type { Post, PostCollection } from '@/types/post';
 import type { MarkdownProcessorRenderResult } from '@astrojs/markdown-remark';
 import type { MarkdownHeading } from 'astro';
+
+const { MORE_POSTS_COUNT } = CONFIG;
 
 /*-------------------------------- getAllPosts ------------------------------*/
 
@@ -28,12 +31,18 @@ export const getPostsWithReadingTimeFromPosts = async (
 
 /*-------------------------------- random Posts ------------------------------*/
 
+export interface RandomPostsArgs {
+  posts: Post[];
+  count?: number;
+  excludeSlug?: string;
+}
+
 /** Must handle empty array. */
-export const getRandomPosts = (
-  posts: PostCollection[],
-  count: number,
-  excludeSlug?: string
-): PostCollection[] => {
+export const getRandomPosts = ({
+  posts,
+  count = MORE_POSTS_COUNT,
+  excludeSlug,
+}: RandomPostsArgs): Post[] => {
   if (!(posts.length > 0)) return [];
 
   const filteredPosts = posts.filter((post) => post.slug !== excludeSlug);
@@ -93,17 +102,18 @@ export const getHeadingsForTableOfContents = (postHeadings: MarkdownHeading[]): 
 
 // more posts with rendered md description
 export type CollectionEntryWithRenderedDescription = PostCollection & {
-  description: MarkdownProcessorRenderResult;
+  renderedDescription: MarkdownProcessorRenderResult;
 };
 
+/** Don't use this, description without markdown, or myst wrap with prose. */
 export const getMorePostsWithRenderedMarkdownDescription = async (
   posts: PostCollection[]
 ): Promise<CollectionEntryWithRenderedDescription[]> => {
   const morePosts: CollectionEntryWithRenderedDescription[] = [];
 
   for (const post of posts) {
-    const description = await renderMarkdown(post.data.description ?? '');
-    morePosts.push({ ...post, description });
+    const renderedDescription = await renderMarkdown(post.data.description ?? '');
+    morePosts.push({ ...post, renderedDescription });
   }
 
   return morePosts;

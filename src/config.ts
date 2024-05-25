@@ -11,6 +11,7 @@ const configData: ConfigType = {
   SITE_TITLE: 'John Doe',
   SITE_DESCRIPTION: 'I am John Doe, eat at Joe',
   PAGE_SIZE: 3,
+  MORE_POSTS_COUNT: 3,
   AUTHOR_NAME: 'Nemanja Mitic',
   AUTHOR_EMAIL: 'email@email.com',
   // github, linkedin...

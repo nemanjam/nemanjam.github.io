@@ -202,4 +202,12 @@ date and minutes read absolute div over card
 3xl and prose-lg looks good with navbar, list 660px
 footer two columns
 improve slots in Post layout
+
+// more posts
+https://the-green-chronicle.esteban-soubiran.site/articles/the-organic-chronicles-transitioning-to-chemical-free-farming
+https://guillaumeduhan.hashnode.dev/ive-build-a-reusable-team-component-for-nextjs-14-using-supabase
+
+fix Post and PostCollection types, Post has readingTime (calc props) and PostCollection only frontmatter
+concat routes helper
+rewrite for loops await with Promise.all()
 ```

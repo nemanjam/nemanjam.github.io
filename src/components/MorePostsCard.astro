@@ -1,0 +1,31 @@
+---
+import { Image } from 'astro:assets';
+
+import { ROUTES } from '@/constants/routes';
+
+import type { Post } from '@/types/post';
+
+export interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const { data, slug } = post;
+const { title, heroImage, heroAlt, description } = data;
+---
+
+<div>
+  <Image
+    src={heroImage}
+    alt={heroAlt}
+    widths={[320, 540]}
+    sizes="(max-width: 475px) 320px, 540px"
+    class="max-h-40 object-cover rounded-t-box"
+  />
+  <h4 class="break-words line-clamp-2 mt-3 mb-2">
+    <a class="link-heading" href={`${ROUTES.BLOG}${slug}`}>
+      {title}
+    </a>
+  </h4>
+  {description && <p class="text-base text-captions line-clamp-2">{description}</p>}
+</div>

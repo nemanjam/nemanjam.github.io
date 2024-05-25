@@ -157,9 +157,16 @@ declare module 'astro:content' {
   collection: "post";
   data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
-"2024-01-20-example-article-4.mdx": {
-	id: "2024-01-20-example-article-4.mdx";
-  slug: "2024-01-20-example-article-4";
+"2024-01-20-example-article-4 copy.mdx": {
+	id: "2024-01-20-example-article-4 copy.mdx";
+  slug: "2024-01-20-example-article-4-copy";
+  body: string;
+  collection: "post";
+  data: InferEntrySchema<"post">
+} & { render(): Render[".mdx"] };
+"2024-01-21-example-article-5.mdx": {
+	id: "2024-01-21-example-article-5.mdx";
+  slug: "2024-01-21-example-article-5";
   body: string;
   collection: "post";
   data: InferEntrySchema<"post">

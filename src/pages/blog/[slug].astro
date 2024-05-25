@@ -1,27 +1,28 @@
 ---
 import { Image } from 'astro:assets';
 
-import { geSlugFromEntry } from '@/modules/common';
 import {
   getAllPosts,
   getHeadingsForTableOfContents,
-  getMorePostsWithRenderedMarkdownDescription,
+  getPostsWithReadingTimeFromPosts,
   getRandomPosts,
 } from '@/modules/post';
-import Post from '@/layouts/Post.astro';
-import MorePosts from '@/components/MorePosts.astro';
+import { default as PostLayout } from '@/layouts/Post.astro';
+import MorePostsList from '@/components/MorePostsList.astro';
 import PostMeta from '@/components/PostMeta.astro';
 import SharePost from '@/components/SharePost.astro';
 import TocWidget from '@/components/TocWidget.astro';
 
 import type { Metadata } from '@/types/common';
+import type { Post } from '@/types/post';
 
 export async function getStaticPaths() {
   const sortedPosts = await getAllPosts();
+  const posts: Post[] = await getPostsWithReadingTimeFromPosts(sortedPosts);
 
-  const paths = sortedPosts.map((post) => {
+  const paths = posts.map((post) => {
     const { slug } = post;
-    const randomPosts = getRandomPosts(sortedPosts, 4, slug);
+    const randomPosts = getRandomPosts({ posts, excludeSlug: slug });
 
     return {
       params: { slug },
@@ -32,7 +33,7 @@ export async function getStaticPaths() {
   return paths;
 }
 
-const { data, render, randomPosts } = Astro.props;
+const { data, render, readingTime, randomPosts } = Astro.props;
 const {
   draft,
   title,
@@ -49,11 +50,8 @@ const {
 
 const { slug } = Astro.params;
 
-const { Content, headings: postHeadings, remarkPluginFrontmatter } = await render();
-const { readingTime } = remarkPluginFrontmatter;
-
+const { Content, headings: postHeadings } = await render();
 const headings = getHeadingsForTableOfContents(postHeadings);
-const morePosts = await getMorePostsWithRenderedMarkdownDescription(randomPosts);
 
 const postMetaProps = {
   category,
@@ -66,7 +64,7 @@ const metadata: Metadata = { title, description, image: heroImage.src };
 ---
 
 {/* clean up all of this */}
-<Post {metadata}>
+<PostLayout {metadata}>
   <Fragment slot="hero-image">
     {/* hero image 1280x720 max, 16:9 */}
     {
@@ -112,6 +110,6 @@ const metadata: Metadata = { title, description, image: heroImage.src };
   </Fragment>
 
   <Fragment slot="more-posts">
-    <MorePosts morePosts={morePosts} />
+    <MorePostsList morePosts={randomPosts} />
   </Fragment>
-</Post>
+</PostLayout>
