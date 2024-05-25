@@ -210,4 +210,8 @@ https://guillaumeduhan.hashnode.dev/ive-build-a-reusable-team-component-for-next
 fix Post and PostCollection types, Post has readingTime (calc props) and PostCollection only frontmatter
 concat routes helper
 rewrite for loops await with Promise.all()
+LinkButton
+share widget
+404 page style
+pagination with numbers
 ```
