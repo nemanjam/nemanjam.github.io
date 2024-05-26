@@ -220,4 +220,5 @@ refactor Post layout
 remove config folder for code theme
 rename header to navigation
 open components to pass class: className
+post hero title and description custom style without prose
 ```

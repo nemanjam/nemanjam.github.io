@@ -10,62 +10,56 @@
     /* style base font in body, not in html so rem is unaffected */
     /* not responsive font, will affect buttons, etc, all elements */
     color: var(--content);
-    /* @apply text-base sm:text-lg lg:text-xl; */
   }
 
-  h1,
-  h2,
-  h3,
-  h4 {
+  /* filter is required everywhere so it doesn't style my-prose children */
+  /* same filter as in original prose */
+  h1:not(:where([class~='my-prose'], [class~='my-prose'] *)),
+  h2:not(:where([class~='my-prose'], [class~='my-prose'] *)),
+  h3:not(:where([class~='my-prose'], [class~='my-prose'] *)),
+  h4:not(:where([class~='my-prose'], [class~='my-prose'] *)) {
     @apply text-headings;
   }
 
-  h1 {
+  h1:not(:where([class~='my-prose'], [class~='my-prose'] *)) {
     @apply text-3xl sm:text-4xl md:text-5xl;
     @apply font-extrabold;
+    @apply mb-6 md:mb-8 lg:mb-10;
   }
 
-  h2 {
+  h2:not(:where([class~='my-prose'], [class~='my-prose'] *)) {
     @apply text-2xl sm:text-3xl md:text-4xl;
     @apply font-bold;
     @apply mt-12 mb-6 md:mt-14 md:mb-8;
   }
 
-  h3 {
+  h3:not(:where([class~='my-prose'], [class~='my-prose'] *)) {
     @apply text-xl sm:text-2xl md:text-3xl;
     @apply font-bold;
   }
 
-  h4 {
+  h4:not(:where([class~='my-prose'], [class~='my-prose'] *)) {
     @apply text-base sm:text-lg md:text-xl;
     @apply font-bold;
   }
 
   /* h5, h6 */
 
-  p {
+  p:not(:where([class~='my-prose'], [class~='my-prose'] *)) {
     @apply text-content;
     @apply text-base sm:text-lg md:text-xl;
-  }
 
-  .my-prose {
     /* @apply outline outline-blue-500; */
   }
 
-  .not-prose {
+  .my-prose {
     /* @apply outline outline-red-500; */
   }
 
-  /* all h2 that dont have .prose parent */
+  /* all h2 that dont have .prose parent // this is broken, both is: and where: */
   /*
   h2:not(:is(.prose *) h2) {
     @apply outline outline-red-500;
   }
-  */
-
-  /* 
-  *:hover {
-    @apply outline outline-red-500;
-  } 
   */
 }

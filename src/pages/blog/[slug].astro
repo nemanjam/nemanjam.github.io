@@ -63,7 +63,6 @@ const postMetaProps = {
 const metadata: Metadata = { title, description, image: heroImage.src };
 ---
 
-{/* clean up all of this */}
 <PostLayout {metadata}>
   <Fragment slot="hero-image">
     {/* hero image 1280x720 max, 16:9 */}
@@ -94,7 +93,7 @@ const metadata: Metadata = { title, description, image: heroImage.src };
     {description && <h2 class="font-normal text-xl lg:text-2xl tracking-tight">{description}</h2>}
 
     {/* meta */}
-    <PostMeta {...postMetaProps} />
+    <PostMeta {...postMetaProps} class="not-prose" />
   </Fragment>
 
   {/* section content */}
