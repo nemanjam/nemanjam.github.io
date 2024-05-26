@@ -4,7 +4,6 @@ import { Image } from 'astro:assets';
 import PostMeta from '@/components/PostMeta.astro';
 import TagList from '@/components/TagList.astro';
 import { ROUTES } from '@/constants/routes';
-import { cn } from '@/utils/styles';
 
 import type { Post } from '@/types/post';
 
@@ -26,27 +25,23 @@ const {
   description,
 } = data;
 
-// prepare all data for render
-
 const postMetaProps = { readingTime, publishDate };
 ---
 
 <article
-  class="flex flex-col md:flex-row gap-4 py-4 lg:py-6 lg:gap-6 not-last:border-b border-base-300"
+  class="max-w-lg md:max-w-3xl flex flex-col md:flex-row gap-4 py-4 lg:py-6 lg:gap-6 not-last:border-b border-base-300"
 >
   {/* left column */}
-
-  {/* image */}
   {
     heroImage && (
-      <div class="md:basis-1/3">
+      <div class="md:basis-1/3 md:shrink-0">
         <Image
           src={heroImage}
           alt={heroAlt}
-          widths={[320, 540, 720]}
-          sizes="(max-width: 475px) 320px, (max-width: 720px) 540px, 720px"
+          widths={[320, 540]}
+          sizes="(max-width: 475px) 320px, 540px"
           itemprop="image"
-          class="w-full max-h-48 min-h-40 md:max-h-none md:h-full md:w-auto object-cover rounded-box"
+          class="w-full h-40 md:h-full object-cover rounded-box"
           transition:name={`hero-${heroImage.src}`}
         />
       </div>
@@ -54,11 +49,11 @@ const postMetaProps = { readingTime, publishDate };
   }
 
   {/* right column */}
-  <div class="flex flex-col md:basis-2/3">
-    <PostMeta {...postMetaProps} class="text-sm text-captions" />
+  <div class="flex flex-col md:basis-2/3 md:shrink">
+    <PostMeta {...postMetaProps} class="text-sm text-captions leading-none mb-1" />
 
     {/* title */}
-    <h2 class="text-2xl font-bold break-words line-clamp-2 mt-0 mb-2">
+    <h2 class="text-2xl font-bold break-words md:line-clamp-2 mt-0 mb-2">
       <a href={`${ROUTES.BLOG}${slug}`} class="link-heading">
         {title}
         {draft && <sup class="text-sm text-red-400">(draft)</sup>}
@@ -67,13 +62,10 @@ const postMetaProps = { readingTime, publishDate };
 
     {
       description && (
-        <p class={cn('text-base mb-3', title?.length <= 48 ? 'line-clamp-2' : 'line-clamp-1')}>
-          {description}
-        </p>
+        <p class="text-base mb-1 line-clamp-2 md:line-clamp-1 md:leading-tight">{description}</p>
       )
     }
 
-    {/* tags */}
     <TagList tags={tags} class="mt-auto" />
   </div>
 </article>

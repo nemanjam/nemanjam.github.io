@@ -219,4 +219,5 @@ move vertical padding to correct layout
 refactor Post layout
 remove config folder for code theme
 rename header to navigation
+open components to pass class: className
 ```
