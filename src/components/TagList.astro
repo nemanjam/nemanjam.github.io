@@ -5,14 +5,14 @@ import { cn } from '@/utils/styles';
 
 import type { TagWithCount } from '@/modules/post';
 
-export interface Props extends astroHTML.JSX.BaseHTMLAttributes {
+export interface Props {
   tags: string[] | TagWithCount[];
   marginY?: boolean;
-  className?: string;
-  // variant
+  class?: string;
+  tagClass?: string;
 }
 
-const { tags = [], marginY = false, class: className, ...props } = Astro.props;
+const { tags = [], marginY = false, class: className, tagClass, ...props } = Astro.props;
 const tagLinks = tags.map((tagItem) => {
   const tagLink =
     typeof tagItem === 'string'
@@ -28,7 +28,9 @@ const tagLinks = tags.map((tagItem) => {
     <ul {...props} class={cn('flex flex-wrap gap-2', { 'my-4': marginY }, className)}>
       {tagLinks.map(({ href, text }) => (
         <li>
-          <Tag href={href}>{text}</Tag>
+          <Tag href={href} class={tagClass}>
+            {text}
+          </Tag>
         </li>
       ))}
     </ul>
