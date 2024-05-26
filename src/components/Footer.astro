@@ -2,6 +2,7 @@
 import { Icon } from 'astro-icon/components';
 
 import { BackToTop } from '@/components/BackToTop';
+import Link from '@/components/Link.astro';
 import { CONFIG } from '@/config';
 import { getLatestCommitInfo } from '@/utils/git';
 import { trimHttpProtocol } from '@/utils/strings';
@@ -21,12 +22,10 @@ const { time, hash, message } = getLatestCommitInfo();
       <div class="flex gap-2 flex-col md:flex-row">
         <label class="font-bold text-nowrap">Under construciton:</label>
         <div class="flex gap-2 flex-wrap">
-          <a class="link" href="https://github.com/paularmstrong/paularmstrong.dev"
-            >Starter project</a
-          >
-          <a class="link" href="https://github.com/nemanjam/nemanjam.github.io#references"
-            >All references</a
-          >
+          <Link href="https://github.com/paularmstrong/paularmstrong.dev">Starter project</Link>
+          <Link href="https://github.com/nemanjam/nemanjam.github.io#references">
+            All references
+          </Link>
         </div>
       </div>
       <div class="flex gap-2 flex-col md:flex-row">
@@ -41,38 +40,41 @@ const { time, hash, message } = getLatestCommitInfo();
 
     <ul class="flex gap-2 flex-row flex-wrap xs:flex-nowrap">
       <li>
-        <a
+        <Link
           href="https://github.com/nemanjam"
           target="_blank"
           rel="me noreferrer noopener"
           title="@nemanjam on Github"
-          class="link-nav flex items-center gap-2"
+          class="flex items-center gap-2"
+          variant="link-nav"
         >
           <Icon name="mdi:github" class="h-6 w-6 fill-current" />
           <span>Github</span>
-        </a>
+        </Link>
       </li>
       <li>
-        <a
+        <Link
           href="https://www.linkedin.com/in/nemanja-mitic"
           target="_blank"
           rel="me noreferrer noopener"
           title="Nemanja on LinkedIn"
-          class="link-nav flex items-center gap-2"
+          class="flex items-center gap-2"
+          variant="link-nav"
         >
           <Icon name="mdi:linkedin" class="h-6 w-6 fill-current" />
           <span>LinkedIn</span>
-        </a>
+        </Link>
       </li>
       <li>
-        <a
+        <Link
           href="/feed.xml"
           title={`RSS feed for ${domain}`}
-          class="link-nav flex items-center gap-2"
+          class="flex items-center gap-2"
+          variant="link-nav"
         >
           <Icon name="mdi:rss" class="h-6 w-6 fill-current" />
           <span>RSS Feed</span>
-        </a>
+        </Link>
       </li>
     </ul>
   </div>

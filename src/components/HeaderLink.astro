@@ -1,4 +1,5 @@
 ---
+import Link from '@/components/Link.astro';
 import { isActiveNavItem } from '@/utils/strings';
 import { cn } from '@/utils/styles';
 
@@ -13,6 +14,6 @@ const isActive = isActiveNavItem({
 });
 ---
 
-<a {...props} class={cn('link-nav', { 'underline text-links': isActive }, className)}>
+<Link {...props} variant="link-nav" class={cn({ 'underline text-links': isActive }, className)}>
   <slot />
-</a>
+</Link>

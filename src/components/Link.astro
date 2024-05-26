@@ -1,34 +1,26 @@
 ---
-import clsx from 'clsx';
+import { cn } from '@/utils/styles';
 
 export type Props = astroHTML.JSX.AnchorHTMLAttributes & {
-  variant?: 'primary' | 'secondary' | 'transparent';
+  variant?: 'link' | 'no-underline' | 'link-heading' | 'link-nav' | 'button';
 };
 
-const { class: className, variant = 'primary', ...props } = Astro.props;
+const { class: className, variant = 'link', ...props } = Astro.props;
+// add cva here
+// all buttons are links, add more button variants
+// props target="_blank" etc
 ---
 
 <a
-  class={clsx(
-    // link styles
-    'no-underline decoration-1',
-    // hover styles
-    // add visited:...
-    'hover:underline focus:underline active:underline',
-    // variants
-    {
-      'text-links hover:text-links-hover focus:text-links-hover active:text-links-hover visited:text-links-visited':
-        variant === 'primary',
-    },
-    {
-      'text-secondary hover:text-primary hover:no-underline focus:text-primary focus:no-underline active:text-primary active:no-underline':
-        variant === 'secondary',
-    },
-    {
-      '': variant === 'transparent',
-    },
+  {...props}
+  class={cn(
+    { link: variant === 'link' },
+    { 'link-no-underline': variant === 'no-underline' },
+    { 'link-button': variant === 'button' },
+    { 'link-heading': variant === 'link-heading' },
+    { 'link-nav': variant === 'link-nav' },
     className
   )}
-  {...props}
-  ><slot />
+>
+  <slot />
 </a>

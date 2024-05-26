@@ -29,6 +29,7 @@
     --th-accent-content: var(--var-color-slate-700);
 
     /* border radius, default for all themes */
+    /* rounded-md, rounded-lg, rounded-full */
     --th-rounded-box: 0.375rem;
     --th-rounded-button: 0.5rem;
     --th-rounded-tag: 9999px;

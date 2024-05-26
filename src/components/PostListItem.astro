@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 
+import Link from '@/components/Link.astro';
 import PostMeta from '@/components/PostMeta.astro';
 import TagList from '@/components/TagList.astro';
 import { ROUTES } from '@/constants/routes';
@@ -54,10 +55,10 @@ const postMetaProps = { readingTime, publishDate };
 
     {/* title */}
     <h2 class="text-2xl font-bold break-words md:line-clamp-2 mt-0 mb-2">
-      <a href={`${ROUTES.BLOG}${slug}`} class="link-heading">
+      <Link href={`${ROUTES.BLOG}${slug}`} variant="link-heading">
         {title}
         {draft && <sup class="text-sm text-red-400">(draft)</sup>}
-      </a>
+      </Link>
     </h2>
 
     {

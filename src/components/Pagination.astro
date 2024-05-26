@@ -1,7 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components';
 
-import Button from '@/components/Button.astro';
+import Link from '@/components/Link.astro';
 import { cn } from '@/utils/styles';
 
 import type { AnyCollection } from '@/types/common';
@@ -44,10 +44,10 @@ const { prev, next } = url;
             aria-setsize={lastPage}
             aria-posinset={currentPage + 1}
           >
-            <Button href={next} class="inline-flex flex-row-reverse py-4">
+            <Link href={next} variant="no-underline" class="inline-flex flex-row-reverse py-4">
               <Icon name="arrow-right" class="h-6 w-6 shrink-0" />
               <span class="text-right">Older posts</span>
-            </Button>
+            </Link>
           </li>
         )}
         {prev && (
@@ -56,10 +56,10 @@ const { prev, next } = url;
             aria-setsize={lastPage}
             aria-posinset={currentPage - 1}
           >
-            <Button href={prev} class="inline-flex flex-row py-4">
+            <Link href={prev} variant="no-underline" class="inline-flex flex-row py-4">
               <Icon name="arrow-left" class="h-6 w-6 shrink-0" />
               <span>Newer posts</span>
-            </Button>
+            </Link>
           </li>
         )}
       </ul>

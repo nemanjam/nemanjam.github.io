@@ -9,7 +9,7 @@
   body {
     /* style base font in body, not in html so rem is unaffected */
     /* not responsive font, will affect buttons, etc, all elements */
-    color: var(--content);
+    @apply text-content;
   }
 
   /* filter is required everywhere so it doesn't style my-prose children */

@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 
+import Link from '@/components/Link.astro';
 import { ROUTES } from '@/constants/routes';
 
 import type { Post } from '@/types/post';
@@ -23,9 +24,9 @@ const { title, heroImage, heroAlt, description } = data;
     class="max-h-40 object-cover rounded-t-box"
   />
   <h4 class="break-words line-clamp-2 mt-3 mb-2">
-    <a class="link-heading" href={`${ROUTES.BLOG}${slug}`}>
+    <Link variant="link-heading" href={`${ROUTES.BLOG}${slug}`}>
       {title}
-    </a>
+    </Link>
   </h4>
   {description && <p class="text-base text-captions line-clamp-2">{description}</p>}
 </div>

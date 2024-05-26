@@ -17,7 +17,7 @@ import { Icon } from 'astro-icon/components';
 import { Image } from 'astro:assets';
 
 import Aside from '../../components/Aside.astro';
-import Button from '../../components/Button.astro';
+import Link from '../../components/Link.astro';
 import RiverImage from '../../content/post/_images/2024-01-20-example-article-4/river1.jpg';
 
 Ut exercitation occaecat in velit [nulla aliqua](#) eiusmod laboris ex. Officia dolore ipsum aliqua irure qui non ea elit veniam aute ex incididunt. Elit incididunt dolor velit velit magna. Nulla occaecat ut dolore ullamco amet aliqua laborum velit cillum.
@@ -231,15 +231,15 @@ Cupidatat nulla voluptate aliquip amet. Duis ipsum cupidatat occaecat consectetu
 ### Quis mollit `laboris voluptate`
 
 <div class="not-prose flex gap-4">
-  <Button href="#" target="_blank">
+  <Link variant="button" href="#" target="_blank">
     <Icon name="github" class="inline h-6 w-6 fill-current" /> Laboris elit ad officia
-  </Button>
-  <Button href="#" target="_blank">
+  </Link>
+  <Link variant="button" href="#" target="_blank">
     <Icon name="npm" class="inline h-6 w-6 fill-current" /> Aliqua reprehenderit
-  </Button>
-  <Button href="#" target="_blank">
+  </Link>
+  <Link variant="button" href="#" target="_blank">
     <Icon name="note" class="inline h-6 w-6 fill-current" /> Qui velit fugiat
-  </Button>
+  </Link>
 </div>
 
 ```sh

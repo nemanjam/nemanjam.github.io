@@ -226,4 +226,16 @@ style table of contents
 // type for class
 export type Props = astroHTML.JSX.AnchorHTMLAttributes;
 extract vertical paddings
+vertical spacing svuda isti, top, bottom, headings, sections
+tags and categories page
+remote bookmarks md page
+share widget
+aside - alert component
+images border radius
+remove unused components
+cva, class_ variance authority everywhere
+all buttons are links, add more button variants in Link component
+link and primary are came color
+--th-headings, captions links, singular plural
+
 ```
