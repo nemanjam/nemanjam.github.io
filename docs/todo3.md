@@ -200,7 +200,7 @@ algolia search .md, later
 more posts cards
 date and minutes read absolute div over card
 3xl and prose-lg looks good with navbar, list 660px
-footer two columns
+    footer two columns
 improve slots in Post layout
 
 // more posts
