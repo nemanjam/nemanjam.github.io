@@ -23,7 +23,7 @@
 
   h1:not(:where([class~='my-prose'], [class~='my-prose'] *)) {
     @apply text-3xl sm:text-4xl md:text-5xl;
-    @apply font-extrabold;
+    @apply font-bold;
     @apply mb-6 md:mb-8 lg:mb-10;
   }
 

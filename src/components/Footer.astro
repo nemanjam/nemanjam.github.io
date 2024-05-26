@@ -29,7 +29,7 @@ const { time, hash, message } = getLatestCommitInfo();
           >
         </div>
       </div>
-      <div class="flex gap-2">
+      <div class="flex gap-2 flex-col md:flex-row">
         <label class="font-bold text-nowrap">Latest commit:</label>
         <div class="flex gap-2 flex-col xs:flex-row flex-wrap">
           <span>{time}</span>
@@ -39,7 +39,7 @@ const { time, hash, message } = getLatestCommitInfo();
       </div>
     </div>
 
-    <ul class="flex gap-2 flex-row flex-wrap">
+    <ul class="flex gap-2 flex-row flex-wrap xs:flex-nowrap">
       <li>
         <a
           href="https://github.com/nemanjam"

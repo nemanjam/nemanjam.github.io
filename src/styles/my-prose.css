@@ -10,6 +10,7 @@
     @apply md:prose-lg lg:prose-xl;
     /* limit just h1 */
     @apply prose-h1:text-3xl md:prose-h1:text-4xl lg:prose-h1:text-5xl;
+    @apply prose-h1:font-bold;
 
     /* a */
     @apply prose-a:link;
