@@ -225,5 +225,5 @@ style proper footer
 style table of contents
 // type for class
 export type Props = astroHTML.JSX.AnchorHTMLAttributes;
-
+extract vertical paddings
 ```

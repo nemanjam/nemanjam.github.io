@@ -22,4 +22,12 @@
     @apply focus:text-links-hover focus:underline;
     @apply active:text-links-hover;
   }
+
+  .centered {
+    @apply w-full md:mx-auto;
+  }
+
+  .centered-px {
+    @apply centered px-4 lg:px-0;
+  }
 }

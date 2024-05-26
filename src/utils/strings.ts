@@ -29,7 +29,8 @@ export const isActiveNavItem = ({
     // navItemHref identifies button, routePathname is route
     case navItemHref === ROUTES.BLOG && routePathname === ROUTES.BLOG:
     case navItemHref === ROUTES.ABOUT && routePathname === ROUTES.ABOUT:
-    case navItemHref === ROUTES.HOME && routePathname === ROUTES.HOME:
+    // don't highlight home route
+    // case navItemHref === ROUTES.HOME && routePathname === ROUTES.HOME:
     case navItemHref === ROUTES.RESUME && routePathname === ROUTES.RESUME:
     case navItemHref === ROUTES.PROJECTS && routePathname.startsWith(ROUTES.PROJECTS):
     case navItemHref === ROUTES.TAGS && routePathname.startsWith(ROUTES.TAGS):
