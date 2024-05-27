@@ -17,7 +17,7 @@ const { title, description } = metadata;
   <article>
     <h1>{title}</h1>
     {description && <p class="mb-5">{description}</p>}
-    <section class="not-prose">
+    <section>
       <slot />
       {paginationProps && <Pagination {...paginationProps} />}
     </section>

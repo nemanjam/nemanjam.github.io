@@ -49,6 +49,7 @@
     }
   }
   .alert--note {
+    /* use base-200-300 here */
     @apply bg-slate-100 border border-slate-200 dark:border-slate-800 dark:bg-slate-900;
   }
   .alert--info {
