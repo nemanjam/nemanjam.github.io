@@ -210,7 +210,7 @@ https://guillaumeduhan.hashnode.dev/ive-build-a-reusable-team-component-for-next
 fix Post and PostCollection types, Post has readingTime (calc props) and PostCollection only frontmatter
 concat routes helper
 rewrite for loops await with Promise.all()
-LinkButton
+    LinkButton
 share widget
 404 page style
 pagination with numbers
@@ -227,14 +227,14 @@ style table of contents
 export type Props = astroHTML.JSX.AnchorHTMLAttributes;
 extract vertical paddings
 vertical spacing svuda isti, top, bottom, headings, sections
-tags and categories page
+tags and categories page, filter radio buttons
 remote bookmarks md page
 share widget
 aside - alert component
 images border radius
 remove unused components
-cva, class_ variance authority everywhere
-all buttons are links, add more button variants in Link component
+  cva, class_ variance authority everywhere
+all buttons are links, add more button variants in Link component, button ahs size, link doesnt
 link and primary are came color
 --th-headings, captions links, singular plural
 

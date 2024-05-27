@@ -1,26 +1,31 @@
 ---
-import { cn } from '@/utils/styles';
+import { cva } from 'class-variance-authority';
 
-export type Props = astroHTML.JSX.AnchorHTMLAttributes & {
-  variant?: 'link' | 'no-underline' | 'link-heading' | 'link-nav' | 'button';
-};
+import type { HTMLAttributes } from 'astro/types';
+import type { VariantProps } from 'class-variance-authority';
+
+const linkVariants = cva('', {
+  variants: {
+    variant: {
+      link: 'link',
+      'no-underline': 'link-no-underline',
+      button: 'link-button',
+      'link-heading': 'link-heading',
+      'link-nav': 'link-nav',
+    },
+    // size: {},
+  },
+  // compoundVariants: [],
+});
+
+export interface Props extends HTMLAttributes<'a'>, VariantProps<typeof linkVariants> {}
 
 const { class: className, variant = 'link', ...props } = Astro.props;
-// add cva here
+
 // all buttons are links, add more button variants
 // props target="_blank" etc
 ---
 
-<a
-  {...props}
-  class={cn(
-    { link: variant === 'link' },
-    { 'link-no-underline': variant === 'no-underline' },
-    { 'link-button': variant === 'button' },
-    { 'link-heading': variant === 'link-heading' },
-    { 'link-nav': variant === 'link-nav' },
-    className
-  )}
->
+<a class={linkVariants({ variant, className })} {...props}>
   <slot />
 </a>

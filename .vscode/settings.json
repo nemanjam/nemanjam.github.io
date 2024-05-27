@@ -22,6 +22,10 @@
   "files.associations": {
     "*.mdx": "markdown"
   },
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ],
   // "gitlens.currentLine.enabled": false,
   "cSpell.words": ["astro"]
 }
