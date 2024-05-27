@@ -188,20 +188,19 @@ export async function getStaticPaths() {
 use single Post or PostCollection type_ everywhere
 rewrite Pagination component
 find footer examples
-social links component for footer, array of objects and map
+social links component for footer, array of constant objects and map
 accessibility, tab, focus, aria, nav, ul li, header, article
 icon link button
 use primary color so it makes sense
 extract all ui in components and render them in styleguide
 fix codeblocks style and find light theme, highlight selected line
-reduce font-size and width PostListItems for balance with_ navbar, maybe blog heading and typography too
+    reduce font-size and width PostListItems for balance with_ navbar, maybe blog heading and typography too
 add giscuss comments
 algolia search .md, later
-more posts cards
+    more posts cards
 date and minutes read absolute div over card
 3xl and prose-lg looks good with navbar, list 660px
     footer two columns
-improve slots in Post layout
 
 // more posts
 https://the-green-chronicle.esteban-soubiran.site/articles/the-organic-chronicles-transitioning-to-chemical-free-farming
@@ -211,13 +210,12 @@ fix Post and PostCollection types, Post has readingTime (calc props) and PostCol
 concat routes helper
 rewrite for loops await with Promise.all()
     LinkButton
-share widget
 404 page style
 pagination with numbers
 category div, MorePostsCard, Post
 move vertical padding to correct layout
-refactor Post layout
-remove config folder for code theme
+    refactor Post layout
+remove config folder for code theme, add light theme and fix styles
 rename header to navigation
 open components to pass class: className
 post hero title and description custom style without prose
@@ -225,17 +223,17 @@ style proper footer
 style table of contents
 // type for class
 export type Props = astroHTML.JSX.AnchorHTMLAttributes;
-extract vertical paddings
+    extract vertical paddings
 vertical spacing svuda isti, top, bottom, headings, sections
 tags and categories page, filter radio buttons
-remote bookmarks md page
-share widget
+share widget, research examples
 aside - alert component
 images border radius
 remove unused components
   cva, class_ variance authority everywhere
-all buttons are links, add more button variants in Link component, button ahs size, link doesnt
-link and primary are came color
+all buttons are links, add more button variants in Link component, button has size, link doesnt
+link and primary are same color
 --th-headings, captions links, singular plural
+remote bookmarks md page, fetch bookmarks md and render as page
 
 ```
