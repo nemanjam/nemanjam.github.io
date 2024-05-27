@@ -235,5 +235,6 @@ all buttons are links, add more button variants in Link component, button has si
 link and primary are same color
 --th-headings, captions links, singular plural
 remote bookmarks md page, fetch bookmarks md and render as page
-
+next: alert - aside and share widgets, simple work
+my logo and favicon
 ```

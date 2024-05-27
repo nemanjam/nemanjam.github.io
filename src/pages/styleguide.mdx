@@ -3,7 +3,7 @@ layout: '../layouts/Page.astro'
 title: Styleguide
 ---
 
-import Aside from '../components/Aside.astro';
+import Alert from '../components/Alert.astro';
 import Details from '../components/Details.astro';
 import PageInfo from '../components/PageInfo.astro';
 import Picture from '../components/Picture.astro';
@@ -28,7 +28,7 @@ Here is a sample of some basic Markdown syntax that can be used when writing Mar
       { text: 'Code blocks', slug: 'code-blocks', depth: 0 },
       { text: 'List Types', slug: 'list-types', depth: 0 },
       { text: 'Other elements', slug: 'other-elements--abbr-sub-sup-kbd-mark', depth: 0 },
-      { text: 'Asides', slug: 'asides', depth: 0 },
+      { text: 'Alerts', slug: 'alerts', depth: 0 },
       { text: 'YouTube', slug: 'youtube', depth: 0 },
     ]}
   />
@@ -161,37 +161,37 @@ Press <kbd><kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>Delete</kbd></kbd> to end the ses
 
 Most <mark>salamanders</mark> are <del>nighttime</del> nocturnal, and hunt for insects, worms, and other small creatures.
 
-## Asides
+## Alerts
 
-<Aside type="note">
+<Alert variant="note">
 
 This is a note.
 
-</Aside>
+</Alert>
 
-<Aside type="info">
+<Alert variant="info">
 
 This is some extra info.
 
-</Aside>
+</Alert>
 
-<Aside type="tip">
+<Alert variant="tip">
 
 There’s probably a hot tip here.
 
-</Aside>
+</Alert>
 
-<Aside type="warning">
+<Alert variant="warning">
 
 You should heed this warning.
 
-</Aside>
+</Alert>
 
-<Aside type="danger">
+<Alert variant="danger">
 
 A bit more serious than a warning.
 
-</Aside>
+</Alert>
 
 ## YouTube
 
