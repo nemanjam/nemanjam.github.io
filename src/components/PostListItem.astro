@@ -29,8 +29,12 @@ const {
 const postMetaProps = { readingTime, publishDate };
 ---
 
+{/* Text in right column determines height, 2 lines title + 2 lines description. */}
+{/* Image determines max-height. For cases when image isn't 16/9 so it's cropped. */}
+{/* Image for 2 + 2 lines text has 168px naturaly, limit to 172, h-44 = 176 */}
+
 <article
-  class="max-w-lg md:max-w-3xl flex flex-col md:flex-row gap-4 py-4 lg:py-6 lg:gap-6 not-last:border-b border-base-300"
+  class="w-full flex flex-col md:flex-row gap-4 py-4 lg:py-6 lg:gap-6 not-last:border-b border-base-300"
 >
   {/* left column */}
   {
@@ -42,7 +46,7 @@ const postMetaProps = { readingTime, publishDate };
           widths={[320, 540]}
           sizes="(max-width: 475px) 320px, 540px"
           itemprop="image"
-          class="w-full h-40 md:h-full object-cover rounded-box"
+          class="w-full h-40 md:h-full md:max-h-[172px] object-cover rounded-box"
           transition:name={`hero-${heroImage.src}`}
         />
       </div>
@@ -61,11 +65,7 @@ const postMetaProps = { readingTime, publishDate };
       </Link>
     </h2>
 
-    {
-      description && (
-        <p class="text-base mb-1 line-clamp-2 md:line-clamp-1 md:leading-tight">{description}</p>
-      )
-    }
+    {description && <p class="text-base mb-1 line-clamp-2">{description}</p>}
 
     <TagList tags={tags} class="mt-auto" tagClass="text-sm" />
   </div>
