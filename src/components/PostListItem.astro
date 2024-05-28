@@ -5,6 +5,7 @@ import Link from '@/components/Link.astro';
 import PostMeta from '@/components/PostMeta.astro';
 import TagList from '@/components/TagList.astro';
 import { ROUTES } from '@/constants/routes';
+import { cn } from '@/utils/styles';
 
 import type { Post } from '@/types/post';
 
@@ -34,7 +35,11 @@ const postMetaProps = { readingTime, publishDate };
 {/* Image for 2 + 2 lines text has 168px naturaly, limit to 172, h-44 = 176 */}
 
 <article
-  class="w-full flex flex-col md:flex-row gap-4 py-4 lg:py-6 lg:gap-6 not-last:border-b border-base-300"
+  class={cn(
+    'w-full flex flex-col md:flex-row gap-4 lg:gap-6',
+    'not-first:pt-4 not-last:pb-4 md:not-first:pt-6 md:not-last:pb-6',
+    'not-last:border-b border-base-300'
+  )}
 >
   {/* left column */}
   {
