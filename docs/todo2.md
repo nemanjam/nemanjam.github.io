@@ -151,6 +151,9 @@ https://mistral.bloggrify.com/
 // related articles
 https://the-green-chronicle.esteban-soubiran.site/articles/the-organic-chronicles-transitioning-to-chemical-free-farming
 
+// two columns design
+https://github.com/TailGrids/play-astro
+
 -----------
 za local state mora react ili solid
 for state between pages nanostore with localStorage
