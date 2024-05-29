@@ -11,4 +11,6 @@ export const configSchema = z.object({
   MORE_POSTS_COUNT: z.number(),
   AUTHOR_NAME: z.string().min(1),
   AUTHOR_EMAIL: z.string().email(),
+  AUTHOR_GITHUB: z.string().url(),
+  AUTHOR_LINKEDIN: z.string().url(),
 });

@@ -7,7 +7,7 @@ import { CONFIG } from '@/config';
 import { getLatestCommitInfo } from '@/utils/git';
 import { trimHttpProtocol } from '@/utils/strings';
 
-const { SITE_URL } = CONFIG;
+const { SITE_URL, AUTHOR_LINKEDIN, AUTHOR_GITHUB } = CONFIG;
 const domain = trimHttpProtocol(SITE_URL);
 
 const { time, hash, message } = getLatestCommitInfo();
@@ -41,7 +41,7 @@ const { time, hash, message } = getLatestCommitInfo();
     <ul class="flex gap-2 flex-row flex-wrap xs:flex-nowrap">
       <li>
         <Link
-          href="https://github.com/nemanjam"
+          href={AUTHOR_GITHUB}
           target="_blank"
           rel="me noreferrer noopener"
           title="@nemanjam on Github"
@@ -54,7 +54,7 @@ const { time, hash, message } = getLatestCommitInfo();
       </li>
       <li>
         <Link
-          href="https://www.linkedin.com/in/nemanja-mitic"
+          href={AUTHOR_LINKEDIN}
           target="_blank"
           rel="me noreferrer noopener"
           title="Nemanja on LinkedIn"

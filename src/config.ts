@@ -14,7 +14,8 @@ const configData: ConfigType = {
   MORE_POSTS_COUNT: 3,
   AUTHOR_NAME: 'Nemanja Mitic',
   AUTHOR_EMAIL: 'email@email.com',
-  // github, linkedin...
+  AUTHOR_GITHUB: 'https://github.com/nemanjam',
+  AUTHOR_LINKEDIN: 'https://www.linkedin.com/in/nemanja-mitic',
 };
 
 // todo: Config should go into import.meta.env in astro.config.ts

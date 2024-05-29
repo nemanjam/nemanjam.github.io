@@ -1,8 +1,10 @@
 ---
 import Alert from '@/components/Alert.astro';
 import Link from '@/components/Link.astro';
-import { Share, ShareLink } from '@/components/Share';
 import { ROUTES } from '@/constants/routes';
+import { CONFIG } from '@/config';
+
+const { AUTHOR_LINKEDIN } = CONFIG;
 
 export interface Props {
   title: string;
@@ -10,23 +12,20 @@ export interface Props {
 }
 
 const { title, slug } = Astro.props;
+// generate Twitter intent link
 ---
 
 <Alert title="Share your thoughts">
-  <div class="flex flex-col items-start gap-x-4 gap-y-0 sm:flex-row-reverse">
-    <div class="mt-4 justify-self-center">
-      <div class="w-28"><Share client:load title={title} url={`${ROUTES.BLOG}${slug}/`} /></div>
-    </div>
-    <p class="!mb-1 inline-flex shrink flex-wrap gap-x-1">
-      Since you’ve made it this far, hopefully you enjoyed reading! Please
-      <ShareLink client:load title={title} url={`${ROUTES.BLOG}${slug}/`}>share</ShareLink>
-      {' '}the post or <Link
-        href="https://github.com/nemanjam"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        ping me on Mastodon
+  <div class="flex flex-col items-start gap-x-4 gap-y-0 sm:flex-row">
+    <div class="flex shrink flex-wrap gap-x-1">
+      <span>Since you’ve made it this far, hopefully you enjoyed reading! Please </span>
+      <Link href={`${ROUTES.BLOG}${slug}`}>share</Link>
+      <span>the post or</span>
+      <Link href={AUTHOR_LINKEDIN} target="_blank" rel="noopener noreferrer">
+        ping me on LinkedIn
       </Link>
-    </p>
+    </div>
+
+    <Link href={`${ROUTES.BLOG}${slug}`} variant="button">Twitter</Link>
   </div>
 </Alert>
