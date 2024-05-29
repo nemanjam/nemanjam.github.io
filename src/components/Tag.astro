@@ -9,9 +9,7 @@ const { class: className, ...props } = Astro.props;
 <a
   class={cn(
     'text-base bg-base-200 hover:bg-base-300',
-    'px-2 py-0.5 lowercase no-underline rounded-tag',
-    // mono font for vertical center
-    'inline-block font-mono',
+    'inline-block px-2 pb-1 pt-0.5 lowercase no-underline rounded-tag',
     className
   )}
   {...props}

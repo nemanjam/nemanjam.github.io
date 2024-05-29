@@ -238,4 +238,5 @@ remote bookmarks md page, fetch bookmarks md and render as page, ssg
 next: alert - aside and share widgets, simple work
 my logo and favicon
 search behance and awwards for design inspiration, vertical card blog list
+style PostMeta
 ```
