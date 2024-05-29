@@ -212,7 +212,7 @@ rewrite for loops await with Promise.all()
     LinkButton
 404 page style
 pagination with numbers
-category div, MorePostsCard, Post
+    category div, MorePostsCard, Post
 move vertical padding to correct layout
     refactor Post layout
 remove config folder for code theme, add light theme and fix styles
@@ -234,7 +234,7 @@ remove unused components
 all buttons are links, add more button variants in Link component, button has size, link doesnt
 link and primary are same color
 --th-headings, captions links, singular plural
-remote bookmarks md page, fetch bookmarks md and render as page
+remote bookmarks md page, fetch bookmarks md and render as page, ssg
 next: alert - aside and share widgets, simple work
 my logo and favicon
 search behance and awwards for design inspiration, vertical card blog list
