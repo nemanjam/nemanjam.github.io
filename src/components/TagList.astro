@@ -5,10 +5,9 @@ import { cn } from '@/utils/styles';
 
 import type { TagWithCount } from '@/modules/post';
 
-export interface Props {
+export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
   tags: string[] | TagWithCount[];
   marginY?: boolean;
-  class?: string;
   tagClass?: string;
 }
 

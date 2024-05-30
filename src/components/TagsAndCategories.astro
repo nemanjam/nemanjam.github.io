@@ -1,0 +1,26 @@
+---
+import { getSortedUniqueCategoriesWithCount, getSortedUniqueTagsWithCount } from '@/modules/post';
+import CategoryList from '@/components/CategoryList.astro';
+import TagList from '@/components/TagList.astro';
+import { cn } from '@/utils/styles';
+
+import type { PostCollection } from '@/types/post';
+
+export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
+  posts: PostCollection[];
+}
+
+const { posts, class: className, ...props } = Astro.props;
+
+const tagsWithCount = getSortedUniqueTagsWithCount(posts);
+const categoriesWithCount = getSortedUniqueCategoriesWithCount(posts);
+---
+
+<section {...props} class={cn(className)}>
+  <div class="flex flex-col items-center gap-16">
+    <TagList tags={tagsWithCount} />
+  </div>
+  <div class="flex flex-col items-center gap-16">
+    <CategoryList categories={categoriesWithCount} />
+  </div>
+</section>

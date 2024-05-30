@@ -241,7 +241,8 @@ search behance and awwards for design inspiration, vertical card blog list
 style PostMeta
 generate Twitter intent link, use react share component
 range in pagination, leave only 3 numbers
-disabled color?
+disabled color?, daysy ui
 must use flex flex-grow in all containers for full height
 filter page with buttons for categories and tags
+Button component
 ```

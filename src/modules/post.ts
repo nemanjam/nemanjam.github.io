@@ -11,7 +11,7 @@ const { MORE_POSTS_COUNT } = CONFIG;
 
 /*-------------------------------- getAllPosts ------------------------------*/
 
-export const getAllPosts = () => getAllEntries(COLLECTIONS.POST);
+export const getAllPosts = (): Promise<PostCollection[]> => getAllEntries(COLLECTIONS.POST);
 
 export const getPostsWithReadingTimeFromPosts = async (
   posts: PostCollection[]

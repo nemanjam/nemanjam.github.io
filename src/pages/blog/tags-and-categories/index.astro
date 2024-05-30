@@ -1,0 +1,15 @@
+---
+import { getAllPosts } from '@/modules/post';
+import List from '@/layouts/List.astro';
+import TagsAndCategories from '@/components/TagsAndCategories.astro';
+
+import type { Metadata } from '@/types/common';
+
+const posts = await getAllPosts();
+
+const metadata: Metadata = { title: 'Tags & Categories' };
+---
+
+<List {metadata}>
+  <TagsAndCategories {posts} />
+</List>
