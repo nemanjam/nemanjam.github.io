@@ -132,12 +132,12 @@ export const getUniqueTags = (posts: PostCollection[]): string[] => {
 };
 
 /** For both tags and categories. */
-export interface ItemWithCount {
+export interface Filter {
   text: string;
   count: number;
 }
 
-export const getSortedUniqueTagsWithCount = (posts: PostCollection[]): ItemWithCount[] => {
+export const getSortedUniqueTagsWithCount = (posts: PostCollection[]): Filter[] => {
   // must have duplicated tags here to calc count
   const tags = getAllTags(posts);
 
@@ -151,7 +151,7 @@ export const getSortedUniqueTagsWithCount = (posts: PostCollection[]): ItemWithC
       acc[index].count++;
       return acc;
     },
-    <ItemWithCount[]>[]
+    <Filter[]>[]
   );
 
   const sortedTagsWithCount = tagsWithCount.slice().sort((a, b) => b.count - a.count);
@@ -168,7 +168,7 @@ export const getUniqueCategories = (posts: PostCollection[]): string[] => {
   return uniqueCategories;
 };
 
-export const getSortedUniqueCategoriesWithCount = (posts: PostCollection[]): ItemWithCount[] => {
+export const getSortedUniqueCategoriesWithCount = (posts: PostCollection[]): Filter[] => {
   const categories = getAllCategories(posts);
   if (!(categories.length > 0)) return [];
 

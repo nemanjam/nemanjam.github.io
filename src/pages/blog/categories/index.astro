@@ -1,7 +1,7 @@
 ---
 import { getAllPosts, getSortedUniqueCategoriesWithCount } from '@/modules/post';
 import List from '@/layouts/List.astro';
-import ItemWithCountList from '@/components/ItemWithCountList.astro';
+import FilterList from '@/components/FilterList.astro';
 
 import type { Metadata } from '@/types/common';
 
@@ -12,6 +12,6 @@ const metadata: Metadata = { title: 'Categories' };
 
 <List {metadata}>
   <section>
-    <ItemWithCountList type="categories" items={categoriesWithCount} class="mb-4" />
+    <FilterList type="categories" items={categoriesWithCount} class="mb-4" />
   </section>
 </List>

@@ -6,7 +6,7 @@ export const ROUTES = {
   RESUME: '/resume/',
   TAGS: '/blog/tags/',
   CATEGORIES: '/blog/categories/',
-  TAGS_AND_CATEGORIES: '/blog/tags-and-categories/',
+  CATEGORIES_AND_TAGS: '/blog/categories-and-tags/',
   DRAFTS: '/drafts/',
   _404: '/404/',
   _500: '/500/',

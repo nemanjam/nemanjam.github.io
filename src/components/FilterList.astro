@@ -4,10 +4,10 @@ import Link from '@/components/Link.astro';
 import { ROUTES } from '@/constants/routes';
 import { cn } from '@/utils/styles';
 
-import type { ItemWithCount } from '@/modules/post';
+import type { Filter } from '@/modules/post';
 
 export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
-  items: ItemWithCount[];
+  items: Filter[];
   type: 'tags' | 'categories';
 }
 

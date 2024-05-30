@@ -12,7 +12,7 @@ export const NAVIGATION_ITEMS: NavigationItem[] = [
   },
   {
     title: 'Explore',
-    path: ROUTES.TAGS_AND_CATEGORIES,
+    path: ROUTES.CATEGORIES_AND_TAGS,
   },
   // {
   //   title: 'Tags',

@@ -1,7 +1,7 @@
 ---
 import { getAllPosts } from '@/modules/post';
 import List from '@/layouts/List.astro';
-import TagsAndCategories from '@/components/TagsAndCategories.astro';
+import CategoriesAndTags from '@/components/CategoriesAndTags.astro';
 
 import type { Metadata } from '@/types/common';
 
@@ -11,5 +11,5 @@ const metadata: Metadata = { title: 'Explore' };
 ---
 
 <List {metadata}>
-  <TagsAndCategories {posts} />
+  <CategoriesAndTags {posts} />
 </List>

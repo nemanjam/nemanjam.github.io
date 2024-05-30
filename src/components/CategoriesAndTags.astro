@@ -1,6 +1,6 @@
 ---
 import { getSortedUniqueCategoriesWithCount, getSortedUniqueTagsWithCount } from '@/modules/post';
-import ItemWithCountList from '@/components/ItemWithCountList.astro';
+import FilterList from '@/components/FilterList.astro';
 import { cn } from '@/utils/styles';
 
 import type { PostCollection } from '@/types/post';
@@ -17,7 +17,7 @@ const categoriesWithCount = getSortedUniqueCategoriesWithCount(posts);
 
 <section {...props} class={cn(className)}>
   <h4>Categories:</h4>
-  <ItemWithCountList type="categories" items={categoriesWithCount} class="mb-4" />
+  <FilterList type="categories" items={categoriesWithCount} class="mb-4" />
   <h4>Tags:</h4>
-  <ItemWithCountList type="tags" items={tagsWithCount} class="mb-4" />
+  <FilterList type="tags" items={tagsWithCount} class="mb-4" />
 </section>
