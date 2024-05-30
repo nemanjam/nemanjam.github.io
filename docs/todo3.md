@@ -250,4 +250,6 @@ rename ItemWithCountList, tags-and-categories
 add more buttons, size, primary, secondary
 isActive tag and category
 noHeading layout
+restyle PostMeta component
+fix schema validation for tags and categories
 ```

@@ -19,8 +19,10 @@ const { category, publishDate, updatedDate, readingTime, class: className } = As
 
 const categoryIcon = CATEGORIES.find((item) => item.name === category)?.icon;
 
+
 const shouldDisplay = Object.values(Astro.props).some(Boolean);
 // add variance authority
+// fix this html
 ---
 
 {
