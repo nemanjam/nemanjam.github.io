@@ -16,8 +16,8 @@ const categoriesWithCount = getSortedUniqueCategoriesWithCount(posts);
 ---
 
 <section {...props} class={cn(className)}>
-  <h3>Tags:</h3>
-  <ItemWithCountList type="tags" items={tagsWithCount} class="mb-4" />
-  <h3>Categories:</h3>
+  <h4>Categories:</h4>
   <ItemWithCountList type="categories" items={categoriesWithCount} class="mb-4" />
+  <h4>Tags:</h4>
+  <ItemWithCountList type="tags" items={tagsWithCount} class="mb-4" />
 </section>

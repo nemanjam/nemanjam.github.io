@@ -1,5 +1,6 @@
 ---
 import Button from '@/components/Button.astro';
+import Link from '@/components/Link.astro';
 import { ROUTES } from '@/constants/routes';
 import { cn } from '@/utils/styles';
 
@@ -29,7 +30,7 @@ const itemLinks = items.map((item) => {
     <ul {...props} class={cn('flex flex-wrap gap-2', className)}>
       {itemLinks.map(({ href, text }) => (
         <li class="inline-block">
-          <Button href={href}>{text}</Button>
+          <Link href={href}>{text}</Link>
         </li>
       ))}
     </ul>
