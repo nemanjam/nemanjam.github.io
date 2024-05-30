@@ -15,8 +15,10 @@ const { title, description } = metadata;
 
 <Centered {metadata}>
   <article class="flex flex-col">
-    <h1>{title}</h1>
-    {description && <p class="mb-5">{description}</p>}
+    <slot name="heading">
+      <h1>{title}</h1>
+      {description && <p class="mb-5">{description}</p>}
+    </slot>
     <section class="flex-grow flex flex-col justify-between">
       <slot />
       {paginationProps && <Pagination {...paginationProps} class="mt-6" />}

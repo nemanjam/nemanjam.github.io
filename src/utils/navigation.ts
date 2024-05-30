@@ -16,8 +16,8 @@ export const isActiveNavItem = ({ routePathname, navItemHref }: NavItemArgs): bo
     // case navItemHref === ROUTES.HOME && routePathname === ROUTES.HOME:
     case navItemHref === ROUTES.RESUME && routePathname === ROUTES.RESUME:
     case navItemHref === ROUTES.PROJECTS && routePathname.startsWith(ROUTES.PROJECTS):
-    case navItemHref === ROUTES.TAGS && routePathname.startsWith(ROUTES.TAGS):
-    case navItemHref === ROUTES.CATEGORIES && routePathname.startsWith(ROUTES.CATEGORIES):
+    case navItemHref === ROUTES.CATEGORIES_AND_TAGS && routePathname.startsWith(ROUTES.TAGS):
+    case navItemHref === ROUTES.CATEGORIES_AND_TAGS && routePathname.startsWith(ROUTES.CATEGORIES):
     case navItemHref === ROUTES.CATEGORIES_AND_TAGS &&
       routePathname.startsWith(ROUTES.CATEGORIES_AND_TAGS):
     case navItemHref === ROUTES.BLOG &&
