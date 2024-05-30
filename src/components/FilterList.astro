@@ -12,14 +12,19 @@ export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
 }
 
 const { items = [], type, class: className, ...props } = Astro.props;
+const { pathname } = Astro.url;
+
 const itemLinks = items.map((item) => {
   const pathSegment = type === 'tags' ? ROUTES.TAGS : ROUTES.CATEGORIES;
   const itemText = type === 'tags' ? `#${item.text}` : item.text;
 
-  const link = {
-    href: `${pathSegment}${item.text}`,
-    text: `${itemText}(${item.count})`,
-  };
+  const href = `${pathSegment}${item.text}`;
+  const text = `${itemText}(${item.count})`;
+
+  // unused, wont display in category and tag list
+  const isActive = href === pathname;
+
+  const link = { href, text, isActive };
 
   return link;
 });
@@ -28,9 +33,11 @@ const itemLinks = items.map((item) => {
 {
   itemLinks.length > 0 && (
     <ul {...props} class={cn('flex flex-wrap gap-2', className)}>
-      {itemLinks.map(({ href, text }) => (
+      {itemLinks.map(({ href, text, isActive }) => (
         <li class="inline-block">
-          <Link href={href}>{text}</Link>
+          <Link href={href} class={cn({ 'underline font-bold text-accent': isActive })}>
+            {text}
+          </Link>
         </li>
       ))}
     </ul>

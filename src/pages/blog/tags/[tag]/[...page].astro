@@ -29,7 +29,7 @@ const { page } = Astro.props;
 const { tag } = Astro.params;
 
 const paginationProps = pickPaginationPropsFromPage(page);
-const metadata: Metadata = { title: `Tag: ${tag}` };
+const metadata: Metadata = { title: `#${tag}` };
 
 const layoutProps = { metadata, paginationProps };
 ---

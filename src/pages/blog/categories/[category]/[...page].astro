@@ -4,6 +4,7 @@ import List from '@/layouts/List.astro';
 import PostList from '@/components/PostList.astro';
 import { CONFIG } from '@/config';
 import { pickPaginationPropsFromPage } from '@/utils/pagination';
+import { capitalizeFirstLetter } from '@/utils/strings';
 
 import type { Metadata } from '@/types/common';
 import type { Post } from '@/types/post';
@@ -32,7 +33,7 @@ const { page } = Astro.props;
 const { category } = Astro.params;
 
 const paginationProps = pickPaginationPropsFromPage(page);
-const metadata: Metadata = { title: `Category: ${category}` };
+const metadata: Metadata = { title: capitalizeFirstLetter(category) };
 
 const layoutProps = { metadata, paginationProps };
 ---

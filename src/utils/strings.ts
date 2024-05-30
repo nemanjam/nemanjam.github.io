@@ -14,6 +14,5 @@ export const trimHttpProtocol = (url: string) => {
   return withoutProtocol;
 };
 
-export const capitalizeFirstLetter = (str: string) => {
-  return str ? str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() : null;
-};
+export const capitalizeFirstLetter = (str: string) =>
+  str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
