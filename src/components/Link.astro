@@ -13,19 +13,21 @@ const linkVariants = cva('', {
       'link-heading': 'link-heading',
       'link-nav': 'link-nav',
     },
-    // size: {},
+    disabled: { true: 'link-disabled' },
   },
   // compoundVariants: [],
 });
 
 export interface Props extends HTMLAttributes<'a'>, VariantProps<typeof linkVariants> {}
 
-const { class: className, variant = 'link', ...props } = Astro.props;
+const { class: className, variant = 'link', disabled, ...props } = Astro.props;
+
+const Tag = disabled ? 'span' : 'a';
 
 // all buttons are links, add more button variants
 // props target="_blank" etc
 ---
 
-<a class={linkVariants({ variant, className })} {...props}>
+<Tag class={linkVariants({ variant, disabled, className })} {...props}>
   <slot />
-</a>
+</Tag>

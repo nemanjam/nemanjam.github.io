@@ -33,6 +33,10 @@
     @apply hover:text-links-hover hover:border-links-hover;
   }
 
+  .link-disabled {
+    @apply text-content hover:text-content no-underline cursor-not-allowed;
+  }
+
   .centered {
     @apply w-full md:mx-auto;
   }

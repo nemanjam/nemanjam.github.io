@@ -1,9 +1,9 @@
 ---
 import { getAllPosts, getPostsWithReadingTimeFromPosts } from '@/modules/post';
 import List from '@/layouts/List.astro';
-import { pickPaginationPropsFromPage } from '@/components/Pagination.astro';
 import PostList from '@/components/PostList.astro';
 import { CONFIG } from '@/config';
+import { pickPaginationPropsFromPage } from '@/utils/pagination';
 
 import type { Metadata } from '@/types/common';
 import type { Post } from '@/types/post';
