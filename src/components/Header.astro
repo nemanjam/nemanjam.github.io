@@ -9,8 +9,11 @@ import ThemeToggle from '@/components/ThemeToggle.astro';
 import { NAVIGATION_ITEMS } from '@/constants/navigation';
 import { ROUTES } from '@/constants/routes';
 import { CONFIG } from '@/config';
+import { isActiveNavItem } from '@/utils/navigation';
 
 import Avatar from '@/assets/images/avatar.jpg';
+
+const { pathname: routePathname } = Astro.url;
 
 // group-[.menu-open]: increases specificity everywhere
 // group-[.menu-open]:flex-col md:!flex-row, both on flex-direction
@@ -57,11 +60,17 @@ import Avatar from '@/assets/images/avatar.jpg';
     <nav class="select-none hidden md:block group-[.menu-open]:block" aria-label="Site navigation">
       <ul class="flex gap-4 group-[.menu-open]:flex-col md:!flex-row md:items-center">
         {
-          NAVIGATION_ITEMS.map(({ title, path }) => (
-            <li>
-              <HeaderLink href={path}>{title}</HeaderLink>
-            </li>
-          ))
+          NAVIGATION_ITEMS.map(({ title, path }) => {
+            const isActive = isActiveNavItem({ routePathname, navItemHref: path });
+
+            return (
+              <li>
+                <HeaderLink href={path} {isActive}>
+                  {title}
+                </HeaderLink>
+              </li>
+            );
+          })
         }
         <li class="shrink-0">
           <ThemeToggle />

@@ -1,17 +1,13 @@
 ---
 import Link from '@/components/Link.astro';
-import { isActiveNavItem } from '@/utils/navigation';
 import { cn } from '@/utils/styles';
 
-export type Props = astroHTML.JSX.AnchorHTMLAttributes;
+export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
+  isActive?: boolean;
+}
 
-// eslint-disable-next-line no-unused-vars1
-const { slot, class: className, ...props } = Astro.props as Props;
-
-const isActive = isActiveNavItem({
-  routePathname: Astro.url.pathname,
-  navItemHref: props.href as string,
-});
+// eslint-disable-next-line no-unused-vars
+const { slot, isActive = false, class: className, ...props } = Astro.props as Props;
 ---
 
 <Link {...props} variant="link-nav" class={cn({ 'underline text-links': isActive }, className)}>
