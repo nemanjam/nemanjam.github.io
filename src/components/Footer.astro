@@ -14,69 +14,69 @@ const { time, hash, message } = getLatestCommitInfo();
 // footer is full width for border, div has max-w
 ---
 
-<footer class="border-t border-base-300">
-  <div
-    class="max-w-6xl md:mx-auto flex items-center justify-between gap-4 flex-col-reverse md:flex-row py-8 px-4"
-  >
-    <div class="text-sm text-content">
-      <div class="flex gap-2 flex-col md:flex-row">
-        <label class="font-bold text-nowrap">Under construciton:</label>
-        <div class="flex gap-2 flex-wrap">
-          <Link href="https://github.com/paularmstrong/paularmstrong.dev">Starter project</Link>
-          <Link href="https://github.com/nemanjam/nemanjam.github.io#references">
-            All references
-          </Link>
+<footer class="border-t border-base-300 py-8 px-4">
+  <div class="max-w-6xl md:mx-auto flex justify-center md:justify-start">
+    <div class="flex justify-between gap-4 flex-col-reverse md:flex-row md:w-full">
+      <div class="flex gap-2 flex-col text-sm text-content">
+        <div class="flex gap-2 flex-col md:flex-row">
+          <label class="font-bold text-nowrap">Under construciton:</label>
+          <div class="flex gap-2 flex-col md:flex-row">
+            <Link href="https://github.com/paularmstrong/paularmstrong.dev">Starter project</Link>
+            <Link href="https://github.com/nemanjam/nemanjam.github.io#references">
+              All references
+            </Link>
+          </div>
+        </div>
+        <div class="flex gap-2 flex-col md:flex-row">
+          <label class="font-bold text-nowrap">Latest commit:</label>
+          <div class="flex gap-2 flex-col xs:flex-row flex-wrap">
+            <span>{time}</span>
+            <span>{hash}</span>
+            <span>{message}</span>
+          </div>
         </div>
       </div>
-      <div class="flex gap-2 flex-col md:flex-row">
-        <label class="font-bold text-nowrap">Latest commit:</label>
-        <div class="flex gap-2 flex-col xs:flex-row flex-wrap">
-          <span>{time}</span>
-          <span>{hash}</span>
-          <span>{message}</span>
-        </div>
-      </div>
-    </div>
 
-    <ul class="flex gap-2 flex-row flex-wrap xs:flex-nowrap">
-      <li>
-        <Link
-          href={AUTHOR_GITHUB}
-          target="_blank"
-          rel="me noreferrer noopener"
-          title="@nemanjam on Github"
-          class="flex items-center gap-2"
-          variant="link-nav"
-        >
-          <Icon name="mdi:github" class="h-6 w-6 fill-current" />
-          <span>Github</span>
-        </Link>
-      </li>
-      <li>
-        <Link
-          href={AUTHOR_LINKEDIN}
-          target="_blank"
-          rel="me noreferrer noopener"
-          title="Nemanja on LinkedIn"
-          class="flex items-center gap-2"
-          variant="link-nav"
-        >
-          <Icon name="mdi:linkedin" class="h-6 w-6 fill-current" />
-          <span>LinkedIn</span>
-        </Link>
-      </li>
-      <li>
-        <Link
-          href="/feed.xml"
-          title={`RSS feed for ${domain}`}
-          class="flex items-center gap-2"
-          variant="link-nav"
-        >
-          <Icon name="mdi:rss" class="h-6 w-6 fill-current" />
-          <span>RSS Feed</span>
-        </Link>
-      </li>
-    </ul>
+      <ul class="flex gap-2 flex-wrap xs:flex-nowrap lg:items-center">
+        <li>
+          <Link
+            href={AUTHOR_GITHUB}
+            target="_blank"
+            rel="me noreferrer noopener"
+            title="@nemanjam on Github"
+            class="flex items-center gap-2 text-base xs:text-lg"
+            variant="link-nav"
+          >
+            <Icon name="mdi:github" class="h-6 w-6 fill-current" />
+            <span>Github</span>
+          </Link>
+        </li>
+        <li>
+          <Link
+            href={AUTHOR_LINKEDIN}
+            target="_blank"
+            rel="me noreferrer noopener"
+            title="Nemanja on LinkedIn"
+            class="flex items-center gap-2 text-base xs:text-lg"
+            variant="link-nav"
+          >
+            <Icon name="mdi:linkedin" class="h-6 w-6 fill-current" />
+            <span>LinkedIn</span>
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="/feed.xml"
+            title={`RSS feed for ${domain}`}
+            class="flex items-center gap-2 text-base xs:text-lg"
+            variant="link-nav"
+          >
+            <Icon name="mdi:rss" class="h-6 w-6 fill-current" />
+            <span>RSS Feed</span>
+          </Link>
+        </li>
+      </ul>
+    </div>
   </div>
   <BackToTop client:only="solid-js" />
 </footer>

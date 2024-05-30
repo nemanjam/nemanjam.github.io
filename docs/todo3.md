@@ -219,7 +219,7 @@ remove config folder for code theme, add light theme and fix styles
 rename header to navigation
 open components to pass class: className
 post hero title and description custom style without prose
-style proper footer
+    style proper footer
 style table of contents
 // type for class
 export type Props = astroHTML.JSX.AnchorHTMLAttributes;
@@ -243,4 +243,5 @@ generate Twitter intent link, use react share component
 range in pagination, leave only 3 numbers
 disabled color?
 must use flex flex-grow in all containers for full height
+filter page with buttons for categories and tags
 ```
