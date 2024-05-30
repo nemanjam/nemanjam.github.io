@@ -1,0 +1,37 @@
+---
+import Button from '@/components/Button.astro';
+import { ROUTES } from '@/constants/routes';
+import { cn } from '@/utils/styles';
+
+import type { ItemWithCount } from '@/modules/post';
+
+export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
+  items: ItemWithCount[];
+  type: 'tags' | 'categories';
+}
+
+const { items = [], type, class: className, ...props } = Astro.props;
+const itemLinks = items.map((item) => {
+  const pathSegment = type === 'tags' ? ROUTES.TAGS : ROUTES.CATEGORIES;
+  const itemText = type === 'tags' ? `#${item.text}` : item.text;
+
+  const link = {
+    href: `${pathSegment}${item.text}`,
+    text: `${itemText}(${item.count})`,
+  };
+
+  return link;
+});
+---
+
+{
+  itemLinks.length > 0 && (
+    <ul {...props} class={cn('flex flex-wrap gap-2', className)}>
+      {itemLinks.map(({ href, text }) => (
+        <li class="inline-block">
+          <Button href={href}>{text}</Button>
+        </li>
+      ))}
+    </ul>
+  )
+}

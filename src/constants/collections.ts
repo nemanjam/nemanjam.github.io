@@ -10,7 +10,7 @@ export const TAGS = [
   'next.js',
   'react',
   'astro',
-  'node',
+  'node.js',
   'javascript',
   'css',
   'python',

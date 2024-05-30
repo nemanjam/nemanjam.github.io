@@ -3,28 +3,19 @@ import Tag from '@/components/Tag.astro';
 import { ROUTES } from '@/constants/routes';
 import { cn } from '@/utils/styles';
 
-import type { TagWithCount } from '@/modules/post';
-
 export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
-  tags: string[] | TagWithCount[];
+  tags: string[];
   marginY?: boolean;
   tagClass?: string;
 }
 
 const { tags = [], marginY = false, class: className, tagClass, ...props } = Astro.props;
-const tagLinks = tags.map((tagItem) => {
-  const tagLink =
-    typeof tagItem === 'string'
-      ? { href: `${ROUTES.TAGS}${tagItem}`, text: `#${tagItem}` }
-      : { href: `${ROUTES.TAGS}${tagItem.tag}`, text: `#${tagItem.tag}(${tagItem.count})` };
-
-  return tagLink;
-});
+const tagLinks = tags.map((tagItem) => ({ href: `${ROUTES.TAGS}${tagItem}`, text: `#${tagItem}` }));
 ---
 
 {
   tagLinks.length > 0 && (
-    <ul {...props} class={cn('flex flex-wrap gap-2', { 'my-4': marginY }, className)}>
+    <ul {...props} class={cn('flex flex-wrap gap-2', className)}>
       {tagLinks.map(({ href, text }) => (
         <li>
           <Tag href={href} class={tagClass}>

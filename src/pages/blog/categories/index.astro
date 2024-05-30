@@ -1,8 +1,7 @@
 ---
 import { getAllPosts, getSortedUniqueCategoriesWithCount } from '@/modules/post';
 import List from '@/layouts/List.astro';
-import Link from '@/components/Link.astro';
-import { ROUTES } from '@/constants/routes';
+import ItemWithCountList from '@/components/ItemWithCountList.astro';
 
 import type { Metadata } from '@/types/common';
 
@@ -13,14 +12,6 @@ const metadata: Metadata = { title: 'Categories' };
 
 <List {metadata}>
   <section>
-    <ul class="flex flex-wrap gap-2">
-      {
-        categoriesWithCount.map(({ category, count }) => (
-          <li>
-            <Link href={`${ROUTES.CATEGORIES}${category}`}>{`${category}(${count})`}</Link>
-          </li>
-        ))
-      }
-    </ul>
+    <ItemWithCountList type="categories" items={categoriesWithCount} class="mb-4" />
   </section>
 </List>

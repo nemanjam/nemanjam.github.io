@@ -3,10 +3,10 @@ import Link from '@/components/Link.astro';
 import { ROUTES } from '@/constants/routes';
 import { cn } from '@/utils/styles';
 
-import type { CategoryWithCount } from '@/modules/post';
+import type { ItemWithCount } from '@/modules/post';
 
 export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
-  categories: CategoryWithCount[];
+  categories: ItemWithCount[];
 }
 
 const { categories, class: className, ...props } = Astro.props;
@@ -14,7 +14,7 @@ const { categories, class: className, ...props } = Astro.props;
 
 <ul {...props} class={cn('flex flex-wrap gap-2', className)}>
   {
-    categories.map(({ category, count }) => (
+    categories.map(({ text: category, count }) => (
       <li>
         <Link href={`${ROUTES.CATEGORIES}${category}`}>{`${category}(${count})`}</Link>
       </li>

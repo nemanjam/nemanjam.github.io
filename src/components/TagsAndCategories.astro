@@ -1,7 +1,6 @@
 ---
 import { getSortedUniqueCategoriesWithCount, getSortedUniqueTagsWithCount } from '@/modules/post';
-import CategoryList from '@/components/CategoryList.astro';
-import TagList from '@/components/TagList.astro';
+import ItemWithCountList from '@/components/ItemWithCountList.astro';
 import { cn } from '@/utils/styles';
 
 import type { PostCollection } from '@/types/post';
@@ -17,10 +16,8 @@ const categoriesWithCount = getSortedUniqueCategoriesWithCount(posts);
 ---
 
 <section {...props} class={cn(className)}>
-  <div class="flex flex-col items-center gap-16">
-    <TagList tags={tagsWithCount} />
-  </div>
-  <div class="flex flex-col items-center gap-16">
-    <CategoryList categories={categoriesWithCount} />
-  </div>
+  <h3>Tags:</h3>
+  <ItemWithCountList type="tags" items={tagsWithCount} class="mb-4" />
+  <h3>Categories:</h3>
+  <ItemWithCountList type="categories" items={categoriesWithCount} class="mb-4" />
 </section>

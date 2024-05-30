@@ -245,4 +245,5 @@ disabled color?, daysy ui
 must use flex flex-grow in all containers for full height
 filter page with buttons for categories and tags
 Button component
+color-mix(...) css native function_, oklch color system, u daisy ui for hover, focus colors, pogledaj
 ```

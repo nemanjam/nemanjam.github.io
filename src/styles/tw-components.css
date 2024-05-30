@@ -27,14 +27,14 @@
     @apply active:text-links-hover;
   }
 
-  .link-button {
-    @apply text-links no-underline;
-    @apply border border-links rounded-button px-2 py-1;
-    @apply hover:text-links-hover hover:border-links-hover;
-  }
-
   .link-disabled {
     @apply text-content hover:text-content no-underline cursor-not-allowed;
+  }
+
+  .button-outline {
+    @apply inline-block text-primary no-underline;
+    @apply border border-primary rounded-button px-3 py-2;
+    @apply hover:bg-primary hover:text-primary-content;
   }
 
   .centered {

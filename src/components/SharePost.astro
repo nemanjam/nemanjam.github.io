@@ -1,4 +1,5 @@
 ---
+import Button from '@/components//Button.astro';
 import Alert from '@/components/Alert.astro';
 import Link from '@/components/Link.astro';
 import { ROUTES } from '@/constants/routes';
@@ -26,6 +27,6 @@ const { title, slug } = Astro.props;
       </Link>
     </div>
 
-    <Link href={`${ROUTES.BLOG}${slug}`} variant="button">Twitter</Link>
+    <Button href={`${ROUTES.BLOG}${slug}`}>Twitter</Button>
   </div>
 </Alert>

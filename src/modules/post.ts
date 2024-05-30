@@ -131,12 +131,13 @@ export const getUniqueTags = (posts: PostCollection[]): string[] => {
   return uniqueTags;
 };
 
-export interface TagWithCount {
-  tag: string;
+/** For both tags and categories. */
+export interface ItemWithCount {
+  text: string;
   count: number;
 }
 
-export const getSortedUniqueTagsWithCount = (posts: PostCollection[]): TagWithCount[] => {
+export const getSortedUniqueTagsWithCount = (posts: PostCollection[]): ItemWithCount[] => {
   // must have duplicated tags here to calc count
   const tags = getAllTags(posts);
 
@@ -144,13 +145,13 @@ export const getSortedUniqueTagsWithCount = (posts: PostCollection[]): TagWithCo
 
   const tagsWithCount = tags.reduce(
     (acc, tag) => {
-      const index = acc.findIndex((item) => item.tag === tag);
-      if (index === -1) return [...acc, { tag, count: 1 }];
+      const index = acc.findIndex((item) => item.text === tag);
+      if (index === -1) return [...acc, { text: tag, count: 1 }];
 
       acc[index].count++;
       return acc;
     },
-    <TagWithCount[]>[]
+    <ItemWithCount[]>[]
   );
 
   const sortedTagsWithCount = tagsWithCount.slice().sort((a, b) => b.count - a.count);
@@ -167,14 +168,7 @@ export const getUniqueCategories = (posts: PostCollection[]): string[] => {
   return uniqueCategories;
 };
 
-export interface CategoryWithCount {
-  category: string;
-  count: number;
-}
-
-export const getSortedUniqueCategoriesWithCount = (
-  posts: PostCollection[]
-): CategoryWithCount[] => {
+export const getSortedUniqueCategoriesWithCount = (posts: PostCollection[]): ItemWithCount[] => {
   const categories = getAllCategories(posts);
   if (!(categories.length > 0)) return [];
 
@@ -182,7 +176,7 @@ export const getSortedUniqueCategoriesWithCount = (
 
   const categoriesWithCount = uniqueCategories.map((category) => {
     const count = categories.filter((item) => item === category).length;
-    return { category, count };
+    return { text: category, count };
   });
 
   const sortedCategoriesWithCount = categoriesWithCount.slice().sort((a, b) => b.count - a.count);
