@@ -8,6 +8,9 @@ export interface Props extends BaseProps {}
 const props = Astro.props;
 ---
 
+{/* flex here to take full height for pagination, flex-row align-stretch */}
+{/* h-full doent work without all parents h-full */}
+
 <Base {...props}>
   <main id="main" class="flex-grow flex centered-px max-w-4xl py-4 lg:py-8">
     <slot />
