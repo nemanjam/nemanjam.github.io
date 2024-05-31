@@ -256,4 +256,9 @@ og images
 tags in post
 render all components in styleguide
 sredi passing metadata u layouts, h1, description, image
+design og image
+create og image for pages, glob, zapravo ne, samo jedna default slika za sve ti treba, prosledis u metadata u Base layout
+postavi i desctiption i title svuda u metadata, u Base default
+check all meta tags in BaseHead
+color themes
 ```
