@@ -255,4 +255,5 @@ fix schema validation for tags and categories
 og images
 tags in post
 render all components in styleguide
+sredi passing metadata u layouts, h1, description, image
 ```
