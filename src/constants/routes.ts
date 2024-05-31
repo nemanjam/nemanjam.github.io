@@ -13,4 +13,8 @@ export const ROUTES = {
   STATIC: {
     IMAGES: '/images/',
   },
+  API: {
+    OG_BLOG: '/api/open-graph/blog/',
+    OG_PROJECTS: '/api/open-graph/projects/',
+  },
 } as const;
