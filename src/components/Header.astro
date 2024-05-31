@@ -57,7 +57,10 @@ const { pathname: routePathname } = Astro.url;
     </div>
 
     {/* nav items */}
-    <nav class="select-none hidden md:block group-[.menu-open]:block" aria-label="Site navigation">
+    <nav
+      class="select-none hidden md:block group-[.menu-open]:block mt-0 group-[.menu-open]:mt-2"
+      aria-label="Site navigation"
+    >
       <ul class="flex gap-4 group-[.menu-open]:flex-col md:!flex-row md:items-center">
         {
           NAVIGATION_ITEMS.map(({ title, path }) => {

@@ -154,6 +154,12 @@ https://the-green-chronicle.esteban-soubiran.site/articles/the-organic-chronicle
 // two columns design
 https://github.com/TailGrids/play-astro
 
+// astro docs blog, prose font sizes and margins
+https://astro.build/blog/
+
+// clean white design
+https://argos-ci.com/blog
+
 -----------
 za local state mora react ili solid
 for state between pages nanostore with localStorage

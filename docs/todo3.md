@@ -252,4 +252,5 @@ isActive tag and category
 noHeading layout
 restyle PostMeta component
 fix schema validation for tags and categories
+og images
 ```
