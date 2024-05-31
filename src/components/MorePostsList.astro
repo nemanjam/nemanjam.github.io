@@ -10,7 +10,7 @@ export interface Props {
 const { morePosts } = Astro.props;
 ---
 
-<section>
+<div>
   <h2>More posts</h2>
   <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
     {
@@ -21,4 +21,4 @@ const { morePosts } = Astro.props;
       ))
     }
   </ul>
-</section>
+</div>
