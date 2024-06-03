@@ -65,7 +65,7 @@ jobs:
           # Dockerfile dir
           file: ./docker/Dockerfile
           # available linux/amd64,linux/arm64
-          platforms: linux/arm64
+          platforms: linux/amd64,linux/arm64
           build-args: |
             "ARG_SITE_URL=${{ env.SITE_URL }}"
           push: true
