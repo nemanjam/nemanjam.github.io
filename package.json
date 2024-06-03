@@ -6,6 +6,8 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
+    "build:nginx": "SITE_URL='https://nemanjamitic.com' astro build",
+    "build:nginx:local": "SITE_URL='https://blog.local.nemanjamitic.com' astro build",
     "preview": "astro preview",
     "astro": "astro",
     "sync": "astro sync",
@@ -13,8 +15,10 @@
     "format": "prettier-config",
     "clean": "rm -rf node_modules yarn.lock",
     "check-types": "tsc --noEmit --pretty",
-    "deploy:nginx": "bash scripts/deploy-nginx-local.sh",
-    "docker:build:arm": "add qemu here docker build -f ./docker/Dockerfile -t nemanjamitic/nemanjam.github.io --build-arg ARG_SITE_URL='https://nmc-docker.arm1.nemanjamitic.com' .",
+    "deploy:nginx": "bash scripts/deploy-nginx-local.sh ~/traefik-proxy/apps/nmc-nginx-with-volume/website arm1",
+    "deploy:nginx:local": "bash scripts/deploy-nginx-local.sh ~/traefik-proxy/apps/nmc-nginx-with-volume/website lxc11",
+    "docker:build:push:arm": "docker buildx build -f ./docker/Dockerfile -t nemanjamitic/nemanjam.github.io --build-arg ARG_SITE_URL='https://nmc-docker.arm1.nemanjamitic.com' --platform linux/arm64 --push .",
+    "docker:build:push:x86": "docker buildx build -f ./docker/Dockerfile -t nemanjamitic/nemanjam.github.io --build-arg ARG_SITE_URL='https://nmc-docker.local.nemanjamitic.com' --platform linux/amd64 --push .",
     "docker:push": "docker push nemanjamitic/nemanjam.github.io"
   },
   "dependencies": {

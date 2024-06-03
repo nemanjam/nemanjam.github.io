@@ -1,8 +1,17 @@
 #!/bin/bash
 
 LOCAL_PATH="./dist"
-REMOTE_PATH="~/traefik-proxy/apps/nmc-nginx-with-volume/website"
-REMOTE_HOST="arm1"
+# REMOTE_PATH="~/traefik-proxy/apps/nmc-nginx-with-volume/website"
+# REMOTE_HOST="arm1"
+
+REMOTE_PATH=$1
+REMOTE_HOST=$2
+
+# Check if all arguments are provided
+if [[ -z "$REMOTE_PATH" || -z "$REMOTE_HOST" ]]; then
+  echo "Incorrect args, usage: $0 <remote_path> <remote_host>"
+  exit 1
+fi
 
 # Navigate to the website folder on the remote server and clear contents of the website folder
 ssh $REMOTE_HOST "cd $REMOTE_PATH && \

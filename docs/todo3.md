@@ -261,4 +261,8 @@ create og image for pages, glob, zapravo ne, samo jedna default slika za sve ti 
 postavi i desctiption i title svuda u metadata, u Base default
 check all meta tags in BaseHead
 color themes
+
+must pass env var SITE_URL at build time
+"build:nginx": "SITE_URL='https://nemanjamitic.com' astro build",
+
 ```
