@@ -159,6 +159,11 @@ https://astro.build/blog/
 
 // clean white design
 https://argos-ci.com/blog
+// public github repo
+https://github.com/argos-ci/argos-ci.com
+
+// medium, excellent design
+https://medium.com/@mgechev
 
 -----------
 za local state mora react ili solid
