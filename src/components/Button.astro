@@ -19,9 +19,9 @@ export interface Props extends HTMLAttributes<'a'>, VariantProps<typeof linkVari
 
 const { class: className, variant = 'outline', size, disabled, ...props } = Astro.props;
 
-const Tag = disabled ? 'span' : 'a';
+const HtmlTag = disabled ? 'span' : 'a';
 ---
 
-<Tag {...props} class={linkVariants({ variant, size, disabled, className })}>
+<HtmlTag {...props} class={linkVariants({ variant, size, disabled, className })}>
   <slot />
-</Tag>
+</HtmlTag>

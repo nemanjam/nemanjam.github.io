@@ -1,18 +1,20 @@
 ---
-import { cn } from '@/utils/styles';
+import { cva } from 'class-variance-authority';
 
-export type Props = astroHTML.JSX.AnchorHTMLAttributes;
+import type { HTMLAttributes } from 'astro/types';
+import type { VariantProps } from 'class-variance-authority';
 
-const { class: className, ...props } = Astro.props;
+const tagVariants = cva('tag', {
+  variants: {
+    size: { sm: 'tag-sm', md: 'tag-md', lg: 'tag-lg' },
+  },
+});
+
+export interface TagProps extends HTMLAttributes<'a'>, VariantProps<typeof tagVariants> {}
+
+const { class: className, size = 'sm', ...props } = Astro.props as TagProps;
 ---
 
-<a
-  class={cn(
-    'text-base bg-base-200 hover:bg-base-300',
-    'inline-block px-2 pb-1 pt-0.5 lowercase no-underline rounded-tag',
-    className
-  )}
-  {...props}
->
+<a {...props} class={tagVariants({ size, className })}>
   <slot />
 </a>

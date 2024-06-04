@@ -1,5 +1,6 @@
 import { getAllEntries } from '@/modules/common';
 import { COLLECTIONS } from '@/constants/collections';
+import { ROUTES } from '@/constants/routes';
 import { CONFIG } from '@/config';
 import { renderMarkdown } from '@/utils/markdown';
 
@@ -131,11 +132,42 @@ export const getUniqueTags = (posts: PostCollection[]): string[] => {
   return uniqueTags;
 };
 
+export type FilterType = 'tag' | 'category';
+
 /** For both tags and categories. */
 export interface Filter {
   text: string;
   count: number;
+  type: FilterType;
 }
+
+export interface FilterLink {
+  href: string;
+  text: string;
+  isActive: boolean;
+  type: FilterType;
+}
+
+export const getFilterLinks = (filterItems: Filter[], pathname?: string): FilterLink[] => {
+  const itemLinks = filterItems.map((item) => {
+    const { type, text, count } = item;
+
+    const pathSegment = type === 'tag' ? ROUTES.TAGS : ROUTES.CATEGORIES;
+    const itemText = type === 'tag' ? `#${text}` : text;
+
+    const href = `${pathSegment}${text}`;
+    const textWithCount = `${itemText}(${count})`;
+
+    // unused, wont display in category and tag list
+    const isActive = href === pathname;
+
+    const link = { href, text: textWithCount, isActive, type };
+
+    return link;
+  });
+
+  return itemLinks;
+};
 
 export const getSortedUniqueTagsWithCount = (posts: PostCollection[]): Filter[] => {
   // must have duplicated tags here to calc count
@@ -143,10 +175,12 @@ export const getSortedUniqueTagsWithCount = (posts: PostCollection[]): Filter[] 
 
   if (!(tags.length > 0)) return [];
 
+  const type = 'tag' as const;
+
   const tagsWithCount = tags.reduce(
     (acc, tag) => {
       const index = acc.findIndex((item) => item.text === tag);
-      if (index === -1) return [...acc, { text: tag, count: 1 }];
+      if (index === -1) return [...acc, { text: tag, count: 1, type }];
 
       acc[index].count++;
       return acc;
@@ -172,11 +206,13 @@ export const getSortedUniqueCategoriesWithCount = (posts: PostCollection[]): Fil
   const categories = getAllCategories(posts);
   if (!(categories.length > 0)) return [];
 
+  const type = 'category' as const;
+
   const uniqueCategories = getUniqueCategories(posts);
 
   const categoriesWithCount = uniqueCategories.map((category) => {
     const count = categories.filter((item) => item === category).length;
-    return { text: category, count };
+    return { text: category, count, type };
   });
 
   const sortedCategoriesWithCount = categoriesWithCount.slice().sort((a, b) => b.count - a.count);

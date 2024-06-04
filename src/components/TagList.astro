@@ -1,24 +1,35 @@
 ---
+import { cva } from 'class-variance-authority';
+
 import Tag from '@/components/Tag.astro';
 import { ROUTES } from '@/constants/routes';
-import { cn } from '@/utils/styles';
 
-export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
+import type { TagProps } from '@/components/Tag.astro';
+import type { HTMLAttributes } from 'astro/types';
+import type { VariantProps } from 'class-variance-authority';
+
+const tagListVariants = cva('not-prose flex flex-wrap', {
+  variants: {
+    size: { sm: 'gap-2', md: 'gap-3', lg: 'gap-4' },
+  },
+});
+
+export interface Props extends HTMLAttributes<'ul'>, VariantProps<typeof tagListVariants> {
   tags: string[];
-  marginY?: boolean;
-  tagClass?: string;
+  tagProps?: TagProps;
 }
 
-const { tags = [], marginY = false, class: className, tagClass, ...props } = Astro.props;
+const { tags = [], tagProps, size = 'sm', class: className, ...props } = Astro.props;
+
 const tagLinks = tags.map((tagItem) => ({ href: `${ROUTES.TAGS}${tagItem}`, text: `#${tagItem}` }));
 ---
 
 {
   tagLinks.length > 0 && (
-    <ul {...props} class={cn('not-prose flex flex-wrap gap-2', className)}>
+    <ul {...props} class={tagListVariants({ size, className })}>
       {tagLinks.map(({ href, text }) => (
         <li>
-          <Tag href={href} class={tagClass}>
+          <Tag {...tagProps} {size} href={href}>
             {text}
           </Tag>
         </li>

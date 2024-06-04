@@ -1,43 +1,30 @@
 ---
-import Button from '@/components/Button.astro';
-import Link from '@/components/Link.astro';
-import { ROUTES } from '@/constants/routes';
+import { getFilterLinks } from '@/modules/post';
+import Tag from '@/components/Tag.astro';
 import { cn } from '@/utils/styles';
 
 import type { Filter } from '@/modules/post';
 
 export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
   items: Filter[];
-  type: 'tags' | 'categories';
 }
 
-const { items = [], type, class: className, ...props } = Astro.props;
+const { items = [], class: className, ...props } = Astro.props;
 const { pathname } = Astro.url;
 
-const itemLinks = items.map((item) => {
-  const pathSegment = type === 'tags' ? ROUTES.TAGS : ROUTES.CATEGORIES;
-  const itemText = type === 'tags' ? `#${item.text}` : item.text;
+const itemLinks = getFilterLinks(items, pathname);
 
-  const href = `${pathSegment}${item.text}`;
-  const text = `${itemText}(${item.count})`;
-
-  // unused, wont display in category and tag list
-  const isActive = href === pathname;
-
-  const link = { href, text, isActive };
-
-  return link;
-});
+// fix this, category card with icon, tag TagList, CategoryList
 ---
 
 {
   itemLinks.length > 0 && (
     <ul {...props} class={cn('flex flex-wrap gap-2', className)}>
-      {itemLinks.map(({ href, text, isActive }) => (
+      {itemLinks.map(({ href, text, isActive, type }) => (
         <li class="inline-block">
-          <Link href={href} class={cn({ 'underline font-bold text-accent': isActive })}>
+          <Tag href={href} size="md" class={cn({ 'underline font-bold text-accent': isActive })}>
             {text}
-          </Link>
+          </Tag>
         </li>
       ))}
     </ul>

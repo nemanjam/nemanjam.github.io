@@ -37,6 +37,23 @@
     @apply hover:bg-primary hover:text-primary-content;
   }
 
+  .tag {
+    @apply text-content bg-base-200 hover:bg-base-300;
+    @apply inline-block lowercase no-underline rounded-tag;
+  }
+
+  .tag-sm {
+    @apply text-sm px-2 pb-1 pt-0.5;
+  }
+
+  .tag-md {
+    @apply text-base px-3 py-1;
+  }
+
+  .tag-lg {
+    @apply text-lg px-4 py-2;
+  }
+
   .centered {
     @apply w-full md:mx-auto;
   }

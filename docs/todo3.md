@@ -264,5 +264,8 @@ color themes
 
 must pass env var SITE_URL at build time
 "build:nginx": "SITE_URL='https://nemanjamitic.com' astro build",
+categories - images or icons with cards
+codesandbox embed
+cva default styles vs default variant, primer
 
 ```
