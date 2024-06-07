@@ -56,5 +56,8 @@ jobs:
           echo "    Port ${{ secrets.REMOTE_PORT }}" >> ~/.ssh/config
           chmod 600 ~/.ssh/config
 
+      - name: Add SSH server key to known_hosts
+        run: ssh-keyscan -H ${{ secrets.REMOTE_HOST }} >> ~/.ssh/known_hosts
+
       - name: Run bash file with yarn
         run: yarn deploy:nginx
