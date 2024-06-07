@@ -1,4 +1,4 @@
-name: Deploy Nginx
+name: Deploy Nginx with bash file
 
 on:
   push:
