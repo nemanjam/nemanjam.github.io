@@ -9,6 +9,7 @@ on:
   workflow_dispatch:
 
 env:
+  SSH_ALIAS: arm1
   IMAGE_NAME_WITH_TAG: ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest
 
 jobs:
@@ -36,7 +37,7 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
 
           # Set up SSH config
-          echo "Host arm1" > ~/.ssh/config
+          echo "Host $SSH_ALIAS" > ~/.ssh/config
           echo "    HostName ${{ secrets.REMOTE_HOST }}" >> ~/.ssh/config
           echo "    User ${{ secrets.REMOTE_USERNAME }}" >> ~/.ssh/config
           echo "    IdentityFile ~/.ssh/id_ed25519" >> ~/.ssh/config
