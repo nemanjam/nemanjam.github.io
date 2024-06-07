@@ -268,4 +268,5 @@ categories - images or icons with cards
 codesandbox embed
 cva default styles vs default variant, primer
 design transparent logo for default ogImage
+astro 4.10 types and zod for env vars
 ```
