@@ -43,7 +43,7 @@ jobs:
         run: yarn build
 
       - name: Setup ssh config
-      - id: ssh
+        id: ssh
         uses: invi5H/ssh-action@v1
         with:
           SSH_HOST: ${{ secrets.REMOTE_HOST }}
@@ -51,6 +51,6 @@ jobs:
           SSH_KEY: ${{ secrets.REMOTE_KEY_ED25519 }}
           SSH_PORT: ${{ secrets.REMOTE_PORT }}
 
-      # - name: Run bash file with ssh alias
-      #   run: |
-      #     bash scripts/deploy-nginx-local.sh '~/traefik-proxy/apps/nmc-nginx-with-volume/website' '${{ steps.ssh.outputs.SERVER }}'
+      - name: Run bash file with ssh alias
+        run: |
+          bash scripts/deploy-nginx-local.sh '~/traefik-proxy/apps/nmc-nginx-with-volume/website' '${{ steps.ssh.outputs.SERVER }}'
