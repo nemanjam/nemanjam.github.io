@@ -267,5 +267,5 @@ must pass env var SITE_URL at build time
 categories - images or icons with cards
 codesandbox embed
 cva default styles vs default variant, primer
-
+design transparent logo for default ogImage
 ```
