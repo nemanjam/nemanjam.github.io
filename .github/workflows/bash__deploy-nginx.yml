@@ -42,14 +42,22 @@ jobs:
         run: yarn build
 
       - name: Set up SSH config
-        id: ssh-foo
-        uses: invi5H/ssh-action@v1
-        with:
-          NAME: arm1
-          SSH_HOST: ${{ secrets.REMOTE_HOST }}
-          SSH_USER: ${{ secrets.REMOTE_USERNAME }}
-          SSH_KEY: ${{ secrets.REMOTE_KEY_ED25519 }}
-          SSH_PORT: ${{ secrets.REMOTE_PORT }}
+        run: |
+          # Set up SSH key
+          mkdir -p ~/.ssh
+          echo "${{ secrets.REMOTE_KEY_ED25519 }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+          # Set up SSH config
+          echo "Host arm1" > ~/.ssh/config
+          echo "    HostName ${{ secrets.REMOTE_HOST }}" >> ~/.ssh/config
+          echo "    User ${{ secrets.REMOTE_USERNAME }}" >> ~/.ssh/config
+          echo "    IdentityFile ~/.ssh/id_ed25519" >> ~/.ssh/config
+          echo "    Port ${{ secrets.REMOTE_PORT }}" >> ~/.ssh/config
+          chmod 600 ~/.ssh/config
+
+          # Add SSH server key to known_hosts
+          ssh-keyscan -H ${{ secrets.REMOTE_HOST }} >> ~/.ssh/known_hosts
 
       - name: Run bash file with yarn
         run: yarn deploy:nginx
