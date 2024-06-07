@@ -52,4 +52,5 @@ jobs:
           SSH_PORT: ${{ secrets.REMOTE_PORT }}
 
       - name: Run bash file with ssh alias
-        run: bash scripts/deploy-nginx-local.sh '~/traefik-proxy/apps/nmc-nginx-with-volume/website' ${{ steps.ssh.outputs.SERVER }}
+        run: |
+          bash scripts/deploy-nginx-local.sh '~/traefik-proxy/apps/nmc-nginx-with-volume/website' '${{ steps.ssh.outputs.SERVER }}'
