@@ -2,21 +2,20 @@
 import { Icon } from 'astro-icon/components';
 
 import { getCategoryIcon } from '@/modules/post';
-import { CATEGORIES } from '@/constants/collections';
-import { ROUTES } from '@/constants/routes';
 import { cn } from '@/utils/styles';
 
 export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
   category: string;
-  text: string;
 }
 
-const { category, text, class: className, ...props } = Astro.props;
+const { category, class: className, ...props } = Astro.props;
 
 const categoryIcon = getCategoryIcon(category);
 ---
 
 <div class={cn('inline-flex items-center gap-2 border border-base-300 p-4', className)}>
   <Icon name={categoryIcon} class="h-8 w-8" />
-  <a {...props} href={`${ROUTES.CATEGORIES}${category}`}>{text}</a>
+  <a {...props}>
+    <slot />
+  </a>
 </div>

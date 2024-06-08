@@ -271,4 +271,5 @@ design transparent logo for default ogImage
 astro 4.10 types and zod for env vars
 CategoryListCard
 small PostItem
+move all types in types folder
 ```

@@ -1,6 +1,8 @@
 ---
-import { getSortedUniqueCategoriesWithCount, getSortedUniqueTagsWithCount } from '@/modules/post';
+import { getCategoryLinks, getTagLinks } from '@/modules/post';
+import CategoryCard from '@/components/CategoryCard.astro';
 import FilterList from '@/components/FilterList.astro';
+import Tag from '@/components/Tag.astro';
 import { cn } from '@/utils/styles';
 
 import type { PostCollection } from '@/types/post';
@@ -11,13 +13,29 @@ export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
 
 const { posts, class: className, ...props } = Astro.props;
 
-const tagsWithCount = getSortedUniqueTagsWithCount(posts);
-const categoriesWithCount = getSortedUniqueCategoriesWithCount(posts);
+const tagLinks = getTagLinks(posts);
+const categoryLinks = getCategoryLinks(posts);
 ---
 
 <section {...props} class={cn(className)}>
   <h4>Categories:</h4>
-  <FilterList type="categories" items={categoriesWithCount} class="mb-4" />
+  <FilterList
+    class="mb-4"
+    itemLinks={categoryLinks}
+    renderFn={({ href, text, textWithCount }) => (
+      <CategoryCard href={href} category={text}>
+        {textWithCount}
+      </CategoryCard>
+    )}
+  />
   <h4>Tags:</h4>
-  <FilterList type="tags" items={tagsWithCount} class="mb-4" />
+  <FilterList
+    class="mb-4"
+    itemLinks={tagLinks}
+    renderFn={({ href, textWithCount, isActive }) => (
+      <Tag href={href} size="md" class={cn({ 'underline font-bold text-accent': isActive })}>
+        {textWithCount}
+      </Tag>
+    )}
+  />
 </section>

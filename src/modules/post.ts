@@ -139,7 +139,6 @@ export type FilterType = 'tag' | 'category';
 export interface Filter {
   text: string;
   count: number;
-  type: FilterType;
 }
 
 export interface FilterLink {
@@ -148,23 +147,21 @@ export interface FilterLink {
   count: number;
   textWithCount: string;
   isActive: boolean;
-  type: FilterType;
 }
 
-export const getFilterLinks = (filterItems: Filter[], pathname?: string): FilterLink[] => {
+export const getTagLinks = (posts: PostCollection[], pathname?: string): FilterLink[] => {
+  const filterItems = getSortedUniqueTagsWithCount(posts);
+
   const itemLinks = filterItems.map((item) => {
-    const { type, text, count } = item;
+    const { text, count } = item;
 
-    const pathSegment = type === 'tag' ? ROUTES.TAGS : ROUTES.CATEGORIES;
-    const itemText = type === 'tag' ? `#${text}` : text;
-
-    const href = `${pathSegment}${text}`;
-    const textWithCount = `${itemText} ${count}`;
+    const href = `${ROUTES.TAGS}${text}`;
+    const textWithCount = `#${text} ${count}`;
 
     // unused, wont display in category and tag list
     const isActive = href === pathname;
 
-    const link = { href, text, count, textWithCount, isActive, type };
+    const link = { href, text, count, textWithCount, isActive };
 
     return link;
   });
@@ -178,12 +175,10 @@ export const getSortedUniqueTagsWithCount = (posts: PostCollection[]): Filter[] 
 
   if (!(tags.length > 0)) return [];
 
-  const type = 'tag' as const;
-
   const tagsWithCount = tags.reduce(
     (acc, tag) => {
       const index = acc.findIndex((item) => item.text === tag);
-      if (index === -1) return [...acc, { text: tag, count: 1, type }];
+      if (index === -1) return [...acc, { text: tag, count: 1 }];
 
       acc[index].count++;
       return acc;
@@ -209,17 +204,34 @@ export const getSortedUniqueCategoriesWithCount = (posts: PostCollection[]): Fil
   const categories = getAllCategories(posts);
   if (!(categories.length > 0)) return [];
 
-  const type = 'category' as const;
-
   const uniqueCategories = getUniqueCategories(posts);
 
   const categoriesWithCount = uniqueCategories.map((category) => {
     const count = categories.filter((item) => item === category).length;
-    return { text: category, count, type };
+    return { text: category, count };
   });
 
   const sortedCategoriesWithCount = categoriesWithCount.slice().sort((a, b) => b.count - a.count);
   return sortedCategoriesWithCount;
+};
+
+export const getCategoryLinks = (posts: PostCollection[], pathname?: string): FilterLink[] => {
+  const filterItems = getSortedUniqueCategoriesWithCount(posts);
+
+  const itemLinks = filterItems.map((item) => {
+    const { text, count } = item;
+
+    const href = `${ROUTES.CATEGORIES}${text}`;
+    const textWithCount = `${text} ${count}`;
+
+    const isActive = href === pathname;
+
+    const link = { href, text, count, textWithCount, isActive };
+
+    return link;
+  });
+
+  return itemLinks;
 };
 
 export const getCategoryIcon = (category: string): CategoryIconType => {
