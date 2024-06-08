@@ -1,5 +1,6 @@
 ---
 import { getFilterLinks } from '@/modules/post';
+import CategoryCard from '@/components/CategoryCard.astro';
 import Tag from '@/components/Tag.astro';
 import { cn } from '@/utils/styles';
 
@@ -20,11 +21,14 @@ const itemLinks = getFilterLinks(items, pathname);
 {
   itemLinks.length > 0 && (
     <ul {...props} class={cn('flex flex-wrap gap-2', className)}>
-      {itemLinks.map(({ href, text, isActive, type }) => (
+      {itemLinks.map(({ href, text, textWithCount, isActive, type }) => (
         <li class="inline-block">
-          <Tag href={href} size="md" class={cn({ 'underline font-bold text-accent': isActive })}>
-            {text}
-          </Tag>
+          {type === 'tag' && (
+            <Tag href={href} size="md" class={cn({ 'underline font-bold text-accent': isActive })}>
+              {textWithCount}
+            </Tag>
+          )}
+          {type === 'category' && <CategoryCard {href} category={text} text={textWithCount} />}
         </li>
       ))}
     </ul>

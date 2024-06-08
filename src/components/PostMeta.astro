@@ -6,6 +6,7 @@ import { CATEGORIES } from '@/constants/collections';
 import { ROUTES } from '@/constants/routes';
 import { formatDate, formatDateIso } from '@/utils/datetime';
 import { cn } from '@/utils/styles';
+import { getCategoryIcon } from '@/modules/post';
 
 interface Props {
   publishDate: Date;
@@ -16,9 +17,6 @@ interface Props {
 }
 
 const { category, publishDate, updatedDate, readingTime, class: className } = Astro.props;
-
-const categoryIcon = CATEGORIES.find((item) => item.name === category)?.icon;
-
 
 const shouldDisplay = Object.values(Astro.props).some(Boolean);
 // add variance authority
@@ -36,7 +34,7 @@ const shouldDisplay = Object.values(Astro.props).some(Boolean);
         )}
         {category && (  
           <span>·</span>     
-            <Icon name={categoryIcon} />
+            <Icon name={getCategoryIcon(category)} />
             <Link href={`${ROUTES.CATEGORIES}${category}`}>{category}</Link>       
         )}
         {readingTime && (    

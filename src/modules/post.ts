@@ -1,9 +1,10 @@
 import { getAllEntries } from '@/modules/common';
-import { COLLECTIONS } from '@/constants/collections';
+import { CATEGORIES, COLLECTIONS } from '@/constants/collections';
 import { ROUTES } from '@/constants/routes';
 import { CONFIG } from '@/config';
 import { renderMarkdown } from '@/utils/markdown';
 
+import type { CategoryIconType } from '@/constants/collections';
 import type { Post, PostCollection } from '@/types/post';
 import type { MarkdownProcessorRenderResult } from '@astrojs/markdown-remark';
 import type { MarkdownHeading } from 'astro';
@@ -144,6 +145,8 @@ export interface Filter {
 export interface FilterLink {
   href: string;
   text: string;
+  count: number;
+  textWithCount: string;
   isActive: boolean;
   type: FilterType;
 }
@@ -156,12 +159,12 @@ export const getFilterLinks = (filterItems: Filter[], pathname?: string): Filter
     const itemText = type === 'tag' ? `#${text}` : text;
 
     const href = `${pathSegment}${text}`;
-    const textWithCount = `${itemText}(${count})`;
+    const textWithCount = `${itemText} ${count}`;
 
     // unused, wont display in category and tag list
     const isActive = href === pathname;
 
-    const link = { href, text: textWithCount, isActive, type };
+    const link = { href, text, count, textWithCount, isActive, type };
 
     return link;
   });
@@ -217,4 +220,14 @@ export const getSortedUniqueCategoriesWithCount = (posts: PostCollection[]): Fil
 
   const sortedCategoriesWithCount = categoriesWithCount.slice().sort((a, b) => b.count - a.count);
   return sortedCategoriesWithCount;
+};
+
+export const getCategoryIcon = (category: string): CategoryIconType => {
+  // set default to prevent breaking build
+  const defaultIcon = CATEGORIES[0].icon;
+  const foundIcon = CATEGORIES.find((item) => item.name === category)?.icon;
+
+  const categoryIcon = foundIcon ?? defaultIcon;
+
+  return categoryIcon;
 };

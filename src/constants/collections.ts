@@ -20,6 +20,8 @@ export const TAGS = [
 
 /** adjust this later */
 export const CATEGORIES = [
+  // add color here
+  // extract find function
   {
     name: 'tutorials',
     icon: 'mdi:teach',
@@ -49,6 +51,8 @@ export const CATEGORIES = [
     icon: 'mdi:book-open-variant-outline',
   },
 ] as const;
+
+export type CategoryIconType = (typeof CATEGORIES)[number]['icon'];
 
 // todo: use imported images here
 export const DEFAULTS_POST = {
