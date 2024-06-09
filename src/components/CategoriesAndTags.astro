@@ -5,6 +5,7 @@ import FilterList from '@/components/FilterList.astro';
 import Tag from '@/components/Tag.astro';
 import { cn } from '@/utils/styles';
 
+import type { FilterLink } from '@/modules/post';
 import type { PostCollection } from '@/types/post';
 
 export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
@@ -19,23 +20,25 @@ const categoryLinks = getCategoryLinks(posts);
 
 <section {...props} class={cn(className)}>
   <h4>Categories:</h4>
-  <FilterList
-    class="mb-4"
-    itemLinks={categoryLinks}
-    renderFn={({ href, text, textWithCount }) => (
-      <CategoryCard href={href} category={text}>
-        {textWithCount}
-      </CategoryCard>
-    )}
-  />
+  <FilterList class="mb-4" itemLinks={categoryLinks}>
+    {
+      ({ href, text, textWithCount }: FilterLink) => (
+        <CategoryCard href={href} category={text}>
+          {textWithCount}
+        </CategoryCard>
+      )
+    }
+  </FilterList>
+
   <h4>Tags:</h4>
-  <FilterList
-    class="mb-4"
-    itemLinks={tagLinks}
-    renderFn={({ href, textWithCount, isActive }) => (
-      <Tag href={href} size="md" class={cn({ 'underline font-bold text-accent': isActive })}>
-        {textWithCount}
-      </Tag>
-    )}
+  <FilterList class="mb-4" itemLinks={tagLinks}>
+    {
+      ({ href, textWithCount, isActive }: FilterLink) => (
+        <Tag href={href} size="md" class={cn({ 'underline font-bold text-accent': isActive })}>
+          {textWithCount}
+        </Tag>
+      )
+    }
+  </FilterList>
   />
 </section>

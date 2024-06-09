@@ -2,14 +2,12 @@
 import { cn } from '@/utils/styles';
 
 import type { FilterLink } from '@/modules/post';
-import type { JSX } from 'astro/jsx-runtime';
 
 export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
   itemLinks: FilterLink[];
-  renderFn: (itemLink: FilterLink) => JSX.Element;
 }
 
-const { itemLinks = [], renderFn, class: className, ...props } = Astro.props;
+const { itemLinks = [], class: className, ...props } = Astro.props;
 
 // fix this, category card with icon, tag TagList, CategoryList
 ---
@@ -17,8 +15,8 @@ const { itemLinks = [], renderFn, class: className, ...props } = Astro.props;
 {
   itemLinks.length > 0 && (
     <ul {...props} class={cn('flex flex-wrap gap-2', className)}>
-      {itemLinks.map((itemLink) => (
-        <li class="inline-block">{renderFn(itemLink)}</li>
+      {itemLinks.map(async (itemLink) => (
+        <li class="inline-block" set:html={await Astro.slots.render('default', [itemLink])} />
       ))}
     </ul>
   )
