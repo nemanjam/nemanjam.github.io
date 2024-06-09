@@ -6,7 +6,6 @@ import type { SchemaContext } from 'astro:content';
 
 /** lowercase tags for routes */
 const removeDuplicatesAndToLowerCase = (items: string[]) => {
-  if (!items.length) return items;
   const lowercaseItems = items.map((str) => str.toLowerCase());
   const distinctItems = new Set(lowercaseItems);
   return Array.from(distinctItems);
@@ -35,6 +34,6 @@ export const postSchema = ({ image }: SchemaContext) =>
           (tag) => ({ message: `Invalid tag: ${tag} in the markdown.` })
         )
       )
-      // .transform(removeDuplicatesAndToLowerCase) // fix this later
-      .nonempty(),
+      .nonempty()
+      .transform(removeDuplicatesAndToLowerCase),
   });
