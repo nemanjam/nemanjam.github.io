@@ -54,7 +54,7 @@ export const CATEGORIES = [
 
 export type CategoryIconType = (typeof CATEGORIES)[number]['icon'];
 
-// todo: use imported images here
+// use imported images here
 export const DEFAULTS_POST = {
   NO_HERO: false,
   HERO_IMAGE: DefaultPostHeroImage,

@@ -14,6 +14,7 @@ export const ROUTES = {
     IMAGES: '/images/',
   },
   API: {
+    OG_PAGES: '/api/open-graph/pages/',
     OG_BLOG: '/api/open-graph/blog/',
     OG_PROJECTS: '/api/open-graph/projects/',
   },

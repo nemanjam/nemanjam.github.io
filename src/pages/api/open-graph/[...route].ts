@@ -7,6 +7,18 @@ import { ROUTES } from '@/constants/routes';
 const OG_FOLDER = './src/assets/images/open-graph/' as const;
 
 // add pages too
+// only path, title and description are important
+const mdxPagesObject = import.meta.glob('/src/pages/**/*.{md,mdx}', { eager: true });
+const mdxPages = Object.fromEntries(
+  Object.entries(mdxPagesObject).map(([path, page]) => [
+    // must match ROUTES.API.OG_PAGES
+    // path.replace('/src/', ''),
+    path.replace(/^\/src\/|\.mdx?$/g, ''),
+    (page as any).frontmatter,
+  ])
+);
+
+// console.log('mdxPages', mdxPages);
 
 // ! 1. must be object, not array of objects
 // ! 2. must not start with '/' blog/slug <- correct, /blog/slug <- incorrect
@@ -20,7 +32,7 @@ const projects = Object.fromEntries(
   allProjects.map((project) => [`${ROUTES.PROJECTS.substring(1)}${project.slug}`, project.data])
 );
 
-const pages = { ...posts, ...projects };
+const pages = { ...posts, ...projects, ...mdxPages };
 
 export const { getStaticPaths, GET } = OGImageRoute({
   param: 'route',

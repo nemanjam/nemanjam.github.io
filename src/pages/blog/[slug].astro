@@ -13,7 +13,7 @@ import PostMeta from '@/components/PostMeta.astro';
 import SharePost from '@/components/SharePost.astro';
 import TagList from '@/components/TagList.astro';
 import TocWidget from '@/components/TocWidget.astro';
-import { ROUTES } from '@/constants/routes';
+import { getDefaultOpenGraphImagePath } from '@/utils/paths';
 
 import type { Metadata } from '@/types/common';
 import type { Post } from '@/types/post';
@@ -63,7 +63,7 @@ const postMetaProps = {
 };
 
 // todo: remove this later
-const ogImage = `${ROUTES.API.OG_BLOG}${slug}.png`;
+const ogImage = getDefaultOpenGraphImagePath('blog', slug);
 
 const metadata: Metadata = { title, description, image: ogImage };
 // const metadata: Metadata = { title, description, image: heroImage.src };

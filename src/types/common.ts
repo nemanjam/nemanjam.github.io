@@ -10,5 +10,6 @@ export type AnyCollection = CollectionEntry<CollectionType>;
 export interface Metadata {
   title: string;
   description?: string;
+  /** Must be url. */
   image?: string;
 }

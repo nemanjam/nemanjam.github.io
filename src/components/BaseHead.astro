@@ -6,6 +6,8 @@ import { CONFIG } from '@/config';
 import '@fontsource-variable/inter/index.css';
 import '@/styles/main.css';
 
+import { DEFAULT_METADATA } from '@/constants/metadata';
+import { filterUndefined } from '@/utils/objects';
 import { trimHttpProtocol } from '@/utils/strings';
 
 import type { Metadata } from '@/types/common';
@@ -19,7 +21,11 @@ export interface BaseHeadProps {
 
 // set defualt here
 const { metadata } = Astro.props as BaseHeadProps;
-const { title, description, image = '/images/favicons/og_image_small.jpg' } = metadata;
+
+const filteredMetadata = filterUndefined(metadata);
+const mergedMetadata = { ...DEFAULT_METADATA, ...filteredMetadata };
+
+const { title, description, image } = mergedMetadata;
 ---
 
 <head>

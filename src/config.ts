@@ -7,6 +7,7 @@ import type { ConfigType } from './types/config';
 
 const configData: ConfigType = {
   NODE_ENV: process.env.NODE_ENV,
+  /** without '/' */
   SITE_URL: process.env.SITE_URL,
   SITE_TITLE: 'Nemanja Mitic',
   SITE_DESCRIPTION: 'I am John Doe, eat at Joe',
