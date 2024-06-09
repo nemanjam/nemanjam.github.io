@@ -3,6 +3,7 @@ import { OGImageRoute } from 'astro-og-canvas';
 import { getAllPosts } from '@/modules/post';
 import { getAllProjects } from '@/modules/project';
 import { ROUTES } from '@/constants/routes';
+import { removeLeadingSlash } from '@/utils/paths';
 
 const OG_FOLDER = './src/assets/images/open-graph/' as const;
 
@@ -12,11 +13,12 @@ const mdxPagesObject = import.meta.glob('/src/pages/**/*.{md,mdx}', { eager: tru
 const mdxPages = Object.fromEntries(
   Object.entries(mdxPagesObject).map(([path, page]) => [
     // must match ROUTES.API.OG_PAGES
-    // path.replace('/src/', ''),
     path.replace(/^\/src\/|\.mdx?$/g, ''),
     (page as any).frontmatter,
   ])
 );
+
+// index.mdx goes to page.png by default by lib, see in yarn build log
 
 // console.log('mdxPages', mdxPages);
 
@@ -24,12 +26,15 @@ const mdxPages = Object.fromEntries(
 // ! 2. must not start with '/' blog/slug <- correct, /blog/slug <- incorrect
 const allPosts = await getAllPosts();
 const posts = Object.fromEntries(
-  allPosts.map((post) => [`${ROUTES.BLOG.substring(1)}${post.slug}`, post.data])
+  allPosts.map((post) => [`${removeLeadingSlash(ROUTES.BLOG)}${post.slug}`, post.data])
 );
 
 const allProjects = await getAllProjects();
 const projects = Object.fromEntries(
-  allProjects.map((project) => [`${ROUTES.PROJECTS.substring(1)}${project.slug}`, project.data])
+  allProjects.map((project) => [
+    `${removeLeadingSlash(ROUTES.PROJECTS)}${project.slug}`,
+    project.data,
+  ])
 );
 
 const pages = { ...posts, ...projects, ...mdxPages };

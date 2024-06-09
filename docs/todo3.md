@@ -274,4 +274,8 @@ small PostItem
 move all types in types folder
 colors for CategoryCard
 extract all lists with render props, maybe
+// index.mdx goes to page.png by default by lib, see in yarn build log
+handle og images for 404 pages, recursion
+og png image text position and transparent
+metadata final clean up and ogImage for List layout
 ```

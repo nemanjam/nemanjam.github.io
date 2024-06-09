@@ -1,4 +1,3 @@
-import { ROUTES } from '@/constants/routes';
 import { CONFIG } from '@/config';
 
 import type { Metadata } from '@/types/common';
