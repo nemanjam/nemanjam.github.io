@@ -1,6 +1,6 @@
 ---
 import Centered from '@/layouts/Centered.astro';
-import { getDefaultOpenGraphImagePath } from '@/utils/paths';
+import { getOpenGraphImagePath } from '@/utils/paths';
 
 import type { Metadata } from '@/types/common';
 
@@ -12,7 +12,7 @@ const { pathname } = Astro.url;
 
 // only call in layouts
 const path = `/pages${pathname}`;
-const image = getDefaultOpenGraphImagePath(path);
+const image = getOpenGraphImagePath(path);
 
 const metadata = { ...props, image };
 ---

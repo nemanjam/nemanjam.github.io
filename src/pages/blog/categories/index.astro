@@ -4,7 +4,7 @@ import List from '@/layouts/List.astro';
 import CategoryCard from '@/components/CategoryCard.astro';
 import FilterList from '@/components/FilterList.astro';
 import { pageMetadata } from '@/constants/metadata';
-import { getDefaultOpenGraphImagePath } from '@/utils/paths';
+import { getOpenGraphImagePath } from '@/utils/paths';
 
 import type { FilterLink } from '@/modules/post';
 import type { Metadata } from '@/types/common';
@@ -13,7 +13,7 @@ const posts = await getAllPosts();
 const categoryLinks = getCategoryLinks(posts);
 
 const path = 'lists/blog/categories';
-const image = getDefaultOpenGraphImagePath(path);
+const image = getOpenGraphImagePath(path);
 const metadata: Metadata = { ...pageMetadata[path], image };
 ---
 
