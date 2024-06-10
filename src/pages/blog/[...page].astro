@@ -2,12 +2,10 @@
 import { getAllPosts, getPostsWithReadingTimeFromPosts } from '@/modules/post';
 import List from '@/layouts/List.astro';
 import PostList from '@/components/PostList.astro';
-import { pageMetadata } from '@/constants/metadata';
 import { CONFIG } from '@/config';
+import { getPageMetadata } from '@/utils/metadata';
 import { pickPaginationPropsFromPage } from '@/utils/pagination';
-import { getOpenGraphImagePath } from '@/utils/paths';
 
-import type { Metadata } from '@/types/common';
 import type { Post } from '@/types/post';
 import type { GetStaticPathsOptions } from 'astro';
 
@@ -28,9 +26,7 @@ const { data: posts } = page;
 
 const paginationProps = pickPaginationPropsFromPage(page);
 
-const path = 'lists/blog';
-const image = getOpenGraphImagePath(path);
-const metadata: Metadata = { ...pageMetadata[path], image };
+const metadata = getPageMetadata('lists/blog');
 
 const layoutProps = { metadata, paginationProps };
 ---

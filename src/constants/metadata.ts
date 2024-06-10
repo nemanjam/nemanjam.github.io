@@ -60,6 +60,8 @@ export const pageMetadata = {
   },
 } as const;
 
+export type PageMetadataKey = keyof typeof pageMetadata;
+
 export const OG_IMAGE_PREFIXES = {
   OG_BLOG: 'blog',
   OG_PROJECTS: 'projects',
