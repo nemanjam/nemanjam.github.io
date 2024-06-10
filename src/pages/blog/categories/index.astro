@@ -1,17 +1,28 @@
 ---
-import { getAllPosts, getSortedUniqueCategoriesWithCount } from '@/modules/post';
+import { getAllPosts, getCategoryLinks, getSortedUniqueCategoriesWithCount } from '@/modules/post';
 import List from '@/layouts/List.astro';
+import CategoryCard from '@/components/CategoryCard.astro';
 import FilterList from '@/components/FilterList.astro';
 
+import type { FilterLink } from '@/modules/post';
 import type { Metadata } from '@/types/common';
 
 const posts = await getAllPosts();
-const categoriesWithCount = getSortedUniqueCategoriesWithCount(posts);
+const categoryLinks = getCategoryLinks(posts);
+
 const metadata: Metadata = { title: 'Categories' };
 ---
 
 <List {metadata}>
   <section>
-    <FilterList type="categories" items={categoriesWithCount} class="mb-4" />
+    <FilterList class="mb-4" itemLinks={categoryLinks}>
+      {
+        ({ href, text, textWithCount }: FilterLink) => (
+          <CategoryCard href={href} category={text}>
+            {textWithCount}
+          </CategoryCard>
+        )
+      }
+    </FilterList>
   </section>
 </List>

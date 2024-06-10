@@ -13,7 +13,8 @@ import PostMeta from '@/components/PostMeta.astro';
 import SharePost from '@/components/SharePost.astro';
 import TagList from '@/components/TagList.astro';
 import TocWidget from '@/components/TocWidget.astro';
-import { getDefaultOpenGraphImagePath } from '@/utils/paths';
+
+// import { getDefaultOpenGraphImagePath } from '@/utils/paths';
 
 import type { Metadata } from '@/types/common';
 import type { Post } from '@/types/post';
@@ -51,6 +52,7 @@ const {
 } = data;
 
 const { slug } = Astro.params;
+const { pathname } = Astro.url;
 
 const { Content, headings: postHeadings } = await render();
 const headings = getHeadingsForTableOfContents(postHeadings);
@@ -63,9 +65,10 @@ const postMetaProps = {
 };
 
 // todo: remove this later
-const ogImage = getDefaultOpenGraphImagePath('blog', slug);
+// const ogImage = getDefaultOpenGraphImagePath(pathname);
+const ogImage = '123';
 
-// console.log('ogImage', ogImage);
+console.log('pathname', pathname);
 
 const metadata: Metadata = { title, description, image: ogImage };
 // const metadata: Metadata = { title, description, image: heroImage.src };

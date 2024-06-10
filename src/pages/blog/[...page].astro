@@ -2,10 +2,10 @@
 import { getAllPosts, getPostsWithReadingTimeFromPosts } from '@/modules/post';
 import List from '@/layouts/List.astro';
 import PostList from '@/components/PostList.astro';
+import { pageMetadata } from '@/constants/metadata';
 import { CONFIG } from '@/config';
 import { pickPaginationPropsFromPage } from '@/utils/pagination';
 
-import type { Metadata } from '@/types/common';
 import type { Post } from '@/types/post';
 import type { GetStaticPathsOptions } from 'astro';
 
@@ -25,11 +25,7 @@ const { page } = Astro.props;
 const { data: posts } = page;
 
 const paginationProps = pickPaginationPropsFromPage(page);
-const metadata: Metadata = {
-  title: 'Blog',
-  description:
-    'Est aliquip reprehenderit eu esse duis laboris cillum adipisicing reprehenderitvoluptate ex aute voluptate.',
-};
+const metadata = pageMetadata['lists/blog'];
 
 const layoutProps = { metadata, paginationProps };
 ---

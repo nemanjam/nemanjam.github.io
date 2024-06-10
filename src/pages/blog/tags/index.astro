@@ -1,18 +1,30 @@
 ---
-import { getAllPosts, getSortedUniqueTagsWithCount } from '@/modules/post';
+import { getAllPosts, getTagLinks } from '@/modules/post';
 import List from '@/layouts/List.astro';
 import FilterList from '@/components/FilterList.astro';
+import Tag from '@/components/Tag.astro';
+import { cn } from '@/utils/styles';
 
+import type { FilterLink } from '@/modules/post';
 import type { Metadata } from '@/types/common';
 
 const allPosts = await getAllPosts();
 
-const tagsWithCount = getSortedUniqueTagsWithCount(allPosts);
+const tagLinks = getTagLinks(allPosts);
+
 const metadata: Metadata = { title: 'Tags' };
 ---
 
 <List {metadata}>
   <section>
-    <FilterList type="tags" items={tagsWithCount} class="mb-4" />
+    <FilterList class="mb-4" itemLinks={tagLinks}>
+      {
+        ({ href, textWithCount, isActive }: FilterLink) => (
+          <Tag href={href} size="md" class={cn({ 'underline font-bold text-accent': isActive })}>
+            {textWithCount}
+          </Tag>
+        )
+      }
+    </FilterList>
   </section>
 </List>

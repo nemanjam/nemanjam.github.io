@@ -9,11 +9,12 @@ export interface Props extends Metadata {}
 const props = Astro.props;
 const { pathname } = Astro.url;
 
-const ogImage = getDefaultOpenGraphImagePath('pages', pathname);
+const path = `/pages${pathname}`;
+const image = getDefaultOpenGraphImagePath(path);
 
-console.log('Page Layout pathname', pathname);
+console.log('image', image);
 
-const metadata = { ...props, image: ogImage };
+const metadata = { ...props, image };
 ---
 
 <Centered {metadata}>

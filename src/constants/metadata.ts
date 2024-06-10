@@ -28,3 +28,39 @@ export const handleTitle = (metadata: Metadata): Metadata => {
 
   return newMetadata;
 };
+
+/**
+ * Metadata for all pages that aren't defined in markdown.
+ * Reused for ogImage api route.
+ */
+export const pageMetadata = {
+  // list pages
+  // must have 'list' prefix to omit type arg
+  'lists/blog': {
+    title: 'Blog',
+    description:
+      'Est aliquip reprehenderit eu esse duis laboris cillum adipisicing reprehenderitvoluptate ex aute voluptate.',
+  },
+  'lists/blog/tags': {
+    title: 'Tags',
+  },
+  // 'src/pages/blog/tags/[tag]/[...page].astro' // dynamic tag param
+  'lists/blog/categories-and-tags': {
+    title: 'Explore',
+  },
+  'lists/blog/categories': {
+    title: 'Categories',
+  },
+  // src/pages/blog/categories/[category]/[...page].astro
+  'lists/projects': {
+    title: 'Projects',
+    description: 'A showcase of experiments and projects.',
+  },
+} as const;
+
+export const OG_IMAGE_PREFIXES = {
+  OG_BLOG: 'blog',
+  OG_PROJECTS: 'projects',
+  OG_PAGES: 'pages',
+  OG_LISTS: 'lists',
+} as const;

@@ -1,38 +1,41 @@
-import { defaultOgImage } from '@/constants/metadata';
+import { OG_IMAGE_PREFIXES } from '@/constants/metadata';
 import { ROUTES } from '@/constants/routes';
 
-export type OpenGraphImageType = 'blog' | 'projects' | 'pages';
+/*--------------------- getDefaultOpenGraphImagePath -------------------*/
 
-export const getDefaultOpenGraphImagePath = (type: OpenGraphImageType, path: string) => {
+export const getDefaultOpenGraphImagePath = (path: string) => {
+  // must not be in global scope
+  const prefixes = Object.values(OG_IMAGE_PREFIXES) as string[];
+  const { OG_PAGES } = OG_IMAGE_PREFIXES;
+
+  const homePageOgImage = `${ROUTES.API.OG_IMAGES}${OG_PAGES}.png`;
+  const _404PageOgImage = `${ROUTES.API.OG_IMAGES}${OG_PAGES}404.png`;
+
+  /*--------------------- data ready -------------------*/
+
   let trimmedPath = removeLeadingAndTrailingSlashes(path);
+  let prefix = trimmedPath.split('/')[0];
 
-  // index.mdx
-  const homePageOgImage = `${removeTrailingSlash(ROUTES.API.OG_PAGES)}.png`;
-  // all unknown pages
-  const _404PageOgImage = `${ROUTES.API.OG_PAGES}404.png`;
+  prefix = removeLeadingAndTrailingSlashes(prefix);
 
-  // this is not perfect
-  if (type === 'pages' && !isKnownRoute(trimmedPath)) return _404PageOgImage;
+  console.log('trimmedPath', trimmedPath);
+  console.log('prefix', prefix);
+
+  if (!prefixes.includes(prefix)) {
+    console.error(`Unknown path prefix requested: ${prefix}`);
+    return _404PageOgImage;
+  }
+
+  // prevents recursion on 404
+  // if (prefix === 'pages' && !isKnownRoute(trimmedPath)) return _404PageOgImage; // about -> pages/about
   if (trimmedPath === '') return homePageOgImage;
 
-  let imagePath: string;
-
-  switch (type) {
-    case 'blog':
-      imagePath = `${ROUTES.API.OG_BLOG}${trimmedPath}.png`; // pass pathname, not just slug, can omit type arg
-      break;
-    case 'projects':
-      imagePath = `${ROUTES.API.OG_PROJECTS}${trimmedPath}.png`;
-      break;
-    case 'pages':
-      imagePath = `${ROUTES.API.OG_PAGES}${trimmedPath}.png`;
-      break;
-    default:
-      imagePath = defaultOgImage;
-  }
+  const imagePath = `${ROUTES.API.OG_IMAGES}${trimmedPath}.png`;
 
   return imagePath;
 };
+
+/*-------------------------------- utils ------------------------------*/
 
 export const removeLeadingSlash = (path: string) => path.replace(/^\/+/g, '');
 
@@ -40,7 +43,8 @@ export const removeTrailingSlash = (path: string) => path.replace(/\/+$/g, '');
 
 export const removeLeadingAndTrailingSlashes = (path: string) => path.replace(/^\/+|\/+$/g, '');
 
-// these 3 functions are for detecting unknown routes
+/*----------------------------- detect unknown routes ---------------------------*/
+
 const extractFirstLevelStringValues = (obj: Record<string, any>): Record<string, string> =>
   Object.fromEntries(Object.entries(obj).filter(([_key, value]) => typeof value === 'string'));
 

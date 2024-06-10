@@ -2,39 +2,53 @@ import { OGImageRoute } from 'astro-og-canvas';
 
 import { getAllPosts } from '@/modules/post';
 import { getAllProjects } from '@/modules/project';
-import { ROUTES } from '@/constants/routes';
-import { removeLeadingSlash } from '@/utils/paths';
+import { DEFAULT_METADATA, OG_IMAGE_PREFIXES, pageMetadata } from '@/constants/metadata';
 
 const OG_FOLDER = './src/assets/images/open-graph/' as const;
 
-// add pages too
+/*-------------------------------- list pages ------------------------------*/
+
+const { image: _, ...defaultTitleAndDescription } = DEFAULT_METADATA;
+
+// add defaults for empty values
+const listPages = Object.fromEntries(
+  Object.entries(pageMetadata).map(([path, metadata]) => {
+    return [
+      // 'lists/blog'
+      path,
+      { ...defaultTitleAndDescription, ...metadata },
+    ];
+  })
+);
+
+/*-------------------------------- pages/page.mdx ------------------------------*/
+
 // only path, title and description are important
 const mdxPagesObject = import.meta.glob('/src/pages/**/*.{md,mdx}', { eager: true });
 const mdxPages = Object.fromEntries(
   Object.entries(mdxPagesObject).map(([path, page]) => [
-    // must match ROUTES.API.OG_PAGES
-    // index.mdx goes to page.png by default by lib, see in yarn build log
+    // '/src/pages/about.mdx' -> 'pages/about'
+    // pages/index.mdx -> pages.png
     path.replace(/^\/src\/|\.mdx?$/g, ''),
     (page as any).frontmatter,
   ])
 );
 
+/*-------------------------------- collections ------------------------------*/
+
 // ! 1. must be object, not array of objects
 // ! 2. must not start with '/' blog/slug <- correct, /blog/slug <- incorrect
 const allPosts = await getAllPosts();
 const posts = Object.fromEntries(
-  allPosts.map((post) => [`${removeLeadingSlash(ROUTES.BLOG)}${post.slug}`, post.data])
+  allPosts.map((post) => [`${OG_IMAGE_PREFIXES.OG_BLOG}/${post.slug}`, post.data])
 );
 
 const allProjects = await getAllProjects();
 const projects = Object.fromEntries(
-  allProjects.map((project) => [
-    `${removeLeadingSlash(ROUTES.PROJECTS)}${project.slug}`,
-    project.data,
-  ])
+  allProjects.map((project) => [`${OG_IMAGE_PREFIXES.OG_PROJECTS}/${project.slug}`, project.data])
 );
 
-const pages = { ...posts, ...projects, ...mdxPages };
+const pages = { ...posts, ...projects, ...mdxPages, ...listPages };
 
 export const { getStaticPaths, GET } = OGImageRoute({
   param: 'route',
