@@ -13,14 +13,11 @@ const mdxPagesObject = import.meta.glob('/src/pages/**/*.{md,mdx}', { eager: tru
 const mdxPages = Object.fromEntries(
   Object.entries(mdxPagesObject).map(([path, page]) => [
     // must match ROUTES.API.OG_PAGES
+    // index.mdx goes to page.png by default by lib, see in yarn build log
     path.replace(/^\/src\/|\.mdx?$/g, ''),
     (page as any).frontmatter,
   ])
 );
-
-// index.mdx goes to page.png by default by lib, see in yarn build log
-
-// console.log('mdxPages', mdxPages);
 
 // ! 1. must be object, not array of objects
 // ! 2. must not start with '/' blog/slug <- correct, /blog/slug <- incorrect

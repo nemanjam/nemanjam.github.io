@@ -1,11 +1,7 @@
 import { ROUTES } from '@/constants/routes';
 
-export interface NavigationItem {
-  title: string;
-  path: string;
-}
-
-export const NAVIGATION_ITEMS: NavigationItem[] = [
+/** Doesn't contain Home nav item. */
+export const NAVIGATION_ITEMS = [
   {
     title: 'Blog',
     path: ROUTES.BLOG,
@@ -35,3 +31,5 @@ export const NAVIGATION_ITEMS: NavigationItem[] = [
   //   path: ROUTES.RESUME,
   // },
 ] as const;
+
+export type NavigationItem = (typeof NAVIGATION_ITEMS)[number];

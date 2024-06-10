@@ -11,7 +11,7 @@ export const defaultOgImage = `${SITE_URL}/images/default/default-open-graph-ima
 
 export const dotSeparator = '•';
 
-export const DEFAULT_METADATA: Metadata = {
+export const DEFAULT_METADATA: Required<Metadata> = {
   title: SITE_TITLE,
   description: SITE_DESCRIPTION,
   image: defaultOgImage,

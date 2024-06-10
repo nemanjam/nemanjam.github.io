@@ -25,7 +25,7 @@ const { metadata } = Astro.props as BaseHeadProps;
 const handledMetadata = handleTitle(metadata);
 
 const filteredMetadata = filterUndefined(handledMetadata);
-const mergedMetadata = { ...DEFAULT_METADATA, ...filteredMetadata };
+const mergedMetadata: Required<Metadata> = { ...DEFAULT_METADATA, ...filteredMetadata };
 
 const { title, description, image } = mergedMetadata;
 ---

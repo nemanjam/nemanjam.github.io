@@ -1,37 +1,48 @@
+import { NAVIGATION_ITEMS } from '@/constants/navigation';
 import { ROUTES } from '@/constants/routes';
 
-export interface NavItemArgs {
-  routePathname: string;
-  navItemHref: string;
-}
+import type { NavigationItem } from '@/constants/navigation';
 
-export const isActiveNavItem = ({ routePathname, navItemHref }: NavItemArgs): boolean => {
-  let isActive: boolean;
+export const getActiveNavItemPath = (routePathname: string): NavigationItem['path'] | undefined => {
+  let activeNavItem: NavigationItem | undefined = undefined;
+
+  // don't highlight home route
 
   switch (true) {
-    // navItemHref identifies button, routePathname is route
-    case navItemHref === ROUTES.BLOG && routePathname === ROUTES.BLOG:
-    case navItemHref === ROUTES.ABOUT && routePathname === ROUTES.ABOUT:
-    // don't highlight home route
-    // case navItemHref === ROUTES.HOME && routePathname === ROUTES.HOME:
-    case navItemHref === ROUTES.RESUME && routePathname === ROUTES.RESUME:
-    case navItemHref === ROUTES.PROJECTS && routePathname.startsWith(ROUTES.PROJECTS):
-    case navItemHref === ROUTES.CATEGORIES_AND_TAGS && routePathname.startsWith(ROUTES.TAGS):
-    case navItemHref === ROUTES.CATEGORIES_AND_TAGS && routePathname.startsWith(ROUTES.CATEGORIES):
-    case navItemHref === ROUTES.CATEGORIES_AND_TAGS &&
-      routePathname.startsWith(ROUTES.CATEGORIES_AND_TAGS):
-    case navItemHref === ROUTES.BLOG &&
-      !routePathname.startsWith(ROUTES.TAGS) &&
+    case routePathname === ROUTES.BLOG:
+      activeNavItem = getNavItem(ROUTES.BLOG);
+      break;
+    case routePathname === ROUTES.ABOUT:
+      activeNavItem = getNavItem(ROUTES.ABOUT);
+      break;
+    // unused
+    case routePathname === ROUTES.RESUME:
+      activeNavItem = getNavItem(ROUTES.RESUME);
+      break;
+    case routePathname.startsWith(ROUTES.PROJECTS):
+      activeNavItem = getNavItem(ROUTES.PROJECTS);
+      break;
+    case routePathname.startsWith(ROUTES.TAGS):
+    case routePathname.startsWith(ROUTES.CATEGORIES):
+    case routePathname.startsWith(ROUTES.CATEGORIES_AND_TAGS):
+      activeNavItem = getNavItem(ROUTES.CATEGORIES_AND_TAGS);
+      break;
+    case !routePathname.startsWith(ROUTES.TAGS) &&
       !routePathname.startsWith(ROUTES.CATEGORIES) &&
       !routePathname.startsWith(ROUTES.CATEGORIES_AND_TAGS) &&
       routePathname.startsWith(ROUTES.BLOG):
-      isActive = true;
+      activeNavItem = getNavItem(ROUTES.BLOG);
       break;
 
     default:
-      isActive = false;
+      activeNavItem = undefined;
       break;
   }
 
-  return isActive;
+  const activeNavItemPath = activeNavItem?.path;
+
+  return activeNavItemPath;
 };
+
+export const getNavItem = (path: string): NavigationItem | undefined =>
+  NAVIGATION_ITEMS.find((navItem) => navItem.path === path);
