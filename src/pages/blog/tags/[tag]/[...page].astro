@@ -30,6 +30,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 const { page } = Astro.props;
 const { tag } = Astro.params;
 
+// todo: dynamic param for metadata
 const title = `#${tag}`;
 const metadata: Metadata = { title };
 

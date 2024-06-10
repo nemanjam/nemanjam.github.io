@@ -2,8 +2,10 @@
 import { getAllProjects } from '@/modules/project';
 import List from '@/layouts/List.astro';
 import ProjectList from '@/components/ProjectList.astro';
+import { pageMetadata } from '@/constants/metadata';
 import { CONFIG } from '@/config';
 import { pickPaginationPropsFromPage } from '@/utils/pagination';
+import { getDefaultOpenGraphImagePath } from '@/utils/paths';
 
 import type { Metadata } from '@/types/common';
 import type { ProjectCollection } from '@/types/project';
@@ -25,10 +27,10 @@ const { page } = Astro.props;
 const { data: projects } = page;
 
 const paginationProps = pickPaginationPropsFromPage(page);
-const metadata: Metadata = {
-  title: 'Projects',
-  description: 'A showcase of experiments and projects.',
-};
+
+const path = 'lists/projects';
+const image = getDefaultOpenGraphImagePath(path);
+const metadata: Metadata = { ...pageMetadata[path], image };
 
 const layoutProps = { metadata, paginationProps };
 ---

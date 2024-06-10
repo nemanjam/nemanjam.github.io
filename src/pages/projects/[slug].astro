@@ -1,6 +1,7 @@
 ---
 import { getAllProjects } from '@/modules/project';
 import Project from '@/layouts/Project.astro';
+import { getDefaultOpenGraphImagePath } from '@/utils/paths';
 
 import type { Metadata } from '@/types/common';
 
@@ -16,8 +17,12 @@ export async function getStaticPaths() {
 }
 
 const { data, render } = Astro.props.page;
-const { title, description, heroImage } = data;
-const metadata: Metadata = { title, description, image: heroImage.src };
+const { pathname } = Astro.url;
+
+const image = getDefaultOpenGraphImagePath(pathname);
+const { title, description } = data;
+
+const metadata: Metadata = { title, description, image };
 
 const { Content } = await render();
 ---

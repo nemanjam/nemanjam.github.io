@@ -28,6 +28,9 @@ const filteredMetadata = filterUndefined(handledMetadata);
 const mergedMetadata: Required<Metadata> = { ...DEFAULT_METADATA, ...filteredMetadata };
 
 const { title, description, image } = mergedMetadata;
+
+// log og image here
+console.log('BaseHead image', image);
 ---
 
 <head>

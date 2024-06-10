@@ -2,12 +2,16 @@
 import { getAllPosts } from '@/modules/post';
 import List from '@/layouts/List.astro';
 import CategoriesAndTags from '@/components/CategoriesAndTags.astro';
+import { pageMetadata } from '@/constants/metadata';
+import { getDefaultOpenGraphImagePath } from '@/utils/paths';
 
 import type { Metadata } from '@/types/common';
 
 const posts = await getAllPosts();
 
-const metadata: Metadata = { title: 'Explore' };
+const path = 'lists/blog/categories-and-tags';
+const image = getDefaultOpenGraphImagePath(path);
+const metadata: Metadata = { ...pageMetadata[path], image };
 ---
 
 <List {metadata}>

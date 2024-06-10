@@ -3,6 +3,8 @@ import { getAllPosts, getTagLinks } from '@/modules/post';
 import List from '@/layouts/List.astro';
 import FilterList from '@/components/FilterList.astro';
 import Tag from '@/components/Tag.astro';
+import { pageMetadata } from '@/constants/metadata';
+import { getDefaultOpenGraphImagePath } from '@/utils/paths';
 import { cn } from '@/utils/styles';
 
 import type { FilterLink } from '@/modules/post';
@@ -12,7 +14,9 @@ const allPosts = await getAllPosts();
 
 const tagLinks = getTagLinks(allPosts);
 
-const metadata: Metadata = { title: 'Tags' };
+const path = 'lists/blog/tags';
+const image = getDefaultOpenGraphImagePath(path);
+const metadata: Metadata = { ...pageMetadata[path], image };
 ---
 
 <List {metadata}>

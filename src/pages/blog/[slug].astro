@@ -13,8 +13,7 @@ import PostMeta from '@/components/PostMeta.astro';
 import SharePost from '@/components/SharePost.astro';
 import TagList from '@/components/TagList.astro';
 import TocWidget from '@/components/TocWidget.astro';
-
-// import { getDefaultOpenGraphImagePath } from '@/utils/paths';
+import { getDefaultOpenGraphImagePath } from '@/utils/paths';
 
 import type { Metadata } from '@/types/common';
 import type { Post } from '@/types/post';
@@ -64,14 +63,10 @@ const postMetaProps = {
   updatedDate,
 };
 
-// todo: remove this later
-// const ogImage = getDefaultOpenGraphImagePath(pathname);
-const ogImage = '123';
+// handle all metadata here
+const image = getDefaultOpenGraphImagePath(pathname);
 
-console.log('pathname', pathname);
-
-const metadata: Metadata = { title, description, image: ogImage };
-// const metadata: Metadata = { title, description, image: heroImage.src };
+const metadata: Metadata = { title, description, image };
 ---
 
 <PostLayout {metadata}>

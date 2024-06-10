@@ -5,7 +5,9 @@ import PostList from '@/components/PostList.astro';
 import { pageMetadata } from '@/constants/metadata';
 import { CONFIG } from '@/config';
 import { pickPaginationPropsFromPage } from '@/utils/pagination';
+import { getDefaultOpenGraphImagePath } from '@/utils/paths';
 
+import type { Metadata } from '@/types/common';
 import type { Post } from '@/types/post';
 import type { GetStaticPathsOptions } from 'astro';
 
@@ -25,7 +27,10 @@ const { page } = Astro.props;
 const { data: posts } = page;
 
 const paginationProps = pickPaginationPropsFromPage(page);
-const metadata = pageMetadata['lists/blog'];
+
+const path = 'lists/blog';
+const image = getDefaultOpenGraphImagePath(path);
+const metadata: Metadata = { ...pageMetadata[path], image };
 
 const layoutProps = { metadata, paginationProps };
 ---

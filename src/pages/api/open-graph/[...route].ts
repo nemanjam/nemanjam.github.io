@@ -50,6 +50,8 @@ const projects = Object.fromEntries(
 
 const pages = { ...posts, ...projects, ...mdxPages, ...listPages };
 
+// todo: combine with heroImage from frontmatter
+
 export const { getStaticPaths, GET } = OGImageRoute({
   param: 'route',
   pages,

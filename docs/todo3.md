@@ -279,5 +279,6 @@ handle og images for 404 pages, recursion
 og png image text position and transparent
 metadata final clean up and ogImage for List layout
 check types for as const objects and arrays
-is hero image og image?
+is hero image og image? // jeste
+tkdodo for post combines hero image with og image, read heroImage from contentCollection
 ```

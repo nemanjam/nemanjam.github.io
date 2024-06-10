@@ -64,9 +64,12 @@ export default defineConfig({
   vite: {
     build: {
       sourcemap: false,
-    },
-    ssr: {
-      noExternal: ['react-component-benchmark'],
+      // should fix import.meta.glob() Promise rejection
+      optimizeDeps: {
+        esbuildOptions: {
+          target: 'es2020',
+        },
+      },
     },
   },
 });

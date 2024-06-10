@@ -2,6 +2,8 @@ import { CONFIG } from '@/config';
 
 import type { Metadata } from '@/types/common';
 
+// can't import getDefaultOpenGraphImagePath here, circular dependency
+
 const { SITE_URL, SITE_DESCRIPTION, SITE_TITLE } = CONFIG;
 
 // todo: make default og image with png logo
