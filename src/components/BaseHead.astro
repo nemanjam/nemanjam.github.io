@@ -6,7 +6,7 @@ import { CONFIG } from '@/config';
 import '@fontsource-variable/inter/index.css';
 import '@/styles/main.css';
 
-import { DEFAULT_METADATA } from '@/constants/metadata';
+import { DEFAULT_METADATA, handleTitle } from '@/constants/metadata';
 import { filterUndefined } from '@/utils/objects';
 import { trimHttpProtocol } from '@/utils/strings';
 
@@ -19,10 +19,12 @@ export interface BaseHeadProps {
   metadata: Metadata;
 }
 
-// set defualt here
+// set defualt metadata in this component
 const { metadata } = Astro.props as BaseHeadProps;
 
-const filteredMetadata = filterUndefined(metadata);
+const handledMetadata = handleTitle(metadata);
+
+const filteredMetadata = filterUndefined(handledMetadata);
 const mergedMetadata = { ...DEFAULT_METADATA, ...filteredMetadata };
 
 const { title, description, image } = mergedMetadata;

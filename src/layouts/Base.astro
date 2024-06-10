@@ -4,23 +4,16 @@ import Footer from '@/components/Footer.astro';
 import Header from '@/components/Header.astro';
 import { Snackbar } from '@/components/Snackbar';
 import ThemeScript from '@/components/ThemeScript.astro';
-import { CONFIG } from '@/config';
 
 import type { BaseHeadProps } from '@/components/BaseHead.astro';
 
 export interface BaseProps extends BaseHeadProps {}
 
 const { metadata } = Astro.props as BaseProps;
-
-const { SITE_DESCRIPTION, SITE_TITLE } = CONFIG;
-const { title, description = SITE_DESCRIPTION, image } = metadata;
-const titleTag = title ? `${title} • ${SITE_TITLE}` : SITE_TITLE;
-
-const headMetadata = { title: titleTag, description, image };
 ---
 
 <html lang="en">
-  <BaseHead metadata={headMetadata} />
+  <BaseHead {metadata} />
   <body class="flex flex-col min-h-screen bg-base-100 transition-colors duration-500">
     <Header />
     <slot />

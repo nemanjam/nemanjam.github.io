@@ -42,7 +42,7 @@ export const removeLeadingAndTrailingSlashes = (path: string) => path.replace(/^
 
 // these 3 functions are for detecting unknown routes
 const extractFirstLevelStringValues = (obj: Record<string, any>): Record<string, string> =>
-  Object.fromEntries(Object.entries(obj).filter(([key, value]) => typeof value === 'string'));
+  Object.fromEntries(Object.entries(obj).filter(([_key, value]) => typeof value === 'string'));
 
 const getUniqueFirstPathSegments = (obj: Record<string, string>): string[] => {
   const segments = Object.entries(obj)
