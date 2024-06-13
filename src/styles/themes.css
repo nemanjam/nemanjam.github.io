@@ -23,7 +23,7 @@
     --th-secondary-content: var(--var-color-white);
 
     --th-neutral: var(--var-color-slate-700);
-    --th-neutral-content: var(--var-color-slate-400);
+    --th-neutral-content: var(--var-color-white);
 
     --th-accent: var(--var-color-teal-400);
     --th-accent-content: var(--var-color-slate-700);
@@ -61,7 +61,7 @@
     --th-secondary-content: var(--var-color-white);
 
     --th-neutral: var(--var-color-slate-400);
-    --th-neutral-content: var(--var-color-slate-700);
+    --th-neutral-content: var(--var-color-white);
 
     --th-accent: var(--var-color-teal-700);
     --th-accent-content: var(--var-color-slate-300);

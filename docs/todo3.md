@@ -287,5 +287,7 @@ tkdodo for post combines hero image with og image, read heroImage from contentCo
 Page Layout the only layout in which is created og image, other og images created in pages
 ----
 handle pagination for one page, research examples
-fix color palette for text and bg
+fix color palette for text and bg,daisy ui
+icon slot for button, button variants, color, size, condensed
+separate css files for tailwind components
 ```

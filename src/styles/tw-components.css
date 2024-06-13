@@ -34,10 +34,61 @@
     @apply text-content hover:text-content no-underline cursor-not-allowed;
   }
 
+  .button-default {
+    @apply inline-flex items-center gap-2 no-underline;
+    @apply rounded-button;
+  }
+
   .button-outline {
-    @apply inline-block text-primary no-underline;
-    @apply border border-primary rounded-button px-3 py-2;
+    @apply border;
+  }
+
+  .button-solid {
+    /* empry for now */
+  }
+
+  /* compound variants */
+  .button-outline-primary {
+    @apply text-primary border-primary;
     @apply hover:bg-primary hover:text-primary-content;
+  }
+
+  .button-outline-neutral {
+    @apply text-neutral border-neutral;
+    @apply hover:bg-neutral hover:text-neutral-content;
+  }
+
+  .button-solid-primary {
+    @apply bg-primary text-primary-content;
+    /* no primary-hover yet */
+  }
+
+  .button-solid-neutral {
+    @apply bg-neutral text-neutral-content;
+  }
+
+  .button-sm {
+    @apply px-2 py-1;
+
+    [data-icon] {
+      @apply w-6 h-6;
+    }
+  }
+
+  .button-md {
+    @apply text-lg px-3 py-2;
+
+    [data-icon] {
+      @apply w-8 h-8;
+    }
+  }
+
+  .button-lg {
+    @apply text-xl px-4 py-3;
+
+    [data-icon] {
+      @apply w-10 h-10;
+    }
   }
 
   .tag {

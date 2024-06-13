@@ -1,6 +1,8 @@
 ---
-import { getCategoryLinks, getTagLinks } from '@/modules/post';
-import CategoryCard from '@/components/CategoryCard.astro';
+import { Icon } from 'astro-icon/components';
+
+import { getCategoryLinks, getCategoryProps, getTagLinks } from '@/modules/post';
+import Button from '@/components/Button.astro';
 import FilterList from '@/components/FilterList.astro';
 import Tag from '@/components/Tag.astro';
 import { cn } from '@/utils/styles';
@@ -22,11 +24,16 @@ const categoryLinks = getCategoryLinks(posts);
   <h4>Categories:</h4>
   <FilterList class="mb-4 gap-4" itemLinks={categoryLinks}>
     {
-      ({ href, text, textWithCount }: FilterLink) => (
-        <CategoryCard href={href} category={text}>
-          {textWithCount}
-        </CategoryCard>
-      )
+      ({ href, text, textWithCount }: FilterLink) => {
+        const { icon } = getCategoryProps(text);
+
+        return (
+          <Button href={href}>
+            <Icon name={icon} slot="before-icon" />
+            {textWithCount}
+          </Button>
+        );
+      }
     }
   </FilterList>
 
