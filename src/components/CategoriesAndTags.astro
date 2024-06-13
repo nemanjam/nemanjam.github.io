@@ -20,7 +20,7 @@ const categoryLinks = getCategoryLinks(posts);
 
 <section {...props} class={cn(className)}>
   <h4>Categories:</h4>
-  <FilterList class="mb-4" itemLinks={categoryLinks}>
+  <FilterList class="mb-4 gap-4" itemLinks={categoryLinks}>
     {
       ({ href, text, textWithCount }: FilterLink) => (
         <CategoryCard href={href} category={text}>

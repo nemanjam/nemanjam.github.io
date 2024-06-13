@@ -268,8 +268,8 @@ categories - images or icons with cards
 codesandbox embed
 cva default styles vs default variant, primer
 astro 4.10 types and zod for env vars
-style CategoryListCard
-small PostItem
+    style CategoryListCard
+small PostItem, maybe with filter Explore page
 colors for CategoryCard
 extract all lists with render props, maybe
 // types
@@ -287,4 +287,5 @@ tkdodo for post combines hero image with og image, read heroImage from contentCo
 Page Layout the only layout in which is created og image, other og images created in pages
 ----
 handle pagination for one page, research examples
+fix color palette for text and bg
 ```

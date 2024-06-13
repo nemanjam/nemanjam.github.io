@@ -4,7 +4,7 @@ import { ROUTES } from '@/constants/routes';
 import { CONFIG } from '@/config';
 import { renderMarkdown } from '@/utils/markdown';
 
-import type { CategoryIconType } from '@/constants/collections';
+import type { CategoryType } from '@/constants/collections';
 import type { Post, PostCollection } from '@/types/post';
 import type { MarkdownProcessorRenderResult } from '@astrojs/markdown-remark';
 import type { MarkdownHeading } from 'astro';
@@ -234,12 +234,8 @@ export const getCategoryLinks = (posts: PostCollection[], pathname?: string): Fi
   return itemLinks;
 };
 
-export const getCategoryIcon = (category: string): CategoryIconType => {
-  // set default to prevent breaking build
-  const defaultIcon = CATEGORIES[0].icon;
-  const foundIcon = CATEGORIES.find((item) => item.name === category)?.icon;
+const defaultCategory = CATEGORIES[0];
 
-  const categoryIcon = foundIcon ?? defaultIcon;
-
-  return categoryIcon;
-};
+/** set default to prevent breaking build */
+export const getCategoryProps = (categoryName: string): CategoryType =>
+  CATEGORIES.find((item) => item.name === categoryName) ?? defaultCategory;

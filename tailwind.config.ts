@@ -4,7 +4,7 @@ import plugin from 'tailwindcss/plugin';
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
-  content: ['src/**/*.{astro,md,mdx,tsx}', 'astro.config.mjs'],
+  content: ['src/**/*.{astro,md,mdx,tsx,ts}', 'astro.config.mjs'],
   // activates only dark: modifier, not color theme
   darkMode: ['selector'],
   plugins: [

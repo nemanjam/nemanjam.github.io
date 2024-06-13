@@ -1,7 +1,8 @@
 ---
 import { Icon } from 'astro-icon/components';
 
-import { getCategoryIcon } from '@/modules/post';
+import { getCategoryProps } from '@/modules/post';
+import Link from '@/components/Link.astro';
 import { cn } from '@/utils/styles';
 
 export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
@@ -10,12 +11,20 @@ export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
 
 const { category, class: className, ...props } = Astro.props;
 
-const categoryIcon = getCategoryIcon(category);
+const { icon } = getCategoryProps(category);
 ---
 
-<div class={cn('inline-flex items-center gap-2 border border-base-300 p-4', className)}>
-  <Icon name={categoryIcon} class="h-8 w-8" />
-  <a {...props}>
+<a
+  {...props}
+  class={cn(
+    'inline-flex items-center gap-2 px-4 py-2 rounded-button border border-base-300 hover:bg-base-300',
+    className
+  )}
+>
+  <span class="inline-block rounded-button">
+    <Icon name={icon} class="h-8 w-8" />
+  </span>
+  <span class="inline-block font-bold text-lg">
     <slot />
-  </a>
-</div>
+  </span>
+</a>

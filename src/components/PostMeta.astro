@@ -6,7 +6,7 @@ import { CATEGORIES } from '@/constants/collections';
 import { ROUTES } from '@/constants/routes';
 import { formatDate, formatDateIso } from '@/utils/datetime';
 import { cn } from '@/utils/styles';
-import { getCategoryIcon } from '@/modules/post';
+import { getCategoryProps } from '@/modules/post';
 
 interface Props {
   publishDate: Date;
@@ -34,7 +34,7 @@ const shouldDisplay = Object.values(Astro.props).some(Boolean);
         )}
         {category && (  
           <span>·</span>     
-            <Icon name={getCategoryIcon(category)} />
+            <Icon name={getCategoryProps(category).icon} />
             <Link href={`${ROUTES.CATEGORIES}${category}`}>{category}</Link>       
         )}
         {readingTime && (    

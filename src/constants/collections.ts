@@ -54,7 +54,7 @@ export const CATEGORIES = [
   },
 ] as const;
 
-export type CategoryIconType = (typeof CATEGORIES)[number]['icon'];
+export type CategoryType = (typeof CATEGORIES)[number];
 
 // use imported images here
 export const DEFAULTS_POST = {
