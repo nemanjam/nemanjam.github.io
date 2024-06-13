@@ -2,7 +2,7 @@ import { OGImageRoute } from 'astro-og-canvas';
 
 import { getAllPosts } from '@/modules/post';
 import { getAllProjects } from '@/modules/project';
-import { DEFAULT_METADATA, OG_IMAGE_PREFIXES, pageMetadata } from '@/constants/metadata';
+import { DEFAULT_METADATA, OG_IMAGE_PREFIXES, PAGE_METADATA } from '@/constants/metadata';
 
 const OG_FOLDER = './src/assets/images/open-graph/' as const;
 
@@ -12,7 +12,7 @@ const { image: _, ...defaultTitleAndDescription } = DEFAULT_METADATA;
 
 // add defaults for empty values
 const listPages = Object.fromEntries(
-  Object.entries(pageMetadata).map(([path, metadata]) => {
+  Object.entries(PAGE_METADATA).map(([path, metadata]) => {
     return [
       // 'lists/blog'
       path,

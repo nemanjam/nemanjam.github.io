@@ -21,9 +21,10 @@ export const DEFAULT_METADATA: Required<Metadata> = {
 
 /**
  * Metadata for all pages that aren't defined in markdown.
+ * Add it here for every new page.
  * Reused for ogImage api route.
  */
-export const pageMetadata = {
+export const PAGE_METADATA = {
   // list pages
   // must have 'list' prefix to omit type arg
   'lists/blog': {
@@ -48,7 +49,7 @@ export const pageMetadata = {
   },
 } as const;
 
-export type PageMetadataKey = keyof typeof pageMetadata;
+export type PageMetadataKey = keyof typeof PAGE_METADATA;
 
 export const OG_IMAGE_PREFIXES = {
   OG_BLOG: 'blog',

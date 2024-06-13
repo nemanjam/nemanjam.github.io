@@ -257,9 +257,9 @@ tags in post
 render all components in styleguide
 sredi passing metadata u layouts, h1, description, image
 design og image
-create og image for pages, glob, zapravo ne, samo jedna default slika za sve ti treba, prosledis u metadata u Base layout
+    create og image for pages, glob, zapravo ne, samo jedna default slika za sve ti treba, prosledis u metadata u Base layout
 postavi i description i title svuda u metadata, u Base default
-check all meta tags in BaseHead
+    check all meta tags in BaseHead
 color themes
 
 must pass env var SITE_URL at build time
@@ -267,20 +267,24 @@ must pass env var SITE_URL at build time
 categories - images or icons with cards
 codesandbox embed
 cva default styles vs default variant, primer
-design transparent logo for default ogImage
 astro 4.10 types and zod for env vars
-CategoryListCard
+style CategoryListCard
 small PostItem
-move all types in types folder
 colors for CategoryCard
 extract all lists with render props, maybe
-// index.mdx goes to page.png by default by lib, see in yarn build log
+// types
+move all types in types folder
+check types for as const objects and arrays
+-----
+// og image
+design transparent logo for default ogImage
+index.mdx goes to page.png by default by lib, see in yarn build log
 handle og images for 404 pages, recursion
 og png image text position and transparent
-metadata final clean up and ogImage for List layout
-check types for as const objects and arrays
+    metadata final clean up and ogImage for List layout
 is hero image og image? // jeste
 tkdodo for post combines hero image with og image, read heroImage from contentCollection
 Page Layout the only layout in which is created og image, other og images created in pages
-handle pagination for one page
+----
+handle pagination for one page, research examples
 ```
