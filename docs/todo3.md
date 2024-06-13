@@ -289,5 +289,6 @@ Page Layout the only layout in which is created og image, other og images create
 handle pagination for one page, research examples
 fix color palette for text and bg,daisy ui
 icon slot for button, button variants, color, size, condensed
-separate css files for tailwind components
+    separate css files for tailwind components
+default and neutral are separate semantic colors
 ```
