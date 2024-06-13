@@ -6,7 +6,8 @@ import { CONFIG } from '@/config';
 import '@fontsource-variable/inter/index.css';
 import '@/styles/main.css';
 
-import { DEFAULT_METADATA, handleTitle } from '@/constants/metadata';
+import { DEFAULT_METADATA } from '@/constants/metadata';
+import { handleTitle } from '@/utils/metadata';
 import { filterUndefined } from '@/utils/objects';
 import { trimHttpProtocol } from '@/utils/strings';
 
@@ -21,6 +22,7 @@ export interface BaseHeadProps {
 
 // set defualt metadata in this component
 const { metadata } = Astro.props as BaseHeadProps;
+const { url: baseUrl } = Astro; // object
 
 const handledMetadata = handleTitle(metadata);
 
@@ -28,6 +30,8 @@ const filteredMetadata = filterUndefined(handledMetadata);
 const mergedMetadata: Required<Metadata> = { ...DEFAULT_METADATA, ...filteredMetadata };
 
 const { title, description, image } = mergedMetadata;
+
+const ogImageUrl = new URL(image, baseUrl);
 
 // log og image here
 console.log('BaseHead image', image);
@@ -86,17 +90,17 @@ console.log('BaseHead image', image);
 
   {/* Open Graph / Facebook */}
   <meta property="og:type" content="website" />
-  <meta property="og:url" content={Astro.url} />
+  <meta property="og:url" content={baseUrl} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  <meta property="og:image" content={new URL(image, Astro.url)} />
+  <meta property="og:image" content={ogImageUrl} />
 
   {/* Twitter */}
   <meta property="twitter:card" content="summary" />
-  <meta property="twitter:url" content={Astro.url} />
+  <meta property="twitter:url" content={baseUrl} />
   <meta property="twitter:title" content={title} />
   <meta property="twitter:description" content={description} />
-  <meta property="twitter:image" content={new URL(image, Astro.url)} />
+  <meta property="twitter:image" content={ogImageUrl} />
 
   {/* Analytics */}
   <!-- 

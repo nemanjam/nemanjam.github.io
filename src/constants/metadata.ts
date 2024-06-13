@@ -19,18 +19,6 @@ export const DEFAULT_METADATA: Required<Metadata> = {
   image: defaultOgImage,
 } as const;
 
-export const handleTitle = (metadata: Metadata): Metadata => {
-  const { title: passedTitle } = metadata;
-  const { title: defaultTitle } = DEFAULT_METADATA;
-
-  const newMetadata = {
-    ...metadata,
-    title: passedTitle ? `${passedTitle} ${dotSeparator} ${defaultTitle}` : defaultTitle,
-  };
-
-  return newMetadata;
-};
-
 /**
  * Metadata for all pages that aren't defined in markdown.
  * Reused for ogImage api route.

@@ -282,4 +282,5 @@ check types for as const objects and arrays
 is hero image og image? // jeste
 tkdodo for post combines hero image with og image, read heroImage from contentCollection
 Page Layout the only layout in which is created og image, other og images created in pages
+handle pagination for one page
 ```
