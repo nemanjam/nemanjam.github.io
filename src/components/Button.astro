@@ -12,16 +12,16 @@ const linkVariants = cva('button-default', {
     },
     colors: {
       primary: 'button-primary',
-      neutral: 'button-neutral',
+      default: 'button-default',
     },
     size: { sm: 'button-sm', md: 'button-md', lg: 'button-lg' },
     disabled: { true: 'button-disabled' },
   },
   compoundVariants: [
     { variant: 'outline', colors: 'primary', class: 'button-outline-primary' },
-    { variant: 'outline', colors: 'neutral', class: 'button-outline-neutral' },
+    { variant: 'outline', colors: 'default', class: 'button-outline-default' },
     { variant: 'solid', colors: 'primary', class: 'button-solid-primary' },
-    { variant: 'solid', colors: 'neutral', class: 'button-solid-neutral' },
+    { variant: 'solid', colors: 'default', class: 'button-solid-default' },
   ],
 });
 
@@ -30,7 +30,7 @@ export interface Props extends HTMLAttributes<'a'>, VariantProps<typeof linkVari
 const {
   class: className,
   variant = 'outline',
-  colors = 'neutral',
+  colors = 'default',
   size = 'md',
   disabled,
   ...props

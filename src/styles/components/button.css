@@ -18,9 +18,9 @@
     @apply hover:bg-primary hover:text-primary-content;
   }
 
-  .button-outline-neutral {
-    @apply text-neutral border-neutral;
-    @apply hover:bg-neutral hover:text-neutral-content;
+  .button-outline-default {
+    @apply text-content border-content;
+    @apply hover:bg-base-200;
   }
 
   .button-solid-primary {
@@ -28,8 +28,8 @@
     /* no primary-hover yet */
   }
 
-  .button-solid-neutral {
-    @apply bg-neutral text-neutral-content;
+  .button-solid-default {
+    @apply bg-base-200 text-content;
   }
 
   .button-sm {

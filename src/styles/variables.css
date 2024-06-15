@@ -14,7 +14,9 @@
 
     /* primary, secondary... */
     --var-color-blue-500: theme('colors.blue.500');
+    --var-color-blue-600: theme('colors.blue.600');
     --var-color-blue-700: theme('colors.blue.700');
+    --var-color-blue-200: theme('colors.blue.200');
     --var-color-blue-300: theme('colors.blue.300');
     --var-color-purple-700: theme('colors.purple.700');
     --var-color-purple-500: theme('colors.purple.500');

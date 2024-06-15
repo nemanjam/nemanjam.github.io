@@ -49,14 +49,12 @@ const config: Config = {
         primary: {
           DEFAULT: 'var(--th-primary)',
           content: 'var(--th-primary-content)',
+          'base-200': 'var(--th-primary-base-200)',
+          'base-300': 'var(--th-primary-base-300)',
         },
         secondary: {
           DEFAULT: 'var(--th-secondary)',
           content: 'var(--th-secondary-content)',
-        },
-        neutral: {
-          DEFAULT: 'var(--th-neutral)',
-          content: 'var(--th-neutral-content)',
         },
         accent: {
           DEFAULT: 'var(--th-accent)',
