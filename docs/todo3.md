@@ -291,4 +291,9 @@ fix color palette for text and bg,daisy ui
 icon slot for button, button variants, color, size, condensed
     separate css files for tailwind components
 default and neutral are separate semantic colors
+-----
+PostCard - needs space, paddings, color, read more, hashnode and flowbite, support without image variant too
+primary-hover, secondary-hover...
+primary-base-200, primary-base-300
+remove accent, neutral
 ```
