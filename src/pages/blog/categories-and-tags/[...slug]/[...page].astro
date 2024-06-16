@@ -1,0 +1,90 @@
+---
+import { getUniqueCategories } from '@/modules/post/category';
+import { getAllPostsWithReadingTime } from '@/modules/post/common';
+import { groupPostsByYear } from '@/modules/post/group-by-year';
+import { getUniqueTags } from '@/modules/post/tag';
+import List from '@/layouts/List.astro';
+import CategoriesAndTags from '@/components/CategoriesAndTags.astro';
+import { CONFIG } from '@/config';
+import { getPageMetadata } from '@/utils/metadata';
+import { pickPaginationPropsFromPage } from '@/utils/pagination';
+
+import type { Post } from '@/types/post';
+import type { GetStaticPathsOptions } from 'astro';
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const posts: Post[] = await getAllPostsWithReadingTime();
+  const pageSize = CONFIG.PAGE_SIZE;
+
+  // grouping is outside of getStaticPaths
+
+  // root pagination, '/', '/tags', '/categories'
+  const slugs = [undefined, 'tags', 'categories'];
+  const rootPagination = slugs.flatMap((slug) => {
+    const pagination = paginate(posts, { pageSize, params: { slug } });
+    return pagination;
+  });
+
+  rootPagination.push({ ...rootPagination[0], params: { ...rootPagination[0].params, page: '1' } });
+
+  // prerender tags
+  const uniqueTags = getUniqueTags(posts);
+
+  const tagPagination = uniqueTags.flatMap((tag) => {
+    const filteredPosts = posts.filter((post) => post.data.tags.includes(tag));
+    const options = { pageSize, params: { slug: `tags/${tag}` } };
+    const pagination = paginate(filteredPosts, options);
+    return pagination;
+  });
+
+  tagPagination.push({ ...tagPagination[0], params: { ...tagPagination[0].params, page: '1' } });
+
+  // prerender categories
+  const uniqueCategories = getUniqueCategories(posts);
+
+  const categoryPagination = uniqueCategories.flatMap((category) => {
+    const filteredPosts = posts.filter((post) => post.data.category === category);
+    const options = { pageSize, params: { slug: `categories/${category}` } };
+    const pagination = paginate(filteredPosts, options);
+    return pagination;
+  });
+
+  categoryPagination.push({
+    ...categoryPagination[0],
+    params: { ...categoryPagination[0].params, page: '1' },
+  });
+
+  const pagination = [...tagPagination, ...categoryPagination, ...rootPagination];
+
+  return pagination;
+}
+
+const { page } = Astro.props;
+const { data: posts } = page;
+
+// for categories and tags
+const allPosts = await getAllPostsWithReadingTime();
+
+const postsByYear = groupPostsByYear(posts);
+
+const paginationProps = pickPaginationPropsFromPage(page);
+
+const metadata = getPageMetadata('lists/blog/categories-and-tags');
+const layoutProps = { metadata, paginationProps };
+---
+
+<List {...layoutProps}>
+  <CategoriesAndTags posts={allPosts} />
+  {
+    postsByYear.years.map((year) => (
+      <>
+        <h2 class="title text-lg">{year}</h2>
+        <ul class="mb-8 mt-6 space-y-8">
+          {postsByYear.posts[year].map((post) => (
+            <li class="">{post.data.title}</li>
+          ))}
+        </ul>
+      </>
+    ))
+  }
+</List>
