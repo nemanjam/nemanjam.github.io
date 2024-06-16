@@ -3,7 +3,7 @@
   :root {
     /* background */
     --th-base-100: var(--var-color-white);
-    --th-base-200: var(--var-color-slate-200);
+    --th-base-200: var(--var-color-slate-100);
     --th-base-300: var(--var-color-slate-300);
     --th-base-code: var(--var-color-slate-400);
 

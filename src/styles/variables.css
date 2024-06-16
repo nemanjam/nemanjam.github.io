@@ -3,7 +3,7 @@
     /* from prose-slate */
     /* background */
     --var-color-white: theme('colors.white');
-    --var-color-slate-200: theme('colors.slate.200');
+    --var-color-slate-100: theme('colors.slate.100');
     --var-color-slate-300: theme('colors.slate.300');
     --var-color-slate-400: theme('colors.slate.400');
 

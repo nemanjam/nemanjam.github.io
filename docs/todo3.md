@@ -303,4 +303,7 @@ https://daisyui.com/docs/colors/#-1
 
 accent - to accent primary
 secondary - for backgrounds...
+
+fix all PostCards to handle without image, noHero: true
+table of contents styling
 ```

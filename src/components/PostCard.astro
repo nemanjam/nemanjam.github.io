@@ -4,7 +4,6 @@ import { Image } from 'astro:assets';
 
 import { getCategoryProps } from '@/modules/post';
 import Link from '@/components/Link.astro';
-import TagList from '@/components/TagList.astro';
 import { ROUTES } from '@/constants/routes';
 import { formatDate, formatDateIso } from '@/utils/datetime';
 import { cn } from '@/utils/styles';
@@ -18,14 +17,20 @@ export interface Props {
 const { post } = Astro.props;
 const { data, slug, readingTime } = post;
 
-const { draft, publishDate, title, heroImage, heroAlt, category, tags = [], description } = data;
+const {
+  draft,
+  publishDate,
+  title,
+  heroImage,
+  heroAlt,
+  noHero,
+  category,
+  tags = [],
+  description,
+} = data;
 
 const { icon: categoryIcon } = getCategoryProps(category);
 ---
-
-{/* Text in right column determines height, 2 lines title + 2 lines description. */}
-{/* Image determines max-height. For cases when image isn't 16/9 so it's cropped. */}
-{/* Image for 2 + 2 lines text has 168px naturaly, limit to 172, h-44 = 176 */}
 
 <article
   class={cn(
@@ -36,7 +41,7 @@ const { icon: categoryIcon } = getCategoryProps(category);
 >
   {/* left column */}
   {
-    heroImage && (
+    !noHero && (
       <div class="md:basis-1/3 md:shrink-0">
         <Image
           src={heroImage}
@@ -44,7 +49,7 @@ const { icon: categoryIcon } = getCategoryProps(category);
           widths={[320, 540]}
           sizes="(max-width: 475px) 320px, 540px"
           itemprop="image"
-          class="w-full h-40 md:h-full md:max-h-52 object-cover rounded-box"
+          class="w-full h-[168px] xs:h-[250px] md:h-[168px] md:max-w-[298px] object-cover rounded-box"
           transition:name={`hero-${heroImage.src}`}
         />
       </div>
@@ -52,14 +57,14 @@ const { icon: categoryIcon } = getCategoryProps(category);
   }
 
   {/* right column */}
-  <div class="flex flex-col md:basis-2/3 md:shrink">
+  <div class={cn('flex flex-col', { 'md:basis-2/3': !noHero })}>
     {/* category and publishDate row*/}
     <div class="flex items-start justify-between mb-4 text-sm leading-none">
       <Link
         href={`${ROUTES.CATEGORIES}${category}`}
         class="inline-flex items-center gap-2 bg-primary-base-200 font-medium px-2 py-0.5 rounded-button"
       >
-        <Icon name={categoryIcon} />
+        <Icon name={categoryIcon} class="w-4 h-4" />
         <span class="pb-0.5">
           {category}
         </span>
