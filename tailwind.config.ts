@@ -48,16 +48,19 @@ const config: Config = {
         // brand
         primary: {
           DEFAULT: 'var(--th-primary)',
+          hover: 'var(--th-primary-hover)',
           content: 'var(--th-primary-content)',
           'base-200': 'var(--th-primary-base-200)',
           'base-300': 'var(--th-primary-base-300)',
         },
         secondary: {
           DEFAULT: 'var(--th-secondary)',
+          hover: 'var(--th-secondary-hover)',
           content: 'var(--th-secondary-content)',
         },
         accent: {
           DEFAULT: 'var(--th-accent)',
+          hover: 'var(--th-accent-hover)',
           content: 'var(--th-accent-content)',
         },
       },

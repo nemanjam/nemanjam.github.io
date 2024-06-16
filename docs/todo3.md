@@ -306,4 +306,7 @@ secondary - for backgrounds...
 
 fix all PostCards to handle without image, noHero: true
 table of contents styling
+fix image sizes for new PostCard
+link and primary single color
+put all components and variants in styleguide
 ```
