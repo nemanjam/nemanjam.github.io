@@ -54,8 +54,6 @@ export const CATEGORIES = [
   },
 ] as const;
 
-export type CategoryType = (typeof CATEGORIES)[number];
-
 // use imported images here
 export const DEFAULTS_POST = {
   TITLE: DEFAULT_METADATA.title,

@@ -315,4 +315,6 @@ refactor rss and json feed
 ProjectCard and test markdown
 PostCardSmall
 extract types from constants
+update yarn scripts for eslint, prettier, types
+404 page design
 ```

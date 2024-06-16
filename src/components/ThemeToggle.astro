@@ -11,7 +11,9 @@ import { Icon } from 'astro-icon/components';
 <script>
   import { getNextTheme } from 'utils/dom';
 
-  import { THEME_CHANGE_EVENT } from '@/constants/themes';
+  import { THEME_CONFIG } from '@/constants/themes';
+
+  const { THEME_CHANGE_EVENT } = THEME_CONFIG;
 
   class ThemeToggle extends HTMLElement {
     #controller: AbortController | undefined;

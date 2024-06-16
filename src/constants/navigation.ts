@@ -31,5 +31,3 @@ export const NAVIGATION_ITEMS = [
   //   path: ROUTES.RESUME,
   // },
 ] as const;
-
-export type NavigationItem = (typeof NAVIGATION_ITEMS)[number];

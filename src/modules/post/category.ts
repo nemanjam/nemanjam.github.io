@@ -1,7 +1,7 @@
 import { CATEGORIES } from '@/constants/collections';
 import { ROUTES } from '@/constants/routes';
 
-import type { CategoryType } from '@/constants/collections';
+import type { CategoryType } from '@/types/constants';
 import type { Filter, FilterLink, PostCollection } from '@/types/post';
 
 export const getAllCategories = (posts: PostCollection[]): string[] =>

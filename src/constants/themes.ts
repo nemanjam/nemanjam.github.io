@@ -1,5 +1,3 @@
-export type Theme = (typeof THEMES)[number];
-
 export const MODES = {
   dark: 'dark',
   light: 'light',
@@ -29,8 +27,9 @@ export const THEMES = [
   },
 ] as const;
 
-export const MODE_CLASS = 'dark' as const;
-export const THEME_ATTRIBUTE = 'data-theme' as const;
-export const THEME_CHANGE_EVENT = 'theme-change' as const;
-
-export const LOCAL_STORAGE_THEME_KEY = 'theme' as const;
+export const THEME_CONFIG = {
+  MODE_CLASS: 'dark',
+  THEME_ATTRIBUTE: 'data-theme',
+  THEME_CHANGE_EVENT: 'theme-change',
+  LOCAL_STORAGE_THEME_KEY: 'theme',
+} as const;

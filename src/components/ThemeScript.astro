@@ -4,8 +4,8 @@ import * as themeConstants from '@/constants/themes';
 
 {/* Inlined to avoid flash of white content. */}
 <script is:inline define:vars={{ themeConstants }}>
-  const { LOCAL_STORAGE_THEME_KEY, MODES, THEME_ATTRIBUTE, THEME_CHANGE_EVENT, THEMES } =
-    themeConstants;
+  const { MODES, THEMES, THEME_CONFIG } = themeConstants;
+  const { THEME_ATTRIBUTE, THEME_CHANGE_EVENT, LOCAL_STORAGE_THEME_KEY } = THEME_CONFIG;
 
   // this is JavaScript, not TypeScript
   const defaultThemes = { light: THEMES[0], dark: THEMES[1] };

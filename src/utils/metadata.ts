@@ -1,8 +1,8 @@
 import { DEFAULT_METADATA, dotSeparator, PAGE_METADATA } from '@/constants/metadata';
 import { getOpenGraphImagePath } from './open-graph-image';
 
-import type { PageMetadataKey } from '@/constants/metadata';
 import type { Metadata } from '@/types/common';
+import type { PageMetadataKey } from '@/types/constants';
 
 export const getPageMetadata = (path: PageMetadataKey): Metadata => {
   const image = getOpenGraphImagePath(path);

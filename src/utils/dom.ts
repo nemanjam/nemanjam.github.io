@@ -1,6 +1,8 @@
-import { DEFAULT_THEMES, MODE_CLASS, MODES, THEME_ATTRIBUTE, THEMES } from '@/constants/themes';
+import { DEFAULT_THEMES, MODES, THEME_CONFIG, THEMES } from '@/constants/themes';
 
-import type { Theme } from '@/constants/themes';
+import type { Theme } from '@/types/constants';
+
+const { MODE_CLASS, THEME_ATTRIBUTE } = THEME_CONFIG;
 
 export const getCurrentMode = () =>
   document.documentElement.classList.contains(MODE_CLASS) ? MODES.dark : MODES.light;
