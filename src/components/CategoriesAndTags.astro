@@ -8,10 +8,10 @@ import FilterList from '@/components/FilterList.astro';
 import Tag from '@/components/Tag.astro';
 import { cn } from '@/utils/styles';
 
-import type { FilterLink, PostCollection } from '@/types/post';
+import type { FilterLink, Post } from '@/types/post';
 
 export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
-  posts: PostCollection[];
+  posts: Post[];
 }
 
 const { posts, class: className, ...props } = Astro.props;

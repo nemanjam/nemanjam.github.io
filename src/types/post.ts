@@ -8,6 +8,11 @@ export type Post = PostCollection & {
   readingTime: number;
 };
 
+export interface PostsByYear {
+  years: string[];
+  posts: Record<string, Post[]>;
+}
+
 export type FilterType = 'tag' | 'category';
 
 /** For both tags and categories. */

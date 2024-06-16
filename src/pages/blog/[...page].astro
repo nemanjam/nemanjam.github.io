@@ -1,5 +1,5 @@
 ---
-import { getAllPosts, getPostsWithReadingTimeFromPosts } from '@/modules/post/common';
+import { getAllPostsWithReadingTime } from '@/modules/post/common';
 import List from '@/layouts/List.astro';
 import PostList from '@/components/PostList.astro';
 import { CONFIG } from '@/config';
@@ -11,9 +11,7 @@ import type { GetStaticPathsOptions } from 'astro';
 
 // [page].astro and getStaticPaths because of pagination
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const sortedPosts = await getAllPosts();
-
-  const posts: Post[] = await getPostsWithReadingTimeFromPosts(sortedPosts);
+  const posts: Post[] = await getAllPostsWithReadingTime();
 
   const pagination = paginate(posts, { pageSize: CONFIG.PAGE_SIZE }); // must take entire config here, interesting
   pagination.push({ params: { page: '1' }, props: pagination[0].props });

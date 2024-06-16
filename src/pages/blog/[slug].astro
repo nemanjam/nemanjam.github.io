@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 
-import { getAllPosts, getPostsWithReadingTimeFromPosts } from '@/modules/post/common';
+import { getAllPostsWithReadingTime } from '@/modules/post/common';
 import { getRandomPosts } from '@/modules/post/random';
 import { getHeadingsForTableOfContents } from '@/modules/post/table-of-contents';
 import { default as PostLayout } from '@/layouts/Post.astro';
@@ -16,8 +16,7 @@ import type { Metadata } from '@/types/common';
 import type { Post } from '@/types/post';
 
 export async function getStaticPaths() {
-  const sortedPosts = await getAllPosts();
-  const posts: Post[] = await getPostsWithReadingTimeFromPosts(sortedPosts);
+  const posts: Post[] = await getAllPostsWithReadingTime();
 
   const paths = posts.map((post) => {
     const { slug } = post;

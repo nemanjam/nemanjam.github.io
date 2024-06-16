@@ -11,6 +11,7 @@ export const projectSchema = ({ image }: SchemaContext) =>
     title: z.string().default(TITLE),
     description: z.string().default(DESCRIPTION),
     publishDate: z.coerce.date(),
+    updatedDate: z.coerce.date().optional(),
     heroImage: image().default(HERO_IMAGE),
     heroAlt: z.string().default(HERO_ALT),
     draft: z.boolean().default(DRAFT),

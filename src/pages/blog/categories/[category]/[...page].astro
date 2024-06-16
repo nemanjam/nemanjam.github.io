@@ -1,6 +1,6 @@
 ---
 import { getUniqueCategories } from '@/modules/post/category';
-import { getAllPosts, getPostsWithReadingTimeFromPosts } from '@/modules/post/common';
+import { getAllPostsWithReadingTime } from '@/modules/post/common';
 import List from '@/layouts/List.astro';
 import Link from '@/components/Link.astro';
 import PostList from '@/components/PostList.astro';
@@ -14,8 +14,7 @@ import type { Post } from '@/types/post';
 import type { GetStaticPathsOptions } from 'astro';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const sortedPosts = await getAllPosts();
-  const posts: Post[] = await getPostsWithReadingTimeFromPosts(sortedPosts);
+  const posts: Post[] = await getAllPostsWithReadingTime();
 
   const uniqueCategories = getUniqueCategories(posts);
 

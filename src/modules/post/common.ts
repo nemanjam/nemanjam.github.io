@@ -3,6 +3,7 @@ import { COLLECTIONS } from '@/constants/collections';
 
 import type { Post, PostCollection } from '@/types/post';
 
+/** Sorted posts. */
 export const getAllPosts = (): Promise<PostCollection[]> => getAllEntries(COLLECTIONS.POST);
 
 export const getPostsWithReadingTimeFromPosts = async (
@@ -20,3 +21,7 @@ export const getPostsWithReadingTimeFromPosts = async (
   const postsWithReadingTime = posts.map((post, index) => ({ ...post, ...readingTimes[index] }));
   return postsWithReadingTime;
 };
+
+/** Prefer over getAllPosts() */
+export const getAllPostsWithReadingTime = async (): Promise<Post[]> =>
+  getPostsWithReadingTimeFromPosts(await getAllPosts());
