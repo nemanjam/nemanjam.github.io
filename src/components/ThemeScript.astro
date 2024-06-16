@@ -5,7 +5,7 @@ import * as themeConstants from '@/constants/themes';
 {/* Inlined to avoid flash of white content. */}
 <script is:inline define:vars={{ themeConstants }}>
   const { MODES, THEMES, THEME_CONFIG } = themeConstants;
-  const { THEME_ATTRIBUTE, THEME_CHANGE_EVENT, LOCAL_STORAGE_THEME_KEY } = THEME_CONFIG;
+  const { DATA_ATTRIBUTE, CHANGE_EVENT, LOCAL_STORAGE_KEY } = THEME_CONFIG;
 
   // this is JavaScript, not TypeScript
   const defaultThemes = { light: THEMES[0], dark: THEMES[1] };
@@ -39,7 +39,7 @@ import * as themeConstants from '@/constants/themes';
 
   const getTheme = () => {
     const storedThemeString =
-      typeof localStorage !== 'undefined' && localStorage.getItem(LOCAL_STORAGE_THEME_KEY);
+      typeof localStorage !== 'undefined' && localStorage.getItem(LOCAL_STORAGE_KEY);
 
     if (!storedThemeString) return null;
 
@@ -47,14 +47,14 @@ import * as themeConstants from '@/constants/themes';
     try {
       storedTheme = JSON.parse(storedThemeString);
     } catch (error) {
-      localStorage.removeItem(LOCAL_STORAGE_THEME_KEY);
+      localStorage.removeItem(LOCAL_STORAGE_KEY);
       return null;
     }
 
     // invalid theme
     if (!(storedTheme && storedTheme.name && storedTheme.mode)) {
       // clear stored invalid theme
-      localStorage.removeItem(LOCAL_STORAGE_THEME_KEY);
+      localStorage.removeItem(LOCAL_STORAGE_KEY);
       return null;
     }
 
@@ -75,7 +75,7 @@ import * as themeConstants from '@/constants/themes';
 
     const isDarkMode = root.classList.contains(MODES.dark);
     const existingTheme = {
-      name: root.getAttribute(THEME_ATTRIBUTE),
+      name: root.getAttribute(DATA_ATTRIBUTE),
       mode: isDarkMode ? MODES.dark : MODES.light,
     };
     const isExistingTheme =
@@ -85,7 +85,7 @@ import * as themeConstants from '@/constants/themes';
     if (isExistingTheme) return;
 
     // update root class and data-theme
-    root.setAttribute(THEME_ATTRIBUTE, newTheme.name);
+    root.setAttribute(DATA_ATTRIBUTE, newTheme.name);
     if (newTheme.mode === MODES.dark) {
       // dark
       if (!isDarkMode) root.classList.add(MODES.dark);
@@ -95,7 +95,7 @@ import * as themeConstants from '@/constants/themes';
     }
 
     if (typeof localStorage !== 'undefined') {
-      localStorage.setItem(LOCAL_STORAGE_THEME_KEY, JSON.stringify(newTheme));
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newTheme));
     }
   };
 
@@ -106,7 +106,7 @@ import * as themeConstants from '@/constants/themes';
   document.addEventListener('astro:after-swap', () => setTheme(getUserPreference()));
 
   // listen for theme-change custom event, fired in src/components/ThemeToggle.astro
-  document.addEventListener(THEME_CHANGE_EVENT, (event) => {
+  document.addEventListener(CHANGE_EVENT, (event) => {
     setTheme(event.detail.theme);
   });
 

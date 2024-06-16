@@ -2,13 +2,13 @@ import { DEFAULT_THEMES, MODES, THEME_CONFIG, THEMES } from '@/constants/themes'
 
 import type { Theme } from '@/types/constants';
 
-const { MODE_CLASS, THEME_ATTRIBUTE } = THEME_CONFIG;
+const { MODE_CLASS, DATA_ATTRIBUTE } = THEME_CONFIG;
 
 export const getCurrentMode = () =>
   document.documentElement.classList.contains(MODE_CLASS) ? MODES.dark : MODES.light;
 
 export const getCurrentTheme = () => {
-  const themeName = document.documentElement.getAttribute(THEME_ATTRIBUTE);
+  const themeName = document.documentElement.getAttribute(DATA_ATTRIBUTE);
   const isValidThemeName =
     Boolean(themeName) && THEMES.map((theme) => theme.name).includes(themeName as Theme['name']);
 

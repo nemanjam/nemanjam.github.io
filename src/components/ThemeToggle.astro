@@ -13,7 +13,7 @@ import { Icon } from 'astro-icon/components';
 
   import { THEME_CONFIG } from '@/constants/themes';
 
-  const { THEME_CHANGE_EVENT } = THEME_CONFIG;
+  const { CHANGE_EVENT } = THEME_CONFIG;
 
   class ThemeToggle extends HTMLElement {
     #controller: AbortController | undefined;
@@ -33,7 +33,7 @@ import { Icon } from 'astro-icon/components';
         () => {
           // shift theme
           const nextTheme = getNextTheme();
-          const themeChangeEvent = new CustomEvent(THEME_CHANGE_EVENT, {
+          const themeChangeEvent = new CustomEvent(CHANGE_EVENT, {
             detail: { theme: nextTheme },
           });
           // dispatch event -> ThemeProvider.astro

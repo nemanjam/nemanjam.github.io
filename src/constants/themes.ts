@@ -29,7 +29,7 @@ export const THEMES = [
 
 export const THEME_CONFIG = {
   MODE_CLASS: 'dark',
-  THEME_ATTRIBUTE: 'data-theme',
-  THEME_CHANGE_EVENT: 'theme-change',
-  LOCAL_STORAGE_THEME_KEY: 'theme',
+  DATA_ATTRIBUTE: 'data-theme',
+  CHANGE_EVENT: 'theme-change',
+  LOCAL_STORAGE_KEY: 'theme',
 } as const;
