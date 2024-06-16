@@ -1,11 +1,12 @@
 ---
-import { getAllPosts, getCategoryLinks } from '@/modules/post';
+import { getCategoryLinks } from '@/modules/post/category';
+import { getAllPosts } from '@/modules/post/common';
 import List from '@/layouts/List.astro';
 import CategoryCard from '@/components/CategoryCard.astro';
 import FilterList from '@/components/FilterList.astro';
 import { getPageMetadata } from '@/utils/metadata';
 
-import type { FilterLink } from '@/modules/post';
+import type { FilterLink } from '@/types/post';
 
 const posts = await getAllPosts();
 const categoryLinks = getCategoryLinks(posts);

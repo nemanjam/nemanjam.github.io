@@ -7,3 +7,19 @@ export type PostCollection = CollectionEntry<'post'>;
 export type Post = PostCollection & {
   readingTime: number;
 };
+
+export type FilterType = 'tag' | 'category';
+
+/** For both tags and categories. */
+export interface Filter {
+  text: string;
+  count: number;
+}
+
+export interface FilterLink {
+  href: string;
+  text: string;
+  count: number;
+  textWithCount: string;
+  isActive: boolean;
+}

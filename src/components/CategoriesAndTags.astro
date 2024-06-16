@@ -1,14 +1,14 @@
 ---
 import { Icon } from 'astro-icon/components';
 
-import { getCategoryLinks, getCategoryProps, getTagLinks } from '@/modules/post';
+import { getCategoryLinks, getCategoryProps } from '@/modules/post/category';
+import { getTagLinks } from '@/modules/post/tag';
 import Button from '@/components/Button.astro';
 import FilterList from '@/components/FilterList.astro';
 import Tag from '@/components/Tag.astro';
 import { cn } from '@/utils/styles';
 
-import type { FilterLink } from '@/modules/post';
-import type { PostCollection } from '@/types/post';
+import type { FilterLink, PostCollection } from '@/types/post';
 
 export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
   posts: PostCollection[];

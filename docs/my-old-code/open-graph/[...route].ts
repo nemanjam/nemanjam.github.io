@@ -1,6 +1,6 @@
 import { OGImageRoute } from 'astro-og-canvas';
 
-import { getAllPosts } from '@/modules/post';
+import { getAllPosts } from '@/modules/post/common';
 import { getAllProjects } from '@/modules/project';
 import { ROUTES } from '@/constants/routes';
 

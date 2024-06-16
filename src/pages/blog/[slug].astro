@@ -1,12 +1,9 @@
 ---
 import { Image } from 'astro:assets';
 
-import {
-  getAllPosts,
-  getHeadingsForTableOfContents,
-  getPostsWithReadingTimeFromPosts,
-  getRandomPosts,
-} from '@/modules/post';
+import { getAllPosts, getPostsWithReadingTimeFromPosts } from '@/modules/post/common';
+import { getRandomPosts } from '@/modules/post/random';
+import { getHeadingsForTableOfContents } from '@/modules/post/table-of-contents';
 import { default as PostLayout } from '@/layouts/Post.astro';
 import PostMeta from '@/components/PostMeta.astro';
 import PostsListMore from '@/components/PostsListMore.astro';

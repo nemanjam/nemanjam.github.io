@@ -310,4 +310,9 @@ fix image sizes for new PostCard
 link and primary single color
 put all components and variants in styleguide
 daisy ui color-mix() and oklch just to calc hover colors, i dont need it, hardcode it
+sorted archive like in astro-cactus, route param highlight and link
+refactor rss and json feed
+ProjectCard and test markdown
+PostCardSmall
+extract types from constants
 ```

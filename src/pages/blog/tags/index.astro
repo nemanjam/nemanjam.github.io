@@ -1,12 +1,13 @@
 ---
-import { getAllPosts, getTagLinks } from '@/modules/post';
+import { getAllPosts } from '@/modules/post/common';
+import { getTagLinks } from '@/modules/post/tag';
 import List from '@/layouts/List.astro';
 import FilterList from '@/components/FilterList.astro';
 import Tag from '@/components/Tag.astro';
 import { getPageMetadata } from '@/utils/metadata';
 import { cn } from '@/utils/styles';
 
-import type { FilterLink } from '@/modules/post';
+import type { FilterLink } from '@/types/post';
 
 const allPosts = await getAllPosts();
 

@@ -1,5 +1,6 @@
 ---
-import { getAllPosts, getPostsWithReadingTimeFromPosts, getUniqueTags } from '@/modules/post';
+import { getAllPosts, getPostsWithReadingTimeFromPosts } from '@/modules/post/common';
+import { getUniqueTags } from '@/modules/post/tag';
 import List from '@/layouts/List.astro';
 import Link from '@/components/Link.astro';
 import PostList from '@/components/PostList.astro';
