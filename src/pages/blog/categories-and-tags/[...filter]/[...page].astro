@@ -19,9 +19,9 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   // grouping is outside of getStaticPaths
 
   // root pagination, '/', '/tags', '/categories'
-  const slugs = [undefined, 'tags', 'categories'];
-  const rootPagination = slugs.flatMap((slug) => {
-    const pagination = paginate(posts, { pageSize, params: { slug } });
+  const filters = [undefined, 'tags', 'categories'];
+  const rootPagination = filters.flatMap((filter) => {
+    const pagination = paginate(posts, { pageSize, params: { filter } });
     return pagination;
   });
 
@@ -32,7 +32,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 
   const tagPagination = uniqueTags.flatMap((tag) => {
     const filteredPosts = posts.filter((post) => post.data.tags.includes(tag));
-    const options = { pageSize, params: { slug: `tags/${tag}` } };
+    const options = { pageSize, params: { filter: `tags/${tag}` } };
     const pagination = paginate(filteredPosts, options);
     return pagination;
   });
@@ -44,7 +44,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 
   const categoryPagination = uniqueCategories.flatMap((category) => {
     const filteredPosts = posts.filter((post) => post.data.category === category);
-    const options = { pageSize, params: { slug: `categories/${category}` } };
+    const options = { pageSize, params: { filter: `categories/${category}` } };
     const pagination = paginate(filteredPosts, options);
     return pagination;
   });
