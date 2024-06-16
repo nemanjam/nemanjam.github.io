@@ -309,4 +309,5 @@ table of contents styling
 fix image sizes for new PostCard
 link and primary single color
 put all components and variants in styleguide
+daisy ui color-mix() and oklch just to calc hover colors, i dont need it, hardcode it
 ```

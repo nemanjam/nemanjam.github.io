@@ -8,8 +8,8 @@ import {
   getRandomPosts,
 } from '@/modules/post';
 import { default as PostLayout } from '@/layouts/Post.astro';
-import MorePostsList from '@/components/MorePostsList.astro';
 import PostMeta from '@/components/PostMeta.astro';
+import PostsListMore from '@/components/PostsListMore.astro';
 import SharePost from '@/components/SharePost.astro';
 import TagList from '@/components/TagList.astro';
 import TocWidget from '@/components/TocWidget.astro';
@@ -115,6 +115,6 @@ const metadata: Metadata = { title, description, image };
   </Fragment>
 
   <Fragment slot="more-posts">
-    <MorePostsList morePosts={randomPosts} />
+    <PostsListMore morePosts={randomPosts} />
   </Fragment>
 </PostLayout>

@@ -1,5 +1,5 @@
 ---
-import MorePostsCard from './MorePostsCard.astro';
+import PostsCardMore from './PostsCardMore.astro';
 
 import type { Post } from '@/types/post';
 
@@ -16,7 +16,7 @@ const { morePosts } = Astro.props;
     {
       morePosts.map((post) => (
         <li>
-          <MorePostsCard {post} />
+          <PostsCardMore {post} />
         </li>
       ))
     }
