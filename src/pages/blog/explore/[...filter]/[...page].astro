@@ -5,6 +5,7 @@ import { groupPostsByYear } from '@/modules/post/group-by-year';
 import { getUniqueTags } from '@/modules/post/tag';
 import List from '@/layouts/List.astro';
 import Explore from '@/components/Explore.astro';
+import PostCardSmall from '@/components/PostCardSmall.astro';
 import { CONFIG } from '@/config';
 import { getPageMetadata } from '@/utils/metadata';
 import { pickPaginationPropsFromPage } from '@/utils/pagination';
@@ -89,14 +90,12 @@ const postsByYear = groupPostsByYear(paginatedPosts);
   <Explore posts={allPosts} {filterPathname} />
   {
     postsByYear.years.map((year) => (
-      <>
-        <h2 class="title text-lg">{year}</h2>
-        <ul class="mb-8 mt-6 space-y-8">
-          {postsByYear.posts[year].map((post) => (
-            <li class="">{post.data.title}</li>
-          ))}
-        </ul>
-      </>
+      <div>
+        <h2>{year}</h2>
+        {postsByYear.posts[year].map((post) => (
+          <PostCardSmall {post} />
+        ))}
+      </div>
     ))
   }
 </List>

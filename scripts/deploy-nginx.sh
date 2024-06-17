@@ -29,8 +29,8 @@ ssh $REMOTE_HOST "cd $REMOTE_PATH && \
                   echo 'Copying new contents...'"
 
 # Copy new contents, 27MB
-# Using scp
-scp -rq $LOCAL_PATH/* $REMOTE_HOST:$REMOTE_PATH
+# Using scp -rq
+scp -r $LOCAL_PATH/* $REMOTE_HOST:$REMOTE_PATH
 
 # Using rsync
 # rsync -az --progress $LOCAL_PATH/* $REMOTE_HOST:$REMOTE_PATH

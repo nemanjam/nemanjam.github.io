@@ -1,0 +1,53 @@
+---
+import { Icon } from 'astro-icon/components';
+import { Image } from 'astro:assets';
+
+import Link from '@/components/Link.astro';
+import { ROUTES } from '@/constants/routes';
+import { formatDate, formatDateIso } from '@/utils/datetime';
+import { cn } from '@/utils/styles';
+import TagList from './TagList.astro';
+
+import type { Post } from '@/types/post';
+
+export interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const { data, slug } = post;
+const { title, heroImage, heroAlt, description, publishDate, tags } = data;
+---
+
+<article
+  class={cn(
+    'flex flex-col xs:flex-row gap-2',
+    'not-first:pt-2 not-last:pb-2',
+    'not-last:border-b border-base-300'
+  )}
+>
+  <Image
+    src={heroImage}
+    alt={heroAlt}
+    widths={[200]}
+    sizes="200px"
+    class="h-[68px] w-[112px] object-cover rounded-box hidden xs:block"
+  />
+  <div>
+    <h4 class="break-words line-clamp-1 mb-1 leading-none">
+      <Link variant="link-heading" href={`${ROUTES.BLOG}${slug}`}>
+        {title}
+      </Link>
+    </h4>
+    {description && <p class="text-sm text-captions line-clamp-1">{description}</p>}
+    <div class="flex flex-col xs:flex-row xs:items-center gap-2">
+      <span class="inline-flex items-center gap-1 text-sm text-captions">
+        <Icon name="mdi:access-time" class="w-4 h-4" />
+        <time itemprop="datePublished" datetime={formatDateIso(publishDate)}>
+          {formatDate(publishDate)}
+        </time>
+      </span>
+      <TagList tags={tags} />
+    </div>
+  </div>
+</article>

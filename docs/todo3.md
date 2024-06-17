@@ -319,4 +319,7 @@ update yarn scripts for eslint, prettier, types
 404 page design
 PostCard updatedDate
 post collection date md filename and publishDate?
+tag variants styles
+category pill
+updatedDate publishDate edit icon
 ```

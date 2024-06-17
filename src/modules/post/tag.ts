@@ -18,11 +18,12 @@ export const getTagLinks = (posts: PostCollection[], pathname?: string): FilterL
   const itemLinks = filterItems.map((item) => {
     const { text, count } = item;
 
-    const href = `${ROUTES.EXPLORE_TAGS}${text}`;
+    const originalHref = `${ROUTES.EXPLORE_TAGS}${text}`;
     const textWithCount = `#${text} ${count}`;
 
     // unused, wont display in category and tag list
-    const isActive = href === pathname;
+    const isActive = originalHref === pathname;
+    const href = !isActive ? originalHref : ROUTES.EXPLORE;
 
     const link = { href, text, count, textWithCount, isActive };
 
