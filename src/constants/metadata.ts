@@ -36,7 +36,7 @@ export const PAGE_METADATA = {
     title: 'Tags',
   },
   // 'src/pages/blog/tags/[tag]/[...page].astro' // dynamic tag param
-  'lists/blog/categories-and-tags': {
+  'lists/blog/explore': {
     title: 'Explore',
   },
   'lists/blog/categories': {

@@ -65,8 +65,8 @@ const { page } = Astro.props;
 const { data: paginatedPosts } = page;
 const { filter, page: pageParam } = Astro.params;
 
-// http://localhost:3000/blog/categories-and-tags/tags/react/2
-// filter tags pageParam react/2 pathname /blog/categories-and-tags/tags/react/2
+// http://localhost:3000/blog/explore/tags/react/2
+// filter tags pageParam react/2 pathname /blog/explore/tags/react/2
 
 const filterParams: FilterParams = {
   filterType: filter as FilterType,
@@ -79,7 +79,7 @@ const allPosts = await getAllPostsWithReadingTime();
 
 // layout
 const paginationProps = pickPaginationPropsFromPage(page);
-const metadata = getPageMetadata('lists/blog/categories-and-tags');
+const metadata = getPageMetadata('lists/blog/explore');
 const layoutProps = { metadata, paginationProps };
 
 // render
