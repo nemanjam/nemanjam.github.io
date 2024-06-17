@@ -136,23 +136,23 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"post": {
-"2024-01-16-example-article-1.mdx": {
-	id: "2024-01-16-example-article-1.mdx";
-  slug: "2024-01-16-example-article-1";
+"2022-02-16-example-article-1.mdx": {
+	id: "2022-02-16-example-article-1.mdx";
+  slug: "2022-02-16-example-article-1";
   body: string;
   collection: "post";
   data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
-"2024-01-17-example-article-2.mdx": {
-	id: "2024-01-17-example-article-2.mdx";
-  slug: "2024-01-17-example-article-2";
+"2022-03-17-example-article-2.mdx": {
+	id: "2022-03-17-example-article-2.mdx";
+  slug: "2022-03-17-example-article-2";
   body: string;
   collection: "post";
   data: InferEntrySchema<"post">
 } & { render(): Render[".mdx"] };
-"2024-01-19-example-article-3.mdx": {
-	id: "2024-01-19-example-article-3.mdx";
-  slug: "2024-01-19-example-article-3";
+"2023-01-19-example-article-3.mdx": {
+	id: "2023-01-19-example-article-3.mdx";
+  slug: "2023-01-19-example-article-3";
   body: string;
   collection: "post";
   data: InferEntrySchema<"post">

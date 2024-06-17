@@ -322,4 +322,5 @@ post collection date md filename and publishDate?
 tag variants styles
 category pill
 updatedDate publishDate edit icon
+images sizes for new PostCards
 ```
