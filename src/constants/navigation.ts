@@ -8,7 +8,7 @@ export const NAVIGATION_ITEMS = [
   },
   {
     title: 'Explore',
-    path: ROUTES.CATEGORIES_AND_TAGS,
+    path: ROUTES.EXPLORE,
   },
   // {
   //   title: 'Tags',

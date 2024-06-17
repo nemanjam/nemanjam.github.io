@@ -4,7 +4,7 @@ import { getAllPostsWithReadingTime } from '@/modules/post/common';
 import { groupPostsByYear } from '@/modules/post/group-by-year';
 import { getUniqueTags } from '@/modules/post/tag';
 import List from '@/layouts/List.astro';
-import CategoriesAndTags from '@/components/CategoriesAndTags.astro';
+import Explore from '@/components/Explore.astro';
 import { CONFIG } from '@/config';
 import { getPageMetadata } from '@/utils/metadata';
 import { pickPaginationPropsFromPage } from '@/utils/pagination';
@@ -86,7 +86,7 @@ const postsByYear = groupPostsByYear(paginatedPosts);
 ---
 
 <List {...layoutProps}>
-  <CategoriesAndTags posts={allPosts} {filterPathname} />
+  <Explore posts={allPosts} {filterPathname} />
   {
     postsByYear.years.map((year) => (
       <>

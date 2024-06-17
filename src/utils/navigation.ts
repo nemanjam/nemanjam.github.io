@@ -24,12 +24,12 @@ export const getActiveNavItemPath = (routePathname: string): NavigationItem['pat
       break;
     case routePathname.startsWith(ROUTES.TAGS):
     case routePathname.startsWith(ROUTES.CATEGORIES):
-    case routePathname.startsWith(ROUTES.CATEGORIES_AND_TAGS):
-      activeNavItem = getNavItem(ROUTES.CATEGORIES_AND_TAGS);
+    case routePathname.startsWith(ROUTES.EXPLORE):
+      activeNavItem = getNavItem(ROUTES.EXPLORE);
       break;
     case !routePathname.startsWith(ROUTES.TAGS) &&
       !routePathname.startsWith(ROUTES.CATEGORIES) &&
-      !routePathname.startsWith(ROUTES.CATEGORIES_AND_TAGS) &&
+      !routePathname.startsWith(ROUTES.EXPLORE) &&
       routePathname.startsWith(ROUTES.BLOG):
       activeNavItem = getNavItem(ROUTES.BLOG);
       break;
