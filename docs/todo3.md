@@ -323,4 +323,5 @@ tag variants styles
 category pill
 updatedDate publishDate edit icon
 images sizes for new PostCards
+layout bottom padding
 ```

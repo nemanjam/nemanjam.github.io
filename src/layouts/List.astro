@@ -21,13 +21,9 @@ const { title, description } = metadata;
     </slot>
     <section class="flex-grow flex flex-col">
       <slot />
-      {
-        paginationProps && (
-          <div class="mt-auto">
-            <Pagination {...paginationProps} class="mt-6" />
-          </div>
-        )
-      }
+      <div class="mt-auto">
+        {paginationProps && <Pagination {...paginationProps} class="mt-6" />}
+      </div>
     </section>
   </article>
 </Centered>

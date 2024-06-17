@@ -10,10 +10,12 @@ import type { Page } from 'astro';
 export interface PaginationProps
   extends Pick<Page<AnyCollection>, 'url' | 'currentPage' | 'lastPage'> {}
 
-export interface Props extends PaginationProps, astroHTML.JSX.HTMLAttributes {}
+export interface Props extends PaginationProps, astroHTML.JSX.HTMLAttributes {
+  showIfOnePage?: boolean;
+}
 
 // page - numbers
-const { url, currentPage, lastPage, class: className } = Astro.props;
+const { showIfOnePage = false, url, currentPage, lastPage, class: className } = Astro.props;
 // all links in Astro are relative /blog/2
 const { prev: prevUrl, current: currentUrl, next: nextUrl } = url;
 
@@ -24,42 +26,45 @@ const getPageUrl = (pageNumber: number) =>
   pageNumber === 1 ? firstUrl : `${firstUrl}/${pageNumber}`;
 
 const lastUrl = getPageUrl(lastPage);
+const hasMoreThanOnePage = () => lastPage > 1;
 
 const pageNumbers = Array.from({ length: lastPage }, (_, i) => i + 1);
 ---
 
-<nav aria-label="pages" class={cn('flex items-center justify-end gap-4 text-xl', className)}>
-  <Link href={firstUrl} disabled={!prevUrl}>
-    <Icon name="mdi:chevron-double-left" />
-  </Link>
+{
+  hasMoreThanOnePage() || showIfOnePage ? (
+    <nav aria-label="pages" class={cn('flex items-center justify-end gap-4 text-xl', className)}>
+      <Link href={firstUrl} disabled={!prevUrl}>
+        <Icon name="mdi:chevron-double-left" />
+      </Link>
 
-  <Link href={prevUrl} disabled={!prevUrl}>
-    <Icon name="mdi:chevron-left" />
-  </Link>
+      <Link href={prevUrl} disabled={!prevUrl}>
+        <Icon name="mdi:chevron-left" />
+      </Link>
 
-  {
-    pageNumbers.map((pageNumber) => {
-      const isCurrentPage = pageNumber === currentPage;
+      {pageNumbers.map((pageNumber) => {
+        const isCurrentPage = pageNumber === currentPage;
 
-      // trimm long pagination with (...)
+        // trimm long pagination with (...)
 
-      return (
-        <Link
-          href={getPageUrl(pageNumber)}
-          disabled={isCurrentPage}
-          class={cn({ 'underline font-semibold': isCurrentPage })}
-        >
-          {pageNumber}
-        </Link>
-      );
-    })
-  }
+        return (
+          <Link
+            href={getPageUrl(pageNumber)}
+            disabled={isCurrentPage}
+            class={cn({ 'underline font-semibold': isCurrentPage })}
+          >
+            {pageNumber}
+          </Link>
+        );
+      })}
 
-  <Link href={nextUrl} disabled={!nextUrl}>
-    <Icon name="mdi:chevron-right" />
-  </Link>
+      <Link href={nextUrl} disabled={!nextUrl}>
+        <Icon name="mdi:chevron-right" />
+      </Link>
 
-  <Link href={lastUrl} disabled={!nextUrl}>
-    <Icon name="mdi:chevron-double-right" />
-  </Link>
-</nav>
+      <Link href={lastUrl} disabled={!nextUrl}>
+        <Icon name="mdi:chevron-double-right" />
+      </Link>
+    </nav>
+  ) : null
+}
