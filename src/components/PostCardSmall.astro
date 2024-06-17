@@ -10,12 +10,13 @@ import { cn } from '@/utils/styles';
 import TagList from './TagList.astro';
 
 import type { Post } from '@/types/post';
+import type { HTMLAttributes } from 'astro/types';
 
-export interface Props {
+export interface Props extends HTMLAttributes<'article'> {
   post: Post;
 }
 
-const { post } = Astro.props;
+const { post, class: className } = Astro.props;
 const { data, slug } = post;
 const { title, heroImage, heroAlt, description, publishDate, updatedDate, tags } = data;
 
@@ -29,7 +30,8 @@ const { lastAccessDate, isUpdatedDate } = getPublishedOrUpdatedDate({
   class={cn(
     'flex flex-col xs:flex-row gap-2',
     'not-first:pt-2 not-last:pb-2',
-    'not-last:border-b border-base-300'
+    'not-last:border-b border-base-300',
+    className
   )}
 >
   <Image
