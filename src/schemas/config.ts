@@ -7,7 +7,10 @@ export const configSchema = z.object({
   SITE_URL: z.string().url(),
   SITE_TITLE: z.string().min(1),
   SITE_DESCRIPTION: z.string().min(1),
-  PAGE_SIZE: z.number(),
+  PAGE_SIZE: z.object({
+    POST_CARD: z.number(),
+    POST_CARD_SMALL: z.number(),
+  }),
   MORE_POSTS_COUNT: z.number(),
   AUTHOR_NAME: z.string().min(1),
   AUTHOR_EMAIL: z.string().email(),

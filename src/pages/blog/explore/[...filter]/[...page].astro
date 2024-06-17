@@ -16,7 +16,7 @@ import type { GetStaticPathsOptions } from 'astro';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const posts: Post[] = await getAllPostsWithReadingTime();
-  const pageSize = CONFIG.PAGE_SIZE;
+  const pageSize = CONFIG.PAGE_SIZE.POST_CARD_SMALL;
 
   // grouping is outside of getStaticPaths
 

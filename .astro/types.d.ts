@@ -180,16 +180,16 @@ declare module 'astro:content' {
   collection: "project";
   data: InferEntrySchema<"project">
 } & { render(): Render[".mdx"] };
-"2024-02-15-example-project-2.mdx": {
-	id: "2024-02-15-example-project-2.mdx";
-  slug: "2024-02-15-example-project-2";
+"2024-03-15-example-project-2.mdx": {
+	id: "2024-03-15-example-project-2.mdx";
+  slug: "2024-03-15-example-project-2";
   body: string;
   collection: "project";
   data: InferEntrySchema<"project">
 } & { render(): Render[".mdx"] };
-"2024-02-16-example-project-3.mdx": {
-	id: "2024-02-16-example-project-3.mdx";
-  slug: "2024-02-16-example-project-3";
+"2024-05-16-example-project-3.mdx": {
+	id: "2024-05-16-example-project-3.mdx";
+  slug: "2024-05-16-example-project-3";
   body: string;
   collection: "project";
   data: InferEntrySchema<"project">

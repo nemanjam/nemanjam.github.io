@@ -15,15 +15,13 @@ import type { GetStaticPathsOptions } from 'astro';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const posts: Post[] = await getAllPostsWithReadingTime();
+  const pageSize = CONFIG.PAGE_SIZE.POST_CARD;
 
   const uniqueCategories = getUniqueCategories(posts);
 
   const pagination = uniqueCategories.flatMap((category) => {
     const filteredPosts = posts.filter((post) => post.data.category === category);
-    const categoryPagination = paginate(filteredPosts, {
-      pageSize: CONFIG.PAGE_SIZE,
-      params: { category },
-    });
+    const categoryPagination = paginate(filteredPosts, { pageSize, params: { category } });
     return categoryPagination;
   });
 

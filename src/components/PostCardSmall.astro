@@ -2,6 +2,7 @@
 import { Icon } from 'astro-icon/components';
 import { Image } from 'astro:assets';
 
+import { getPublishedOrUpdatedDate } from '@/modules/common';
 import Link from '@/components/Link.astro';
 import { ROUTES } from '@/constants/routes';
 import { formatDate, formatDateIso } from '@/utils/datetime';
@@ -16,7 +17,12 @@ export interface Props {
 
 const { post } = Astro.props;
 const { data, slug } = post;
-const { title, heroImage, heroAlt, description, publishDate, tags } = data;
+const { title, heroImage, heroAlt, description, publishDate, updatedDate, tags } = data;
+
+const { lastAccessDate, isUpdatedDate } = getPublishedOrUpdatedDate({
+  publishDate,
+  updatedDate,
+});
 ---
 
 <article
@@ -42,9 +48,9 @@ const { title, heroImage, heroAlt, description, publishDate, tags } = data;
     {description && <p class="text-sm text-captions line-clamp-1">{description}</p>}
     <div class="flex flex-col xs:flex-row xs:items-center gap-2">
       <span class="inline-flex items-center gap-1 text-sm text-captions">
-        <Icon name="mdi:access-time" class="w-4 h-4" />
-        <time itemprop="datePublished" datetime={formatDateIso(publishDate)}>
-          {formatDate(publishDate)}
+        <Icon name={isUpdatedDate ? 'mdi:edit-outline' : 'mdi:access-time'} class="w-4 h-4" />
+        <time itemprop="datePublished" datetime={formatDateIso(lastAccessDate)}>
+          {formatDate(lastAccessDate)}
         </time>
       </span>
       <TagList tags={tags} />

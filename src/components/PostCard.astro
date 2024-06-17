@@ -2,6 +2,7 @@
 import { Icon } from 'astro-icon/components';
 import { Image } from 'astro:assets';
 
+import { getPublishedOrUpdatedDate } from '@/modules/common';
 import { getCategoryProps } from '@/modules/post/category';
 import Link from '@/components/Link.astro';
 import { ROUTES } from '@/constants/routes';
@@ -20,6 +21,7 @@ const { data, slug, readingTime } = post;
 const {
   draft,
   publishDate,
+  updatedDate,
   title,
   heroImage,
   heroAlt,
@@ -30,6 +32,10 @@ const {
 } = data;
 
 const { icon: categoryIcon } = getCategoryProps(category);
+const { lastAccessDate, isUpdatedDate } = getPublishedOrUpdatedDate({
+  publishDate,
+  updatedDate,
+});
 ---
 
 <article
@@ -71,9 +77,9 @@ const { icon: categoryIcon } = getCategoryProps(category);
       </Link>
 
       <span class="inline-flex items-center gap-2 text-captions">
-        <Icon name="mdi:access-time" class="w-4 h-4" />
-        <time itemprop="datePublished" datetime={formatDateIso(publishDate)}>
-          {formatDate(publishDate)}
+        <Icon name={isUpdatedDate ? 'mdi:edit-outline' : 'mdi:access-time'} class="w-4 h-4" />
+        <time itemprop="datePublished" datetime={formatDateIso(lastAccessDate)}>
+          {formatDate(lastAccessDate)}
         </time>
       </span>
     </div>
