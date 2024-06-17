@@ -33,7 +33,7 @@ export const getCategoryLinks = (posts: PostCollection[], pathname?: string): Fi
   const itemLinks = filterItems.map((item) => {
     const { text, count } = item;
 
-    const href = `${ROUTES.CATEGORIES}${text}`;
+    const href = `${ROUTES.CAT_CATEGORIES}${text}`;
     const textWithCount = `${text} ${count}`;
 
     const isActive = href === pathname;

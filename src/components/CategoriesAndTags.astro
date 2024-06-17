@@ -12,23 +12,25 @@ import type { FilterLink, Post } from '@/types/post';
 
 export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
   posts: Post[];
+  filterPathname?: string;
 }
 
-const { posts, class: className, ...props } = Astro.props;
+const { posts, filterPathname, class: className, ...props } = Astro.props;
 
-const tagLinks = getTagLinks(posts);
-const categoryLinks = getCategoryLinks(posts);
+const tagLinks = getTagLinks(posts, filterPathname);
+const categoryLinks = getCategoryLinks(posts, filterPathname);
 ---
 
 <section {...props} class={cn(className)}>
   <h4>Categories:</h4>
   <FilterList class="mb-4 gap-4" itemLinks={categoryLinks}>
     {
-      ({ href, text, textWithCount }: FilterLink) => {
+      ({ href, text, textWithCount, isActive }: FilterLink) => {
         const { icon } = getCategoryProps(text);
+        const buttonProps = isActive ? ({ colors: 'primary', variant: 'solid' } as const) : {};
 
         return (
-          <Button href={href}>
+          <Button href={href} {...buttonProps}>
             <Icon name={icon} slot="before-icon" />
             {textWithCount}
           </Button>
@@ -41,7 +43,7 @@ const categoryLinks = getCategoryLinks(posts);
   <FilterList class="mb-4" itemLinks={tagLinks}>
     {
       ({ href, textWithCount, isActive }: FilterLink) => (
-        <Tag href={href} size="md" class={cn({ 'underline font-bold text-accent': isActive })}>
+        <Tag href={href} size="md" class={cn({ 'bg-primary text-primary-content': isActive })}>
           {textWithCount}
         </Tag>
       )

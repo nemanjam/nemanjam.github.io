@@ -13,7 +13,8 @@ export interface PostsByYear {
   posts: Record<string, Post[]>;
 }
 
-export type FilterType = 'tag' | 'category';
+/** plural, so it matches route param */
+export type FilterType = 'tags' | 'categories';
 
 /** For both tags and categories. */
 export interface Filter {
@@ -27,4 +28,9 @@ export interface FilterLink {
   count: number;
   textWithCount: string;
   isActive: boolean;
+}
+
+export interface FilterParams {
+  filterType?: FilterType;
+  filterSlug?: string;
 }

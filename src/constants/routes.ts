@@ -7,6 +7,8 @@ export const ROUTES = {
   TAGS: '/blog/tags/',
   CATEGORIES: '/blog/categories/',
   CATEGORIES_AND_TAGS: '/blog/categories-and-tags/',
+  CAT_TAGS: '/blog/categories-and-tags/tags/',
+  CAT_CATEGORIES: '/blog/categories-and-tags/categories/',
   DRAFTS: '/drafts/',
   _404: '/404/',
   _500: '/500/',

@@ -15,9 +15,11 @@ const { itemLinks = [], class: className, ...props } = Astro.props;
 {
   itemLinks.length > 0 && (
     <ul {...props} class={cn('flex flex-wrap gap-2', className)}>
-      {itemLinks.map(async (itemLink) => (
-        <li class="inline-block" set:html={await Astro.slots.render('default', [itemLink])} />
-      ))}
+      {itemLinks.map(async (itemLink) => {
+        const html = await Astro.slots.render('default', [itemLink]);
+
+        return <li class="inline-block" set:html={html} />;
+      })}
     </ul>
   )
 }
