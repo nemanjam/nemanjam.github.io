@@ -6,15 +6,35 @@ import type { VariantProps } from 'class-variance-authority';
 
 const tagVariants = cva('tag', {
   variants: {
+    variant: {
+      text: 'tag-text',
+      solid: 'tag-solid',
+    },
+    colors: {
+      default: '',
+      primary: 'tag-primary',
+    },
     size: { sm: 'tag-sm', md: 'tag-md', lg: 'tag-lg' },
   },
+  compoundVariants: [
+    { variant: 'solid', size: 'sm', class: 'tag-solid-sm' },
+    { variant: 'solid', size: 'md', class: 'tag-solid-md' },
+    { variant: 'solid', size: 'lg', class: 'tag-solid-lg' },
+    { variant: 'solid', colors: 'primary', class: 'tag-solid-primary' },
+  ],
 });
 
 export interface TagProps extends HTMLAttributes<'a'>, VariantProps<typeof tagVariants> {}
 
-const { class: className, size = 'sm', ...props } = Astro.props as TagProps;
+const {
+  variant = 'solid',
+  colors = 'default',
+  size = 'sm',
+  class: className,
+  ...props
+} = Astro.props as TagProps;
 ---
 
-<a {...props} class={tagVariants({ size, className })}>
+<a {...props} class={tagVariants({ variant, colors, size, className })}>
   <slot />
 </a>

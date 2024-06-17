@@ -315,13 +315,17 @@ refactor rss and json feed
 ProjectCard and test markdown
 PostCardSmall
 extract types from constants
-update yarn scripts for eslint, prettier, types
+update yarn scripts for eslint, prettier, types // to
 404 page design
 PostCard updatedDate
 post collection date md filename and publishDate?
-tag variants styles
+tag variants styles // to
 category pill
 updatedDate publishDate edit icon
 images sizes for new PostCards
 layout bottom padding
+start writing readme
+working-notes folder in docs
+footer commit toast
+
 ```

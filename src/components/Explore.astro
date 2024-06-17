@@ -43,7 +43,7 @@ const categoryLinks = getCategoryLinks(posts, filterPathname);
   <FilterList class="mb-4" itemLinks={tagLinks}>
     {
       ({ href, textWithCount, isActive }: FilterLink) => (
-        <Tag href={href} size="md" class={cn({ 'bg-primary text-primary-content': isActive })}>
+        <Tag href={href} size="md" colors={isActive ? 'primary' : 'default'}>
           {textWithCount}
         </Tag>
       )
