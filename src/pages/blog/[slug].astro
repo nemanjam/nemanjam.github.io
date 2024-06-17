@@ -5,8 +5,8 @@ import { getAllPostsWithReadingTime } from '@/modules/post/common';
 import { getRandomPosts } from '@/modules/post/random';
 import { getHeadingsForTableOfContents } from '@/modules/post/table-of-contents';
 import { default as PostLayout } from '@/layouts/Post.astro';
+import PostListMore from '@/components/PostListMore.astro';
 import PostMeta from '@/components/PostMeta.astro';
-import PostsListMore from '@/components/PostsListMore.astro';
 import SharePost from '@/components/SharePost.astro';
 import TagList from '@/components/TagList.astro';
 import TocWidget from '@/components/TocWidget.astro';
@@ -111,6 +111,6 @@ const metadata: Metadata = { title, description, image };
   </Fragment>
 
   <Fragment slot="more-posts">
-    <PostsListMore morePosts={randomPosts} />
+    <PostListMore morePosts={randomPosts} />
   </Fragment>
 </PostLayout>

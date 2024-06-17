@@ -72,7 +72,7 @@ const filterParams: FilterParams = {
   filterSlug: pageParam?.split('/')[0], // will return first word without '/'
 };
 
-// for categories and tags
+// for explore
 const filterPathname = getPathnameFromFilterParams(filterParams);
 const allPosts = await getAllPostsWithReadingTime();
 
