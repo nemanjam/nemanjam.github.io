@@ -36,7 +36,7 @@ const tagLinks = tags.map((tagItem) => ({ href: `${ROUTES.TAGS}${tagItem}`, text
   tagLinks.length > 0 && (
     <ul {...props} class={tagListVariants({ variant, size, className })}>
       {tagLinks.map(({ href, text }) => (
-        <li>
+        <li class="inline-flex items-center">
           <Tag {size} {variant} {href} {...tagProps}>
             {text}
           </Tag>
