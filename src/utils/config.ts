@@ -1,4 +1,6 @@
 import dotenv from 'dotenv';
+// @ts-expect-error, js lib
+import treeify from 'object-treeify';
 
 import { nodeEnvValues } from '../schemas/config';
 
@@ -33,12 +35,8 @@ export const validateConfig = (
   const { data: parsedConfigData } = parsedConfig;
 
   if (isDebug) {
-    const stringifiedConfigData = JSON.stringify(parsedConfigData, null, 2);
-
-    let stringData = stringifiedConfigData.replace(/[{}\t ]/gm, '');
-    stringData = stringData.replace(/\s+,/gm, ',');
-
-    console.log('parsedConfigData: ', stringData);
+    const stringData = treeify(parsedConfigData);
+    console.log('parsedConfigData:\n\n' + stringData);
   }
 
   return parsedConfigData;

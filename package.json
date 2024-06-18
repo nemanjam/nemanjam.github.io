@@ -42,6 +42,7 @@
     "feed": "^4.2.2",
     "mdast-util-to-string": "^4.0.0",
     "nanostores": "^0.10.3",
+    "object-treeify": "^4.0.1",
     "react": "^18.3.1",
     "react-component-benchmark": "^2.0.0",
     "react-dom": "^18.3.1",
