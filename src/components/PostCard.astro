@@ -5,6 +5,7 @@ import { Image } from 'astro:assets';
 import { getPublishedOrUpdatedDate } from '@/modules/common';
 import { getCategoryProps } from '@/modules/post/category';
 import Link from '@/components/Link.astro';
+import TagList from '@/components/TagList.astro';
 import { ROUTES } from '@/constants/routes';
 import { formatDate, formatDateIso } from '@/utils/datetime';
 import { cn } from '@/utils/styles';
@@ -95,14 +96,20 @@ const { lastAccessDate, isUpdatedDate } = getPublishedOrUpdatedDate({
     {description && <p class="text-base mb-4 line-clamp-2">{description}</p>}
 
     {/* reading time and read more link */}
-    <div class="flex items-end justify-between">
-      <span class="inline-flex items-center gap-2 text-sm text-captions">
-        <Icon name="mdi:book-open-blank-variant-outline" class="w-4 h-4" />
-        <span>{`${Math.round(readingTime)} minutes`}</span>
-      </span>
+    <div class="flex items-center xs:items-end justify-between">
+      <div class="flex items-center gap-4">
+        <span class="inline-flex items-center gap-2 text-sm text-captions">
+          <Icon name="mdi:book-open-blank-variant-outline" class="w-4 h-4" />
+          <span class="text-nowrap">{`${Math.round(readingTime)} minutes`}</span>
+        </span>
+        <TagList tags={tags.slice(0, 2)} size="sm" variant="text" class="hidden xs:inline-flex" />
+      </div>
 
-      <Link href={`${ROUTES.BLOG}${slug}`} class="inline-flex items-center gap-1 font-medium">
-        <span>Read more</span>
+      <Link
+        href={`${ROUTES.BLOG}${slug}`}
+        class="inline-flex items-center gap-1 text-base font-medium"
+      >
+        <span class="text-nowrap">Read more</span>
         <Icon name="mdi:arrow-right" class="w-4 h-4" />
       </Link>
     </div>
