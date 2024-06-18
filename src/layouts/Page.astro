@@ -2,19 +2,30 @@
 import Centered from '@/layouts/Centered.astro';
 import { getOpenGraphImagePath } from '@/utils/open-graph-image';
 
-import type { Metadata } from '@/types/common';
+export interface Content {
+  title: string;
+  description: string;
+  readingTime: number;
+  file: string;
+  url: string;
+}
 
-export interface Props extends Metadata {}
+export interface Props {
+  content: Content;
+}
 
-const props = Astro.props;
+// metadata from frontmatter
+const { content } = Astro.props;
+const { title, description } = content;
+
 // available in Layouts
 const { pathname } = Astro.url;
 
-// only call in layouts
+// og image for metadata, only call in layouts
 const path = `/pages${pathname}`;
 const image = getOpenGraphImagePath(path);
 
-const metadata = { ...props, image };
+const metadata = { title, description, image };
 ---
 
 <Centered {metadata}>

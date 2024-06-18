@@ -15,6 +15,9 @@
     /* a */
     @apply prose-a:link;
 
+    /* image */
+    @apply prose-img:rounded-button;
+
     /* @apply outline outline-pink-500; */
   }
 }

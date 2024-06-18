@@ -33,7 +33,7 @@
   }
 
   .button-sm {
-    @apply text-sm px-2 pt-0.5 pb-1;
+    @apply text-sm px-3 pt-0.5 pb-1;
 
     [data-icon] {
       @apply w-4 h-4;
@@ -49,7 +49,7 @@
   }
 
   .button-lg {
-    @apply text-lg px-3 py-2;
+    @apply text-lg px-5 py-2;
 
     [data-icon] {
       @apply w-8 h-8;
