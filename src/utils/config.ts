@@ -33,7 +33,11 @@ export const validateConfig = (
   const { data: parsedConfigData } = parsedConfig;
 
   if (isDebug) {
-    const stringData = JSON.stringify(parsedConfigData, null, 2).replace(/[{}\t ]/g, '');
+    const stringifiedConfigData = JSON.stringify(parsedConfigData, null, 2);
+
+    let stringData = stringifiedConfigData.replace(/[{}\t ]/gm, '');
+    stringData = stringData.replace(/\s+,/gm, ',');
+
     console.log('parsedConfigData: ', stringData);
   }
 
