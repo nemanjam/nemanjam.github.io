@@ -225,7 +225,7 @@ style table of contents
 export type Props = astroHTML.JSX.AnchorHTMLAttributes;
     extract vertical paddings
 vertical spacing svuda isti, top, bottom, headings, sections
-tags and categories page, filter radio buttons
+    tags and categories page, filter radio buttons
 share widget, research examples
 aside - alert component
 images border radius
@@ -243,17 +243,17 @@ generate Twitter intent link, use react share component
 range in pagination, leave only 3 numbers
 disabled color?, daysy ui
 must use flex flex-grow in all containers for full height
-filter page with buttons for categories and tags
+    filter page with buttons for categories and tags
 Button component
-color-mix(...) css native function_, oklch color system, u daisy ui for hover, focus colors, pogledaj
+    color-mix(...) css native function_, oklch color system, u daisy ui for hover, focus colors, pogledaj
 rename ItemWithCountList, tags-and-categories
 add more buttons, size, primary, secondary
-isActive tag and category
+    isActive tag and category
 noHeading layout
 restyle PostMeta component
-fix schema validation for tags and categories
-og images
-tags in post
+    fix schema validation for tags and categories
+    og images
+    tags in post
 render all components in styleguide
 sredi passing metadata u layouts, h1, description, image
 design og image
@@ -287,16 +287,16 @@ tkdodo for post combines hero image with og image, read heroImage from contentCo
 Page Layout the only layout in which is created og image, other og images created in pages
 ----
 handle pagination for one page, research examples
-fix color palette for text and bg,daisy ui
+    fix color palette for text and bg, daisy ui
 icon slot for button, button variants, color, size, condensed
     separate css files for tailwind components
 default and neutral are separate semantic colors
 -----
-PostCard - needs space, paddings, color, read more, hashnode and flowbite, support without image variant too
-postojeci vertical spacing zbijen
-primary-hover, secondary-hover...
-primary-base-200, primary-base-300
-remove accent, neutral
+    PostCard - needs space, paddings, color, read more, hashnode and flowbite, support without image variant too
+    postojeci vertical spacing zbijen
+    primary-hover, secondary-hover...
+    primary-base-200, primary-base-300
+    remove accent, neutral
 
 // semantic colors benefits, put in list
 https://daisyui.com/docs/colors/#-1
@@ -308,8 +308,8 @@ fix all PostCards to handle without image, noHero: true
 table of contents styling
 fix image sizes for new PostCard
 link and primary single color
-put all components and variants in styleguide
-daisy ui color-mix() and oklch just to calc hover colors, i dont need it, hardcode it
+put all components and variants in styleguide, loops for variants
+    daisy ui color-mix() and oklch just to calc hover colors, i dont need it, hardcode it
 sorted archive like in astro-cactus, route param highlight and link
     refactor rss and json feed
 ProjectCard and test markdown
@@ -317,15 +317,16 @@ PostCardSmall
 extract types from constants
 update yarn scripts for eslint, prettier, types // to
     404 page design
-PostCard updatedDate
+    PostCard updatedDate
 post collection date md filename and publishDate?
 tag variants styles // to
 category pill
-updatedDate publishDate edit icon
+    updatedDate publishDate edit icon
 images sizes for new PostCards
 layout bottom padding
 start writing readme
 working-notes folder in docs
 footer commit toast
 draft preview for prod
+fix button not-prose
 ```
