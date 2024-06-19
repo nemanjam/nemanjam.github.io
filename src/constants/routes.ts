@@ -17,5 +17,7 @@ export const ROUTES = {
   },
   API: {
     OG_IMAGES: '/api/open-graph/',
+    FEED_JSON: '/api/feed.json',
+    FEED_RSS: '/api/feed.xml',
   },
 } as const;

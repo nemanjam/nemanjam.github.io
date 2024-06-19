@@ -6,18 +6,22 @@ import type { CollectionEntry, CollectionKey } from 'astro:content';
 
 export interface GetAllEntriesOptions {
   skipSort?: boolean;
+  includeDrafts?: boolean;
 }
 
-/** Sorts by publishDate desc by default. Newest on top. */
+/**
+ * Sorts by publishDate desc by default. Newest on top.
+ * Omits drafts by default.
+ */
 export const getAllEntries = async <T extends CollectionKey>(
   collectionName: T,
   options?: GetAllEntriesOptions
 ): Promise<CollectionEntry<T>[]> => {
-  const { skipSort = false } = options ?? {};
+  const { skipSort = false, includeDrafts = false } = options ?? {};
 
   const entries = await getCollection<T>(collectionName, ({ data }) => {
     const isProdAndDraft = import.meta.env.PROD && data.draft;
-    return !isProdAndDraft;
+    return !isProdAndDraft || includeDrafts;
   });
 
   if (skipSort) return entries;

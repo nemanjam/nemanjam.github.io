@@ -1,9 +1,24 @@
 // all relative imports in config subtree
+import dotenv from 'dotenv';
 
-import { configSchema } from './schemas/config';
+import { configSchema, nodeEnvValues } from './schemas/config';
 import { validateConfig } from './utils/config';
 
 import type { ConfigType } from './types/config';
+
+/*------------------ load .env file -----------------*/
+
+const NODE_ENV = process.env.NODE_ENV;
+
+if (!nodeEnvValues.includes(NODE_ENV)) {
+  console.error('Invalid process.env.NODE_ENV: ', NODE_ENV);
+  throw new Error('Invalid process.env.NODE_ENV');
+}
+
+const envFileName = `.env.${NODE_ENV}`;
+dotenv.config({ path: envFileName });
+
+/*-------------------- configData -------------------*/
 
 const configData: ConfigType = {
   NODE_ENV: process.env.NODE_ENV,
