@@ -313,8 +313,8 @@ put all components and variants in styleguide, loops for variants
 sorted archive like in astro-cactus, route param highlight and link
     refactor rss and json feed
 ProjectCard and test markdown
-PostCardSmall
-extract types from constants
+    PostCardSmall
+    extract types from constants
 update yarn scripts for eslint, prettier, types // to
     404 page design
     PostCard updatedDate
@@ -329,4 +329,8 @@ working-notes folder in docs
 footer commit toast
 draft preview for prod
 fix button not-prose
+write content and design for pages, research
+yarn scripts
+Dockerfile has arm hardcoded
+tsconfig.json strictest
 ```

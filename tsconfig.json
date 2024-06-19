@@ -27,5 +27,5 @@
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.astro"],
-  "exclude": ["dist", ",astro", "node_modules"]
+  "exclude": ["dist", "docs", "node_modules"]
 }

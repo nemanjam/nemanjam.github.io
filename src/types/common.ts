@@ -1,5 +1,6 @@
 import { COLLECTIONS } from '@/constants/collections';
 
+import type { Page } from 'astro';
 import type { CollectionEntry } from 'astro:content';
 
 export type CollectionType = (typeof COLLECTIONS)[keyof typeof COLLECTIONS];
@@ -13,3 +14,6 @@ export interface Metadata {
   /** Must be url. */
   image?: string;
 }
+
+export interface PaginationProps
+  extends Pick<Page<AnyCollection>, 'url' | 'currentPage' | 'lastPage'> {}

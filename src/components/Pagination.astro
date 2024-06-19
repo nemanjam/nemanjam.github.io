@@ -4,11 +4,7 @@ import { Icon } from 'astro-icon/components';
 import Link from '@/components/Link.astro';
 import { cn } from '@/utils/styles';
 
-import type { AnyCollection } from '@/types/common';
-import type { Page } from 'astro';
-
-export interface PaginationProps
-  extends Pick<Page<AnyCollection>, 'url' | 'currentPage' | 'lastPage'> {}
+import type { PaginationProps } from '@/types/common';
 
 export interface Props extends PaginationProps, astroHTML.JSX.HTMLAttributes {
   showIfOnePage?: boolean;
