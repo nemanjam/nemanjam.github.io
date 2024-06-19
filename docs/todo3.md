@@ -333,4 +333,5 @@ write content and design for pages, research
 yarn scripts
 Dockerfile has arm hardcoded
 tsconfig.json strictest
+eslint 8.57 fine tune config
 ```

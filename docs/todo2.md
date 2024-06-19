@@ -165,6 +165,11 @@ https://github.com/argos-ci/argos-ci.com
 // medium, excellent design
 https://medium.com/@mgechev
 
+// have look, accessibility
+https://github.com/markteekman/accessible-astro-starter
+
+// another
+https://github.com/saicaca/fuwari
 -----------
 za local state mora react ili solid
 for state between pages nanostore with localStorage

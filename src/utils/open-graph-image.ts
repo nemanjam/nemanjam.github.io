@@ -10,7 +10,7 @@ const homePageOgImage = `${ROUTES.API.OG_IMAGES}${OG_PAGES}.png`;
 const _404PageOgImage = `${ROUTES.API.OG_IMAGES}${OG_PAGES}404.png`;
 
 export const getOpenGraphImagePath = (path: string) => {
-  let trimmedPath = removeLeadingAndTrailingSlashes(path);
+  const trimmedPath = removeLeadingAndTrailingSlashes(path);
   let prefix = trimmedPath.split('/')[0];
 
   prefix = removeLeadingAndTrailingSlashes(prefix);
