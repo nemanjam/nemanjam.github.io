@@ -334,4 +334,10 @@ yarn scripts
 Dockerfile has arm hardcoded
 tsconfig.json strictest
 eslint 8.57 fine tune config
+
+----
+og image
+share
+code blocks and theme
+styleguide
 ```

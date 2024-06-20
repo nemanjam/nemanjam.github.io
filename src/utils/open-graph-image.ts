@@ -2,7 +2,7 @@ import { OG_IMAGE_PREFIXES } from '@/constants/metadata';
 import { ROUTES } from '@/constants/routes';
 import { removeLeadingAndTrailingSlashes } from '@/utils/paths';
 
-/*--------------------- getDefaultOpenGraphImagePath -------------------*/
+/*--------------------- getOpenGraphImagePath -------------------*/
 
 const { OG_PAGES } = OG_IMAGE_PREFIXES;
 
