@@ -336,7 +336,7 @@ tsconfig.json strictest
 eslint 8.57 fine tune config
 
 ----
-og image
+og image design
 share
 code blocks and theme
 styleguide

@@ -33,14 +33,6 @@
   }
 
   .button-sm {
-    @apply text-sm px-3 pt-0.5 pb-1;
-
-    [data-icon] {
-      @apply w-4 h-4;
-    }
-  }
-
-  .button-md {
     @apply px-4 py-1;
 
     [data-icon] {
@@ -48,11 +40,19 @@
     }
   }
 
-  .button-lg {
+  .button-md {
     @apply text-lg px-5 py-2;
 
     [data-icon] {
       @apply w-8 h-8;
+    }
+  }
+
+  .button-lg {
+    @apply text-lg px-6 py-3;
+
+    [data-icon] {
+      @apply w-10 h-10;
     }
   }
 }
