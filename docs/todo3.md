@@ -330,7 +330,7 @@ footer commit toast
 draft preview for prod
 fix button not-prose
 write content and design for pages, research
-yarn scripts
+    yarn scripts
 Dockerfile has arm hardcoded
 tsconfig.json strictest
 eslint 8.57 fine tune config
@@ -340,5 +340,8 @@ og image design
 share
     code blocks and theme
     code blocks responsive fonts 14, 16px, md or lg?
+    pagination 3 items
 styleguide
+sitemap
+    transistor favicon
 ```

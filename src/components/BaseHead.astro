@@ -1,12 +1,12 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
-
-import { CONFIG } from '@/config';
-
 import '@fontsource-variable/inter/index.css';
 import '@/styles/main.css';
 
+import { ViewTransitions } from 'astro:transitions';
+
 import { DEFAULT_METADATA } from '@/constants/metadata';
+import { ROUTES } from '@/constants/routes';
+import { CONFIG } from '@/config';
 import { handleTitle } from '@/utils/metadata';
 import { filterUndefined } from '@/utils/objects';
 import { trimHttpProtocol } from '@/utils/strings';
@@ -32,9 +32,6 @@ const mergedMetadata: Required<Metadata> = { ...DEFAULT_METADATA, ...filteredMet
 const { title, description, image } = mergedMetadata;
 
 const ogImageUrl = new URL(image, baseUrl);
-
-// log og image here
-console.log('BaseHead image', image);
 ---
 
 <head>
@@ -47,19 +44,19 @@ console.log('BaseHead image', image);
   <link
     rel="apple-touch-icon"
     sizes="180x180"
-    href={`${SITE_URL}/images/favicons/apple-touch-icon.png`}
+    href={`${SITE_URL}${ROUTES.STATIC.FAVICONS}apple-touch-icon.png`}
   />
   <link
     rel="icon"
     type="image/png"
     sizes="32x32"
-    href={`${SITE_URL}/images/favicons/favicon-32x32.png`}
+    href={`${SITE_URL}${ROUTES.STATIC.FAVICONS}favicon-32x32.png`}
   />
   <link
     rel="icon"
     type="image/png"
     sizes="16x16"
-    href={`${SITE_URL}/images/favicons/favicon-16x16.png`}
+    href={`${SITE_URL}${ROUTES.STATIC.FAVICONS}favicon-16x16.png`}
   />
   <link rel="manifest" href={`${SITE_URL}/manifest.json`} />
 
@@ -73,13 +70,13 @@ console.log('BaseHead image', image);
     rel="alternate"
     type="application/rss+xml"
     title={`RSS feed for ${domain}`}
-    href={`${SITE_URL}/feed.xml`}
+    href={`${SITE_URL}${ROUTES.API.FEED_RSS}`}
   />
   <link
     rel="alternate"
     type="application/json"
     title={`JSON feed for ${domain}`}
-    href={`${SITE_URL}/feed.json`}
+    href={`${SITE_URL}${ROUTES.API.FEED_JSON}`}
   />
   <link
     rel="sitemap"

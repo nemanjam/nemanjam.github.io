@@ -3,6 +3,7 @@ import { Icon } from 'astro-icon/components';
 
 import { BackToTop } from '@/components/BackToTop';
 import Link from '@/components/Link.astro';
+import { ROUTES } from '@/constants/routes';
 import { CONFIG } from '@/config';
 import { getLatestCommitInfo } from '@/utils/git';
 import { trimHttpProtocol } from '@/utils/strings';
@@ -66,7 +67,7 @@ const { time, hash, message } = getLatestCommitInfo();
         </li>
         <li>
           <Link
-            href="/feed.xml"
+            href={ROUTES.API.FEED_RSS}
             title={`RSS feed for ${domain}`}
             class="flex items-center gap-2 text-base xs:text-lg"
             variant="link-nav"

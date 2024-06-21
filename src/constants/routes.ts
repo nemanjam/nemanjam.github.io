@@ -14,6 +14,7 @@ export const ROUTES = {
   _500: '/500/',
   STATIC: {
     IMAGES: '/images/',
+    FAVICONS: '/images/favicons/',
   },
   API: {
     OG_IMAGES: '/api/open-graph/',
