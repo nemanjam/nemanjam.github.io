@@ -35,7 +35,40 @@ const hasMoreThanOnePage = () => lastPage > 1;
 
 const pageNumbers = Array.from({ length: lastPage }, (_, i) => i + 1);
 
-// const threePageNumbers = (currentPage: number, lastPage: number): number[] => {};
+const threePageNumbers = (currentPage: number, lastPage: number): number[] => {
+  const hasPrevious1Index = lastPage > 3 ? 2 : 1;
+  const hasPrevious2Index = lastPage > 3 ? 3 : 2;
+  const hasNext1Index = lastPage > 3 ? 1 : 0;
+  const hasNext2Index = lastPage > 3 ? 2 : 1;
+
+  const hasPrevious2 = currentPage > hasPrevious2Index;
+  const hasPrevious1 = currentPage > hasPrevious1Index;
+  const hasNext1 = currentPage < lastPage - hasNext1Index;
+  const hasNext2 = currentPage < lastPage - hasNext2Index;
+
+  const previous2 = hasPrevious2 ? currentPage - 2 : undefined;
+  const previous1 = hasPrevious1 ? currentPage - 1 : undefined;
+  const next1 = hasNext1 ? currentPage + 1 : undefined;
+  const next2 = hasNext2 ? currentPage + 2 : undefined;
+
+  // current - array
+  // 1       - 1 2 3
+  // 2       - 1 2 3
+  // 3       - 2 3 4
+  // 4       - 3 4 5
+  // 5       - 3 4 5
+
+  const pageNumbers = [previous2, previous1, currentPage, next1, next2];
+
+  const pageNumbersFiltered = pageNumbers.filter(Boolean) as number[];
+
+  console.log('currentPage', currentPage);
+  console.log('lastPage', lastPage);
+  console.log('pageNumbers', pageNumbers);
+  console.log('pageNumbersFiltered', pageNumbersFiltered);
+
+  return pageNumbersFiltered;
+};
 ---
 
 {
@@ -60,7 +93,7 @@ const pageNumbers = Array.from({ length: lastPage }, (_, i) => i + 1);
           <Icon name="mdi:chevron-left" />
         </Link>
 
-        {pageNumbers.map((pageNumber) => {
+        {threePageNumbers(currentPage, lastPage).map((pageNumber) => {
           const isCurrentPage = pageNumber === currentPage;
 
           // trimm long pagination with (...)

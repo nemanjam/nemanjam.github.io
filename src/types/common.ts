@@ -16,4 +16,7 @@ export interface Metadata {
 }
 
 export interface PaginationProps
-  extends Pick<Page<AnyCollection>, 'url' | 'currentPage' | 'lastPage'> {}
+  extends Pick<
+    Page<AnyCollection>,
+    'url' | 'currentPage' | 'lastPage' | 'start' | 'end' | 'total'
+  > {}
