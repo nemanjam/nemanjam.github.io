@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  nmc-docker:
+    container_name: nmc-docker
+    # image: nemanjamitic/nemanjam.github.io:latest
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+      args:
+        ARG_SITE_URL: 'http://localhost:8080'
+    # platform: linux/arm64
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - '8080:8080'
+    networks:
+      - default
+
+networks:
+  default:
+    name: nmc-default
