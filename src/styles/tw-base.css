@@ -12,6 +12,11 @@
     @apply text-content;
   }
 
+  :root {
+    /* code blocks responsive font size */
+    @apply [--expressive-code-font-size:0.875rem] md:[--expressive-code-font-size:1rem];
+  }
+
   /* filter is required everywhere so it doesn't style my-prose children */
   /* same filter as in original prose */
   h1:not(:where([class~='my-prose'], [class~='my-prose'] *)),

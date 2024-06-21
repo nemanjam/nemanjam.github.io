@@ -28,6 +28,7 @@ export const expressiveCodeIntegration = () =>
     },
     tabWidth: 2,
     styleOverrides: {
+      codeFontSize: 'var(--expressive-code-font-size)',
       codeLineHeight: '1.4',
       frames: {
         frameBoxShadowCssValue: 'none',
