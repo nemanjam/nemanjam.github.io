@@ -15,9 +15,6 @@ import { sitemapIntegration } from './src/libs/integrations/sitemap';
 const { SITE_URL } = CONFIG;
 const remarkPlugins = [remarkReadingTime];
 
-/** @type {import('@types/astro').AstroUserConfig} */
-
-// https://astro.build/config
 export default defineConfig({
   site: SITE_URL,
   trailingSlash: 'ignore',
@@ -43,10 +40,7 @@ export default defineConfig({
     tailwind({
       applyBaseStyles: false,
     }),
-    mdx({
-      remarkPlugins,
-      extendPlugins: 'astroDefaults',
-    }),
+    mdx(),
     icon({
       iconDir: 'src/assets/icons',
     }),
@@ -57,12 +51,6 @@ export default defineConfig({
   vite: {
     build: {
       sourcemap: false,
-      // should fix import.meta.glob() Promise rejection
-      optimizeDeps: {
-        esbuildOptions: {
-          target: 'es2020',
-        },
-      },
     },
   },
 });
