@@ -36,6 +36,7 @@ module.exports = {
     '^@/schemas',
     '^@/constants',
     '^@/config',
+    '^@/libs',
     '^@/utils',
     '^[./]', // all relative imports
     '',

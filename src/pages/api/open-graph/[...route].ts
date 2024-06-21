@@ -1,6 +1,6 @@
 import { OGImageRoute } from 'astro-og-canvas';
 
-import { getPages } from '@/modules/open-graph-image';
+import { getPages } from '@/libs/api/open-graph-image';
 
 const OG_FOLDER = './src/assets/images/open-graph/' as const;
 

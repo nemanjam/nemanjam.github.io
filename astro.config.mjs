@@ -1,6 +1,5 @@
 import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
-import sitemap from '@astrojs/sitemap';
 import solid from '@astrojs/solid-js';
 import tailwind from '@astrojs/tailwind';
 import icon from 'astro-icon';
@@ -10,8 +9,8 @@ import { defineConfig } from 'astro/config';
 import { remarkReadingTime } from './plugins/remark-reading-time.mjs';
 // all relative imports in subtree
 import { CONFIG } from './src/config';
-import { ROUTES } from './src/constants/routes';
-import { expressiveCodeIntegration } from './src/modules/expressive-code';
+import { expressiveCodeIntegration } from './src/libs/integrations/expressive-code';
+import { sitemapIntegration } from './src/libs/integrations/sitemap';
 
 const { SITE_URL } = CONFIG;
 const remarkPlugins = [remarkReadingTime];
@@ -32,6 +31,7 @@ export default defineConfig({
   },
   integrations: [
     expressiveCodeIntegration(),
+    sitemapIntegration(),
     solid({
       include: ['src/**'],
       exclude: ['**/*react*/**'],
@@ -47,25 +47,12 @@ export default defineConfig({
       remarkPlugins,
       extendPlugins: 'astroDefaults',
     }),
-    sitemap({
-      serialize(item) {
-        if (item.url.endsWith(SITE_URL)) {
-          item.priority = 1.0;
-        } else if (item.url.endsWith(`${SITE_URL}${ROUTES.BLOG}`)) {
-          item.changefreq = 'daily';
-          item.priority = 0.9;
-        }
-        return item;
-      },
-    }),
     icon({
       iconDir: 'src/assets/icons',
     }),
   ],
   markdown: {
     remarkPlugins,
-    // syntaxHighlight: false,
-    // extendDefaultPlugins: true,
   },
   vite: {
     build: {
