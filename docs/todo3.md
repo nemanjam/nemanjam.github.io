@@ -348,4 +348,5 @@ styleguide
 transitions
 render mdx for rss feed content
 Promise.all for all render, feed, toc
+fix git text in footer
 ```

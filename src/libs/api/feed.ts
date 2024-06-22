@@ -39,7 +39,7 @@ export const getFeed = async (): Promise<Feed> => {
   // this handles omitting draft posts and preview mode by default
   const sortedPosts = await getAllPosts();
 
-  for (const post of sortedPosts) {
+  const itemPromises = sortedPosts.map(async (post) => {
     const { data, body, slug } = post;
     const { title, description, publishDate, heroImage, noHero } = data;
 
@@ -59,8 +59,12 @@ export const getFeed = async (): Promise<Feed> => {
       ...(noHero ? { image: `${SITE_URL}${heroImage.src}` } : {}),
     };
 
-    feed.addItem(item);
-  }
+    return item;
+  });
+
+  const items = await Promise.all(itemPromises);
+
+  items.forEach((item) => feed.addItem(item));
 
   return feed;
 };
