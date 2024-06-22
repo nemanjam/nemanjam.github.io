@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 
 import Link from '@/components/Link.astro';
+import { draftText } from '@/constants/data';
 import { ROUTES } from '@/constants/routes';
 
 import type { Post } from '@/types/post';
@@ -12,7 +13,7 @@ export interface Props {
 
 const { post } = Astro.props;
 const { data, slug } = post;
-const { title, heroImage, heroAlt, description } = data;
+const { title, heroImage, heroAlt, description, draft } = data;
 ---
 
 <div>
@@ -26,6 +27,7 @@ const { title, heroImage, heroAlt, description } = data;
   <h4 class="break-words line-clamp-2 mt-3 mb-2">
     <Link variant="link-heading" href={`${ROUTES.BLOG}${slug}`}>
       {title}
+      {draft && <sup class="text-sm text-red-500 ml-1">{draftText}</sup>}
     </Link>
   </h4>
   {description && <p class="text-base text-captions line-clamp-2">{description}</p>}

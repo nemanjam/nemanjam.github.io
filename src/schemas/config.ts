@@ -1,11 +1,16 @@
 import { z } from 'zod';
 
 export const nodeEnvValues = ['development', 'test', 'production'] as const;
+export const booleanValues = ['true', 'false', ''] as const;
 
 export const configSchema = z.object({
   NODE_ENV: z.enum(nodeEnvValues),
+  PREVIEW_MODE: z
+    .enum(booleanValues)
+    .transform((value) => value === 'true')
+    .default('false'),
   // ensure no trailing slash
-  SITE_URL: z.string().url().regex(/[^/]$/, 'SITE_URL should not end with a slash'),
+  SITE_URL: z.string().url().regex(/[^/]$/, 'SITE_URL should not end with a slash "/"'),
   SITE_TITLE: z.string().min(1),
   SITE_DESCRIPTION: z.string().min(1),
   PAGE_SIZE: z.object({

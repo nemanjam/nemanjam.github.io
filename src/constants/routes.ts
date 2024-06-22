@@ -9,6 +9,7 @@ export const ROUTES = {
   EXPLORE: '/blog/explore/',
   EXPLORE_TAGS: '/blog/explore/tags/',
   EXPLORE_CATEGORIES: '/blog/explore/categories/',
+  /** maybe in future */
   DRAFTS: '/drafts/',
   _404: '/404/',
   _500: '/500/',

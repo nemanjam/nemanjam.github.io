@@ -4,6 +4,7 @@ import { getAllPosts } from '@/modules/post/common';
 import { ROUTES } from '@/constants/routes';
 import { CONFIG } from '@/config';
 import { renderMarkdown } from '@/utils/markdown';
+import { isPreviewMode } from '@/utils/preview';
 
 import type { Item } from 'feed';
 
@@ -42,8 +43,10 @@ export const getFeed = async (): Promise<Feed> => {
     const { data, body, slug } = post;
     const { title, description, publishDate, heroImage, noHero, draft } = data;
 
+    const includeDrafts = isPreviewMode() && draft;
+
     // omit drafts
-    if (draft) continue;
+    if (!includeDrafts) continue;
 
     const url = `${SITE_URL}${ROUTES.BLOG}${slug}/`;
     const { code: content } = await renderMarkdown(body);

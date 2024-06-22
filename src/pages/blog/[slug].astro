@@ -10,6 +10,7 @@ import PostMeta from '@/components/PostMeta.astro';
 import SharePost from '@/components/SharePost.astro';
 import TagList from '@/components/TagList.astro';
 import TocWidget from '@/components/TocWidget.astro';
+import { draftText } from '@/constants/data';
 import { getOpenGraphImagePath } from '@/utils/open-graph-image';
 
 import type { Metadata } from '@/types/common';
@@ -88,7 +89,7 @@ const metadata: Metadata = { title, description, image };
     {/* title */}
     <h1>
       {title}
-      {draft && <sup class="text-red-400">(draft)</sup>}
+      {draft && <sup class="text-red-500 ml-1">{draftText}</sup>}
     </h1>
 
     {/* description */}

@@ -4,6 +4,7 @@ import { Image } from 'astro:assets';
 
 import { getPublishedOrUpdatedDate } from '@/modules/common';
 import Link from '@/components/Link.astro';
+import { draftText } from '@/constants/data';
 import { ROUTES } from '@/constants/routes';
 import { formatDate, formatDateIso } from '@/utils/datetime';
 import { cn } from '@/utils/styles';
@@ -17,7 +18,7 @@ export interface Props extends HTMLAttributes<'article'> {
 
 const { post, class: className } = Astro.props;
 const { data, slug } = post;
-const { title, heroImage, heroAlt, description, publishDate, updatedDate, tags } = data;
+const { title, heroImage, heroAlt, description, publishDate, updatedDate, draft } = data;
 
 const { lastAccessDate, isUpdatedDate } = getPublishedOrUpdatedDate({
   publishDate,
@@ -41,8 +42,9 @@ const { lastAccessDate, isUpdatedDate } = getPublishedOrUpdatedDate({
     class="object-cover rounded-box hidden xs:block"
   />
   <div>
-    <h4 class="text-xl line-clamp-1 leading-none mb-1">
+    <h4 class="text-xl leading-none line-clamp-1 mb-1">
       <Link variant="link-heading" href={`${ROUTES.BLOG}${slug}`}>
+        {draft && <sup class="text-sm text-red-500 mr-1">{draftText}</sup>}
         {title}
       </Link>
     </h4>

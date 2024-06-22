@@ -6,6 +6,7 @@ import { getPublishedOrUpdatedDate } from '@/modules/common';
 import { getCategoryProps } from '@/modules/post/category';
 import Link from '@/components/Link.astro';
 import TagList from '@/components/TagList.astro';
+import { draftText } from '@/constants/data';
 import { ROUTES } from '@/constants/routes';
 import { formatDate, formatDateIso } from '@/utils/datetime';
 import { cn } from '@/utils/styles';
@@ -89,7 +90,7 @@ const { lastAccessDate, isUpdatedDate } = getPublishedOrUpdatedDate({
     <h2 class="text-2xl font-bold break-words md:line-clamp-2 mt-0 mb-2">
       <Link href={`${ROUTES.BLOG}${slug}`} variant="link-heading">
         {title}
-        {draft && <sup class="text-sm text-red-400">(draft)</sup>}
+        {draft && <sup class="text-sm text-red-500 ml-1">{draftText}</sup>}
       </Link>
     </h2>
 

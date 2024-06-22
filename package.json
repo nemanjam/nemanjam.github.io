@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "start": "astro dev",
+    "start": "serve ./dist",
+    "preview": "astro preview",
     "build": "astro build",
     "build:nginx": "SITE_URL='https://nemanjamitic.com' astro build",
     "build:nginx:local": "SITE_URL='https://blog.local.nemanjamitic.com' astro build",
-    "preview": "astro preview",
     "astro": "astro",
     "sync": "astro sync",
     "lint": "eslint --ext .astro,.tsx,.ts,.js,.mdx src",
@@ -74,6 +74,7 @@
     "eslint-plugin-tailwindcss": "^3.17.3",
     "prettier": "^3.3.2",
     "prettier-plugin-astro": "^0.14.0",
+    "serve": "^14.2.3",
     "shiki": "^1.7.0",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.4.5"

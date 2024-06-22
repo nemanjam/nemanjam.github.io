@@ -342,6 +342,7 @@ share
     code blocks responsive fonts 14, 16px, md or lg?
     pagination 3 items
 styleguide
-sitemap
+    sitemap
     transistor favicon
+rewrite env vars with new types and import.meta instead of process.env
 ```

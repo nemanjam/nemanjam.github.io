@@ -1,5 +1,7 @@
 import { getCollection } from 'astro:content';
 
+import { isPreviewMode } from '@/utils/preview';
+
 import type { CollectionEntry, CollectionKey } from 'astro:content';
 
 /*-------------------------------- all entries ------------------------------*/
@@ -11,13 +13,15 @@ export interface GetAllEntriesOptions {
 
 /**
  * Sorts by publishDate desc by default. Newest on top.
- * Omits drafts by default.
+ * Omits drafts by default - set by PREVIEW_MODE env var.
+ *
+ * ONLY place to filter draft posts and projects.
  */
 export const getAllEntries = async <T extends CollectionKey>(
   collectionName: T,
   options?: GetAllEntriesOptions
 ): Promise<CollectionEntry<T>[]> => {
-  const { skipSort = false, includeDrafts = false } = options ?? {};
+  const { skipSort = false, includeDrafts = isPreviewMode() } = options ?? {};
 
   const entries = await getCollection<T>(collectionName, ({ data }) => {
     const isProdAndDraft = import.meta.env.PROD && data.draft;

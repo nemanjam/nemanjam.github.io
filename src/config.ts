@@ -20,8 +20,10 @@ dotenv.config({ path: envFileName });
 
 /*-------------------- configData -------------------*/
 
+/** SSG - all env vars are build time only. */
 const configData: ConfigType = {
   NODE_ENV: process.env.NODE_ENV,
+  PREVIEW_MODE: process.env.PREVIEW_MODE,
   /** without '/' */
   SITE_URL: process.env.SITE_URL,
   SITE_TITLE: 'Nemanja Mitic',
