@@ -345,4 +345,7 @@ styleguide
     sitemap
     transistor favicon
     rewrite env vars with new types and import.meta instead of process.env // ne moze naravno, ok je ovako
+transitions
+render mdx for rss feed content
+Promise.all for all render, feed, toc
 ```

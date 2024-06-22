@@ -4,7 +4,6 @@ import { getAllPosts } from '@/modules/post/common';
 import { ROUTES } from '@/constants/routes';
 import { CONFIG } from '@/config';
 import { renderMarkdown } from '@/utils/markdown';
-import { isPreviewMode } from '@/utils/preview';
 
 import type { Item } from 'feed';
 
