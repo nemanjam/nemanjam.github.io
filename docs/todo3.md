@@ -344,5 +344,5 @@ share
 styleguide
     sitemap
     transistor favicon
-rewrite env vars with new types and import.meta instead of process.env
+    rewrite env vars with new types and import.meta instead of process.env // ne moze naravno, ok je ovako
 ```

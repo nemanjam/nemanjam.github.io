@@ -8,6 +8,10 @@ import type { ConfigType } from './types/config';
 
 /*------------------ load .env file -----------------*/
 
+// import.meta.env is not available in astro.config.mjs, only after the config is loaded.
+// ! MUST use process.env for vars used in astro.config.mjs.
+// https://github.com/withastro/astro/issues?q=.env+file+not+loaded
+
 const NODE_ENV = process.env.NODE_ENV;
 
 if (!nodeEnvValues.includes(NODE_ENV)) {
