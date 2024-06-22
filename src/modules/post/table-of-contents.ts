@@ -24,11 +24,8 @@ export const getHeadingsForTableOfContents = (postHeadings: MarkdownHeading[]): 
       // take only depth 3
       if (postHeadings[index].depth !== 3) continue;
 
-      subHeadings.push({
-        slug: postHeadings[index].slug,
-        text: postHeadings[index].text,
-        headings: [],
-      });
+      const { slug, text } = postHeadings[index];
+      subHeadings.push({ slug, text, headings: [] });
     }
 
     headings.push({ slug, text, headings: subHeadings });
