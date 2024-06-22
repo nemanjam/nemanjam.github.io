@@ -170,6 +170,10 @@ https://github.com/markteekman/accessible-astro-starter
 
 // another
 https://github.com/saicaca/fuwari
+
+// big project, chinese guy, has astro and next.js branches
+https://github.dev/syhily/yufan.me
+
 -----------
 za local state mora react ili solid
 for state between pages nanostore with localStorage
