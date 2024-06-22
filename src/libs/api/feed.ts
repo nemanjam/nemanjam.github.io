@@ -37,16 +37,12 @@ export const getFeed = async (): Promise<Feed> => {
     author,
   });
 
+  // this handles omitting draft posts and preview mode by default
   const sortedPosts = await getAllPosts();
 
   for (const post of sortedPosts) {
     const { data, body, slug } = post;
-    const { title, description, publishDate, heroImage, noHero, draft } = data;
-
-    const includeDrafts = isPreviewMode() && draft;
-
-    // omit drafts
-    if (!includeDrafts) continue;
+    const { title, description, publishDate, heroImage, noHero } = data;
 
     const url = `${SITE_URL}${ROUTES.BLOG}${slug}/`;
     const { code: content } = await renderMarkdown(body);
