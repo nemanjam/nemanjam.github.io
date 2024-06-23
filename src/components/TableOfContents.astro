@@ -1,0 +1,41 @@
+---
+import Link from '@/components/Link.astro';
+
+export interface Heading {
+  text: string;
+  slug: string;
+  headings: Heading[];
+}
+
+export interface Props {
+  headings: Heading[];
+}
+
+const { headings } = Astro.props as Props;
+
+const getHref = (slug: string) => `#${slug}`;
+---
+
+<aside class="md:max-w-lg rounded-box border border-base-300 p-4 my-5 md:my-6 mx-auto">
+  <h2 class="mt-4">Table of contents</h2>
+
+  <ol class="ol-nested-decimal my-0">
+    {
+      headings.map(({ slug, text, headings: subHeadings }) => (
+        <li class="my-0">
+          <Link href={getHref(slug)}>{text}</Link>
+
+          {subHeadings.length > 0 && (
+            <ol class="mt-0 mb-2">
+              {subHeadings.map(({ slug, text }) => (
+                <li class="my-0">
+                  <Link href={getHref(slug)}>{text}</Link>
+                </li>
+              ))}
+            </ol>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</aside>

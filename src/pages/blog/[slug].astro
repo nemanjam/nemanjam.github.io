@@ -8,8 +8,8 @@ import { default as PostLayout } from '@/layouts/Post.astro';
 import PostListMore from '@/components/PostListMore.astro';
 import PostMeta from '@/components/PostMeta.astro';
 import SharePost from '@/components/SharePost.astro';
+import TableOfContents from '@/components/TableOfContents.astro';
 import TagList from '@/components/TagList.astro';
-import TocWidget from '@/components/TocWidget.astro';
 import { draftText } from '@/constants/data';
 import { getOpenGraphImagePath } from '@/utils/open-graph-image';
 
@@ -102,7 +102,7 @@ const metadata: Metadata = { title, description, image };
   {/* section content */}
   <Fragment slot="content">
     {/* table of contents */}
-    {toc && false && <TocWidget headings={headings} />}
+    {toc && <TableOfContents headings={headings} />}
 
     <Content />
 

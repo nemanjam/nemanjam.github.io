@@ -7,7 +7,7 @@ import Alert from '../components/Alert.astro';
 import Details from '../components/Details.astro';
 import PageInfo from '../components/PageInfo.astro';
 import Picture from '../components/Picture.astro';
-import TocList from '../components/TocList.astro';
+import TableOfContents from '../components/TableOfContents.astro';
 import YouTube from '../components/YouTube.astro';
 
 <PageInfo file="/src/pages/styleguide.mdx" publishDate={new Date(Date.UTC(2022, 9, 11))} />
@@ -16,23 +16,22 @@ Here is a sample of some basic Markdown syntax that can be used when writing Mar
 
 {/* Note: because of float this is behind headings on hover */}
 
-<aside class="prose-base mx-4 mb-4 rounded-xl border border-slate-200 bg-slate-100 px-4 py-1 text-slate-900 transition-colors duration-500 dark:border-slate-800 dark:bg-slate-900 sm:float-right sm:ml-8 sm:mr-0 sm:max-w-[50%] md:-mr-8 lg:-mr-32">
-  <h2 class="!mt-4">Table of contents</h2>
-  <TocList
-    headings={[
-      { text: 'Headings', slug: 'headings', depth: 0 },
-      { text: 'Paragraph', slug: 'paragraph', depth: 0 },
-      { text: 'Images', slug: 'images', depth: 0 },
-      { text: 'Blockquotes', slug: 'blockquotes', depth: 0 },
-      { text: 'Tables', slug: 'tables', depth: 0 },
-      { text: 'Code blocks', slug: 'code-blocks', depth: 0 },
-      { text: 'List Types', slug: 'list-types', depth: 0 },
-      { text: 'Other elements', slug: 'other-elements--abbr-sub-sup-kbd-mark', depth: 0 },
-      { text: 'Alerts', slug: 'alerts', depth: 0 },
-      { text: 'YouTube', slug: 'youtube', depth: 0 },
-    ]}
-  />
-</aside>
+
+<TableOfContents
+  headings={[
+    { text: 'Headings', slug: 'headings', depth: 0 },
+    { text: 'Paragraph', slug: 'paragraph', depth: 0 },
+    { text: 'Images', slug: 'images', depth: 0 },
+    { text: 'Blockquotes', slug: 'blockquotes', depth: 0 },
+    { text: 'Tables', slug: 'tables', depth: 0 },
+    { text: 'Code blocks', slug: 'code-blocks', depth: 0 },
+    { text: 'List Types', slug: 'list-types', depth: 0 },
+    { text: 'Other elements', slug: 'other-elements--abbr-sub-sup-kbd-mark', depth: 0 },
+    { text: 'Alerts', slug: 'alerts', depth: 0 },
+    { text: 'YouTube', slug: 'youtube', depth: 0 },
+  ]}
+/>
+
 
 ## Headings
 
