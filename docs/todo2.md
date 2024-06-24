@@ -174,6 +174,9 @@ https://github.com/saicaca/fuwari
 // big project, chinese guy, has astro and next.js branches
 https://github.dev/syhily/yufan.me
 
+// interesting design
+https://github.com/joshmedeski/joshmedeski.com
+
 -----------
 za local state mora react ili solid
 for state between pages nanostore with localStorage
