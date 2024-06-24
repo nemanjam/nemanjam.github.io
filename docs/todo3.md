@@ -349,4 +349,7 @@ transitions
 render mdx for rss feed content
 Promise.all for all render, feed, toc
 fix git text in footer
+make design-system with many mdx files, colors, layouts, buttons, links, etc, like storybook
+fora moras astro jsx da exportujes, a ne react componentu
+mdx image gallery 
 ```

@@ -9,6 +9,7 @@
     "streetsidesoftware.code-spell-checker",
     "stylelint.vscode-stylelint",
     "unifiedjs.vscode-mdx",
+    "xyc.vscode-mdx-preview",
     "yoavbls.pretty-ts-errors",
 
     "aaron-bond.better-comments",

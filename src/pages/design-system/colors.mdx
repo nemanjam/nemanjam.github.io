@@ -1,0 +1,36 @@
+---
+layout: '../../layouts/Page.astro'
+title: Colors
+---
+
+{/* Define the color palette data */} 
+
+export const colorPalette = [
+  { name: 'Primary Color', value: '#0070f3' },
+  { name: 'Secondary Color', value: '#1db954' },
+  { name: 'Accent Color', value: '#ff4081' },
+  { name: 'Background Color', value: '#f5f5f5' },
+  { name: 'Text Color', value: '#333333' },
+];
+
+<>
+  <h1>Color Palette</h1>
+  <div>
+    {colorPalette.map((color, index) => (
+      <div key={index} style={{ marginBottom: '1em' }}>
+        <div
+          style={{
+            backgroundColor: color.value,
+            width: '100px',
+            height: '100px',
+            border: '1px solid #000',
+          }}
+        />
+        <p>
+          <strong>{color.name}:</strong> {color.value}
+        </p>
+      </div>
+    ))}
+  </div>
+</>
+ 
