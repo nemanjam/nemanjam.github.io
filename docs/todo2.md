@@ -177,6 +177,10 @@ https://github.dev/syhily/yufan.me
 // interesting design
 https://github.com/joshmedeski/joshmedeski.com
 
+// notion cms
+https://feather.so/showcase
+https://bhanuteja.dev/blog
+https://x.com/tibo_maker
 -----------
 za local state mora react ili solid
 for state between pages nanostore with localStorage
