@@ -355,5 +355,5 @@ mdx image gallery, modal
 nested my-prose and not-prose problem in .mdx pages for cards, buttons...
 mdx intelisense extension
 mdx gallery
-
+tailwind not-prose question
 ```
