@@ -4,6 +4,8 @@ title: Buttons, Links, Tags
 ---
 
 import Button from '../../components/Button.astro';
+import Link from '../../components/Link.astro';
+import Tag from '../../components/Tag.astro';
 
 export const buttons = {
   variant: [
@@ -16,7 +18,6 @@ export const buttons = {
   size: [{size: 'lg'}, {size: 'md'}, {size: 'sm'}],
   disabled: [{disabled: true}, {disabled: false}],
 };
-
 
 ## Buttons
 
@@ -34,5 +35,55 @@ export const buttons = {
   </>
 ))}
 
+export const links = {
+  variant: [
+    {variant: 'link'}, 
+    {variant: 'no-underline'},  
+    {variant: 'link-heading'},  
+    {variant: 'link-nav'},  
+  ],
+  disabled: [{disabled: true}, {disabled: false}],
+};
 
+## Links
 
+{Object.entries(links).map(([key, values]) => (
+  <>
+    <h4>{key}</h4>
+    <div class="flex items-center gap-4 flex-wrap">
+      {values.map((props) => {
+          const text = `${Object.values(props)[0]}`;
+          
+          return <Link {...props}>{text}</Link>;
+        }
+      )}
+    </div>
+  </>
+))}
+
+export const tags = {
+  variant: [
+    {variant: 'solid', colors: 'primary'}, 
+    {variant: 'solid', colors: 'default'}, 
+    {variant: 'text', colors: 'primary'}, 
+    {variant: 'text', colors: 'default'}, 
+  ],
+  size: [{size: 'lg'}, {size: 'md'}, {size: 'sm'}],
+};
+
+## Tags
+
+{Object.entries(tags).map(([key, values]) => (
+  <>
+    <h4>{key}</h4>
+    <div class="flex items-center gap-4 flex-wrap">
+      {values.map((props) => {
+          const item = Object.entries(props)[0];
+          const text = `${item[0]} ${item[1]}`;
+          
+          return <Tag {...props}>{text}</Tag>;
+        }
+      )}
+    </div>
+  </>
+))}
