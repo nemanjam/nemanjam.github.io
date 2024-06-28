@@ -352,4 +352,5 @@ fix git text in footer
 make design-system with many mdx files, colors, layouts, buttons, links, etc, like storybook
 fora moras astro jsx da exportujes, a ne react componentu
 mdx image gallery, modal
+nested my-prose and not-prose problem in .mdx pages for cards, buttons...
 ```
