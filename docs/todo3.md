@@ -327,7 +327,7 @@ layout bottom padding
 start writing readme
 working-notes folder in docs
 footer commit toast
-draft preview for prod
+    draft preview for prod
 fix button not-prose
 write content and design for pages, research
     yarn scripts
@@ -347,9 +347,9 @@ styleguide
     rewrite env vars with new types and import.meta instead of process.env // ne moze naravno, ok je ovako
 transitions
 render mdx for rss feed content
-Promise.all for all render, feed, toc
+    Promise.all for all render, feed, toc
 fix git text in footer
 make design-system with many mdx files, colors, layouts, buttons, links, etc, like storybook
 fora moras astro jsx da exportujes, a ne react componentu
-mdx image gallery 
+mdx image gallery, modal
 ```

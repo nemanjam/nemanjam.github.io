@@ -3,34 +3,52 @@ layout: '../../layouts/Page.astro'
 title: Colors
 ---
 
-{/* Define the color palette data */} 
+import { cn } from '../../utils/styles';
+
 
 export const colorPalette = [
-  { name: 'Primary Color', value: '#0070f3' },
-  { name: 'Secondary Color', value: '#1db954' },
-  { name: 'Accent Color', value: '#ff4081' },
-  { name: 'Background Color', value: '#f5f5f5' },
-  { name: 'Text Color', value: '#333333' },
+
+  // default background and borders
+  { name: 'base-100', value: 'bg-base-100' },
+  { name: 'base-200', value: 'bg-base-200' },
+  { name: 'base-300', value: 'bg-base-300' },
+  { name: 'base-code', value: 'bg-base-code' },
+
+  // default content
+  { name: 'content', value: 'text-content' },
+  { name: 'headings', value: 'text-headings' },
+  { name: 'captions', value: 'text-captions' },
+
+  // links
+  { name: 'links', value: 'text-links' },
+  { name: 'links-hover', value: 'text-links-hover' },
+  { name: 'links-visited', value: 'text-links-visited' },
+
+  // brand colors
+  { name: 'primary', value: 'bg-primary text-primary-content' },
+  { name: 'primary-hover', value: 'bg-primary-hover text-primary-content' },
+  { name: 'primary-base-200', value: 'bg-primary-base-200' },
+  { name: 'primary-base-300', value: 'bg-primary-base-300' },
+
+  { name: 'secondary', value: 'bg-secondary text-secondary-content' },
+  { name: 'secondary-hover', value: 'bg-secondary-hover text-secondary-content' },
+
+  { name: 'accent', value: 'bg-accent text-accent-content' },
+  { name: 'accent-hover', value: 'bg-accent-hover text-accent-content' },
 ];
 
 <>
   <h1>Color Palette</h1>
   <div>
-    {colorPalette.map((color, index) => (
-      <div key={index} style={{ marginBottom: '1em' }}>
-        <div
-          style={{
-            backgroundColor: color.value,
-            width: '100px',
-            height: '100px',
-            border: '1px solid #000',
-          }}
-        />
-        <p>
-          <strong>{color.name}:</strong> {color.value}
-        </p>
-      </div>
-    ))}
+    {colorPalette.map((color, index) => {
+      const { name, value } = color;
+            
+      return (
+        <div key={index} class={cn('px-4 py-2 text-center text-content border border-base-300 my-2', value)}>
+          {name}
+        </div>
+      )}
+    )}
   </div>
 </>
  
