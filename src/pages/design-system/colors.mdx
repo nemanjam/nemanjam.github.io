@@ -37,18 +37,18 @@ export const colorPalette = [
   { name: 'accent-hover', value: 'bg-accent-hover text-accent-content' },
 ];
 
-<>
-  <h1>Color Palette</h1>
-  <div>
-    {colorPalette.map((color, index) => {
-      const { name, value } = color;
-            
-      return (
-        <div key={index} class={cn('px-4 py-2 text-center text-content border border-base-300 my-2', value)}>
-          {name}
-        </div>
-      )}
+# Color Palette
+
+<div>
+  {colorPalette.map((color) => {
+    const { name, value } = color;
+          
+    return (
+      <div class={cn('px-4 py-2 text-center text-content border border-base-300 my-2', value)}>
+        {name}
+      </div>
     )}
-  </div>
-</>
+  )}
+</div>
+
  

@@ -1,0 +1,38 @@
+---
+layout: '../../layouts/Page.astro'
+title: Buttons, Links, Tags
+---
+
+import Button from '../../components/Button.astro';
+
+export const buttons = {
+  variant: [
+    {variant: 'outline', colors: 'primary'}, 
+    {variant: 'solid', colors: 'primary'},  
+    {variant: 'outline', colors: 'default'}, 
+    {variant: 'solid', colors: 'default'},
+  ],
+  colors: [{colors: 'primary'}, {colors: 'default'}],
+  size: [{size: 'lg'}, {size: 'md'}, {size: 'sm'}],
+  disabled: [{disabled: true}, {disabled: false}],
+};
+
+
+## Buttons
+
+{Object.entries(buttons).map(([key, values]) => (
+  <>
+    <h4>{key}</h4>
+    <div class="flex items-center gap-4 flex-wrap">
+      {values.map((props) => {
+          const text = `${Object.values(props)[0]}`;
+          
+          return <Button {...props}>{text}</Button>;
+        }
+      )}
+    </div>
+  </>
+))}
+
+
+
