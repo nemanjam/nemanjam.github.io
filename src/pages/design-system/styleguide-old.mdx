@@ -6,7 +6,6 @@ title: Styleguide
 import Alert from '../../components/Alert.astro';
 import Details from '../../components/Details.astro';
 import PageInfo from '../../components/PageInfo.astro';
-import Picture from '../../components/Picture.astro';
 import TableOfContents from '../../components/TableOfContents.astro';
 import YouTube from '../../components/YouTube.astro';
 
@@ -16,70 +15,68 @@ Here is a sample of some basic Markdown syntax that can be used when writing Mar
 
 {/* Note: because of float this is behind headings on hover */}
 
-
 <TableOfContents
   headings={[
-  {
-    slug: 'commodo-commodo-fugiat-minim-adipisicing',
-    text: 'Commodo commodo fugiat minim adipisicing',
-    headings: [
-      {
-        slug: 'labore-qui-eu-aliquip-labore',
-        text: 'Labore qui eu aliquip labore',
-        headings: []
-      },
-      {
-        slug: 'non-consectetur-do',
-        text: 'Non consectetur do',
-        headings: []
-      },
-      {
-        slug: 'elit-excepteur',
-        text: 'Elit excepteur',
-        headings: []
-      },
-      {
-        slug: 'veniam-consequat-sint-ut-id',
-        text: 'Veniam consequat sint ut id',
-        headings: []
-      },
-      {
-        slug: 'quis-ex-officia',
-        text: 'Quis ex officia',
-        headings: []
-      },
-      {
-        slug: 'consequat-pariatur',
-        text: 'Consequat pariatur',
-        headings: []
-      }
-    ]
-  },
-  {
-    slug: 'anim-fugiat-laborum',
-    text: 'Anim fugiat laborum',
-    headings: [
-      {
-        slug: 'nulla-velit-incididunt',
-        text: 'Nulla velit incididunt',
-        headings: []
-      }
-    ]
-  },
-  {
-    slug: 'reprehenderit-aute-dolor-officia',
-    text: 'Reprehenderit aute dolor officia',
-    headings: [
-      {
-        slug: 'quis-mollit-laboris-voluptate',
-        text: 'Quis mollit laboris voluptate',
-        headings: []
-      }
-    ]
-  }
-]}
+    {
+      slug: 'commodo-commodo-fugiat-minim-adipisicing',
+      text: 'Commodo commodo fugiat minim adipisicing',
+      headings: [
+        {
+          slug: 'labore-qui-eu-aliquip-labore',
+          text: 'Labore qui eu aliquip labore',
+          headings: [],
+        },
+        {
+          slug: 'non-consectetur-do',
+          text: 'Non consectetur do',
+          headings: [],
+        },
+        {
+          slug: 'elit-excepteur',
+          text: 'Elit excepteur',
+          headings: [],
+        },
+        {
+          slug: 'veniam-consequat-sint-ut-id',
+          text: 'Veniam consequat sint ut id',
+          headings: [],
+        },
+        {
+          slug: 'quis-ex-officia',
+          text: 'Quis ex officia',
+          headings: [],
+        },
+        {
+          slug: 'consequat-pariatur',
+          text: 'Consequat pariatur',
+          headings: [],
+        },
+      ],
+    },
+    {
+      slug: 'anim-fugiat-laborum',
+      text: 'Anim fugiat laborum',
+      headings: [
+        {
+          slug: 'nulla-velit-incididunt',
+          text: 'Nulla velit incididunt',
+          headings: [],
+        },
+      ],
+    },
+    {
+      slug: 'reprehenderit-aute-dolor-officia',
+      text: 'Reprehenderit aute dolor officia',
+      headings: [
+        {
+          slug: 'quis-mollit-laboris-voluptate',
+          text: 'Quis mollit laboris voluptate',
+          headings: [],
+        },
+      ],
+    },
+  ]}
 />
-
 
 ## Headings
 
@@ -105,7 +102,7 @@ Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sap
 
 ## Images
 
-<Picture
+<Image
   src="/images/default/default-hero-image.jpg"
   widths={[480, 640, 1200, 1600]}
   width={3576}
@@ -115,8 +112,8 @@ Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sap
 
 ### Hero images
 
-<div class="lg:bustout">
-  <Picture
+<div class="expand-lg">
+  <Image
     src="/images/default/default-hero-image.jpg"
     class="!mt-0 w-full max-w-none"
     widths={[480, 640, 1200, 1600]}

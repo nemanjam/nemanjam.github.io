@@ -355,5 +355,13 @@ mdx image gallery, modal
 nested my-prose and not-prose problem in .mdx pages for cards, buttons...
 mdx intelisense extension
 mdx gallery
-tailwind not-prose question
+tailwind not-prose question // to
+navigation for design system pages
+table of contents styling
+components into folders
+format mdx, autocomplete, it was in prettierignore
+expanded image must not use width less than expanded width, wont be centered
+load bookmarks repo on build
+image gallery grid
+fix image vertical margins, widths and width everywhere, constants
 ```

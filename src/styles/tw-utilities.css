@@ -1,21 +1,15 @@
 @layer utilities {
-  .no-bustout {
+  .no-expand {
   }
 
-  .bustout {
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    transform: translateX(calc(50vw - 50%));
-    width: 80vw;
-    max-width: 1280px;
+  .expand-lg {
+    @apply xl:mx-[calc(50%-50vw)] xl:translate-x-[calc(50vw-50%)];
+    @apply xl:w-[80vw] max-w-7xl;
   }
 
-  .bustout-sm {
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    transform: translateX(calc(50vw - 50%));
-    width: 60vw;
-    max-width: 1024px;
+  .expand-sm {
+    @apply xl:mx-[calc(50%-50vw)] xl:translate-x-[calc(50vw-50%)];
+    @apply xl:w-[70vw] max-w-5xl;
   }
 
   .shape-circle {

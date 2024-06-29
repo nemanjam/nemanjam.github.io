@@ -5,6 +5,7 @@ yarn.yaml
 .turbo
 .vercel
 .astro
-*.md
-*.mdx
 docs
+
+# *.md
+# *.mdx
