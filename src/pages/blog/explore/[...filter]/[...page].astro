@@ -93,9 +93,11 @@ const postsByYear = groupPostsByYear(paginatedPosts);
       postsByYear.years.map((year) => (
         <>
           <h2>{year}</h2>
-          {postsByYear.posts[year].map((post) => (
-            <PostCardSmall {post} class="last:mb-6" />
-          ))}
+          <div>
+            {postsByYear.posts[year].map((post) => (
+              <PostCardSmall {post} class="last:mb-6" />
+            ))}
+          </div>
         </>
       ))
     }
