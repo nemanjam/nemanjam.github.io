@@ -5,6 +5,7 @@ import { Image } from 'astro:assets';
 import { getPublishedOrUpdatedDate } from '@/modules/common';
 import Link from '@/components/Link.astro';
 import { draftText } from '@/constants/data';
+import { IMAGE_SIZES } from '@/constants/image';
 import { ROUTES } from '@/constants/routes';
 import { formatDate, formatDateIso } from '@/utils/datetime';
 import { cn } from '@/utils/styles';
@@ -35,10 +36,9 @@ const { lastAccessDate, isUpdatedDate } = getPublishedOrUpdatedDate({
   )}
 >
   <Image
+    {...IMAGE_SIZES.FIXED.POST_CARD_SMALL}
     src={heroImage}
     alt={heroAlt}
-    width="142"
-    height="80"
     class="object-cover rounded-box hidden xs:block"
   />
   <div>

@@ -369,5 +369,11 @@ index.mdx in design-system folder with navigation
 embed youtube, twitter, link https://github.com/delucis/astro-embed
 add categories and tags links in footer
 giscus, share, transitions, PostInfo, format og image, image constants, h4 p css cva components, astro-embed yt, twitter, codesandbox
+h4, p must be in layer components so it can override prose from base
+base, components, utilities folders, b-, c-, u- prefixes
 links relative path in markdown <Link /> and [link](url), trailing '/', only [index](/design) is valid absolute path, koji krece od SITE_URL base url
+type and interface intelisense
+{} as const satisfies ImageSizes; // radi, pitaj
+fix widths for expanded images
+fix 404 margins?
 ```

@@ -7,6 +7,8 @@ import { Icon } from 'astro-icon/components';
 import { Image } from 'astro:assets';
 
 import YouTube from '../../components/YouTube.astro';
+import { IMAGE_SIZES } from '../../constants/image';
+
 import Amfi1Image from '../../content/post/_images/all-images/amfi1.jpg';
 import Bridge1Image from '../../content/post/_images/all-images/bridge1.jpg';
 import Lure2Image from '../../content/post/_images/all-images/lure2.jpg';
@@ -27,9 +29,9 @@ back to [Index](/design)
 
 ## Image
 
-### Image width="500"
+### Image width=MDX_SM
 
-<Image src={Nis1Image} width="500" alt="This is city" />
+<Image {...IMAGE_SIZES.FIXED.MDX_SM} src={Nis1Image} alt="This is city" />
 
 Dolor aliquip Lorem eiusmod reprehenderit sit. Quis eu ea quis pariatur labore consectetur culpa ex
 qui eu qui. Aliqua culpa consectetur sit ut. Quis Lorem do tempor cillum esse sit enim culpa
@@ -38,10 +40,9 @@ deserunt.
 ### Image widths=[...]
 
 <Image
+  {...IMAGE_SIZES.RESPONSIVE.MDX_EXPAND_LG}
   src={Riverside1Image}
   alt="This is river"
-  widths={[320, 540, 720, 1024]}
-  sizes="(max-width: 475px) 320px, (max-width: 720px) 540px, (max-width: 1280px) 720px, 1024px"
 />
 
 Adipisicing anim cillum esse et qui non veniam consectetur irure mollit aute. Occaecat elit ullamco mollit dolor pariatur ipsum.
@@ -50,10 +51,9 @@ Adipisicing anim cillum esse et qui non veniam consectetur irure mollit aute. Oc
 
 <div class="expand-sm">
   <Image
+    {...IMAGE_SIZES.RESPONSIVE.MDX_EXPAND_LG}
     src={Lure2Image}
     alt="This is lure"
-    widths={[320, 540, 720, 1024]}
-    sizes="(max-width: 475px) 320px, (max-width: 720px) 540px, (max-width: 1280px) 720px, 1024px"
   />
 </div>
 
@@ -63,10 +63,9 @@ Adipisicing exercitation enim nostrud aliquip incididunt. Non commodo ad exercit
 
 <div class="expand-lg">
   <Image
+    {...IMAGE_SIZES.RESPONSIVE.MDX_EXPAND_LG}
     src={Riverside2Image}
     alt="This is lure"
-    widths={[320, 540, 720, 1024]}
-    sizes="(max-width: 475px) 320px, (max-width: 720px) 540px, (max-width: 1280px) 720px, 1024px"
   />
 </div>
 

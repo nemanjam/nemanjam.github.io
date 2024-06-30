@@ -7,6 +7,7 @@ import { getCategoryProps } from '@/modules/post/category';
 import Link from '@/components/Link.astro';
 import TagList from '@/components/TagList.astro';
 import { draftText } from '@/constants/data';
+import { IMAGE_SIZES } from '@/constants/image';
 import { ROUTES } from '@/constants/routes';
 import { formatDate, formatDateIso } from '@/utils/datetime';
 import { cn } from '@/utils/styles';
@@ -52,10 +53,9 @@ const { lastAccessDate, isUpdatedDate } = getPublishedOrUpdatedDate({
     !noHero && (
       <div class="md:basis-1/3 md:shrink-0">
         <Image
+          {...IMAGE_SIZES.RESPONSIVE.POST_CARD}
           src={heroImage}
           alt={heroAlt}
-          widths={[320, 540]}
-          sizes="(max-width: 475px) 320px, 540px"
           itemprop="image"
           class="w-full h-[168px] xs:h-[250px] md:h-[168px] md:max-w-[298px] object-cover rounded-box"
           transition:name={`hero-${heroImage.src}`}

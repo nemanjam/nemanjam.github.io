@@ -6,6 +6,7 @@ import clsx from 'clsx';
 
 import HeaderLink from '@/components/HeaderLink.astro';
 import ThemeToggle from '@/components/ThemeToggle.astro';
+import { IMAGE_SIZES } from '@/constants/image';
 import { NAVIGATION_ITEMS } from '@/constants/navigation';
 import { ROUTES } from '@/constants/routes';
 import { CONFIG } from '@/config';
@@ -32,11 +33,10 @@ const activeNavItemPath = getActiveNavItemPath(routePathname);
     <div class="w-full md:w-auto flex justify-between items-center">
       <HeaderLink href={ROUTES.HOME} class="flex flex-row items-center gap-2 text-xl xs:text-2xl">
         <Image
+          {...IMAGE_SIZES.FIXED.AVATAR}
           loading="eager"
-          class="h-12 w-12 shrink-0 select-none rounded-md border border-base-300"
+          class="shrink-0 select-none rounded-md border border-base-300"
           src={Avatar}
-          width="96"
-          height="96"
           alt="Profile picture"
         />
         <span>

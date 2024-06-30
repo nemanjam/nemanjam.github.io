@@ -11,6 +11,9 @@ import PageInfo from '../../components/PageInfo.astro';
 import TableOfContents from '../../components/TableOfContents.astro';
 import YouTube from '../../components/YouTube.astro';
 
+import { IMAGE_SIZES } from '../../constants/image';
+
+
 <PageInfo file="/src/pages/styleguide.mdx" publishDate={new Date(Date.UTC(2022, 9, 11))} />
 
 Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in Astro.
@@ -105,23 +108,19 @@ Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sap
 ## Images
 
 <Image
+  {...IMAGE_SIZES.FIXED.MDX_LG_16_9}
   src="/images/default/default-hero-image.jpg"
-  widths={[480, 640, 1200, 1600]}
-  width={3576}
-  height={1328}
-  alt=""
+  alt="default image"
 />
 
 ### Hero images
 
 <div class="expand-lg">
   <Image
+    {...IMAGE_SIZES.FIXED.MDX_XL_16_9}
     src="/images/default/default-hero-image.jpg"
     class="!mt-0 w-full max-w-none"
-    widths={[480, 640, 1200, 1600]}
-    width={3576}
-    height={1328}
-    alt=""
+    alt="expand-lg image"
   />
 </div>
 

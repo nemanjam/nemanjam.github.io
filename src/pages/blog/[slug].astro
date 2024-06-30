@@ -11,6 +11,7 @@ import SharePost from '@/components/SharePost.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import TagList from '@/components/TagList.astro';
 import { draftText } from '@/constants/data';
+import { IMAGE_SIZES } from '@/constants/image';
 import { getOpenGraphImagePath } from '@/utils/open-graph-image';
 
 import type { Metadata } from '@/types/common';
@@ -72,14 +73,13 @@ const metadata: Metadata = { title, description, image };
     {
       !noHero && (
         <Image
+          {...IMAGE_SIZES.RESPONSIVE.POST_HERO}
           src={heroImage}
           alt={heroAlt}
           fetchpriority="high"
           loading="eager"
           itemprop="image"
           class="block max-w-full h-auto aspect-[16/8] object-cover"
-          widths={[320, 540, 720, 1024]}
-          sizes="(max-width: 475px) 320px, (max-width: 720px) 540px, (max-width: 1280px) 720px, 1024px"
         />
       )
     }
