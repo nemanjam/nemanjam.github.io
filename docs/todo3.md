@@ -376,4 +376,6 @@ type and interface intelisense
 {} as const satisfies ImageSizes; // radi, pitaj
 fix widths for expanded images
 fix 404 margins?
+open images in new tab and check all sizes
+mdx format adds new lines and paddings to paragraphs
 ```
