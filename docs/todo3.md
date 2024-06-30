@@ -365,7 +365,7 @@ load bookmarks repo on build
 image gallery grid
 fix image vertical margins, widths and width everywhere, constants
 resenje za tailwind - layer component classes za p, h4..., stilovi za komponentu moraju da budu kompletni, no base styles, oni se menjaju u prose
-index.mdx in design-system folder with navigation
+    index.mdx in design-system folder with navigation
 embed youtube, twitter, link https://github.com/delucis/astro-embed
 add categories and tags links in footer
 giscus, share, transitions, PostInfo, format og image, image constants, h4 p css cva components, astro-embed yt, twitter, codesandbox
@@ -378,4 +378,6 @@ fix widths for expanded images
 fix 404 margins?
 open images in new tab and check all sizes
 mdx format adds new lines and paddings to paragraphs
+pagination align bottom
+subfolders in components, working notes in docs folder
 ```

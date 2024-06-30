@@ -1,0 +1,83 @@
+---
+import {
+  FacebookShareButton,
+  HackerNewsShareButton,
+  LinkedInShareButton,
+  RedditShareButton,
+  SocialShare,
+  TwitterShareButton,
+} from 'astro-social-share';
+
+import { DEFAULT_METADATA } from '@/constants/metadata';
+import { CONFIG } from '@/config';
+
+import type { InferProps } from '@/types/utils';
+
+export type Props = Omit<InferProps<typeof SocialShare>, 'buttons'>;
+
+const shareProps = Astro.props;
+
+const { title, description } = DEFAULT_METADATA;
+const { SITE_URL } = CONFIG;
+
+const defaultProps = { description, title, via: SITE_URL };
+
+// dont change order because of colors
+const buttons = [
+  FacebookShareButton,
+  TwitterShareButton,
+  RedditShareButton,
+  LinkedInShareButton,
+  HackerNewsShareButton,
+];
+
+const props = { ...defaultProps, ...shareProps };
+
+// add cva size
+---
+
+<SocialShare {...props} {buttons} />
+
+<style is:global>
+  .astro-social-share {
+    @apply inline-block space-x-8;
+  }
+
+  .social-share-btn {
+    @apply inline-block w-10 h-10 !mr-0;
+
+    &:hover {
+      filter: brightness(70%);
+    }
+  }
+
+  /* facebook */
+  .social-share-btn:nth-child(1) {
+    fill: #1877f2;
+  }
+
+  /* twitter */
+  .social-share-btn:nth-child(2) {
+    fill: #000000;
+
+    /* must target path */
+    &:hover path {
+      @apply fill-gray-400;
+    }
+  }
+
+  /* reddit */
+  .social-share-btn:nth-child(3) {
+    fill: #ff4500;
+  }
+
+  /* linkedin */
+  .social-share-btn:nth-child(4) {
+    fill: #0a66c2;
+  }
+
+  /* hackernews */
+  .social-share-btn:nth-child(5) {
+    fill: #f0652f;
+  }
+</style>
