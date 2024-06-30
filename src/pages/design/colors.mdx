@@ -3,9 +3,10 @@ layout: '../../layouts/Page.astro'
 title: Colors
 ---
 
-import { cn } from '../../utils/styles';
 import { capitalizeFirstLetter } from '../../utils/strings';
+import { cn } from '../../utils/styles';
 
+back to [Index](/design)
 
 export const colors = {
   'background and borders': [
@@ -41,20 +42,16 @@ export const colors = {
 ## Color palette
 
 {Object.entries(colors).map(([key, values]) => (
-  <>
-    <h4>{capitalizeFirstLetter(key)}</h4>
-    {values.map((color) => {
-      const { name, value } = color;
-            
-      return (
-        <div class={cn('px-4 py-2 text-center text-content border border-base-300 my-2', value)}>
-          {name}
-        </div>
-      )}
-    )}
-  </>
-  )
-)}
+<>
+  <h4>{capitalizeFirstLetter(key)}</h4>
+  {values.map((color) => {
+    const { name, value } = color;
 
-
- 
+    return (
+      <div class={cn('px-4 py-2 text-center text-content border border-base-300 my-2', value)}>
+        {name}
+      </div>
+    );
+  })}
+</>
+))}

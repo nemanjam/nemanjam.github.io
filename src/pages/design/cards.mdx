@@ -12,6 +12,7 @@ import ProjectCard from '../../components/ProjectCard.astro';
 import { getAllPostsWithReadingTime } from '../../modules/post/common';
 import { getAllProjects } from '../../modules/project';
 
+back to [Index](/design)
 
 export const posts = await getAllPostsWithReadingTime();
 export const post = posts[0];
@@ -22,8 +23,8 @@ export const postWithoutImage = {
   data: {
     ...post.data,
     noHero: true,
-  }
-}
+  },
+};
 
 export const projects = await getAllProjects();
 export const project = projects[0];
@@ -36,6 +37,7 @@ export const threeProjects = projects.slice(0, 3);
 </div>
 
 ## PostCard without Image
+
 <div class="not-prose">
   <PostCard post={postWithoutImage} />
 </div>
@@ -43,24 +45,23 @@ export const threeProjects = projects.slice(0, 3);
 ## PostCardMore
 
 <div class="flex gap-4">
-{
-  threePosts.map(post => <PostCardMore post={post} />)
-}
+  {threePosts.map((post) => (
+    <PostCardMore post={post} />
+  ))}
 </div>
 
 ## PostCardSmall
 
 <div>
-{
-  threePosts.map(post => <PostCardSmall post={post} />)
-}
+  {threePosts.map((post) => (
+    <PostCardSmall post={post} />
+  ))}
 </div>
 
 ## ProjectCard
 
 <div class="flex gap-4">
-{
-  threeProjects.map(project => <ProjectCard project={project} />)
-}
+  {threeProjects.map((project) => (
+    <ProjectCard project={project} />
+  ))}
 </div>
-

@@ -7,5 +7,6 @@ yarn.yaml
 .astro
 docs
 
-# *.md
-# *.mdx
+# formatting breaks them
+*.md
+*.mdx

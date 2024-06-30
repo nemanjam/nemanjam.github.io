@@ -364,9 +364,10 @@ expanded image must not use width less than expanded width, wont be centered
 load bookmarks repo on build
 image gallery grid
 fix image vertical margins, widths and width everywhere, constants
-resenje za tailwind - layer component classes za p, h4...
+resenje za tailwind - layer component classes za p, h4..., stilovi za komponentu moraju da budu kompletni, no base styles, oni se menjaju u prose
 index.mdx in design-system folder with navigation
 embed youtube, twitter, link https://github.com/delucis/astro-embed
 add categories and tags links in footer
 giscus, share, transitions, PostInfo, format og image, image constants, h4 p css cva components, astro-embed yt, twitter, codesandbox
+links relative path in markdown <Link /> and [link](url), trailing '/', only [index](/design) is valid absolute path, koji krece od SITE_URL base url
 ```
