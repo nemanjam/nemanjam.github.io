@@ -20,6 +20,7 @@ const shareProps = Astro.props;
 const { title, description } = DEFAULT_METADATA;
 const { SITE_URL } = CONFIG;
 
+// via is only for twitter?
 const defaultProps = { description, title, via: SITE_URL };
 
 // dont change order because of colors
@@ -38,13 +39,18 @@ const props = { ...defaultProps, ...shareProps };
 
 <SocialShare {...props} {buttons} />
 
-<style is:global>
+{/* his slot is broken */}
+<style is:global slot="astro-social-share-css">
   .astro-social-share {
-    @apply inline-block space-x-8;
+    @apply inline-block h-10 space-x-8;
   }
 
   .social-share-btn {
-    @apply inline-block w-10 h-10 !mr-0;
+    @apply inline-block !mr-0;
+
+    svg {
+      @apply inline-block w-10 h-10;
+    }
 
     &:hover {
       filter: brightness(70%);
