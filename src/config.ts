@@ -30,7 +30,7 @@ const configData: ConfigType = {
   PREVIEW_MODE: process.env.PREVIEW_MODE,
   /** without '/' */
   SITE_URL: process.env.SITE_URL,
-  SITE_TITLE: 'Nemanja Mitic blog',
+  SITE_TITLE: 'Nemanja Mitic',
   SITE_DESCRIPTION: 'I am Nemanja, full stack developer',
   PAGE_SIZE: { POST_CARD: 3, POST_CARD_SMALL: 10 },
   MORE_POSTS_COUNT: 3,
