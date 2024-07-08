@@ -17,9 +17,7 @@ interface Props {
 
 const { category, publishDate, updatedDate, readingTime, class: className } = Astro.props;
 
-const shouldDisplay = Object.values(Astro.props).some(Boolean);
-// add variance authority
-// fix this html
+const shouldDisplay = [category, publishDate, updatedDate, readingTime].some(Boolean);
 ---
 
 {
