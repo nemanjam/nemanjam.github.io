@@ -380,4 +380,5 @@ open images in new tab and check all sizes
 mdx format adds new lines and paddings to paragraphs
 pagination align bottom
 subfolders in components, working notes in docs folder
+fix title text in metadata
 ```

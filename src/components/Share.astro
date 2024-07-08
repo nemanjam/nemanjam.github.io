@@ -8,14 +8,25 @@ import {
   TwitterShareButton,
 } from 'astro-social-share';
 
+import { cva } from 'class-variance-authority';
+
 import { DEFAULT_METADATA } from '@/constants/metadata';
 import { CONFIG } from '@/config';
 
 import type { InferProps } from '@/types/utils';
+import type { VariantProps } from 'class-variance-authority';
 
-export type Props = Omit<InferProps<typeof SocialShare>, 'buttons'>;
+const shareVariants = cva('', {
+  variants: {
+    size: { sm: 'share-sm', md: 'share-md' },
+  },
+});
 
-const shareProps = Astro.props;
+type SocialShareProps = Omit<InferProps<typeof SocialShare>, 'buttons'>;
+export interface Props extends SocialShareProps, VariantProps<typeof shareVariants> {
+  class?: string;
+}
+const { size = 'md', class: className, ...shareProps } = Astro.props;
 
 const { title, description } = DEFAULT_METADATA;
 const { SITE_URL } = CONFIG;
@@ -34,26 +45,45 @@ const buttons = [
 
 const props = { ...defaultProps, ...shareProps };
 
-// add cva size
+// todo: change package
 ---
 
-<SocialShare {...props} {buttons} />
+<div class={shareVariants({ size, className })}>
+  {/* doesnt expose class, junk lib */}
+  <SocialShare {...props} {buttons} />
+</div>
 
 {/* his slot is broken */}
 <style is:global slot="astro-social-share-css">
   .astro-social-share {
-    @apply inline-block h-10 space-x-8;
+    @apply inline-block;
   }
 
   .social-share-btn {
     @apply inline-block !mr-0;
 
-    svg {
-      @apply inline-block w-10 h-10;
-    }
-
     &:hover {
       filter: brightness(70%);
+    }
+  }
+
+  /* size variants */
+  .share-md {
+    .astro-social-share {
+      @apply h-10 space-x-8;
+    }
+
+    .social-share-btn svg {
+      @apply inline-block w-10 h-10;
+    }
+  }
+
+  .share-sm {
+    .astro-social-share {
+      @apply h-6 space-x-6 !my-4;
+    }
+    .social-share-btn svg {
+      @apply inline-block w-6 h-6;
     }
   }
 

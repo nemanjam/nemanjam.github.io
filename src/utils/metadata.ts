@@ -1,8 +1,13 @@
 import { DEFAULT_METADATA, dotSeparator, PAGE_METADATA } from '@/constants/metadata';
+import { CONFIG } from '@/config';
 import { getOpenGraphImagePath } from './open-graph-image';
 
 import type { Metadata } from '@/types/common';
 import type { PageMetadataKey } from '@/types/constants';
+
+// can't import getDefaultOpenGraphImagePath here, circular dependency
+
+const { AUTHOR_NAME } = CONFIG;
 
 export const getPageMetadata = (path: PageMetadataKey): Metadata => {
   const image = getOpenGraphImagePath(path);
@@ -17,7 +22,7 @@ export const handleTitle = (metadata: Metadata): Metadata => {
 
   const newMetadata = {
     ...metadata,
-    title: passedTitle ? `${passedTitle} ${dotSeparator} ${defaultTitle}` : defaultTitle,
+    title: passedTitle ? `${passedTitle} ${dotSeparator} ${AUTHOR_NAME}` : defaultTitle,
   };
 
   return newMetadata;
