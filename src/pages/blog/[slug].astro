@@ -7,11 +7,12 @@ import { getHeadingsForTableOfContents } from '@/modules/post/table-of-contents'
 import { default as PostLayout } from '@/layouts/Post.astro';
 import PostListMore from '@/components/PostListMore.astro';
 import PostMeta from '@/components/PostMeta.astro';
-import SharePost from '@/components/SharePost.astro';
+import Share from '@/components/Share.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import TagList from '@/components/TagList.astro';
 import { draftText } from '@/constants/data';
 import { IMAGE_SIZES } from '@/constants/image';
+import { ROUTES } from '@/constants/routes';
 import { getOpenGraphImagePath } from '@/utils/open-graph-image';
 
 import type { Metadata } from '@/types/common';
@@ -106,9 +107,9 @@ const metadata: Metadata = { title, description, image };
 
     <Content />
 
-    <SharePost title={title} slug={slug} />
+    <TagList tags={tags} size="lg" class="mb-4 md:mb-6" />
 
-    <TagList tags={tags} size="lg" />
+    <Share {title} {description} url={`${ROUTES.BLOG}${slug}`} size="md" />
   </Fragment>
 
   <Fragment slot="more-posts">

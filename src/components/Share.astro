@@ -31,13 +31,13 @@ const { size = 'md', class: className, ...shareProps } = Astro.props;
 const { title, description } = DEFAULT_METADATA;
 const { SITE_URL } = CONFIG;
 
-// via is only for twitter?
+// via is only for twitter
 const defaultProps = { description, title, via: SITE_URL };
 
 // dont change order because of colors
 const buttons = [
-  FacebookShareButton,
   TwitterShareButton,
+  FacebookShareButton,
   RedditShareButton,
   LinkedInShareButton,
   HackerNewsShareButton,
@@ -87,19 +87,19 @@ const props = { ...defaultProps, ...shareProps };
     }
   }
 
-  /* facebook */
-  .social-share-btn:nth-child(1) {
-    fill: #1877f2;
-  }
-
   /* twitter */
-  .social-share-btn:nth-child(2) {
+  .social-share-btn:nth-child(1) {
     fill: #000000;
 
     /* must target path */
     &:hover path {
       @apply fill-gray-400;
     }
+  }
+
+  /* facebook */
+  .social-share-btn:nth-child(2) {
+    fill: #1877f2;
   }
 
   /* reddit */
