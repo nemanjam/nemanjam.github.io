@@ -368,10 +368,17 @@ resenje za tailwind - layer component classes za p, h4..., stilovi za komponentu
     index.mdx in design-system folder with navigation
 embed youtube, twitter, link https://github.com/delucis/astro-embed
 add categories and tags links in footer
-giscus, share, transitions, PostInfo, format og image, image constants, h4 p css cva components, astro-embed yt, twitter, codesandbox
-h4, p must be in layer components so it can override prose from base
+    image constants
+giscus, share, transitions, PostInfo, format og image, h4 p css cva components, astro-embed yt, twitter, codesandbox
+-----
+// zapisi ovo u clanak
+h4, p must be in layer components so it can override prose from base // ok, moze i base jer je class, import after my-prose
 base, components, utilities folders, b-, c-, u- prefixes
-styles for cards must be COMPLETE // to
+styles for cards must be COMPLETE // to, glavno
+poenta: u cards.mdx je undo tag styles kad stavis not-prose, a mora not-prose za margine
+b-h4 class_ se ne undo kad je not-prose // to je cela poenta
+cards imaju kompletne stilove za text, i fixne velicine i boju 
+-----
 links relative path in markdown <Link /> and [link](url), trailing '/', only [index](/design) is valid absolute path, koji krece od SITE_URL base url
 type and interface intelisense
 {} as const satisfies ImageSizes; // radi, pitaj
@@ -379,8 +386,11 @@ fix widths for expanded images
 fix 404 margins?
 open images in new tab and check all sizes
 mdx format adds new lines and paddings to paragraphs
-pagination align bottom
+pagination align bottom, mobile problem...
 subfolders in components, working notes in docs folder
 fix title text in metadata
 style share, add text
+restyle scroll to top
 ```
+
+replace tag styles (h1-h4, p) with classes b-h1, b-h4, b-p and replace all usages, add base, utilities and theme folder in styles, important commit

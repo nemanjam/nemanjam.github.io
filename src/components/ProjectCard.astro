@@ -33,12 +33,12 @@ const { lastAccessDate, isUpdatedDate } = getPublishedOrUpdatedDate({
     class="rounded-t-box mb-2"
   />
 
-  <h4 class="break-words line-clamp-2 mb-0">
+  <h4 class="b-h4 break-words line-clamp-2 mb-0">
     <Link href={`${ROUTES.PROJECTS}${slug}`} variant="link-heading">
       {title}
     </Link>
   </h4>
-  {description && <div class="text-sm text-captions mb-2">{description}</div>}
+  {description && <p class="text-sm text-captions mb-2">{description}</p>}
 
   <p class="flex items-center gap-1 text-xs text-captions">
     <Icon name={isUpdatedDate ? 'mdi:edit-outline' : 'mdi:access-time'} class="w-4 h-4" />

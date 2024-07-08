@@ -22,7 +22,7 @@ const shouldDisplay = [category, publishDate, updatedDate, readingTime].some(Boo
 
 {
   shouldDisplay && (
-    <p aria-label="Post meta" class={cn('flex flex-row flex-wrap items-center gap-2', className)}>
+    <p aria-label="Post meta" class={cn('b-p text-captions flex flex-row flex-wrap items-center gap-2', className)}>
         {publishDate && (      
             <Icon name="mdi:access-time" />
             <time itemprop="datePublished" datetime={formatDateIso(publishDate)}>
