@@ -393,4 +393,3 @@ style share, add text
 restyle scroll to top
 ```
 
-replace tag styles (h1-h4, p) with classes b-h1, b-h4, b-p and replace all usages, add base, utilities and theme folder in styles, important commit
