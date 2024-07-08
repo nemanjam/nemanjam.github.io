@@ -4,6 +4,7 @@ import { Icon } from 'astro-icon/components';
 import { cva } from 'class-variance-authority';
 
 import { capitalizeFirstLetter } from '@/utils/strings';
+import { cn } from '@/utils/styles';
 
 import type { HTMLAttributes } from 'astro/types';
 import type { VariantProps } from 'class-variance-authority';
@@ -44,7 +45,7 @@ const title = titleProp ?? capitalizeFirstLetter(variant);
 ---
 
 <aside class={alertVariants({ variant, className })} aria-label={title} {...props}>
-  <h4 aria-hidden="true" class={alertTitleVariants({ variant })}>
+  <h4 aria-hidden="true" class={cn('b-h4', alertTitleVariants({ variant }))}>
     <Icon name={variant} class="inline h-6 w-6" />
     {title}
   </h4>

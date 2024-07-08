@@ -73,22 +73,4 @@
     --th-accent-hover: var(--var-color-teal-600);
     --th-accent-content: var(--var-color-slate-300);
   }
-
-  :root[data-theme='green-light'] {
-    --th-primary: var(--var-color-green-600);
-    --th-primary-hover: var(--var-color-green-500);
-    --th-primary-content: var(--var-color-white);
-
-    --th-primary-base-200: var(--var-color-green-100);
-    --th-primary-base-300: var(--var-color-green-200);
-  }
-
-  :root.dark[data-theme='green-dark'] {
-    --th-primary: var(--var-color-green-300);
-    --th-primary-hover: var(--var-color-green-500);
-    --th-primary-content: var(--var-color-white);
-
-    --th-primary-base-200: var(--var-color-green-800);
-    --th-primary-base-300: var(--var-color-green-900);
-  }
 }

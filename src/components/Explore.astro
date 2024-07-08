@@ -23,7 +23,7 @@ const categoryLinks = getCategoryLinks(posts, filterPathname);
 
 <section {...props} class={cn(className)}>
   <div class="flex items-start flex-col md:flex-row gap-2 mb-4">
-    <h4 class="shrink-0 w-24 md:w-28 my-0">Categories:</h4>
+    <h4 class="b-h4 shrink-0 w-24 md:w-28 my-0">Categories:</h4>
     <FilterList class="gap-4" itemLinks={categoryLinks}>
       {
         ({ href, text, textWithCount, isActive }: FilterLink) => {
@@ -42,7 +42,7 @@ const categoryLinks = getCategoryLinks(posts, filterPathname);
   </div>
 
   <div class="flex items-start flex-col md:flex-row gap-2">
-    <h4 class="shrink-0 w-24 md:w-28 my-0">Tags:</h4>
+    <h4 class="b-h4 shrink-0 w-24 md:w-28 my-0">Tags:</h4>
     <FilterList itemLinks={tagLinks}>
       {
         ({ href, textWithCount, isActive }: FilterLink) => (
