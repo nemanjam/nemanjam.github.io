@@ -36,31 +36,39 @@ export const threeProjects = projects.slice(0, 3);
   <PostCard post={post} />
 </div>
 
+---
+
 ## PostCard without Image
 
 <div class="not-prose">
   <PostCard post={postWithoutImage} />
 </div>
 
+---
+
 ## PostCardMore
 
-<div class="flex gap-4">
+<div class="not-prose flex gap-4">
   {threePosts.map((post) => (
     <PostCardMore post={post} />
   ))}
 </div>
 
+---
+
 ## PostCardSmall
 
-<div>
+<div class="not-prose">
   {threePosts.map((post) => (
     <PostCardSmall post={post} />
   ))}
 </div>
 
+---
+
 ## ProjectCard
 
-<div class="flex gap-4">
+<div class="not-prose flex gap-4">
   {threeProjects.map((project) => (
     <ProjectCard project={project} />
   ))}
