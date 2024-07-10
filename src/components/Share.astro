@@ -13,7 +13,7 @@ import { cva } from 'class-variance-authority';
 import { DEFAULT_METADATA } from '@/constants/metadata';
 import { CONFIG } from '@/config';
 
-import type { InferProps } from '@/types/utils';
+import type { ComponentProps } from 'astro/types';
 import type { VariantProps } from 'class-variance-authority';
 
 const shareVariants = cva('', {
@@ -22,7 +22,7 @@ const shareVariants = cva('', {
   },
 });
 
-type SocialShareProps = Omit<InferProps<typeof SocialShare>, 'buttons'>;
+type SocialShareProps = Omit<ComponentProps<typeof SocialShare>, 'buttons'>;
 export interface Props extends SocialShareProps, VariantProps<typeof shareVariants> {
   class?: string;
 }
