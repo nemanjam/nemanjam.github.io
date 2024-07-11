@@ -390,6 +390,8 @@ pagination align bottom, mobile problem...
 subfolders in components, working notes in docs folder
 fix title text in metadata
 style share, add text
-restyle scroll to top, must be moved from solid to astro
+restyle scroll to top, must be moved from solid to astro - cactus
+
+satori can define og image with html, astro-canvas limited
 ```
 
