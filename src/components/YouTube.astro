@@ -10,6 +10,7 @@ type YouTubeAstroEmbedProps = ComponentProps<typeof YouTubeAstroEmbed>;
 
 const youtubeVariants = cva('', {
   variants: {
+    // all cva components name it size, not width
     size: { sm: 'max-w-3xl', full: '', 'expand-sm': 'expand-sm', 'expand-lg': 'expand-lg' },
   },
 });

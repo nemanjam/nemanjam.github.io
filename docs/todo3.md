@@ -366,7 +366,7 @@ image gallery grid
 fix image vertical margins, widths and width everywhere, constants
 resenje za tailwind - layer component classes za p, h4..., stilovi za komponentu moraju da budu kompletni, no base styles, oni se menjaju u prose
     index.mdx in design-system folder with navigation
-embed youtube, twitter, link https://github.com/delucis/astro-embed
+    embed youtube, twitter, link https://github.com/delucis/astro-embed
 add categories and tags links in footer
     image constants
 giscus, share, transitions, PostInfo, format og image, h4 p css cva components, astro-embed yt, twitter, codesandbox
@@ -390,6 +390,6 @@ pagination align bottom, mobile problem...
 subfolders in components, working notes in docs folder
 fix title text in metadata
 style share, add text
-restyle scroll to top
+restyle scroll to top, must be moved from solid to astro
 ```
 
