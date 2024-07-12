@@ -10,6 +10,8 @@ export const removeTrailingSlash = (path: string) => path.replace(/\/+$/g, '');
 
 export const removeLeadingAndTrailingSlashes = (path: string) => path.replace(/^\/+|\/+$/g, '');
 
+export const removeFirstPathSegment = (path: string) => path.split('/').slice(1).join('/');
+
 /*----------------------------- detect unknown routes ---------------------------*/
 
 // maybe remove

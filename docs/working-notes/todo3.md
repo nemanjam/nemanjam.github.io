@@ -396,5 +396,8 @@ satori can define og image with html, astro-canvas limited
 satori understands only react jsx, not solid-js
 solid-js style prop dash case 'border-radius': '3px'
 use satori vercel playground for design og image and research examples
+og image getStaticPath paths
+handle long site url in og template
+add random hero images for mdx and list pages, and maybe random gradient, handle longer domain in new row
 ```
 

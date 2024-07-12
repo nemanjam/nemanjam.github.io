@@ -1,6 +1,7 @@
 import { CONFIG } from '@/config';
 
 import type { Metadata } from '@/types/common';
+import type { ValueUnion } from '@/types/utils';
 
 // can't import getDefaultOpenGraphImagePath here, circular dependency
 
@@ -57,3 +58,5 @@ export const OG_IMAGE_PREFIXES = {
   OG_PAGES: 'pages',
   OG_LISTS: 'lists',
 } as const;
+
+export type OgImagePrefixType = ValueUnion<typeof OG_IMAGE_PREFIXES>;

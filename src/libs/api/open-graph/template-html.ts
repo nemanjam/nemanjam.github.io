@@ -9,10 +9,13 @@ export interface TemplateProps {
 
 const templateHtml = ({ title, heroImageUrl, avatarImageUrl, siteUrl }: TemplateProps) => html`
   <div class="flex p-8 h-full" style="background: linear-gradient(to right, #D1D5DB, #F3F4F6)">
-    <div class="flex w-full flex-row gap-6 justify-between text-slate-900">
+    <div class="flex w-full flex-row justify-between text-slate-900">
       <!-- left column -->
-      <div class="w-[550px] flex flex-col gap-4 justify-between">
-        <div class="flex text-6xl font-semibold">${title}</div>
+      <div class="w-[550px] flex flex-col justify-between mr-6">
+        <!-- title -->
+        <div class="flex text-6xl font-semibold mb-4">${title}</div>
+
+        <!-- avatar and site -->
         <div class="flex items-center">
           <img
             src=${avatarImageUrl}

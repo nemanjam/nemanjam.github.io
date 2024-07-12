@@ -45,8 +45,7 @@ export const getPages = async () => {
     allProjects.map((project) => [`${OG_IMAGE_PREFIXES.OG_PROJECTS}/${project.slug}`, project.data])
   );
 
-  // const pages = { ...posts, ...projects, ...mdxPages, ...listPages };
-  const pages = { ...posts, ...projects };
+  const pages = { ...posts, ...projects, ...mdxPages, ...listPages };
 
   return pages;
 };

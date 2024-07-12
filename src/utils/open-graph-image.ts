@@ -1,15 +1,23 @@
 import { OG_IMAGE_PREFIXES } from '@/constants/metadata';
 import { ROUTES } from '@/constants/routes';
-import { removeLeadingAndTrailingSlashes } from '@/utils/paths';
+import { removeFirstPathSegment, removeLeadingAndTrailingSlashes } from '@/utils/paths';
+
+import type { OgImagePrefixType } from '@/constants/metadata';
 
 /*--------------------- getOpenGraphImagePath -------------------*/
 
-const { OG_PAGES } = OG_IMAGE_PREFIXES;
-
-const homePageOgImage = `${ROUTES.API.OG_IMAGES}${OG_PAGES}.png`;
-const _404PageOgImage = `${ROUTES.API.OG_IMAGES}${OG_PAGES}404.png`;
-
 export const getOpenGraphImagePath = (path: string): string => {
+  // only to throw for invalid path
+  const _prefix = getPagePrefix(path);
+
+  const trimmedPath = removeLeadingAndTrailingSlashes(path);
+
+  const imagePath = `${ROUTES.API.OG_IMAGES}${trimmedPath}.png`;
+
+  return imagePath;
+};
+
+export const getPagePrefix = (path: string): OgImagePrefixType => {
   const trimmedPath = removeLeadingAndTrailingSlashes(path);
   let prefix = trimmedPath.split('/')[0];
 
@@ -19,15 +27,33 @@ export const getOpenGraphImagePath = (path: string): string => {
   const prefixes = Object.values(OG_IMAGE_PREFIXES) as string[];
 
   if (!prefixes.includes(prefix)) {
-    console.error(`Unknown path prefix requested: ${prefix}`);
-    return _404PageOgImage;
+    const message = `Unknown path prefix requested: ${prefix}`;
+    console.error(message);
+    throw new Error(message);
   }
 
-  // prevents recursion on 404
-  // if (prefix === 'pages' && !isKnownRoute(trimmedPath)) return _404PageOgImage; // about -> pages/about
-  if (trimmedPath === '') return homePageOgImage;
+  return prefix as OgImagePrefixType;
+};
 
-  const imagePath = `${ROUTES.API.OG_IMAGES}${trimmedPath}.png`;
+/** not needed function, wrong */
+export const getPathForGetStaticPaths = (path: string): string => {
+  const prefix = getPagePrefix(path);
 
-  return imagePath;
+  let staticPath: string;
+
+  switch (prefix) {
+    case OG_IMAGE_PREFIXES.OG_BLOG:
+    case OG_IMAGE_PREFIXES.OG_PROJECTS:
+      staticPath = path;
+      break;
+    case OG_IMAGE_PREFIXES.OG_PAGES:
+    case OG_IMAGE_PREFIXES.OG_LISTS:
+      staticPath = removeFirstPathSegment(path);
+      break;
+
+    default:
+      throw new Error(`Unknown static path prefix requested: ${prefix}`);
+  }
+
+  return staticPath;
 };
