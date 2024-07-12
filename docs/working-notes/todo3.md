@@ -393,5 +393,8 @@ style share, add text
 restyle scroll to top, must be moved from solid to astro - cactus
 
 satori can define og image with html, astro-canvas limited
+satori understands only react jsx, not solid-js
+solid-js style prop dash case 'border-radius': '3px'
+use satori vercel playground for design og image and research examples
 ```
 
