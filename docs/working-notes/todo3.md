@@ -397,9 +397,13 @@ satori understands only react jsx, not solid-js
 solid-js style prop dash case 'border-radius': '3px'
     use satori vercel playground for design og image and research examples
     og image getStaticPath paths
-handle long site url in og template
-add random hero images for mdx and list pages, and maybe random gradient, handle longer domain in new row
+    handle long site url in og template
+    add random hero images for mdx and list pages, and maybe random gradient, handle longer domain in new row
     fix folders in assets/images
     pages/design, sve .mdx index stranice, fix in metadata, endsWith('/') // fixed in getPages()
+replace solid with react and jsx config
+giscus, share add text, transitions, shorter commit info footer
+write content for home and about
+write readme and credits
 ```
 
