@@ -1,6 +1,6 @@
 import { DEFAULT_METADATA, dotSeparator, PAGE_METADATA } from '@/constants/metadata';
 import { CONFIG } from '@/config';
-import { getOpenGraphImagePath } from './open-graph-image';
+import { getOpenGraphImagePath } from '@/utils/open-graph-image';
 
 import type { Metadata } from '@/types/common';
 import type { PageMetadataKey } from '@/types/constants';

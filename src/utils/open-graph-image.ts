@@ -1,6 +1,6 @@
 import { OG_IMAGE_PREFIXES } from '@/constants/metadata';
 import { ROUTES } from '@/constants/routes';
-import { removeFirstPathSegment, removeLeadingAndTrailingSlashes } from '@/utils/paths';
+import { removeLeadingAndTrailingSlashes } from '@/utils/paths';
 
 import type { OgImagePrefixType } from '@/constants/metadata';
 
@@ -33,27 +33,4 @@ export const getPagePrefix = (path: string): OgImagePrefixType => {
   }
 
   return prefix as OgImagePrefixType;
-};
-
-/** not needed function, wrong */
-export const getPathForGetStaticPaths = (path: string): string => {
-  const prefix = getPagePrefix(path);
-
-  let staticPath: string;
-
-  switch (prefix) {
-    case OG_IMAGE_PREFIXES.OG_BLOG:
-    case OG_IMAGE_PREFIXES.OG_PROJECTS:
-      staticPath = path;
-      break;
-    case OG_IMAGE_PREFIXES.OG_PAGES:
-    case OG_IMAGE_PREFIXES.OG_LISTS:
-      staticPath = removeFirstPathSegment(path);
-      break;
-
-    default:
-      throw new Error(`Unknown static path prefix requested: ${prefix}`);
-  }
-
-  return staticPath;
 };

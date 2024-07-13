@@ -24,7 +24,7 @@ export const getStaticPaths = async () => {
 
   // object to array of tuples
   const paths = Object.entries(pages).map(([path, page]) => ({
-    params: { route: path }, // home page '/' path fixed to '/page/index/ in src/layouts/Page.astro
+    params: { route: path },
     props: { page },
   }));
 

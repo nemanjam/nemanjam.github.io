@@ -388,7 +388,7 @@ open images in new tab and check all sizes
 mdx format adds new lines and paddings to paragraphs
 pagination align bottom, mobile problem...
 subfolders in components, working notes in docs folder
-fix title text in metadata
+fix title text in metadata, dot separator
 style share, add text
 restyle scroll to top, must be moved from solid to astro - cactus
 
@@ -399,5 +399,7 @@ use satori vercel playground for design og image and research examples
 og image getStaticPath paths
 handle long site url in og template
 add random hero images for mdx and list pages, and maybe random gradient, handle longer domain in new row
+fix folders in assets/images
+pages/design, sve .mdx index stranice, fix in metadata, endsWith('/')
 ```
 

@@ -22,10 +22,7 @@ const { title, description } = content;
 const { pathname } = Astro.url;
 
 // og image for metadata, only call in layouts
-
-//! important: fix home page path '/' for og image here, not in getStaticPathsv or getOpenGraphImagePath()
-const path = ['', '/'].includes(pathname) ? '/pages/index' : `/pages${pathname}`;
-
+const path = `/pages${pathname}`;
 const image = getOpenGraphImagePath(path);
 
 const metadata = { title, description, image };

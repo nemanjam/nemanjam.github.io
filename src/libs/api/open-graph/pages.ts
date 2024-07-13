@@ -23,12 +23,16 @@ export const getPages = async () => {
   // only path, title and description are important
   const mdxPagesObject = import.meta.glob('/src/pages/**/*.{md,mdx}', { eager: true });
   const mdxPages = Object.fromEntries(
-    Object.entries(mdxPagesObject).map(([path, page]) => [
+    Object.entries(mdxPagesObject).map(([path, page]) => {
       // '/src/pages/about.mdx' -> 'pages/about'
+      let pagePath = path.replace(/^\/src\/|\.mdx?$/g, '');
+      // fix index.mdx pages here
       // pages/index.mdx -> pages.png
-      path.replace(/^\/src\/|\.mdx?$/g, ''),
-      (page as any).frontmatter,
-    ])
+      // pages/design/index.mdx -> pages/design.png
+      pagePath = pagePath.replace(/\/index$/g, '');
+
+      return [pagePath, (page as any).frontmatter];
+    })
   );
 
   /*-------------------------------- collections ------------------------------*/
