@@ -4,6 +4,10 @@ export const getRandomInt = (max: number, min = 0) =>
 export const getRandomLengthSubstring = (inputString: string, length: number, margin = 0) =>
   inputString.substring(0, length + getRandomInt(margin));
 
+/** for satori og template */
+export const limitString = (str: string, maxLength: number) =>
+  str.length > maxLength ? str.slice(0, maxLength) + '...' : str;
+
 export const trimHttpProtocol = (url: string) => {
   const trailingSlashRegex = /\/$/;
   const protocolRegex = /^(https?:\/\/)/i;
