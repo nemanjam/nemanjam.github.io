@@ -16,8 +16,6 @@ import type { APIContext, APIRoute } from 'astro';
 const { SITE_URL } = CONFIG;
 const { FONTS_FOLDER, OG_FOLDER, IMAGE_404, AVATAR } = FILE_PATHS;
 
-const defaultHeroImagesFolderPath = `${OG_FOLDER}default-hero-images`;
-
 export const getStaticPaths = async () => {
   const pages = await getPages();
 
@@ -34,7 +32,7 @@ export const GET: APIRoute = async ({ props }: APIContext) => {
   // limit number of chars
   const { title, heroImage, pageId } = props.page;
 
-  // resize images in template in CSS only
+  // resize images in template in CSS only, not in sharp
 
   // avatarImage
   const avatarImageBase64Url = await getBase64Image(AVATAR);
@@ -53,7 +51,7 @@ export const GET: APIRoute = async ({ props }: APIContext) => {
 
     // fallback to random default image
     default:
-      heroImagePath = await getRandomImage(defaultHeroImagesFolderPath);
+      heroImagePath = await getRandomImage(OG_FOLDER);
       break;
   }
 

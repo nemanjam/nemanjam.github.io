@@ -42,6 +42,7 @@ export const getPagePrefix = (path: string): OgImagePrefixType => {
   return prefix as OgImagePrefixType;
 };
 
+// use pageId: page404 from frontmatter instead in Page layout
 /** pre-rendered og images in getStaticPaths */
 export const isExistingOgImage = async (path: string): Promise<boolean> => {
   const trimmedPath = removeLeadingAndTrailingSlashes(path);
