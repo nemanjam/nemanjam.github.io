@@ -1,5 +1,6 @@
 import { OG_IMAGE_PREFIXES } from '@/constants/metadata';
 import { ROUTES } from '@/constants/routes';
+import { getPages } from '@/libs/api/open-graph/pages';
 import { removeLeadingAndTrailingSlashes } from '@/utils/paths';
 
 import type { OgImagePrefixType } from '@/constants/metadata';
@@ -13,6 +14,12 @@ export const getOpenGraphImagePath = (path: string): string => {
   const trimmedPath = removeLeadingAndTrailingSlashes(path);
 
   const imagePath = `${ROUTES.API.OG_IMAGES}${trimmedPath}.png`;
+
+  // maybe, makes metadata async
+
+  // if no image is pre-rendered set 404 image
+  // const doesOgImageExists = await isExistingOgImage(trimmedPath);
+  // if (!doesOgImageExists) imagePath = `${ROUTES.API.OG_IMAGES}pages/404.png`;
 
   return imagePath;
 };
@@ -33,4 +40,17 @@ export const getPagePrefix = (path: string): OgImagePrefixType => {
   }
 
   return prefix as OgImagePrefixType;
+};
+
+/** pre-rendered og images in getStaticPaths */
+export const isExistingOgImage = async (path: string): Promise<boolean> => {
+  const trimmedPath = removeLeadingAndTrailingSlashes(path);
+
+  const pages = await getPages();
+
+  // without leading and trailing '/'
+  const paths = Object.entries(pages).map(([path]) => path);
+  const isExisting = paths.includes(trimmedPath);
+
+  return isExisting;
 };

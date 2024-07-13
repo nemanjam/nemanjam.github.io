@@ -4,20 +4,19 @@ import path from 'path';
 import satori from 'satori';
 import sharp from 'sharp';
 
+import { FILE_PATHS } from '@/constants/file-paths';
 import { CONFIG } from '@/config';
 import { getPages } from '@/libs/api/open-graph/pages';
 import templateHtml from '@/libs/api/open-graph/template-html';
+import { removeTrailingSlash } from '@/utils/paths';
 import { trimHttpProtocol } from '@/utils/strings';
 
 import type { APIContext, APIRoute } from 'astro';
 
 const { SITE_URL } = CONFIG;
+const { FONTS_FOLDER, OG_FOLDER, IMAGE_404, AVATAR } = FILE_PATHS;
 
-const OG_FOLDER = './src/assets/images/open-graph/' as const;
-const FONTS_FOLDER = './public/fonts/' as const;
-
-const avatarPath = `${OG_FOLDER}avatar-white.jpg`;
-const defaultHeroImagePath = `${OG_FOLDER}hero-image.jpg`;
+const defaultHeroImagesFolderPath = `${OG_FOLDER}default-hero-images`;
 
 export const getStaticPaths = async () => {
   const pages = await getPages();
@@ -33,18 +32,32 @@ export const getStaticPaths = async () => {
 
 export const GET: APIRoute = async ({ props }: APIContext) => {
   // limit number of chars
-  const { title, heroImage } = props.page;
+  const { title, heroImage, pageId } = props.page;
 
-  // no need to resize any image
+  // resize images in template in CSS only
 
   // avatarImage
-  const avatarImageBase64Url = await getResizedBase64Image({
-    imagePath: avatarPath,
-  });
+  const avatarImageBase64Url = await getBase64Image(AVATAR);
 
   // heroImage
-  const heroImagePath = heroImage?.fsPath ?? defaultHeroImagePath;
-  const heroImageBase64Url = await getResizedBase64Image({ imagePath: heroImagePath });
+  let heroImagePath: string;
+
+  switch (true) {
+    case Boolean(heroImage?.fsPath):
+      heroImagePath = heroImage?.fsPath;
+      break;
+    // hardcoded in 404.mdx frontmatter
+    case pageId === 'page404':
+      heroImagePath = IMAGE_404;
+      break;
+
+    // fallback to random default image
+    default:
+      heroImagePath = await getRandomImage(defaultHeroImagesFolderPath);
+      break;
+  }
+
+  const heroImageBase64Url = await getBase64Image(heroImagePath);
 
   const templateProps = {
     title,
@@ -75,30 +88,14 @@ export const GET: APIRoute = async ({ props }: APIContext) => {
 
 /*-------------------------------- utils ------------------------------*/
 
-interface ResizeImageArgs {
-  imagePath: string;
-  width?: number;
-  height?: number;
-}
-
-const getResizedBase64Image = async (resizeImageArgs: ResizeImageArgs): Promise<string> => {
-  const { imagePath, width, height } = resizeImageArgs;
-
-  const heroImageData = await fs.readFile(imagePath);
-
-  const resizedHeroImage = await sharp(heroImageData)
-    .resize({
-      ...(width ? { width } : {}),
-      ...(height ? { height } : {}),
-      withoutEnlargement: true,
-    })
-    .toBuffer();
+const getBase64Image = async (imagePath: string): Promise<string> => {
+  const imageData = await fs.readFile(imagePath);
 
   const imageType = getImageType(imagePath);
-  const heroImageBase64 = Buffer.from(resizedHeroImage).toString('base64');
-  const heroImageBase64Url = `data:image/${imageType};base64,${heroImageBase64}`;
+  const imageBase64 = Buffer.from(imageData).toString('base64');
+  const imageBase64Url = `data:image/${imageType};base64,${imageBase64}`;
 
-  return heroImageBase64Url;
+  return imageBase64Url;
 };
 
 const getImageType = (imagePath: string) => {
@@ -118,4 +115,25 @@ const getImageType = (imagePath: string) => {
   }
 
   return imageType;
+};
+
+const getRandomImage = async (folderPath: string): Promise<string> => {
+  const trimmedFolderPath = removeTrailingSlash(folderPath);
+
+  const files = await fs.readdir(trimmedFolderPath);
+
+  // omit ./, ../
+  const imageFiles = files.filter((file) => {
+    const ext = path.extname(file).toLowerCase();
+    return ext === '.jpg' || ext === '.jpeg' || ext === '.png';
+  });
+
+  if (imageFiles.length === 0) throw new Error(`No default og images found in: ${folderPath}`);
+
+  const randomIndex = Math.floor(Math.random() * imageFiles.length);
+  const randomImage = imageFiles[randomIndex];
+
+  const randomImageWithPath = `${trimmedFolderPath}/${randomImage}`;
+
+  return randomImageWithPath;
 };
