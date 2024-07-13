@@ -12,8 +12,8 @@ export interface TemplateProps {
 
 const templateHtml = ({ title, heroImageUrl, avatarImageUrl, siteUrl }: TemplateProps) => {
   // 2 rows - max 30 chars
-  // 1 row - max 18 chars
-  const isLongSiteUrl = siteUrl.length > 17;
+  // 1 row - max 20 chars, max that fits - 12nemanjam.github.io
+  const isLongSiteUrl = siteUrl.length > 20;
 
   // max 6 rows x 10-15 chars
   const limitedTitle = limitString(title, 70);
