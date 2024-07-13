@@ -6,6 +6,7 @@ import Link from '@/components/Link.astro';
 import PostList from '@/components/PostList.astro';
 import { ROUTES } from '@/constants/routes';
 import { CONFIG } from '@/config';
+import { getPageMetadata } from '@/utils/metadata';
 import { pickPaginationPropsFromPage } from '@/utils/pagination';
 import { capitalizeFirstLetter } from '@/utils/strings';
 
@@ -32,8 +33,10 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 const { page } = Astro.props;
 const { category } = Astro.params;
 
+const defaultMetadata = getPageMetadata('lists/blog/categories/category');
+
 const title = capitalizeFirstLetter(category);
-const metadata: Metadata = { title };
+const metadata: Metadata = { ...defaultMetadata, title };
 
 const paginationProps = pickPaginationPropsFromPage(page);
 const layoutProps = { metadata, paginationProps };

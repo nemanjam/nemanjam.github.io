@@ -6,6 +6,7 @@ import Link from '@/components/Link.astro';
 import PostList from '@/components/PostList.astro';
 import { ROUTES } from '@/constants/routes';
 import { CONFIG } from '@/config';
+import { getPageMetadata } from '@/utils/metadata';
 import { pickPaginationPropsFromPage } from '@/utils/pagination';
 
 import type { Metadata } from '@/types/common';
@@ -31,9 +32,11 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 const { page } = Astro.props;
 const { tag } = Astro.params;
 
-// todo: dynamic param for metadata
 const title = `#${tag}`;
-const metadata: Metadata = { title };
+
+// dynamic param for metadata
+const defaultMetadata = getPageMetadata('lists/blog/tags/tag');
+const metadata: Metadata = { ...defaultMetadata, title };
 
 const paginationProps = pickPaginationPropsFromPage(page);
 const layoutProps = { metadata, paginationProps };

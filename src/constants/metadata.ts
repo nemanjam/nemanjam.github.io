@@ -36,12 +36,18 @@ export const PAGE_METADATA = {
   'lists/blog/tags': {
     title: 'Tags',
   },
+  'lists/blog/tags/tag': {
+    title: 'Tag',
+  },
   // 'src/pages/blog/tags/[tag]/[...page].astro' // dynamic tag param
   'lists/blog/explore': {
     title: 'Explore',
   },
   'lists/blog/categories': {
     title: 'Categories',
+  },
+  'lists/blog/categories/category': {
+    title: 'Category',
   },
   // src/pages/blog/categories/[category]/[...page].astro
   'lists/projects': {
