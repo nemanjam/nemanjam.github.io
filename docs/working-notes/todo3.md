@@ -408,7 +408,11 @@ write readme and credits
 search with fuse.js astro-paper
 fix lint, types, format
 put images beside .mdx in content, slug...
-style giscus, tags and share
+style giscus, tags and share, astrowind, use existing styleguide
     move giscus mode, add another theme change event handler
+fix content width
+migrate scroll to top and toast to react
+fix footer
+fix share, just small gray icons
 ```
 

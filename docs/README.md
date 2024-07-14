@@ -16,3 +16,22 @@ sudo iptables -L
 # check
 ss -tuln | grep 1080
 ```
+
+### Sitemap, RSS and Json feed links
+
+```bash
+# root
+https://nemanjamitic.com/sitemap-index.xml
+
+# all links
+https://nemanjamitic.com/sitemap-0.xml
+
+# robots.txt
+https://nemanjamitic.com/robots.txt
+
+# RSS
+https://nemanjamitic.com/api/feed.xml
+
+# Json
+https://nemanjamitic.com/api/feed.json
+```
