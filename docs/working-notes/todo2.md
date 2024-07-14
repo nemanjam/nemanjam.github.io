@@ -177,6 +177,10 @@ https://github.dev/syhily/yufan.me
 // interesting design
 https://github.com/joshmedeski/joshmedeski.com
 
+// clean styles, no github repo
+// astrowind zapravo data-aw-social-share
+https://thezal.dev/blog/
+
 // notion cms
 https://feather.so/showcase
 https://bhanuteja.dev/blog

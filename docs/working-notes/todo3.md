@@ -409,5 +409,6 @@ search with fuse.js astro-paper
 fix lint, types, format
 put images beside .mdx in content, slug...
 style giscus, tags and share
+    move giscus mode, add another theme change event handler
 ```
 

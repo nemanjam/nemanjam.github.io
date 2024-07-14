@@ -1,7 +1,7 @@
 import { SELECTORS } from '@/constants/dom';
 import { DEFAULT_THEMES, MODES, THEME_CONFIG, THEMES } from '@/constants/themes';
 
-import type { Theme } from '@/types/constants';
+import type { Mode, Theme } from '@/types/constants';
 
 const { MODE_CLASS, DATA_ATTRIBUTE } = THEME_CONFIG;
 
@@ -39,7 +39,7 @@ export const getNextTheme = () => {
 
 const { GISCUS_WIDGET_SELECTOR, GISCUS_IFRAME_SELECTOR } = SELECTORS;
 
-export const sendModeToGiscus = (): void => {
+export const sendModeToGiscus = (mode: Mode): void => {
   const giscusIframeUrl = 'https://giscus.app';
 
   const shadowHost = document.querySelector(GISCUS_WIDGET_SELECTOR);
@@ -48,8 +48,6 @@ export const sendModeToGiscus = (): void => {
 
   const iframe = shadowRoot.querySelector(GISCUS_IFRAME_SELECTOR) as HTMLIFrameElement;
   if (!iframe?.contentWindow) return;
-
-  const mode = getCurrentMode();
 
   iframe.contentWindow.postMessage({ giscus: { setConfig: { theme: mode } } }, giscusIframeUrl);
 };

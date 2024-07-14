@@ -11,7 +11,9 @@ import { Icon } from 'astro-icon/components';
 
 <script>
   import { THEME_CONFIG } from '@/constants/themes';
-  import { getNextTheme, sendModeToGiscus } from '@/utils/dom';
+  import { getNextTheme } from '@/utils/dom';
+
+  import type { ChangeThemeCustomEvent } from '@/types/constants';
 
   const { CHANGE_EVENT } = THEME_CONFIG;
 
@@ -33,18 +35,13 @@ import { Icon } from 'astro-icon/components';
         () => {
           // shift theme
           const nextTheme = getNextTheme();
-          const themeChangeEvent = new CustomEvent(CHANGE_EVENT, {
-            detail: { theme: nextTheme },
-          });
+          const payload = { detail: { theme: nextTheme } } as ChangeThemeCustomEvent;
+          const themeChangeEvent = new CustomEvent(CHANGE_EVENT, payload);
           // dispatch event -> ThemeProvider.astro
           document.dispatchEvent(themeChangeEvent);
 
           // set the aria-checked attribute
           // button.setAttribute('aria-checked', String(isDarkMode()));
-
-          // send message with delay to Giscus here
-          // ThemeScript has <script is:inline /> and can't import files
-          setTimeout(() => sendModeToGiscus(), 50);
         },
         { signal }
       );
