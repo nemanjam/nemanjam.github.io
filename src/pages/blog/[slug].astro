@@ -5,6 +5,7 @@ import { getAllPostsWithReadingTime } from '@/modules/post/common';
 import { getRandomPosts } from '@/modules/post/random';
 import { getHeadingsForTableOfContents } from '@/modules/post/table-of-contents';
 import { default as PostLayout } from '@/layouts/Post.astro';
+import Giscus from '@/components/Giscus.astro';
 import PostListMore from '@/components/PostListMore.astro';
 import PostMeta from '@/components/PostMeta.astro';
 import Share from '@/components/Share.astro';
@@ -110,6 +111,8 @@ const metadata: Metadata = { title, description, image };
     <TagList tags={tags} size="lg" class="mb-4 md:mb-6" />
 
     <Share {title} {description} url={`${ROUTES.BLOG}${slug}`} size="md" />
+
+    <Giscus />
   </Fragment>
 
   <Fragment slot="more-posts">

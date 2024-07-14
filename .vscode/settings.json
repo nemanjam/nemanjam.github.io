@@ -27,5 +27,5 @@
     ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
   ],
   // "gitlens.currentLine.enabled": false,
-  "cSpell.words": ["astro"]
+  "cSpell.words": ["astro", "giscus"]
 }

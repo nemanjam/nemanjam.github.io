@@ -10,9 +10,8 @@ import { Icon } from 'astro-icon/components';
 </theme-toggle>
 
 <script>
-  import { getNextTheme } from 'utils/dom';
-
   import { THEME_CONFIG } from '@/constants/themes';
+  import { getNextTheme, sendModeToGiscus } from '@/utils/dom';
 
   const { CHANGE_EVENT } = THEME_CONFIG;
 
@@ -42,6 +41,10 @@ import { Icon } from 'astro-icon/components';
 
           // set the aria-checked attribute
           // button.setAttribute('aria-checked', String(isDarkMode()));
+
+          // send message with delay to Giscus here
+          // ThemeScript has <script is:inline /> and can't import files
+          setTimeout(() => sendModeToGiscus(), 50);
         },
         { signal }
       );

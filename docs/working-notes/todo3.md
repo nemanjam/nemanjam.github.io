@@ -407,5 +407,7 @@ write content for home and about
 write readme and credits
 search with fuse.js astro-paper
 fix lint, types, format
+put images beside .mdx in content, slug...
+style giscus, tags and share
 ```
 

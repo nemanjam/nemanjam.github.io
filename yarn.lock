@@ -804,6 +804,18 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
+"@lit-labs/ssr-dom-shim@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@lit-labs/ssr-dom-shim/-/ssr-dom-shim-1.2.0.tgz#353ce4a76c83fadec272ea5674ede767650762fd"
+  integrity sha512-yWJKmpGE6lUURKAaIltoPIE/wrbY3TEkqQt+X0m+7fQNnAv0keydnYvbiJFP1PnMhizmIWRWOG5KLhYyc/xl+g==
+
+"@lit/reactive-element@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@lit/reactive-element/-/reactive-element-2.0.4.tgz#8f2ed950a848016383894a26180ff06c56ae001b"
+  integrity sha512-GFn91inaUa2oHLak8awSIigYz0cU0Payr1rcFsrkf5OJ5eSPxElyZfKh0f2p9FsTiZWXQdWGJeXZICEfXXYSXQ==
+  dependencies:
+    "@lit-labs/ssr-dom-shim" "^1.2.0"
+
 "@mdx-js/mdx@^3.0.1":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@mdx-js/mdx/-/mdx-3.0.1.tgz#617bd2629ae561fdca1bb88e3badd947f5a82191"
@@ -1192,6 +1204,11 @@
   dependencies:
     "@types/node" "*"
     minipass "^4.0.0"
+
+"@types/trusted-types@^2.0.2":
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/@types/trusted-types/-/trusted-types-2.0.7.tgz#baccb07a970b91707df3a3e8ba6896c57ead2d11"
+  integrity sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==
 
 "@types/unist@*", "@types/unist@^3.0.0":
   version "3.0.2"
@@ -3084,6 +3101,13 @@ get-stream@^8.0.1:
   resolved "https://registry.yarnpkg.com/get-stream/-/get-stream-8.0.1.tgz#def9dfd71742cd7754a7761ed43749a27d02eca2"
   integrity sha512-VaUJspBffn/LMCJVoMvSAdmscJyS1auj5Zulnn5UoYcY531UWmdwhRWkcGKnGU93m5HSXP9LP2usOryrBtQowA==
 
+giscus@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/giscus/-/giscus-1.5.0.tgz#8299fa056b2ed31ec8b05d4645871e016982b4b2"
+  integrity sha512-t3LL0qbSO3JXq3uyQeKpF5CegstGfKX/0gI6eDe1cmnI7D56R7j52yLdzw4pdKrg3VnufwCgCM3FDz7G1Qr6lg==
+  dependencies:
+    lit "^3.1.2"
+
 github-from-package@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/github-from-package/-/github-from-package-0.0.0.tgz#97fb5d96bfde8973313f20e8288ef9a167fa64ce"
@@ -3839,6 +3863,31 @@ linkedom@^0.14.26:
     html-escaper "^3.0.3"
     htmlparser2 "^8.0.1"
     uhyphen "^0.2.0"
+
+lit-element@^4.0.4:
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/lit-element/-/lit-element-4.0.6.tgz#b9f5b5d68f30636be1314ec76c9a73a6405f04dc"
+  integrity sha512-U4sdJ3CSQip7sLGZ/uJskO5hGiqtlpxndsLr6mt3IQIjheg93UKYeGQjWMRql1s/cXNOaRrCzC2FQwjIwSUqkg==
+  dependencies:
+    "@lit-labs/ssr-dom-shim" "^1.2.0"
+    "@lit/reactive-element" "^2.0.4"
+    lit-html "^3.1.2"
+
+lit-html@^3.1.2:
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/lit-html/-/lit-html-3.1.4.tgz#30ad4f11467a61e2f08856de170e343184e9034e"
+  integrity sha512-yKKO2uVv7zYFHlWMfZmqc+4hkmSbFp8jgjdZY9vvR9jr4J8fH6FUMXhr+ljfELgmjpvlF7Z1SJ5n5/Jeqtc9YA==
+  dependencies:
+    "@types/trusted-types" "^2.0.2"
+
+lit@^3.1.2:
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/lit/-/lit-3.1.4.tgz#03a72e9f0b1f5da317bf49b1ab579a7132e73d7a"
+  integrity sha512-q6qKnKXHy2g1kjBaNfcoLlgbI3+aSOZ9Q4tiGa9bGYXq5RBXxkVTqTIVmP2VWMp29L4GyvCFm8ZQ2o56eUAMyA==
+  dependencies:
+    "@lit/reactive-element" "^2.0.4"
+    lit-element "^4.0.4"
+    lit-html "^3.1.2"
 
 lite-youtube-embed@^0.3.2:
   version "0.3.2"
