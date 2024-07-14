@@ -49,7 +49,6 @@ export default defineConfig({
     remarkPlugins,
   },
   vite: {
-    // optimizeDeps: { exclude: ['sharp'] },
     build: {
       sourcemap: false,
     },
