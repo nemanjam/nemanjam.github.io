@@ -31,6 +31,7 @@ export const getPages = async () => {
       // pages/design/index.mdx -> pages/design.png
       pagePath = pagePath.replace(/\/index$/g, '');
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return [pagePath, (page as any).frontmatter];
     })
   );

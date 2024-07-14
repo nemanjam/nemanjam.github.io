@@ -1,12 +1,11 @@
 ---
 import { Icon } from 'astro-icon/components';
 
-import { getLatestCommitInfo } from '@/libs/git';
-
-import { BackToTop } from '@/components/BackToTop';
+// import { BackToTop } from '@/components/BackToTop';
 import Link from '@/components/Link.astro';
 import { ROUTES } from '@/constants/routes';
 import { CONFIG } from '@/config';
+import { getLatestCommitInfo } from '@/libs/git';
 import { trimHttpProtocol } from '@/utils/strings';
 
 const { SITE_URL, AUTHOR_LINKEDIN, AUTHOR_GITHUB } = CONFIG;
@@ -80,5 +79,5 @@ const { time, hash, message } = getLatestCommitInfo();
       </ul>
     </div>
   </div>
-  <BackToTop client:only="solid-js" />
+  {/* <BackToTop client:only="solid-js" /> */}
 </footer>

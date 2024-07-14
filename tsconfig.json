@@ -5,8 +5,8 @@
   "esModuleInterop": true,
   "compilerOptions": {
     "allowJs": true,
-    "jsx": "preserve",
-    "jsxImportSource": "solid-js",
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
     "noEmit": true,
     "skipLibCheck": true,
     "baseUrl": "src",

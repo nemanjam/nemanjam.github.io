@@ -1,6 +1,5 @@
 import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
-import solid from '@astrojs/solid-js';
 import tailwind from '@astrojs/tailwind';
 import icon from 'astro-icon';
 import { defineConfig } from 'astro/config';
@@ -29,13 +28,7 @@ export default defineConfig({
   integrations: [
     expressiveCodeIntegration(),
     sitemapIntegration(),
-    solid({
-      include: ['src/**'],
-      exclude: ['**/*react*/**'],
-    }),
-    react({
-      include: ['**/*react*/**'],
-    }),
+    react(),
     // applyBaseStyles: false prevents double loading of tailwind
     tailwind({
       applyBaseStyles: false,

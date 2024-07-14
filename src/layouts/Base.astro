@@ -2,7 +2,7 @@
 import BaseHead from '@/components/BaseHead.astro';
 import Footer from '@/components/Footer.astro';
 import Header from '@/components/Header.astro';
-import { Snackbar } from '@/components/Snackbar';
+// import { Snackbar } from '@/components/Snackbar';
 import ThemeScript from '@/components/ThemeScript.astro';
 
 import type { BaseHeadProps } from '@/components/BaseHead.astro';
@@ -18,7 +18,7 @@ const { metadata } = Astro.props as BaseProps;
     <Header />
     <slot />
     <Footer />
-    <Snackbar client:idle />
+    {/* <Snackbar client:idle /> */}
     <ThemeScript />
   </body>
 </html>

@@ -24,27 +24,27 @@ const shouldDisplay = [category, publishDate, updatedDate, readingTime].some(Boo
   shouldDisplay && (
     <p aria-label="Post meta" class={cn('b-p text-captions flex flex-row flex-wrap items-center gap-2', className)}>
         {publishDate && (      
-            <Icon name="mdi:access-time" />
-            <time itemprop="datePublished" datetime={formatDateIso(publishDate)}>
-              {formatDate(publishDate)}
-            </time>        
+          <Icon name="mdi:access-time" />
+          <time itemprop="datePublished" datetime={formatDateIso(publishDate)}>
+            {formatDate(publishDate)}
+          </time>        
         )}
         {category && (  
           <span>·</span>     
-            <Icon name={getCategoryProps(category).icon} />
-            <Link href={`${ROUTES.CATEGORIES}${category}`}>{category}</Link>       
+          <Icon name={getCategoryProps(category).icon} />
+          <Link href={`${ROUTES.CATEGORIES}${category}`}>{category}</Link>       
         )}
         {readingTime && (    
           <span>·</span>     
-            <Icon name="mdi:book-open-blank-variant-outline" />
-            <span>{`${Math.round(readingTime)} minutes`}</span>     
+          <Icon name="mdi:book-open-blank-variant-outline" />
+          <span>{`${Math.round(readingTime)} minutes`}</span>     
         )}
         {updatedDate && (    
-            <span>·</span>     
-            <Icon name="mdi:edit-outline" />
-            <time itemprop="dateUpdated" datetime={formatDateIso(updatedDate)}>
-              {formatDate(updatedDate)}
-            </time>         
+          <span>·</span>     
+          <Icon name="mdi:edit-outline" />
+          <time itemprop="dateUpdated" datetime={formatDateIso(updatedDate)}>
+            {formatDate(updatedDate)}
+          </time>         
         )}
     </p>
   )

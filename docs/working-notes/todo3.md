@@ -405,5 +405,7 @@ replace solid with react and jsx config
 giscus, share add text, transitions, shorter commit info footer
 write content for home and about
 write readme and credits
+search with fuse.js astro-paper
+fix lint, types, format
 ```
 
