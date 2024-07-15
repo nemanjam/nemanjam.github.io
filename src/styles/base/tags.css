@@ -50,18 +50,16 @@
     @apply my-5 md:my-6;
   }
 
-  /* my- like h2 */
-  .b-h2-my {
-    @apply mt-12 md:mt-14 mb-6 md:mb-8;
-  }
-
-  /* mt- first and last child */
+  /* my- like h2, mt-, mb- first and last child */
   .b-h2-mt {
     @apply mt-12 md:mt-14;
   }
 
-  /* mb- */
   .b-h2-mb {
     @apply mb-6 md:mb-8;
+  }
+
+  .b-h2-my {
+    @apply b-h2-mb b-h2-mt;
   }
 }
