@@ -108,9 +108,12 @@ const metadata: Metadata = { title, description, image };
 
     <Content />
 
-    <TagList tags={tags} size="lg" class="mb-4 md:mb-6" />
-
-    <Share {title} {description} url={`${ROUTES.BLOG}${slug}`} size="md" />
+    <div
+      class="flex justify-between items-start gap-4 flex-col md:flex-row mt-6 md:mt-8 mb-12 md:mb-16"
+    >
+      <TagList tags={tags} size="md" />
+      <Share {title} {description} url={`${ROUTES.BLOG}${slug}`} />
+    </div>
 
     <Giscus />
   </Fragment>
