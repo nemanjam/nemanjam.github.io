@@ -6,13 +6,15 @@ import { ROUTES } from '@/constants/routes';
 import { formatDate, formatDateIso } from '@/utils/datetime';
 import { cn } from '@/utils/styles';
 import { getCategoryProps } from '@/modules/post/category';
+import type { HTMLAttributes } from 'astro/types';
 
-interface Props {
+
+
+export interface Props extends HTMLAttributes<'p'> {
   publishDate: Date;
   category?: string;
   readingTime?: number;
   updatedDate?: Date;
-  class?: string
 }
 
 const { category, publishDate, updatedDate, readingTime, class: className } = Astro.props;

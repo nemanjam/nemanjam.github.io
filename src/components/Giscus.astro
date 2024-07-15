@@ -1,23 +1,31 @@
 ---
+import { cn } from '@/utils/styles';
 
+import type { HTMLAttributes } from 'astro/types';
+
+export interface Props extends HTMLAttributes<'div'> {}
+
+const { class: className } = Astro.props;
 ---
 
-<giscus-widget
-  id="giscus-comments"
-  repo="nemanjam/nemanjam.github.io"
-  repoid="R_kgDOKc-LeA"
-  category="General"
-  categoryid="DIC_kwDOKc-LeM4CZ7UL"
-  mapping="pathname"
-  term="Comments are welcome"
-  strict="0"
-  reactionsenabled="1"
-  emitmetadata="0"
-  inputposition="bottom"
-  theme="light"
-  lang="en"
-  crossorigin="anonymous"
-  loading="lazy"></giscus-widget>
+<div class={cn('giscus', className)}>
+  <giscus-widget
+    id="giscus-comments"
+    repo="nemanjam/nemanjam.github.io"
+    repoid="R_kgDOKc-LeA"
+    category="General"
+    categoryid="DIC_kwDOKc-LeM4CZ7UL"
+    mapping="pathname"
+    term="Comments are welcome"
+    strict="0"
+    reactionsenabled="1"
+    emitmetadata="0"
+    inputposition="bottom"
+    theme="light"
+    lang="en"
+    crossorigin="anonymous"
+    loading="lazy"></giscus-widget>
+</div>
 
 <script>
   import 'giscus';

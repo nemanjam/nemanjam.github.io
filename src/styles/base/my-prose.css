@@ -19,6 +19,13 @@
     /* image */
     @apply prose-img:rounded-button;
 
-    /* @apply outline outline-pink-500; */
+    /* my custom components bellow */
+
+    /* vertical margins */
+    .toc,
+    .expressive-code,
+    .alert {
+      @apply b-p-my;
+    }
   }
 }

@@ -88,34 +88,33 @@ const metadata: Metadata = { title, description, image };
   </Fragment>
 
   <Fragment slot="hero-text">
-    {/* title */}
-    <h1>
+    <h1 class="b-h1">
       {title}
       {draft && <sup class="text-red-500 ml-1">{draftText}</sup>}
     </h1>
 
-    {/* description */}
-    {description && <h2 class="font-normal text-xl lg:text-2xl tracking-tight">{description}</h2>}
+    {
+      description && (
+        <p class="font-normal text-captions text-xl md:text-2xl mb-6 md:mb-8">{description}</p>
+      )
+    }
 
-    {/* meta */}
-    <PostMeta {...postMetaProps} class="not-prose" />
+    <PostMeta {...postMetaProps} />
   </Fragment>
 
-  {/* section content */}
   <Fragment slot="content">
-    {/* table of contents */}
     {toc && <TableOfContents headings={headings} />}
 
     <Content />
+  </Fragment>
 
-    <div
-      class="flex justify-between items-start gap-4 flex-col md:flex-row mt-6 md:mt-8 mb-12 md:mb-16"
-    >
+  <Fragment slot="after-content">
+    <div class="flex justify-between items-start gap-6 flex-col md:flex-row b-h2-mb">
       <TagList tags={tags} size="md" />
       <Share {title} {description} url={`${ROUTES.BLOG}${slug}`} />
     </div>
 
-    <Giscus />
+    <Giscus class="b-h2-mt" />
   </Fragment>
 
   <Fragment slot="more-posts">

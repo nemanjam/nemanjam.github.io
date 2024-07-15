@@ -414,5 +414,8 @@ fix content width
 migrate scroll to top and toast to react
 fix footer
 fix share, just small gray icons
+use vertical margins and margin collapsing for all vertical spacings, no paddings, when in same parent
+remove tag-lg, fix button size on mobile
+alert component style
 ```
 
