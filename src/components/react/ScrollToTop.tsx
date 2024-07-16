@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+import { cn } from '@/utils/styles';
+
 import type { ReactNode } from 'react';
 
 interface Props {
@@ -7,7 +9,7 @@ interface Props {
 }
 
 const fixedClasses = ['opacity-1', 'translate-y-0'];
-const hiddenClasses = ['opacity-0', 'translate-y-full'];
+const hiddenClasses = ['opacity-0', 'translate-y-20'];
 
 const showLink = (linkRef: React.RefObject<HTMLAnchorElement>): void => {
   linkRef.current?.classList.add(...fixedClasses);
@@ -29,13 +31,25 @@ const ScrollToTop: React.FC<Props> = ({ children }) => {
   const [height, setHeight] = useState(getHalfViewportHeight(window));
 
   useEffect(() => {
-    const callback: IntersectionObserverCallback = (entries) => {
-      const isAtTopOrBottom = entries.some((entry) => entry.isIntersecting);
+    // ! track them both independently at same time
+    // ! important: must be in this scope, outside of callback()
+    let isAtTop = false;
+    let isAtBottom = false;
 
-      console.log('isAtTopOrBottom', isAtTopOrBottom);
+    const callback: IntersectionObserverCallback = (entries) => {
+      // entries.length === 1 || 2, count changes when exits viewport
+      entries.forEach((entry) => {
+        if (entry.target === topRef.current) {
+          isAtTop = entry.isIntersecting;
+        }
+
+        if (entry.target === bottomRef.current) {
+          isAtBottom = entry.isIntersecting;
+        }
+      });
 
       if (linkRef.current) {
-        isAtTopOrBottom ? hideLink(linkRef) : showLink(linkRef);
+        isAtTop || isAtBottom ? hideLink(linkRef) : showLink(linkRef);
       }
     };
 
@@ -69,6 +83,7 @@ const ScrollToTop: React.FC<Props> = ({ children }) => {
         className="pointer-events-none absolute top-0 w-10 bg-red-500"
         style={{ height: `${height}px` }}
       />
+      {/* mounted in <body /> in Base layout */}
       <div
         ref={bottomRef}
         className="pointer-events-none absolute bottom-0 w-10 bg-blue-500"
@@ -78,7 +93,14 @@ const ScrollToTop: React.FC<Props> = ({ children }) => {
         ref={linkRef}
         id="to-top"
         href="#top"
-        className="z-10 fixed bottom-6 right-6 rounded bg-base-200 border border-base-300"
+        className={cn(
+          // default styles
+          'z-10 fixed bottom-6 right-6 rounded bg-base-200 border border-base-300',
+          // initial state
+          hiddenClasses,
+          // transition classes
+          'transition-all duration-300'
+        )}
         aria-label="Scroll to top"
       >
         {/* astro-icon must be passed as slot */}
