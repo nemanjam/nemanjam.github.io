@@ -2,7 +2,6 @@
 import { Icon } from 'astro-icon/components';
 
 import Link from '@/components/Link.astro';
-import ScrollToTop from '@/components/react/ScrollToTop';
 import { ROUTES } from '@/constants/routes';
 import { CONFIG } from '@/config';
 import { getLatestCommitInfo } from '@/libs/git';
@@ -79,8 +78,4 @@ const trimmedMessage = limitString(message, messageLength);
       </ul>
     </div>
   </div>
-
-  <ScrollToTop client:only="react">
-    <Icon name="mdi:arrow-up-thin" class="h-10 w-10 text-content hover:text-links-hover" />
-  </ScrollToTop>
 </footer>

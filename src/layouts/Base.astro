@@ -1,7 +1,10 @@
 ---
+import { Icon } from 'astro-icon/components';
+
 import BaseHead from '@/components/BaseHead.astro';
 import Footer from '@/components/Footer.astro';
 import Header from '@/components/Header.astro';
+import ScrollToTop from '@/components/react/ScrollToTop';
 // import { Snackbar } from '@/components/Snackbar';
 import ThemeScript from '@/components/ThemeScript.astro';
 
@@ -14,11 +17,16 @@ const { metadata } = Astro.props as BaseProps;
 
 <html lang="en">
   <BaseHead {metadata} />
-  <body class="flex flex-col min-h-screen bg-base-100 transition-colors duration-500">
+  <body class="relative flex flex-col min-h-screen bg-base-100 transition-colors duration-500">
     <Header />
     <slot />
     <Footer />
     {/* <Snackbar client:idle /> */}
+
+    <ScrollToTop client:only="react">
+      <Icon name="mdi:arrow-up-thin" class="h-10 w-10 text-content hover:text-links-hover" />
+    </ScrollToTop>
+
     <ThemeScript />
   </body>
 </html>
