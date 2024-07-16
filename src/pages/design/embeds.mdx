@@ -7,6 +7,10 @@ import { Tweet, Vimeo, LinkPreview } from 'astro-embed';
 import YouTube from '../../components/YouTube.astro';
 import Share from '../../components/Share.astro';
 
+import { ROUTES } from '../../constants/routes'; 
+import { CONFIG } from '../../config';
+
+
 
 {/* for Twitter iframe */}
 <script async src="https://platform.twitter.com/widgets.js" />
@@ -17,8 +21,13 @@ back to [Index](/design)
 
 ### Social share
 
-<Share />
+export const shareProps = {
+  title: 'Embed page',
+  description: 'Embed page description',
+  url: `${CONFIG.SITE_URL}${ROUTES.DESIGN}embeds`,
+};
 
+<Share {...shareProps} />
 ---
 
 ### astro-embed

@@ -417,5 +417,7 @@ fix share, just small gray icons
 use vertical margins and margin collapsing for all vertical spacings, no paddings, when in same parent
 remove tag-lg, fix button size on mobile
 alert component style
+improve lighthouse, accessibility, aria attrs
+2 prerendered paginations, 3 and 5 items
 ```
 

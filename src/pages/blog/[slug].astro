@@ -14,10 +14,13 @@ import TagList from '@/components/TagList.astro';
 import { draftText } from '@/constants/data';
 import { IMAGE_SIZES } from '@/constants/image';
 import { ROUTES } from '@/constants/routes';
+import { CONFIG } from '@/config';
 import { getOpenGraphImagePath } from '@/libs/api/open-graph/image-path';
 
 import type { Metadata } from '@/types/common';
 import type { Post } from '@/types/post';
+
+const { SITE_URL } = CONFIG;
 
 export async function getStaticPaths() {
   const posts: Post[] = await getAllPostsWithReadingTime();
@@ -61,6 +64,12 @@ const postMetaProps = {
   publishDate,
   readingTime,
   updatedDate,
+};
+
+const shareProps = {
+  title,
+  description,
+  url: `${SITE_URL}${ROUTES.BLOG}${slug}`,
 };
 
 // handle all metadata here
@@ -111,7 +120,7 @@ const metadata: Metadata = { title, description, image };
   <Fragment slot="after-content">
     <div class="flex justify-between items-start gap-6 flex-col md:flex-row b-h2-mb">
       <TagList tags={tags} size="md" />
-      <Share {title} {description} url={`${ROUTES.BLOG}${slug}`} />
+      <Share {...shareProps} />
     </div>
 
     <Giscus class="b-h2-mt" />

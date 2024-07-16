@@ -3,9 +3,12 @@ import { getAllProjects } from '@/modules/project';
 import Project from '@/layouts/Project.astro';
 import Share from '@/components/Share.astro';
 import { ROUTES } from '@/constants/routes';
+import { CONFIG } from '@/config';
 import { getOpenGraphImagePath } from '@/libs/api/open-graph/image-path';
 
 import type { Metadata } from '@/types/common';
+
+const { SITE_URL } = CONFIG;
 
 export async function getStaticPaths() {
   const sortedProjects = await getAllProjects();
@@ -27,10 +30,16 @@ const { title, description } = data;
 
 const metadata: Metadata = { title, description, image };
 
+const shareProps = {
+  title,
+  description,
+  url: `${SITE_URL}${ROUTES.PROJECTS}${slug}`,
+};
+
 const { Content } = await render();
 ---
 
 <Project {metadata}>
   <Content />
-  <Share {title} {description} url={`${ROUTES.PROJECTS}${slug}`} />
+  <Share {...shareProps} />
 </Project>
