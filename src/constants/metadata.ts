@@ -12,7 +12,7 @@ const { SITE_URL, SITE_DESCRIPTION, SITE_TITLE } = CONFIG;
 /** Must be url from public folder. */
 export const defaultOgImage = `${SITE_URL}/images/default/default-open-graph-image.jpg`;
 
-export const dotSeparator = '•';
+export const titleSeparator = '-';
 
 export const DEFAULT_METADATA: Required<Metadata> = {
   title: SITE_TITLE,

@@ -2,23 +2,25 @@ import { execSync } from 'child_process';
 
 export interface GitResult {
   time: string;
-  hash: string;
+  shortHash: string;
+  fullHash: string;
   message: string;
 }
 
 export const getLatestCommitInfo = (): GitResult => {
   const separator = '___';
-  const command = `git log -1 --pretty=format:"%ad${separator}%h${separator}%s" --date=format:'%Y-%m-%d %H:%M:%S'`;
+  const command = `git log -1 --pretty=format:"%ad${separator}%h${separator}%H${separator}%s" --date=format:'%Y-%m-%d %H:%M:%S'`;
   const output = execSync(command).toString().trim().split(separator);
 
-  if (output.length !== 3) {
+  if (output.length !== 4) {
     throw new Error('Could not parse the latest Git commit output.');
   }
 
   const result = {
     time: output[0],
-    hash: output[1],
-    message: output[2],
+    shortHash: output[1],
+    fullHash: output[2],
+    message: output[3],
   };
 
   return result;

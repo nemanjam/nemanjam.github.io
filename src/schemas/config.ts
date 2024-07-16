@@ -22,4 +22,5 @@ export const configSchema = z.object({
   AUTHOR_EMAIL: z.string().email(),
   AUTHOR_GITHUB: z.string().url(),
   AUTHOR_LINKEDIN: z.string().url(),
+  REPO_URL: z.string().url(),
 });

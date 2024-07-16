@@ -28,7 +28,7 @@ dotenv.config({ path: envFileName });
 const configData: ConfigType = {
   NODE_ENV: process.env.NODE_ENV,
   PREVIEW_MODE: process.env.PREVIEW_MODE,
-  /** without '/' */
+  /** all urls without '/' */
   SITE_URL: process.env.SITE_URL,
   SITE_TITLE: 'Nemanja Mitic',
   SITE_DESCRIPTION: 'I am Nemanja, full stack developer',
@@ -38,6 +38,7 @@ const configData: ConfigType = {
   AUTHOR_EMAIL: 'email@email.com',
   AUTHOR_GITHUB: 'https://github.com/nemanjam',
   AUTHOR_LINKEDIN: 'https://www.linkedin.com/in/nemanja-mitic',
+  REPO_URL: 'https://github.com/nemanjam/nemanjam.github.io',
 };
 
 // todo: Config should go into import.meta.env in astro.config.ts

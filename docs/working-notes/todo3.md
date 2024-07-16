@@ -412,12 +412,13 @@ style giscus, tags and share, astrowind, use existing styleguide
     move giscus mode, add another theme change event handler
 fix content width
 migrate scroll to top and toast to react
-fix footer
-fix share, just small gray icons
+    fix footer
+    fix share, just small gray icons
 use vertical margins and margin collapsing for all vertical spacings, no paddings, when in same parent
 remove tag-lg, fix button size on mobile
 alert component style
 improve lighthouse, accessibility, aria attrs
 2 prerendered paginations, 3 and 5 items
+must export_ vars in .mdx or acor error, ask?
 ```
 

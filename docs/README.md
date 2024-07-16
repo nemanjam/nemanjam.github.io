@@ -9,7 +9,7 @@ curl http://152.70.160.21:1080
 ssh -R 1080:localhost:3000 amd2
 curl http://amd2.nemanjamitic.com:1080
 
-# flush
+# flush, works without server and ssh reboot
 sudo iptables -F
 # list
 sudo iptables -L

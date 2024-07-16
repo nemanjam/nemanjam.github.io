@@ -1,3 +1,8 @@
+/**
+ * Folders - all urls with both leading and trailing '/'.
+ * Files - without trailing '/'.
+ */
+
 export const ROUTES = {
   HOME: '/',
   BLOG: '/blog/',
