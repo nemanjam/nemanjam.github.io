@@ -80,13 +80,13 @@ const ScrollToTop: React.FC<Props> = ({ children }) => {
     <>
       <div
         ref={topRef}
-        className="pointer-events-none absolute top-0 w-10 bg-red-500"
+        className="pointer-events-none absolute top-0 w-0"
         style={{ height: `${height}px` }}
       />
       {/* mounted in <body /> in Base layout */}
       <div
         ref={bottomRef}
-        className="pointer-events-none absolute bottom-0 w-10 bg-blue-500"
+        className="pointer-events-none absolute bottom-0 w-0"
         style={{ height: `${height}px` }}
       />
       <a
