@@ -55,7 +55,8 @@ const ScrollToTop: React.FC<Props> = ({ children }) => {
       }
     };
 
-    const debouncedCallback = debounce(callback, 500);
+    // bellow 200 or it will break again
+    const debouncedCallback = debounce(callback, 100);
     const intersect = new IntersectionObserver(debouncedCallback);
 
     if (topRef.current) intersect.observe(topRef.current);
