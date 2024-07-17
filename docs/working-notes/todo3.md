@@ -421,5 +421,6 @@ improve lighthouse, accessibility, aria attrs
 2 prerendered paginations, 3 and 5 items
 must export_ vars in .mdx or acor error, ask?
 define color themes
+:where() selector in my-prose not completely bypassing not-prose
 ```
 

@@ -26,7 +26,8 @@
   }
 
   .alert__title {
-    @apply flex items-center gap-1 mt-2;
+    /* <p> has line-height: 1.7, h4 needs higher mt-1 */
+    @apply flex items-center gap-1 mt-1;
   }
   .alert__title--note {
     @apply text-slate-900 dark:text-slate-100;
