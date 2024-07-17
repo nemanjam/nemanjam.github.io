@@ -435,7 +435,8 @@ write home and about pages, one article
 open images in new tab and check all sizes
 links in md colors
 fix table of contents styling
-astro transitions // maybe
-
+retest vertical spacing, font-size and content width
+// maybe
+astro transitions 
 ```
 
