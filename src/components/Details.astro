@@ -1,19 +1,18 @@
 ---
-export interface Props {
+import { cn } from '@/utils/styles';
+
+import type { HTMLAttributes } from 'astro/types';
+
+export interface Props extends HTMLAttributes<'details'> {
   title: string;
 }
 
-const { title } = Astro.props as Props;
+const { title, class: className, ...props } = Astro.props as Props;
 ---
 
-<details class="group mx-2 rounded-lg bg-slate-200 p-8 px-4 py-1 dark:bg-slate-800 sm:mx-4">
-  <summary
-    class="cursor-pointer text-purple-600 no-underline outline-none hover:underline hover:decoration-4 hover:underline-offset-2 focus:underline focus:decoration-4 focus:underline-offset-4 dark:text-purple-400"
-  >
-    <span
-      class="bg-gradient-to-br from-blue-700 to-purple-600 bg-clip-text font-bold text-transparent dark:from-blue-400 dark:to-purple-400"
-      >{title}</span
-    >
+<details {...props} class={cn('rounded-button bg-base-200 px-4 py-1', className)}>
+  <summary class="cursor-pointer">
+    <span class="font-semibold">{title}</span>
   </summary>
   <slot />
 </details>

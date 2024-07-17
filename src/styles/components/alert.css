@@ -1,11 +1,13 @@
 @layer components {
   .alert {
-    @apply mb-4 mx-8 md:mx-auto px-4 py-1 rounded-button;
+    @apply px-4 py-1 rounded-button;
 
     & p {
       @apply my-0;
     }
   }
+
+  /* extract into semantic colors maybe in future */
   .alert--note {
     /* use base-200-300 here */
     @apply bg-slate-100 border border-slate-200 dark:border-slate-800 dark:bg-slate-900;
