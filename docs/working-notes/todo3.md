@@ -360,10 +360,10 @@ navigation for design system pages
 table of contents styling
 components into folders
 format mdx, autocomplete, it was in prettierignore
-expanded image must not use width less than expanded width, wont be centered
+    expanded image must not use width less than expanded width, wont be centered
 load bookmarks repo on build
-image gallery grid
-fix image vertical margins, widths and width everywhere, constants
+image gallery grid and preview modal
+    fix image vertical margins, widths and width everywhere, constants
 resenje za tailwind - layer component classes za p, h4..., stilovi za komponentu moraju da budu kompletni, no base styles, oni se menjaju u prose
     index.mdx in design-system folder with navigation
     embed youtube, twitter, link https://github.com/delucis/astro-embed
@@ -402,7 +402,8 @@ solid-js style prop dash case 'border-radius': '3px'
     fix folders in assets/images
     pages/design, sve .mdx index stranice, fix in metadata, endsWith('/') // fixed in getPages()
     replace solid with react and jsx config
-giscus, share add text, transitions, shorter commit info footer
+    giscus, share add text, shorter commit info footer
+astro transitions
 write content for home and about
 write readme and credits
 search with fuse.js astro-paper
@@ -411,7 +412,7 @@ put images beside .mdx in content, slug...
 style giscus, tags and share, astrowind, use existing styleguide
     move giscus mode, add another theme change event handler
 fix content width
-migrate scroll to top and toast to react
+    migrate scroll to top and toast to react
     fix footer
     fix share, just small gray icons
 use vertical margins and margin collapsing for all vertical spacings, no paddings, when in same parent
@@ -421,6 +422,20 @@ improve lighthouse, accessibility, aria attrs
 2 prerendered paginations, 3 and 5 items
 must export_ vars in .mdx or acor error, ask?
 define color themes
-:where() selector in my-prose not completely bypassing not-prose
+:where() selector in my-prose not completely bypassing not-prose // this
+load bookmarks readme.md on build, add galery component and mdx
+write typography.mdx
+------
+// for release
+fix button and tags sizes
+define color themes
+improve lighthouse, accessibility, aria attrs
+write readme and credits, roadmap
+write home and about pages, one article
+open images in new tab and check all sizes
+links in md colors
+fix table of contents styling
+astro transitions // maybe
+
 ```
 
