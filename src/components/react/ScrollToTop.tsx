@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+import debounce from 'lodash.debounce';
+
 import { cn } from '@/utils/styles';
 
 import type { ReactNode } from 'react';
@@ -53,7 +55,8 @@ const ScrollToTop: React.FC<Props> = ({ children }) => {
       }
     };
 
-    const intersect = new IntersectionObserver(callback);
+    const debouncedCallback = debounce(callback, 500);
+    const intersect = new IntersectionObserver(debouncedCallback);
 
     if (topRef.current) intersect.observe(topRef.current);
     if (bottomRef.current) intersect.observe(bottomRef.current);
