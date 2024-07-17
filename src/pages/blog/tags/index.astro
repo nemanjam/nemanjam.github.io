@@ -5,7 +5,6 @@ import List from '@/layouts/List.astro';
 import FilterList from '@/components/FilterList.astro';
 import Tag from '@/components/Tag.astro';
 import { getPageMetadata } from '@/utils/metadata';
-import { cn } from '@/utils/styles';
 
 import type { FilterLink } from '@/types/post';
 
@@ -21,7 +20,7 @@ const metadata = getPageMetadata('lists/blog/tags');
     <FilterList class="mb-4" itemLinks={tagLinks}>
       {
         ({ href, textWithCount, isActive }: FilterLink) => (
-          <Tag href={href} size="md" class={cn({ 'underline font-bold text-accent': isActive })}>
+          <Tag href={href} size="md" colors={isActive ? 'primary' : 'default'}>
             {textWithCount}
           </Tag>
         )

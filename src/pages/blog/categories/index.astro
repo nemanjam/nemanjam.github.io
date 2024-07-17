@@ -1,8 +1,10 @@
 ---
-import { getCategoryLinks } from '@/modules/post/category';
+import { Icon } from 'astro-icon/components';
+
+import { getCategoryLinks, getCategoryProps } from '@/modules/post/category';
 import { getAllPosts } from '@/modules/post/common';
 import List from '@/layouts/List.astro';
-import CategoryCard from '@/components/CategoryCard.astro';
+import Button from '@/components/Button.astro';
 import FilterList from '@/components/FilterList.astro';
 import { getPageMetadata } from '@/utils/metadata';
 
@@ -18,11 +20,16 @@ const metadata = getPageMetadata('lists/blog/categories');
   <section>
     <FilterList class="mb-4" itemLinks={categoryLinks}>
       {
-        ({ href, text, textWithCount }: FilterLink) => (
-          <CategoryCard href={href} category={text}>
-            {textWithCount}
-          </CategoryCard>
-        )
+        ({ href, text, textWithCount }: FilterLink) => {
+          const { icon } = getCategoryProps(text);
+
+          return (
+            <Button href={href} size="md">
+              <Icon name={icon} slot="before-icon" />
+              {textWithCount}
+            </Button>
+          );
+        }
       }
     </FilterList>
   </section>

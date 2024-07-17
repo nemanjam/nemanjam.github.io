@@ -389,8 +389,8 @@ mdx format adds new lines and paddings to paragraphs
 pagination align bottom, mobile problem...
 subfolders in components, working notes in docs folder
 fix title text in metadata, dot separator
-style share, add text
-restyle scroll to top, must be moved from solid to astro - cactus
+    style share, add text
+    restyle scroll to top, must be moved from solid to astro - cactus
 
 satori can define og image with html, astro-canvas limited
 satori understands only react jsx, not solid-js
@@ -401,7 +401,7 @@ solid-js style prop dash case 'border-radius': '3px'
     add random hero images for mdx and list pages, and maybe random gradient, handle longer domain in new row
     fix folders in assets/images
     pages/design, sve .mdx index stranice, fix in metadata, endsWith('/') // fixed in getPages()
-replace solid with react and jsx config
+    replace solid with react and jsx config
 giscus, share add text, transitions, shorter commit info footer
 write content for home and about
 write readme and credits
@@ -420,5 +420,6 @@ alert component style
 improve lighthouse, accessibility, aria attrs
 2 prerendered paginations, 3 and 5 items
 must export_ vars in .mdx or acor error, ask?
+define color themes
 ```
 
