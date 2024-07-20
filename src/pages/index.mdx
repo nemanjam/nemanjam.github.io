@@ -4,6 +4,13 @@ title: 'Home'
 description: 'Lorem ipsum dolor sit amet'
 ---
 
-# This is index page
+import { Image } from 'astro:assets';
+
+import { IMAGE_SIZES } from '../constants/image';
+import River10Image from '../assets/images/all-images/river10.jpg';
+
+# Hello visitor
+
+<Image {...IMAGE_SIZES.FIXED.MDX_MD} src={River10Image} alt="Fishing spot" />
 
 Irure non reprehenderit aute velit proident ad reprehenderit. Laborum quis ea tempor ullamco aute qui ad et qui ipsum est mollit eu. Aliquip non officia amet reprehenderit irure. Et voluptate ea veniam cillum dolor labore commodo culpa. Culpa eiusmod mollit sunt nisi dolor ullamco velit in aliquip et ea duis eu.

@@ -427,7 +427,7 @@ load bookmarks readme.md on build, add galery component and mdx
 write typography.mdx
 ------
 // for release
-fix button and tags sizes
+    fix button and tags sizes
 define color themes
 improve lighthouse, accessibility, aria attrs
 write readme and credits, roadmap

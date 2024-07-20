@@ -4,8 +4,15 @@ title: 'About Me'
 description: 'Lorem ipsum dolor sit amet'
 ---
 
+import { Image } from 'astro:assets';
+
+import { IMAGE_SIZES } from '../constants/image';
+import Electronics1Image from '../assets/images/all-images/electronics1.jpg';
+
 # About
 
-## Subtitle
+<Image {...IMAGE_SIZES.FIXED.MDX_SM} src={Electronics1Image} alt="Veronica transmitter board" />
 
-- This is list item
+Aliquip quis commodo proident et dolor irure irure tempor voluptate. Exercitation pariatur ipsum nulla nulla laboris velit cupidatat amet adipisicing consectetur quis quis irure. Quis ullamco sint cupidatat reprehenderit deserunt. Et sunt anim ex ipsum sit quis dolor excepteur mollit aute commodo veniam velit. 
+
+
