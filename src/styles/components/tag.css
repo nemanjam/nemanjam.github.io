@@ -21,7 +21,7 @@
   }
 
   .tag-solid-sm {
-    @apply px-2 pb-0.5;
+    @apply px-2 py-0.5;
   }
 
   .tag-md {
@@ -29,15 +29,7 @@
   }
 
   .tag-solid-md {
-    @apply px-3 pt-0.5 pb-1;
-  }
-
-  .tag-lg {
-    @apply text-lg;
-  }
-
-  .tag-solid-lg {
-    @apply px-4 pt-1.5 pb-2;
+    @apply px-3 py-1;
   }
 
   .tag-solid-primary {

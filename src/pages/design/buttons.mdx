@@ -2,6 +2,7 @@
 layout: '../../layouts/Page.astro'
 title: Buttons, Links, Tags
 ---
+import { Icon } from 'astro-icon/components';
 
 import Button from '../../components/Button.astro';
 import Link from '../../components/Link.astro';
@@ -17,7 +18,7 @@ export const buttons = {
     { variant: 'solid', colors: 'default' },
   ],
   colors: [{ colors: 'primary' }, { colors: 'default' }],
-  size: [{ size: 'lg' }, { size: 'md' }, { size: 'sm' }],
+  size: [{ size: 'md' }, { size: 'sm' }],
   disabled: [{ disabled: true }, { disabled: false }],
 };
 
@@ -32,10 +33,27 @@ export const buttons = {
 
       return <Button {...props}>{text}</Button>;
     })}
-
   </div>
 </>
 ))}
+
+#### slot="before-icon"
+
+<div class="not-prose">
+  <Button colors="primary" size="sm">
+    <Icon name="mdi:fish" slot="before-icon" />
+    My Button
+  </Button>
+</div>
+
+#### slot="after-icon"
+
+<div class="not-prose">
+  <Button colors="primary">
+    <Icon name="mdi:fish" slot="after-icon" />
+    My Button
+  </Button>
+</div>
 
 export const links = {
   variant: [
@@ -74,7 +92,12 @@ export const tags = {
     { variant: 'text', colors: 'primary' },
     { variant: 'text', colors: 'default' },
   ],
-  size: [{ size: 'lg' }, { size: 'md' }, { size: 'sm' }],
+  size: [
+    { size: 'md', variant: 'solid' }, 
+    { size: 'md', variant: 'text' }, 
+    { size: 'sm', variant: 'solid' },
+    { size: 'sm', variant: 'text' }, 
+  ],
 };
 
 ## Tags

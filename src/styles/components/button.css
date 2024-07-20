@@ -1,7 +1,7 @@
 @layer components {
-  .button-default {
+  .button {
     @apply inline-flex items-center gap-2 no-underline;
-    @apply rounded-button;
+    @apply rounded-button text-base;
   }
 
   .button-outline {
@@ -33,7 +33,7 @@
   }
 
   .button-sm {
-    @apply px-4 py-1;
+    @apply px-3 py-0.5;
 
     [data-icon] {
       @apply w-6 h-6;
@@ -41,18 +41,10 @@
   }
 
   .button-md {
-    @apply text-lg px-5 py-2;
+    @apply text-lg px-5 py-1.5;
 
     [data-icon] {
       @apply w-8 h-8;
-    }
-  }
-
-  .button-lg {
-    @apply text-lg px-6 py-3;
-
-    [data-icon] {
-      @apply w-10 h-10;
     }
   }
 }
