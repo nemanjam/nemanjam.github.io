@@ -437,10 +437,13 @@ open images in new tab and check all sizes
 links in md colors
 fix table of contents styling
 retest vertical spacing, font-size and content width
+
 // maybe
-astro transitions 
+    astro transitions, works for PostCard on blog, tags, categories, explore
 --------
 
 ask about optimal max-width image width
 fix .mdx live reload
+firefox has white flash bug on theme change after transitions, https://youtu.be/9MChTVlXbf8?t=363
+
 ```

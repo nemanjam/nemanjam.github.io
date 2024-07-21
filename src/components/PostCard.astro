@@ -9,6 +9,7 @@ import TagList from '@/components/TagList.astro';
 import { draftText } from '@/constants/data';
 import { IMAGE_SIZES } from '@/constants/image';
 import { ROUTES } from '@/constants/routes';
+import { setTransitionSlug, TRANSITION_ELEMENT_IDS } from '@/constants/transitions';
 import { formatDate, formatDateIso } from '@/utils/datetime';
 import { cn } from '@/utils/styles';
 
@@ -39,6 +40,8 @@ const { lastAccessDate, isUpdatedDate } = getPublishedOrUpdatedDate({
   publishDate,
   updatedDate,
 });
+
+const getTransitionNameFromElementId = setTransitionSlug({ pageSlug: slug });
 ---
 
 <article
@@ -58,7 +61,9 @@ const { lastAccessDate, isUpdatedDate } = getPublishedOrUpdatedDate({
           alt={heroAlt}
           itemprop="image"
           class="w-full h-[168px] xs:h-[250px] md:h-[168px] md:max-w-[298px] object-cover rounded-box"
-          transition:name={`hero-image-${slug}`}
+          transition:name={getTransitionNameFromElementId({
+            elementId: TRANSITION_ELEMENT_IDS.POST_CARD.HERO_IMAGE,
+          })}
         />
       </div>
     )
@@ -67,7 +72,12 @@ const { lastAccessDate, isUpdatedDate } = getPublishedOrUpdatedDate({
   {/* right column */}
   <div class={cn('flex flex-col', { 'md:basis-2/3': !noHero })}>
     {/* category and publishDate row*/}
-    <div class="flex items-start justify-between mb-4 text-sm leading-none">
+    <div
+      class="flex items-start justify-between mb-4 text-sm leading-none"
+      transition:name={getTransitionNameFromElementId({
+        elementId: TRANSITION_ELEMENT_IDS.POST_CARD.META,
+      })}
+    >
       <Link
         href={`${ROUTES.CATEGORIES}${category}`}
         class="inline-flex items-center gap-2 bg-primary-base-200 font-medium px-2 py-0.5 rounded-button"
@@ -87,14 +97,30 @@ const { lastAccessDate, isUpdatedDate } = getPublishedOrUpdatedDate({
     </div>
 
     {/* title */}
-    <h2 class="text-2xl font-bold break-words md:line-clamp-2 mt-0 mb-2">
+    <h2
+      class="text-2xl font-bold break-words md:line-clamp-2 mt-0 mb-2"
+      transition:name={getTransitionNameFromElementId({
+        elementId: TRANSITION_ELEMENT_IDS.POST_CARD.TITLE,
+      })}
+    >
       <Link href={`${ROUTES.BLOG}${slug}`} variant="link-heading">
         {title}
         {draft && <sup class="text-sm text-red-500 ml-1">{draftText}</sup>}
       </Link>
     </h2>
 
-    {description && <p class="text-base mb-4 line-clamp-2">{description}</p>}
+    {
+      description && (
+        <p
+          class="text-base mb-4 line-clamp-2"
+          transition:name={getTransitionNameFromElementId({
+            elementId: TRANSITION_ELEMENT_IDS.POST_CARD.DESCRIPTION,
+          })}
+        >
+          {description}
+        </p>
+      )
+    }
 
     {/* reading time and read more link */}
     <div class="flex items-center xs:items-end justify-between">

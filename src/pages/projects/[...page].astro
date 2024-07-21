@@ -11,7 +11,7 @@ import type { GetStaticPathsOptions, Page } from 'astro';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const sortedProjects = await getAllProjects();
-  const pageSize = CONFIG.PAGE_SIZE.POST_CARD;
+  const pageSize = CONFIG.PAGE_SIZE_POST_CARD;
 
   const pagination = paginate(sortedProjects, { pageSize });
   pagination.push({ params: { page: '1' }, props: pagination[0].props });

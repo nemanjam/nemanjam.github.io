@@ -6,6 +6,7 @@ import { getUniqueTags } from '@/modules/post/tag';
 import List from '@/layouts/List.astro';
 import Explore from '@/components/Explore.astro';
 import PostCardSmall from '@/components/PostCardSmall.astro';
+import { getTransitionName, TRANSITION_ELEMENT_IDS } from '@/constants/transitions';
 import { CONFIG } from '@/config';
 import { getPageMetadata } from '@/utils/metadata';
 import { pickPaginationPropsFromPage } from '@/utils/pagination';
@@ -16,7 +17,7 @@ import type { GetStaticPathsOptions } from 'astro';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const posts: Post[] = await getAllPostsWithReadingTime();
-  const pageSize = CONFIG.PAGE_SIZE.POST_CARD_SMALL;
+  const pageSize = CONFIG.PAGE_SIZE_POST_CARD_SMALL;
 
   // grouping is outside of getStaticPaths
 
@@ -92,7 +93,15 @@ const postsByYear = groupPostsByYear(paginatedPosts);
     {
       postsByYear.years.map((year) => (
         <>
-          <h2 class="b-h2">{year}</h2>
+          <h2
+            class="b-h2"
+            transition:name={getTransitionName({
+              elementId: TRANSITION_ELEMENT_IDS.EXPLORE.YEAR,
+              pageSlug: year,
+            })}
+          >
+            {year}
+          </h2>
           <div>
             {postsByYear.posts[year].map((post) => (
               <PostCardSmall {post} class="last:mb-6" />

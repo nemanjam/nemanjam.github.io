@@ -102,6 +102,7 @@ import * as themeConstants from '@/constants/themes';
   // initial setup
   setTheme(getUserPreference());
 
+  // fails in firefox
   // View Transitions hook to restore theme
   document.addEventListener('astro:after-swap', () => setTheme(getUserPreference()));
 

@@ -7,6 +7,7 @@ import Link from '@/components/Link.astro';
 import { draftText } from '@/constants/data';
 import { IMAGE_SIZES } from '@/constants/image';
 import { ROUTES } from '@/constants/routes';
+import { setTransitionSlug, TRANSITION_ELEMENT_IDS } from '@/constants/transitions';
 import { formatDate, formatDateIso } from '@/utils/datetime';
 import { cn } from '@/utils/styles';
 
@@ -25,6 +26,8 @@ const { lastAccessDate, isUpdatedDate } = getPublishedOrUpdatedDate({
   publishDate,
   updatedDate,
 });
+
+const getTransitionNameFromElementId = setTransitionSlug({ pageSlug: slug });
 ---
 
 <article
@@ -40,16 +43,40 @@ const { lastAccessDate, isUpdatedDate } = getPublishedOrUpdatedDate({
     src={heroImage}
     alt={heroAlt}
     class="object-cover rounded-box hidden xs:block"
+    transition:name={getTransitionNameFromElementId({
+      elementId: TRANSITION_ELEMENT_IDS.POST_CARD.HERO_IMAGE,
+    })}
   />
   <div>
-    <h4 class="b-h4 text-xl leading-none line-clamp-1 mb-1">
+    <h4
+      class="b-h4 text-xl leading-none line-clamp-1 mb-1"
+      transition:name={getTransitionNameFromElementId({
+        elementId: TRANSITION_ELEMENT_IDS.POST_CARD.TITLE,
+      })}
+    >
       <Link variant="link-heading" href={`${ROUTES.BLOG}${slug}`}>
         {draft && <sup class="text-sm text-red-500 mr-1">{draftText}</sup>}
         {title}
       </Link>
     </h4>
-    {description && <p class="text-base text-captions line-clamp-1 mb-2">{description}</p>}
-    <span class="inline-flex items-center gap-1 text-sm text-captions text-nowrap">
+    {
+      description && (
+        <p
+          class="text-base text-captions line-clamp-1 mb-2"
+          transition:name={getTransitionNameFromElementId({
+            elementId: TRANSITION_ELEMENT_IDS.POST_CARD.DESCRIPTION,
+          })}
+        >
+          {description}
+        </p>
+      )
+    }
+    <span
+      class="inline-flex items-center gap-1 text-sm text-captions text-nowrap"
+      transition:name={getTransitionNameFromElementId({
+        elementId: TRANSITION_ELEMENT_IDS.POST_CARD.META,
+      })}
+    >
       <Icon name={isUpdatedDate ? 'mdi:edit-outline' : 'mdi:access-time'} class="w-4 h-4" />
       <time itemprop="datePublished" datetime={formatDateIso(lastAccessDate)}>
         {formatDate(lastAccessDate)}

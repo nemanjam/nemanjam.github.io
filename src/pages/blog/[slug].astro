@@ -14,6 +14,7 @@ import TagList from '@/components/TagList.astro';
 import { draftText } from '@/constants/data';
 import { IMAGE_SIZES } from '@/constants/image';
 import { ROUTES } from '@/constants/routes';
+import { setTransitionSlug, TRANSITION_ELEMENT_IDS } from '@/constants/transitions';
 import { CONFIG } from '@/config';
 import { getOpenGraphImagePath } from '@/libs/api/open-graph/image-path';
 
@@ -72,6 +73,8 @@ const shareProps = {
   url: `${SITE_URL}${ROUTES.BLOG}${slug}`,
 };
 
+const getTransitionNameFromElementId = setTransitionSlug({ pageSlug: slug });
+
 // handle all metadata here
 const image = getOpenGraphImagePath(pathname);
 
@@ -91,25 +94,44 @@ const metadata: Metadata = { title, description, image };
           loading="eager"
           itemprop="image"
           class="block max-w-full h-auto aspect-[16/8] object-cover"
-          transition:name={`hero-image-${slug}`}
+          transition:name={getTransitionNameFromElementId({
+            elementId: TRANSITION_ELEMENT_IDS.POST_CARD.HERO_IMAGE,
+          })}
         />
       )
     }
   </Fragment>
 
   <Fragment slot="hero-text">
-    <h1 class="b-h1">
+    <h1
+      class="b-h1"
+      transition:name={getTransitionNameFromElementId({
+        elementId: TRANSITION_ELEMENT_IDS.POST_CARD.TITLE,
+      })}
+    >
       {title}
       {draft && <sup class="text-red-500 ml-1">{draftText}</sup>}
     </h1>
 
     {
       description && (
-        <p class="font-normal text-content text-xl md:text-2xl mb-6 md:mb-8">{description}</p>
+        <p
+          class="font-normal text-content text-xl md:text-2xl mb-6 md:mb-8"
+          transition:name={getTransitionNameFromElementId({
+            elementId: TRANSITION_ELEMENT_IDS.POST_CARD.DESCRIPTION,
+          })}
+        >
+          {description}
+        </p>
       )
     }
 
-    <PostMeta {...postMetaProps} />
+    <PostMeta
+      {...postMetaProps}
+      transition:name={getTransitionNameFromElementId({
+        elementId: TRANSITION_ELEMENT_IDS.POST_CARD.META,
+      })}
+    />
   </Fragment>
 
   <Fragment slot="content">
