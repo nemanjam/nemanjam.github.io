@@ -433,9 +433,9 @@ define color themes
 improve lighthouse, accessibility, aria attrs
 write readme and credits, features, roadmap
 write home and about pages, one article
-open images in new tab and check all sizes
+open images in new tab and check all sizes, ask
 links in md colors
-fix table of contents styling
+fix table of contents styling, border
 retest vertical spacing, font-size and content width
 
 // maybe
@@ -445,5 +445,5 @@ retest vertical spacing, font-size and content width
 ask about optimal max-width image width
 fix .mdx live reload
 firefox has white flash bug on theme change after transitions, https://youtu.be/9MChTVlXbf8?t=363
-
+home -> about pages image transition maybe, markdown content
 ```
