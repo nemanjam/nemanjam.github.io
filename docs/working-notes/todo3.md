@@ -428,9 +428,10 @@ write typography.mdx
 ------
 // for release
     fix button and tags sizes
+smaller mobile buttons
 define color themes
 improve lighthouse, accessibility, aria attrs
-write readme and credits, roadmap
+write readme and credits, features, roadmap
 write home and about pages, one article
 open images in new tab and check all sizes
 links in md colors
@@ -438,5 +439,8 @@ fix table of contents styling
 retest vertical spacing, font-size and content width
 // maybe
 astro transitions 
-```
+--------
 
+ask about optimal max-width image width
+fix .mdx live reload
+```

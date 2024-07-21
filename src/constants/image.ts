@@ -64,7 +64,7 @@ export const IMAGE_SIZES = {
     },
     // doesn't work
     MDX_EXPAND_LG: {
-      widths: [TW_SCREENS.XXS, TW_SCREENS.SM, TW_SCREENS.MD, TW_SCREENS.LG],
+      widths: [TW_SCREENS.XXS, TW_SCREENS.SM, TW_SCREENS.MD, TW_SCREENS.LG, TW_SCREENS.XL],
       sizes: `(max-width: ${TW_SCREENS.XS}px) ${TW_SCREENS.XXS}px, (max-width: ${TW_SCREENS.MD}px) ${TW_SCREENS.SM}px, (max-width: ${TW_SCREENS.LG}px) ${TW_SCREENS.LG}px, ${TW_SCREENS.XL}px`,
     },
   },
