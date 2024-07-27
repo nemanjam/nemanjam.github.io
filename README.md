@@ -8,6 +8,8 @@
 
 ## Features
 
+- 
+
 ## Roadmap
 
 ## Credits
@@ -18,7 +20,7 @@ The most important projects, examples, demos, resources that I reused and review
 - Starter project, initial structure, some components, some plugins, integrations, libs choices - repo: [paularmstrong/paularmstrong.dev](https://github.com/paularmstrong/paularmstrong.dev), blog: https://paularmstrong.dev/blog
 - Navbar responsive menu, theme toggling - repo: [chrismwilliams/astro-theme-cactus](https://github.com/chrismwilliams/astro-theme-cactus), demo: https://astro-cactus.chriswilliams.dev/posts
 - Astro collections schemas, some visual design decisions - repo: [billy-le/billyle.dev](https://github.com/billy-le/billyle.dev), blog: https://billyle.dev
-- Giscuss comments, satori og-image - repo: [thomasledoux1/website-thomas-astro](https://github.com/thomasledoux1/website-thomas-astro) , blog: https://website-thomas-astro.vercel.app/, repo: [TkDodo/blog](https://github.com/TkDodo/blog), blog: https://tkdodo.eu/blog
+- Giscuss comments, Satori og-image - repo: [thomasledoux1/website-thomas-astro](https://github.com/thomasledoux1/website-thomas-astro) , blog: https://website-thomas-astro.vercel.app/, repo: [TkDodo/blog](https://github.com/TkDodo/blog), blog: https://tkdodo.eu/blog
 - Deployment with Docker and Nginx - docs: https://docs.astro.build/en/recipes/docker
 - PostCard component design - site: https://flowbite.com/blocks, demo: https://mistral.bloggrify.com
 - PostCardSmall component design - demo: https://epoxia.bloggrify.com/archives

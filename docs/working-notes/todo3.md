@@ -429,7 +429,7 @@ write typography.mdx
 // for release
     fix button and tags sizes
 smaller mobile buttons
-define color themes
+define color themes, gradient background
 improve lighthouse, accessibility, aria attrs
 write readme and credits, features, roadmap
 write home and about pages, one article
@@ -437,9 +437,10 @@ open images in new tab and check all sizes, ask
 links in md colors
 fix table of contents styling, border
 retest vertical spacing, font-size and content width
-
+test content width on 1920x1080 
 // maybe
     astro transitions, works for PostCard on blog, tags, categories, explore
+social links config
 --------
 
 ask about optimal max-width image width
@@ -458,6 +459,7 @@ in BaseHead.astro
   }
 </style>
 
+// astro 4.10
 astro env  vars sa schema 
 astro component container, render component to string for rss 
 css directive transitions 
