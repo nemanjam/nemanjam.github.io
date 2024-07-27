@@ -16,10 +16,18 @@ The greatest care is devoted to a solid, clear, comprehensive, understandable, m
 - Post and Project content collections for `.mdx` content
 - Support for both Tags (1:N) and Categories (1:1) relations
 - Astro view transitions
-- Concise and readable `astro.config.ts` with extracted configurations for integrations and plugins
-- Astro optimized images, all image sizes and breakpoints centralized into a single place as constants
-- All website routes centralized into a single constant object, same for all file system paths
+- Astro optimized images
 - Pagination for both blog and projects pages
+- Environment variable controlled preview mode for draft posts and projects
+- Embedded code syntax highlighting using `expressive-code`integration
+- RSS and Json feed endpoints
+
+#### Structure
+
+- Extracted configuration for integrations and plugins to keep `astro.config.ts` clean and readable
+- All website routes centralized into a single constant object
+- All file system paths centralized into a single constant object
+- All image sizes and breakpoints centralized into a single place as constants
 
 #### Styling
 
@@ -32,11 +40,13 @@ The greatest care is devoted to a solid, clear, comprehensive, understandable, m
 
 #### SEO and Metadata
 
-- Metadata handling for all types of pages, with defaults
+- Centralized and typed metadata for all types of pages, with defaults
+- Open graph image endpoint with Satori generated images for all pages with hero image and random gradient background
+- Sitemap generated at build-time
 
 #### External libraries
 
-- Comments with Giscus
+- Comments with Giscus and dark mode support
 
 #### Types
 
@@ -61,7 +71,7 @@ The greatest care is devoted to a solid, clear, comprehensive, understandable, m
 
 The most important projects, examples, demos, resources that I reused and reviewed:
 
-- Starter project, initial structure, some components, some plugins, integrations, libs choices - repo: [paularmstrong/paularmstrong.dev](https://github.com/paularmstrong/paularmstrong.dev), blog: https://paularmstrong.dev/blog
+- Starter project, initial structure, some components, some plugins, integrations, libs, styling choices - repo: [paularmstrong/paularmstrong.dev](https://github.com/paularmstrong/paularmstrong.dev), blog: https://paularmstrong.dev/blog
 - Navbar responsive menu, theme toggling - repo: [chrismwilliams/astro-theme-cactus](https://github.com/chrismwilliams/astro-theme-cactus), demo: https://astro-cactus.chriswilliams.dev/posts
 - Astro collections schemas, some visual design decisions - repo: [billy-le/billyle.dev](https://github.com/billy-le/billyle.dev), blog: https://billyle.dev
 - Giscuss comments, Satori og-image - repo: [thomasledoux1/website-thomas-astro](https://github.com/thomasledoux1/website-thomas-astro) , blog: https://website-thomas-astro.vercel.app/, repo: [TkDodo/blog](https://github.com/TkDodo/blog), blog: https://tkdodo.eu/blog
