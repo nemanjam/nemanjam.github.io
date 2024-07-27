@@ -446,16 +446,17 @@ ask about optimal max-width image width
 fix .mdx live reload
 firefox has white flash bug on theme change after transitions, https://youtu.be/9MChTVlXbf8?t=363
 home -> about pages image transition maybe, markdown content
-
+mermaid plugin
+loading skeletons
 ----
 // 4.10
 in BaseHead.astro
 
-  <style>
-    @view-transition {
-      navigation: auto; /* enabled! */
-    }
-  </style>
+<style>
+  @view-transition {
+    navigation: auto; /* enabled! */
+  }
+</style>
 
 astro env  vars sa schema 
 astro component container, render component to string for rss 
