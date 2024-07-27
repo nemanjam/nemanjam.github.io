@@ -1,10 +1,10 @@
-# Astro blog - nemanjamitic.com
+# Astro blog - [nemanjamitic.com](https://nemanjamitic.com)
 
 ## Mirrors
 
-- https://nemanjamitic.com
-- https://nemanjam.github.io
-- https://nmc-docker.arm1.nemanjamitic.com
+- Nginx: https://nemanjamitic.com
+- Github pages: https://nemanjam.github.io
+- Docker: https://nmc-docker.arm1.nemanjamitic.com
 
 ## Features
 
