@@ -8,7 +8,26 @@
 
 ## Features
 
-- 
+- The greatest care is devoted to a solid, clear, comprehensive, understandable, maintainable and customizable structure
+- Latest Astro, statically generated, high performance
+- Tailwind responsive styling, both spacings and typography
+- Post and Project content collections for `.mdx` content
+- Support for both Tags (1:N) and Categories (1:1) relations
+- Fully Typescript, all types are located in a separate folder
+- Centralized Zod schemas for Post, Project and Config models with proper defaults
+- Fully typed and build-time validated config and environment variables
+- Concise and readable `astro.config.ts` with extracted configurations for integrations and plugins
+- Astro optimized images, all image sizes and breakpoints centralized into a single place as constants
+- All website routes centralized into a single constant object, same for all file system paths
+- Metadata handling for all types of pages, with defaults
+- Latest git commit info is included in the website footer for easy identifying of currently deployed version
+- Both dark mode support, light/dark Tailwind modes and color themes support, semantic colors
+- Themes stored into separate files as CSS variables organized in two levels
+- Astro view transitions
+- Three layer (base/components/utilities) CSS code organization
+- System for keeping typography styles in sync between markdown (prose) and custom components
+- Component styles extracted into CSS files with `class-variance-authority` for variants
+
 
 ## Roadmap
 

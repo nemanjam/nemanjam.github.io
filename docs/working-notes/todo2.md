@@ -185,6 +185,9 @@ https://thezal.dev/blog/
 https://feather.so/showcase
 https://bhanuteja.dev/blog
 https://x.com/tibo_maker
+
+// minimalistic, narrow column
+https://github.com/markhorn-dev/astro-nano
 -----------
 za local state mora react ili solid
 for state between pages nanostore with localStorage
