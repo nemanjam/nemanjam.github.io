@@ -95,8 +95,6 @@ yarn build
 yarn start
 ```
 
-## Implementation details
-
 ## Deployment
 
 There are three deployment methods available locally and in Github Actions. You can always easily identify currently deployed version by checking **the latest commit info in the footer** of the deployed website.
@@ -231,6 +229,8 @@ default__build-push-docker.yml
 bash__deploy-docker.yml
 default__deploy-docker.yml
 ```
+
+## Implementation details
 
 ## Roadmap
 

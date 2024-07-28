@@ -52,7 +52,7 @@ export const PAGE_METADATA = {
   // src/pages/blog/categories/[category]/[...page].astro
   'lists/projects': {
     title: 'Projects',
-    description: 'A showcase of experiments and projects.',
+    description: 'Ad duis incididunt reprehenderit elit in enim amet dolor.',
   },
 } as const;
 
