@@ -14,6 +14,14 @@ This is the repository for my coding blog [nemanjamitic.com](https://nemanjamiti
 
 ![Screenshot_1](/docs/screenshots/Screenshot_1.png)
 
+## Motivation
+
+By the end of 2023. I started thinking about capturing insights from my usual daily coding work into rounded blog articles, so I started looking for a clean, minimalistic and well structured blog template. I started researching and considered Jekyll, Hugo, Next.js but eventually realized that currently Astro is the best tool for a static, personal website.
+
+Then I researched and reviewed all open source Astro examples that I could find with intention to reuse it and just customize styles but none of them met my preference for code structure and desired features, so I decided to compile the best parts from all of them into a structure and coding style of my own liking.
+
+I intend to use this website for years to come, so I consider the extra effort well spent. Additionally, it helped me gain some practical experience with Astro in the process.
+
 ## Features
 
 - Latest Astro, static, high performance website
