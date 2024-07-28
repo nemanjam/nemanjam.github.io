@@ -6,6 +6,10 @@
 - Github pages: https://nemanjam.github.io
 - Docker: https://nmc-docker.arm1.nemanjamitic.com
 
+## Screenshots
+
+![Screenshot_1](/docs/screenshots/Screenshot_1.png)
+
 ## Features
 
 - Latest Astro, static, high performance website
@@ -29,6 +33,8 @@
 - GitHub Actions workflows and local scripts
 
 ## Installation
+
+## Implementation details
 
 ## Deployment
 
