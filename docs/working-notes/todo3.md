@@ -450,6 +450,7 @@ home -> about pages image transition maybe, markdown content
 mermaid plugin
 loading skeletons
 tree diagram for layouts hierarchy
+analytics
 ----
 // 4.10
 in BaseHead.astro

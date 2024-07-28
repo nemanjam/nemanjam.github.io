@@ -115,6 +115,18 @@ REMOTE_PORT
 REMOTE_USERNAME
 ```
 
+For local deployments you will need to set SSH alias for the remote server, in your local SSH config file, for example:
+
+```bash
+# /home/username/.ssh/config
+
+# arm1 ssh alias for remote server
+Host arm1 123.123.13.123
+    HostName 123.123.13.123
+    IdentityFile ~/.ssh/my-servers/arm1-ssh-private-key.key
+    User your-user
+```
+
 ### 1. Nginx
 
 All Nginx deployments come down to building the website and copying the compiled files from the `/dist` folder into the Nginx web root folder on a remote server.
@@ -134,6 +146,9 @@ yarn build:nginx
 
 # copy compiled app from local /dist folder to Nginx web root on the remote server
 "deploy:nginx": "bash scripts/deploy-nginx.sh '~/traefik-proxy/apps/nmc-nginx-with-volume/website' arm1",
+
+# run deploy
+yarn deploy:nginx
 ```
 
 #### Github Actions
@@ -146,18 +161,6 @@ Just trigger one of the following workflows:
 bash__deploy-nginx.yml
 
 default__deploy-nginx.yml
-```
-
-SSH alias for the remote server, example config file:
-
-```bash
-# /home/username/.ssh/config
-
-# arm1 ssh alias for remote server
-Host arm1 123.123.13.123
-    HostName 123.123.13.123
-    IdentityFile ~/.ssh/my-servers/arm1-ssh-private-key.key
-    User your-user
 ```
 
 ### 2. Github Pages
