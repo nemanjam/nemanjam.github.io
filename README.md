@@ -1,5 +1,7 @@
 # Astro blog - [nemanjamitic.com](https://nemanjamitic.com)
 
+This is the repository for my coding blog [nemanjamitic.com](https://nemanjamitic.com). Free and open source, feel free to reuse code and customize for your own developer blog. Blog posts (future) require attribution.
+
 ## Mirrors
 
 - Nginx: https://nemanjamitic.com
