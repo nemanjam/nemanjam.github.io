@@ -186,7 +186,7 @@ https://feather.so/showcase
 https://bhanuteja.dev/blog
 https://x.com/tibo_maker
 
-// minimalistic, narrow column
+// minimalistic, narrow column, good animations
 https://github.com/markhorn-dev/astro-nano
 -----------
 za local state mora react ili solid

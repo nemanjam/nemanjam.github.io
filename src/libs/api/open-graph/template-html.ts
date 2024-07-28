@@ -32,7 +32,6 @@ const templateHtml = ({ title, heroImageUrl, avatarImageUrl, siteUrl }: Template
           <div class="flex items-center ${isLongSiteUrl ? 'flex-col justify-end items-start' : ''}">
             <img
               src=${avatarImageUrl}
-              alt="Nemanja Mitic"
               width="120"
               height="120"
               class="rounded-full mr-8 border-2 border-gray-300"

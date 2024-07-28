@@ -8,26 +8,27 @@
 
 ## Features
 
-The greatest care is devoted to a solid, clear, comprehensive, understandable, maintainable and customizable structure.
+The greatest care is devoted to a solid, clear, comprehensive, understandable, maintainable and customizable code structure.
 
 #### Astro
 
 - Latest Astro, statically generated, high performance
 - Post and Project content collections for `.mdx` content
 - Support for both Tags (1:N) and Categories (1:1) relations
-- Astro view transitions
-- Astro optimized images
+- Astro view transitions that track Post across all the pages
+- Astro optimized images with all image sizes and breakpoints centralized into a single place as constants
 - Pagination for both blog and projects pages
 - Environment variable controlled preview mode for draft posts and projects
-- Embedded code syntax highlighting using `expressive-code`integration
 - RSS and Json feed endpoints
+- Enabled React integration for components that require client side interactivity
 
 #### Structure
 
 - Extracted configuration for integrations and plugins to keep `astro.config.ts` clean and readable
 - All website routes centralized into a single constant object
 - All file system paths centralized into a single constant object
-- All image sizes and breakpoints centralized into a single place as constants
+- Clear, separated, hierarchical, both centered and full-width layouts for all types of pages:`.mdx` pages, collections pages - Post and Project, and List pages - indexes with pagination
+- Extracted logic for querying content collections for clean and readable `getStaticPaths()`
 
 #### Styling
 
@@ -36,28 +37,53 @@ The greatest care is devoted to a solid, clear, comprehensive, understandable, m
 - Tailwind responsive styling, both spacings and typography
 - Three layer (base/components/utilities) CSS code organization
 - System for keeping typography styles in sync between markdown (prose) and custom components
+- Customized typography plugin prose class
 - Component styles extracted into CSS files with `class-variance-authority` for variants
+- `tailwind-merge` and `clsx` for dynamic class names
 
 #### SEO and Metadata
 
 - Centralized and typed metadata for all types of pages, with defaults
-- Open graph image endpoint with Satori generated images for all pages with hero image and random gradient background
+- Open Graph image endpoint with Satori template generated images for all pages with hero image and random gradient background
 - Sitemap generated at build-time
+- Custom styled 404 page
+
+#### Website
+
+- Organized assets structure for both optimized (`/src`) and un-optimized (`/public`) images with extracted defaults
+- `astro-icon` package supporting both material design (`mdi`) icons and local SVG's
+- Paginated list pages for filtering posts: by tag - `/tags`, by category - `categories`, by both - `/explore` - Explore (Archive) page
+- Collapsible navbar with items stored as array and active item for the current route
+- Table of contents for blog posts
+- Design system with `.mdx` pages available at `/design` path for clear preview and debugging of all visual components
+- Share component supporting Twitter, Facebook, Reddit, LinkedIn and Hackernews
 
 #### External libraries
 
 - Comments with Giscus and dark mode support
+- `astro-embed` for embedding tweets, YouTube and Vimeo videos, and Open Graph links
+- Embedded code syntax highlighting using `expressive-code`integration
 
 #### Types
 
 - Fully Typescript, all types are located in a separate folder
 - Centralized Zod schemas for Post, Project and Config models with proper defaults to prevent runtime exceptions
 - Fully typed and build-time validated config and environment variables
-- Enhanced Post collection model to include calculated reading time
+- Abstracted Post and Project collection models that can include additional fields like calculated reading time
+
+#### Development
+
+- Typescript path aliases for clean and organized imports
+- Prettier formatting with sorted imports
+- ESLint syntax checking
 
 #### Deployment
 
-- Latest git commit info is included in the website footer for easy identifying of currently deployed version
+- Latest git commit info is included in the website footer for easy identification of currently deployed version
+- Production deployments with Github Pages, Nginx and Docker image
+- All three deployment methods are supported both in Github Actions and locally
+- The same bash scripts reused for both Github Actions and local deployments for easy debugging locally
+- Support for building both `x86` and `arm` Docker images
 
 ## Roadmap
 
@@ -66,6 +92,8 @@ The greatest care is devoted to a solid, clear, comprehensive, understandable, m
 - Add remote markdown page
 - Validate config with `astro:env`
 - Render `.mdx` for RSS using component containers
+- Review and improve ESLint, (strictest) Typescript and Prettier configs
+- Improve visual design
 
 ## Credits
 
@@ -74,7 +102,7 @@ The most important projects, examples, demos, resources that I reused and review
 - Starter project, initial structure, some components, some plugins, integrations, libs, styling choices - repo: [paularmstrong/paularmstrong.dev](https://github.com/paularmstrong/paularmstrong.dev), blog: https://paularmstrong.dev/blog
 - Navbar responsive menu, theme toggling - repo: [chrismwilliams/astro-theme-cactus](https://github.com/chrismwilliams/astro-theme-cactus), demo: https://astro-cactus.chriswilliams.dev/posts
 - Astro collections schemas, some visual design decisions - repo: [billy-le/billyle.dev](https://github.com/billy-le/billyle.dev), blog: https://billyle.dev
-- Giscuss comments, Satori og-image - repo: [thomasledoux1/website-thomas-astro](https://github.com/thomasledoux1/website-thomas-astro) , blog: https://website-thomas-astro.vercel.app/, repo: [TkDodo/blog](https://github.com/TkDodo/blog), blog: https://tkdodo.eu/blog
+- Giscuss comments, Satori og-image - repo: [thomasledoux1/website-thomas-astro](https://github.com/thomasledoux1/website-thomas-astro) , blog: https://website-thomas-astro.vercel.app, repo: [TkDodo/blog](https://github.com/TkDodo/blog), blog: https://tkdodo.eu/blog
 - Deployment with Docker and Nginx - docs: https://docs.astro.build/en/recipes/docker
 - PostCard component design - site: https://flowbite.com/blocks, demo: https://mistral.bloggrify.com
 - PostCardSmall component design - demo: https://epoxia.bloggrify.com/archives

@@ -13,5 +13,5 @@ export const projectCollection = defineCollection({
   type: 'content',
 });
 
-// _schemas folder in collections fill be included in type
+// _schemas folder in collections will be included in type
 export const collections = { post: postCollection, project: projectCollection };
