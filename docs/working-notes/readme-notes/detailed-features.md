@@ -73,7 +73,7 @@ The greatest care is devoted to a solid, clear, comprehensive, understandable, m
 
 #### Deployment
 
-- Latest git commit info is included in the website footer for easy identification of currently deployed version
+- Latest git commit info is included in the website footer for easy identification of the currently deployed version
 - Production deployments with Github Pages, Nginx and Docker image
 - All three deployment methods are supported both in Github Actions and locally
 - The same bash scripts reused for both Github Actions and local deployments for easy debugging locally

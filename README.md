@@ -99,6 +99,130 @@ yarn start
 
 ## Deployment
 
+There are three deployment methods available locally and in Github Actions. You can always easily identify currently deployed version by checking **the latest commit info in the footer** of the deployed website.
+
+For Github Actions workflows you will need to set these secrets in your Github repository settings:
+
+```bash
+# Dockerhub user and pass
+DOCKER_PASSWORD
+DOCKER_USERNAME
+
+# remote server ssh credentials
+REMOTE_HOST
+REMOTE_KEY_ED25519
+REMOTE_PORT
+REMOTE_USERNAME
+```
+
+### 1. Nginx
+
+All Nginx deployments come down to building the website and copying the compiled files from the `/dist` folder into the Nginx web root folder on a remote server.
+
+#### Local
+
+```bash
+# package.json
+
+# set your SITE_URL
+"build:nginx": "SITE_URL='https://nemanjamitic.com' astro build",
+
+# build the app
+yarn build:nginx
+
+# configure ssh for your own "arm1" remote server in /home/username/.ssh/config
+
+# copy compiled app from local /dist folder to Nginx web root on the remote server
+"deploy:nginx": "bash scripts/deploy-nginx.sh '~/traefik-proxy/apps/nmc-nginx-with-volume/website' arm1",
+```
+
+#### Github Actions
+
+Just trigger one of the following workflows:
+
+```bash
+# .github/workflows/bash__deploy-nginx.yml
+
+# .github/workflows/default__deploy-nginx.yml
+```
+
+SSH alias for the remote server, example config file:
+
+```bash
+# /home/username/.ssh/config
+
+# arm1 ssh alias for remote server
+Host arm1 123.123.13.123
+    HostName 123.123.13.123
+    IdentityFile ~/.ssh/my-servers/arm1-ssh-private-key.key
+    User your-user
+```
+
+### 2. Github Pages
+
+Only available in Github Actions. Just trigger one of the following workflows:
+
+```bash
+# uses official Astro action
+# .github/workflows/gh-pages__deploy-astro.yml
+
+# uses manual build, useful for Astro in monorepos
+# .github/workflows/gh-pages__deploy-manual.yml
+```
+
+### 3. Docker
+
+#### Local
+
+To build `linux/arm64` Docker images locally if you have x86 computer you will need to install Qemu and Buildx locally, see this tutorial:
+
+[Multi-Arch Images with Docker Buildx and QEMU](https://drpdishant.medium.com/multi-arch-images-with-docker-buildx-and-qemu-141e0b6161e7)
+
+If you are on Ubuntu you will probably need to run this too.
+
+```bash
+# Register QEMU for Docker
+docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+```
+
+After that you can build and push multi-platform images locally.
+
+```bash
+# package.json
+
+# open terminal and login with your Dockerhub account, both locally and on remote server
+docker login my-user my-pass
+
+# replace "nemanjamitic/nemanjam.github.io" with your image name
+# set ARG_SITE_URL to your production url
+# set correct architecture for your production server --platform linux/arm64 or linux/amd64
+"docker:build:push:arm": "docker buildx build -f ./docker/Dockerfile -t nemanjamitic/nemanjam.github.io --build-arg ARG_SITE_URL='https://nmc-docker.arm1.nemanjamitic.com' --platform linux/arm64 --push .",
+
+# build and push Docker image, replace "arm" with your architecture
+yarn docker:build:push:arm
+
+# replace "~/traefik-proxy/apps/nmc-docker" with your path to docker-compose.yml
+# replace "nemanjamitic/nemanjam.github.io" with your image name
+"deploy:docker": "bash scripts/deploy-docker.sh arm1 '~/traefik-proxy/apps/nmc-docker' nemanjamitic/nemanjam.github.io",
+
+# pull and run latest image on your production server
+yarn deploy:docker
+```
+
+#### Github Actions
+
+Just trigger these workflows:
+
+```bash
+# build and push Docker image
+# .github/workflows/default__build-push-docker.yml
+
+# pull and run latest Docker image
+# trigger one of the following:
+# .github/workflows/bash__deploy-docker.yml
+# .github/workflows/default__deploy-docker.yml
+```
+
 ## Roadmap
 
 - Add accessibility attributes
