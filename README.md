@@ -141,9 +141,9 @@ yarn build:nginx
 Just trigger one of the following workflows:
 
 ```bash
-# .github/workflows/bash__deploy-nginx.yml
+.github/workflows/bash__deploy-nginx.yml
 
-# .github/workflows/default__deploy-nginx.yml
+.github/workflows/default__deploy-nginx.yml
 ```
 
 SSH alias for the remote server, example config file:
@@ -164,10 +164,10 @@ Only available in Github Actions. Just trigger one of the following workflows:
 
 ```bash
 # uses official Astro action
-# .github/workflows/gh-pages__deploy-astro.yml
+.github/workflows/gh-pages__deploy-astro.yml
 
 # uses manual build, useful for Astro in monorepos
-# .github/workflows/gh-pages__deploy-manual.yml
+.github/workflows/gh-pages__deploy-manual.yml
 ```
 
 ### 3. Docker
@@ -215,12 +215,12 @@ Just trigger these workflows:
 
 ```bash
 # build and push Docker image
-# .github/workflows/default__build-push-docker.yml
+.github/workflows/default__build-push-docker.yml
 
 # pull and run latest Docker image
 # trigger one of the following:
-# .github/workflows/bash__deploy-docker.yml
-# .github/workflows/default__deploy-docker.yml
+.github/workflows/bash__deploy-docker.yml
+.github/workflows/default__deploy-docker.yml
 ```
 
 ## Roadmap
