@@ -449,6 +449,7 @@ firefox has white flash bug on theme change after transitions, https://youtu.be/
 home -> about pages image transition maybe, markdown content
 mermaid plugin
 loading skeletons
+tree diagram for layouts hierarchy
 ----
 // 4.10
 in BaseHead.astro
