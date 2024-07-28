@@ -52,7 +52,7 @@ The greatest care is devoted to a solid, clear, comprehensive, understandable, m
 
 - Organized assets structure for both optimized (`/src`) and un-optimized (`/public`) images with extracted defaults
 - `astro-icon` package supporting both material design (`mdi`) icons and local SVG's
-- Paginated list pages for filtering posts: by tag - `/tags`, by category - `categories`, by both - `/explore` - Explore (Archive) page
+- Paginated list pages for filtering posts: by tag - `/tags`, by category - `/categories`, by both - `/explore` - Explore (Archive) page
 - Collapsible navbar with items stored as array and active item for the current route
 - Table of contents for blog posts
 - Design system with `.mdx` pages available at `/design` path for clear preview and debugging of all visual components
@@ -84,6 +84,45 @@ The greatest care is devoted to a solid, clear, comprehensive, understandable, m
 - All three deployment methods are supported both in Github Actions and locally
 - The same bash scripts reused for both Github Actions and local deployments for easy debugging locally
 - Support for building both `x86` and `arm` Docker images
+
+## Installation and running
+
+### Development
+
+```bash
+# install packages
+yarn install
+
+# copy and set environment variables
+cp .env.development.example .env.development
+
+# run development server and visit http://localhost:3000
+yarn dev
+
+# delete node_modules and yarn.lock
+yarn clean
+```
+
+### Production
+
+```bash
+# copy and set environment variables
+cp .env.production.example .env.production
+
+# build website
+yarn build
+
+# run website
+yarn start
+```
+
+## Deployment
+
+```bash
+
+# deploy local /dist folder to the remote Nginx server
+yarn deploy:nginx
+```
 
 ## Roadmap
 
