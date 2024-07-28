@@ -46,6 +46,55 @@ I intend to use this website for years to come, so I consider the extra effort w
 
 ## Installation
 
+#### Environment variables
+
+In development you can see draft posts by default.
+
+```bash
+# .env.development
+
+# this var is always without trailing slash '/'
+SITE_URL=http://localhost:3000
+```
+
+```bash
+# .env.production
+
+SITE_URL=https://nemanjamitic.com
+
+# set to true to preview draft posts in production
+PREVIEW_MODE=
+```
+
+#### Development
+
+```bash
+# install packages
+yarn install
+
+# copy and set environment variables
+cp .env.development.example .env.development
+
+# run development server and visit http://localhost:3000
+yarn dev
+
+# delete node_modules and yarn.lock
+yarn clean
+```
+
+#### Production
+
+```bash
+# copy and set environment variables
+cp .env.production.example .env.production
+
+# build website
+yarn build
+
+# run website and visit http://localhost:3000
+yarn start
+```
+
 ## Implementation details
 
 ## Deployment
