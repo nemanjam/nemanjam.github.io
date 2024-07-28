@@ -120,7 +120,7 @@ yarn deploy:nginx
 
 ## Roadmap
 
-- Add accessibility attributes
+- Add accessibility attributes, semantic html
 - Add image gallery page
 - Add remote markdown page
 - Validate config with `astro:env`
