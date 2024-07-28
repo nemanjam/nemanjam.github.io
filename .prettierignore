@@ -8,5 +8,5 @@ yarn.yaml
 docs
 
 # formatting breaks them
-*.md
+# *.md
 *.mdx
