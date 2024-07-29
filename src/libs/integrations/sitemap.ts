@@ -5,6 +5,7 @@ import { ROUTES } from '../../constants/routes';
 
 const { SITE_URL } = CONFIG;
 
+/** generated at build-time only */
 export const sitemapIntegration = () =>
   sitemap({
     serialize: (item) => {

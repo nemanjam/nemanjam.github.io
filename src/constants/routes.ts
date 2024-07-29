@@ -22,6 +22,8 @@ export const ROUTES = {
   STATIC: {
     IMAGES: '/images/',
     FAVICONS: '/images/favicons/',
+    /** generated at build-time only */
+    SITEMAP: '/sitemap-index.xml',
   },
   API: {
     OG_IMAGES: '/api/open-graph/',
