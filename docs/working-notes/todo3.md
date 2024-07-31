@@ -451,6 +451,7 @@ mermaid plugin
 loading skeletons
 tree diagram for layouts hierarchy
 analytics
+shaped text around images, home and about pages
 ----
 // 4.10
 in BaseHead.astro
