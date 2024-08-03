@@ -188,6 +188,10 @@ https://x.com/tibo_maker
 
 // minimalistic, narrow column, good animations
 https://github.com/markhorn-dev/astro-nano
+
+// no images, astro db
+https://github.com/flavienbonvin/flavien-bonvin
+
 -----------
 za local state mora react ili solid
 for state between pages nanostore with localStorage
