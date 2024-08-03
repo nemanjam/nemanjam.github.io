@@ -273,6 +273,7 @@ Latest git commit info is included in the website footer for easy identification
 
 ## Roadmap
 
+- Component to float text around images
 - Add accessibility attributes
 - Add image gallery page
 - Add remote markdown page
