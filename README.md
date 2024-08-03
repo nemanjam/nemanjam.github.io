@@ -295,7 +295,7 @@ The most important projects, examples, demos, resources that I reused and review
 - Design inspiration and reference - https://hashnode.com, https://medium.com, https://dev.to, https://www.developerway.com
 - Tailwind themes, dark mode, CSS structure, semantic colors - site: https://daisyui.com, repo: https://github.com/saadeghi/daisyui
 
-### Other credits
+#### Other credits
 
 Other projects, examples, demos, resources that I reused and reviewed:
 
