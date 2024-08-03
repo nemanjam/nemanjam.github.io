@@ -463,7 +463,7 @@ in BaseHead.astro
 </style>
 
 // astro 4.10
-astro env  vars sa schema 
+astro env vars sa schema 
 astro component container, render component to string for rss 
 css directive transitions 
 remote collection 2.0, custom folder

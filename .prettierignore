@@ -5,7 +5,10 @@ yarn.yaml
 .turbo
 .vercel
 .astro
+
+# enable for .md
 docs
+
 
 # formatting breaks them
 # *.md
