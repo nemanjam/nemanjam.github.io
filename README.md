@@ -12,7 +12,7 @@ This is the repository for my coding blog [nemanjamitic.com](https://nemanjamiti
 
 ## Screenshots
 
-https://github.com/user-attachments/assets/761d7b05-51e9-44ca-ac29-2dc77672ace3
+https://github.com/user-attachments/assets/5bf85aee-a3bd-4ca0-9b6d-d5b4f555934b
 
 <!-- ![Screenshot_1](/docs/screenshots/Screenshot_1.png) -->
 
