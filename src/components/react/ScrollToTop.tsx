@@ -51,12 +51,13 @@ const ScrollToTop: React.FC<Props> = ({ children }) => {
       });
 
       if (linkRef.current) {
-        isAtTop || isAtBottom ? hideLink(linkRef) : showLink(linkRef);
+        if (isAtTop || isAtBottom) hideLink(linkRef);
+        else showLink(linkRef);
       }
     };
 
-    // bellow 200 or it will break again
-    const debouncedCallback = debounce(callback, 100);
+    // bellow 100 or it will break again on fast scroll
+    const debouncedCallback = debounce(callback, 20);
     const intersect = new IntersectionObserver(debouncedCallback);
 
     if (topRef.current) intersect.observe(topRef.current);
