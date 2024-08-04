@@ -453,6 +453,7 @@ tree diagram for layouts hierarchy
 analytics
 shaped text around images, home and about pages
 better roadmap
+add youtube, twitter in footer
 ----
 // 4.10
 in BaseHead.astro

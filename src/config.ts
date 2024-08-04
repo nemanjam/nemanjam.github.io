@@ -39,6 +39,8 @@ const configData: ConfigType = {
   AUTHOR_EMAIL: 'email@email.com',
   AUTHOR_GITHUB: 'https://github.com/nemanjam',
   AUTHOR_LINKEDIN: 'https://www.linkedin.com/in/nemanja-mitic',
+  AUTHOR_TWITTER: 'https://x.com/nemanja_codes',
+  AUTHOR_YOUTUBE: 'https://www.youtube.com/@nemanja_codes',
   REPO_URL: 'https://github.com/nemanjam/nemanjam.github.io',
 };
 

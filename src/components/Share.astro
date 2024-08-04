@@ -21,10 +21,10 @@ export interface Props extends SocialShareProps {
 const { class: className, ...shareProps } = Astro.props;
 
 const { title, description } = DEFAULT_METADATA;
-const { SITE_URL } = CONFIG;
+const { AUTHOR_TWITTER } = CONFIG;
 
 // via is only for twitter
-const defaultProps = { description, title, via: SITE_URL };
+const defaultProps = { description, title, via: AUTHOR_TWITTER };
 
 // dont change order because of colors
 const buttons = [

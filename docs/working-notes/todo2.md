@@ -192,6 +192,10 @@ https://github.com/markhorn-dev/astro-nano
 // no images, astro db
 https://github.com/flavienbonvin/flavien-bonvin
 
+// excellent css, wide column
+https://lea.verou.me/
+https://lea.verou.me/blog/2023/going-lean/#public-or-private-repo%3F
+
 -----------
 za local state mora react ili solid
 for state between pages nanostore with localStorage

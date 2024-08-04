@@ -6,13 +6,38 @@ description: 'Lorem ipsum dolor sit amet'
 
 import { Image } from 'astro:assets';
 
+import { CONFIG } from '../config';
 import { IMAGE_SIZES } from '../constants/image';
+import Link from '../components/Link.astro';
 import Electronics1Image from '../assets/images/all-images/electronics1.jpg';
+
+
+export const { SITE_URL, AUTHOR_GITHUB, AUTHOR_LINKEDIN, AUTHOR_TWITTER, AUTHOR_YOUTUBE, REPO_URL } = CONFIG;
 
 # About
 
-<Image {...IMAGE_SIZES.FIXED.MDX_SM} src={Electronics1Image} alt="Veronica transmitter board" />
+<Image {...IMAGE_SIZES.FIXED.MDX_SM} src={Electronics1Image} alt="Veronica transmitter board" /> 
 
-Aliquip quis commodo proident et dolor irure irure tempor voluptate. Exercitation pariatur ipsum nulla nulla laboris velit cupidatat amet adipisicing consectetur quis quis irure. Quis ullamco sint cupidatat reprehenderit deserunt. Et sunt anim ex ipsum sit quis dolor excepteur mollit aute commodo veniam velit. 
+My name is Nemanja, I am a full-stack developer with experience in React.js, Next.js, and Node.js. In the past, I have worked with C# and ASP.NET, and lately, I have developed an interest in Python and FastAPI. I also like to experiment with DevOps and homelab self-hosting.
 
+My hobbies are fishing, lure building, bicycling, playing guitar, composing in FL Studio, and DIY electronics.
+
+If you want to contact me about coding, or if you need a companion for fishing or jamming, use the links below.
+
+<p class="my-2">
+  <label class="font-bold">GitHub:</label>
+  <Link href={AUTHOR_GITHUB} target="_blank">{AUTHOR_GITHUB}</Link>
+</p>
+<p class="my-2">
+  <label class="font-bold">LinkedIn:</label>
+  <Link href={AUTHOR_LINKEDIN} target="_blank">{AUTHOR_LINKEDIN}</Link>
+</p>
+<p class="my-2">
+  <label class="font-bold">Twitter:</label>
+  <Link href={AUTHOR_TWITTER} target="_blank">{AUTHOR_TWITTER}</Link>
+</p>
+<p class="my-2">
+  <label class="font-bold">YouTube:</label>
+  <Link href={AUTHOR_YOUTUBE} target="_blank">{AUTHOR_YOUTUBE}</Link>
+</p>
 
