@@ -277,6 +277,7 @@ Latest git commit info is included in the website footer for easy identification
 
 - Component to float text around images
 - Add accessibility attributes
+- Fix View transitions flash in Firefox dark theme
 - Add analytics
 - Add image gallery page
 - Add remote markdown page
