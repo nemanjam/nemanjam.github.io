@@ -196,6 +196,10 @@ https://github.com/flavienbonvin/flavien-bonvin
 https://lea.verou.me/
 https://lea.verou.me/blog/2023/going-lean/#public-or-private-repo%3F
 
+// astro, looks good
+analytics, internationalisation, github issue template, small project
+https://github.com/wanoo21/tailwind-astro-starting-blog
+
 -----------
 za local state mora react ili solid
 for state between pages nanostore with localStorage
