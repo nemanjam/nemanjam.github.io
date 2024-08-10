@@ -30,8 +30,8 @@ export const IMAGE_SIZES = {
       height: 48,
     },
     POST_CARD_SMALL: {
-      width: 142,
-      height: 80,
+      width: 215,
+      height: 120,
     },
     _404: {
       width: TW_SCREENS.MD,

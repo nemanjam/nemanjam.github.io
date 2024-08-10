@@ -32,8 +32,8 @@ const getTransitionNameFromElementId = setTransitionSlug({ pageSlug: slug });
 
 <article
   class={cn(
-    'flex flex-col xs:flex-row gap-2',
-    'not-first:pt-2 not-last:pb-2',
+    'flex flex-col xs:flex-row gap-2 md:gap-4',
+    'not-first:pt-2 not-last:pb-2 md:not-first:pt-4 md:not-last:pb-4',
     'not-last:border-b border-base-300',
     className
   )}
@@ -42,14 +42,14 @@ const getTransitionNameFromElementId = setTransitionSlug({ pageSlug: slug });
     {...IMAGE_SIZES.FIXED.POST_CARD_SMALL}
     src={heroImage}
     alt={heroAlt}
-    class="object-cover rounded-box hidden xs:block"
+    class="object-cover rounded-box hidden xs:block w-[142px] h-[80px] md:size-auto"
     transition:name={getTransitionNameFromElementId({
       elementId: TRANSITION_ELEMENT_IDS.POST_CARD.HERO_IMAGE,
     })}
   />
-  <div>
+  <div class="flex flex-col">
     <h4
-      class="b-h4 text-xl leading-none line-clamp-1 mb-1"
+      class="b-h4 text-xl leading-none line-clamp-1 mb-1 md:mb-2"
       transition:name={getTransitionNameFromElementId({
         elementId: TRANSITION_ELEMENT_IDS.POST_CARD.TITLE,
       })}
@@ -62,7 +62,7 @@ const getTransitionNameFromElementId = setTransitionSlug({ pageSlug: slug });
     {
       description && (
         <p
-          class="text-base text-captions line-clamp-1 mb-2"
+          class="text-base text-captions line-clamp-1 md:line-clamp-2 mb-2"
           transition:name={getTransitionNameFromElementId({
             elementId: TRANSITION_ELEMENT_IDS.POST_CARD.DESCRIPTION,
           })}
@@ -72,7 +72,7 @@ const getTransitionNameFromElementId = setTransitionSlug({ pageSlug: slug });
       )
     }
     <span
-      class="inline-flex items-center gap-1 text-sm text-captions text-nowrap"
+      class="inline-flex items-center gap-1 text-sm text-captions text-nowrap mt-auto"
       transition:name={getTransitionNameFromElementId({
         elementId: TRANSITION_ELEMENT_IDS.POST_CARD.META,
       })}

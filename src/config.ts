@@ -33,7 +33,7 @@ const configData: ConfigType = {
   SITE_TITLE: 'Nemanja Mitic',
   SITE_DESCRIPTION: 'I am Nemanja, full stack developer',
   PAGE_SIZE_POST_CARD: 3,
-  PAGE_SIZE_POST_CARD_SMALL: 10,
+  PAGE_SIZE_POST_CARD_SMALL: 6,
   MORE_POSTS_COUNT: 3,
   AUTHOR_NAME: 'Nemanja Mitic',
   AUTHOR_EMAIL: 'email@email.com',

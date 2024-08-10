@@ -455,7 +455,7 @@ shaped text around images, home and about pages
 better roadmap
 add youtube, twitter in footer
 sta se tacno desava kad je site_url netacan a i dalje radi, npr: https://nmc-docker.local.nemanjamitic.com
-PostCardSmall increase height maybe
+    PostCardSmall increase height maybe
     set canonicalURL, <link href={canonicalURL} rel="canonical" />
 ----
 // 4.10
