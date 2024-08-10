@@ -22,35 +22,28 @@ const categoryLinks = getCategoryLinks(posts, filterPathname);
 ---
 
 <section {...props} class={cn(className)}>
-  <div class="flex items-start flex-col md:flex-row gap-2 mb-4">
-    <h4 class="b-h4 shrink-0 w-24 md:w-28 my-0">Categories:</h4>
-    <FilterList class="gap-4" itemLinks={categoryLinks}>
-      {
-        ({ href, text, textWithCount, isActive }: FilterLink) => {
-          const { icon } = getCategoryProps(text);
-          const buttonProps = isActive ? ({ colors: 'primary', variant: 'solid' } as const) : {};
+  <FilterList class="gap-4 mb-4" itemLinks={categoryLinks}>
+    {
+      ({ href, text, textWithCount, isActive }: FilterLink) => {
+        const { icon } = getCategoryProps(text);
+        const buttonProps = isActive ? ({ colors: 'primary', variant: 'solid' } as const) : {};
 
-          return (
-            <Button href={href} size="md" {...buttonProps}>
-              <Icon name={icon} slot="before-icon" />
-              {textWithCount}
-            </Button>
-          );
-        }
-      }
-    </FilterList>
-  </div>
-
-  <div class="flex items-start flex-col md:flex-row gap-2">
-    <h4 class="b-h4 shrink-0 w-24 md:w-28 my-0">Tags:</h4>
-    <FilterList itemLinks={tagLinks}>
-      {
-        ({ href, textWithCount, isActive }: FilterLink) => (
-          <Tag href={href} size="md" colors={isActive ? 'primary' : 'default'}>
+        return (
+          <Button href={href} size="md" {...buttonProps}>
+            <Icon name={icon} slot="before-icon" />
             {textWithCount}
-          </Tag>
-        )
+          </Button>
+        );
       }
-    </FilterList>
-  </div>
+    }
+  </FilterList>
+  <FilterList itemLinks={tagLinks}>
+    {
+      ({ href, textWithCount, isActive }: FilterLink) => (
+        <Tag href={href} size="md" colors={isActive ? 'primary' : 'default'}>
+          {textWithCount}
+        </Tag>
+      )
+    }
+  </FilterList>
 </section>
