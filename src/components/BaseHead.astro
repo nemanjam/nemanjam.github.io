@@ -9,12 +9,10 @@ import { ROUTES } from '@/constants/routes';
 import { CONFIG } from '@/config';
 import { handleTitle } from '@/utils/metadata';
 import { filterUndefined } from '@/utils/objects';
-import { trimHttpProtocol } from '@/utils/strings';
 
 import type { Metadata } from '@/types/common';
 
-const { SITE_URL } = CONFIG;
-const domain = trimHttpProtocol(SITE_URL);
+const { AUTHOR_NAME } = CONFIG;
 
 export interface BaseHeadProps {
   metadata: Metadata;
@@ -22,7 +20,11 @@ export interface BaseHeadProps {
 
 // set defualt metadata in this component
 const { metadata } = Astro.props as BaseHeadProps;
-const { url: baseUrl } = Astro; // object
+
+// site: SITE_URL var + '/'
+// url: full page url, cannonical url, per page
+const { url } = Astro; // objects
+const { host } = url;
 
 const handledMetadata = handleTitle(metadata);
 
@@ -31,7 +33,7 @@ const mergedMetadata: Required<Metadata> = { ...DEFAULT_METADATA, ...filteredMet
 
 const { title, description, image } = mergedMetadata;
 
-const ogImageUrl = new URL(image, baseUrl);
+const ogImageUrl = new URL(image, url);
 ---
 
 <head>
@@ -41,60 +43,60 @@ const ogImageUrl = new URL(image, baseUrl);
 
   <meta name="theme-color" content="#c1ddf9" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
+
+  {/* Links */}
+  {/* Root-Relative URL (Starts with /): */}
+  <link rel="canonical" href={url} />
   <link
     rel="apple-touch-icon"
     sizes="180x180"
-    href={`${SITE_URL}${ROUTES.STATIC.FAVICONS}apple-touch-icon.png`}
+    href={`${ROUTES.STATIC.FAVICONS}apple-touch-icon.png`}
   />
   <link
     rel="icon"
     type="image/png"
     sizes="32x32"
-    href={`${SITE_URL}${ROUTES.STATIC.FAVICONS}favicon-32x32.png`}
+    href={`${ROUTES.STATIC.FAVICONS}favicon-32x32.png`}
   />
   <link
     rel="icon"
     type="image/png"
     sizes="16x16"
-    href={`${SITE_URL}${ROUTES.STATIC.FAVICONS}favicon-16x16.png`}
+    href={`${ROUTES.STATIC.FAVICONS}favicon-16x16.png`}
   />
-  <link rel="manifest" href={`${SITE_URL}/manifest.json`} />
+  <link rel="manifest" href="/manifest.json" />
 
   {/* Primary Meta Tags */}
   <title>{title}</title>
   <meta name="title" content={title} />
   <meta name="description" content={description} />
+  <meta name="author" content={AUTHOR_NAME} />
 
   {/* Feeds */}
   <link
     rel="alternate"
     type="application/rss+xml"
-    title={`RSS feed for ${domain}`}
-    href={`${SITE_URL}${ROUTES.API.FEED_RSS}`}
+    title={`RSS feed for ${host}`}
+    href={`${ROUTES.API.FEED_RSS}`}
   />
   <link
     rel="alternate"
     type="application/json"
-    title={`JSON feed for ${domain}`}
-    href={`${SITE_URL}${ROUTES.API.FEED_JSON}`}
+    title={`JSON feed for ${host}`}
+    href={`${ROUTES.API.FEED_JSON}`}
   />
-  <link
-    rel="sitemap"
-    type="application/xml"
-    title="Sitemap"
-    href={`${SITE_URL}${ROUTES.STATIC.SITEMAP}`}
-  />
+  <link rel="sitemap" type="application/xml" title="Sitemap" href={`${ROUTES.STATIC.SITEMAP}`} />
 
   {/* Open Graph / Facebook */}
   <meta property="og:type" content="website" />
-  <meta property="og:url" content={baseUrl} />
+  <meta property="og:url" content={url} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={ogImageUrl} />
 
   {/* Twitter */}
   <meta property="twitter:card" content="summary" />
-  <meta property="twitter:url" content={baseUrl} />
+  <meta property="twitter:url" content={url} />
   <meta property="twitter:title" content={title} />
   <meta property="twitter:description" content={description} />
   <meta property="twitter:image" content={ogImageUrl} />
@@ -106,7 +108,7 @@ const ogImageUrl = new URL(image, baseUrl);
   <script src="set-url-here" crossorigin="anonymous"></script>
  -->
 
-  <ViewTransitions fallback="animate" />
+  <ViewTransitions fallback="none" />
 
   <!-- 
     <style>
