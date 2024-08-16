@@ -2,31 +2,41 @@
 import { Image } from 'astro:assets';
 
 import { IMAGE_SIZES } from '@/constants/image';
+import { cn } from '@/utils/styles';
 
 import type { ImageMetadata } from 'astro';
 
+export interface Props extends astroHTML.JSX.HTMLAttributes {}
+
+// filenames
+const EXCLUDE_IMAGES = ['avatar1.jpg'];
+
 const getAllImagesMetadata = (): ImageMetadata[] => {
-  //
-  // src/assets/images/all-images/river9.jpg
   const imageModules = import.meta.glob<{ default: ImageMetadata }>(
-    '/src/assets/images/all-images/*.{jpg}',
+    // cant be even variable
+    '/src/assets/images/all-images/*.jpg',
     { eager: true }
   );
 
-  console.log('imageModules', imageModules);
-
-  const imagesMetadata = Object.keys(imageModules).map((path) => imageModules[path].default);
+  // convert map to array
+  const imagesMetadata = Object.keys(imageModules)
+    // filter excluded filenames
+    .filter((path) => !EXCLUDE_IMAGES.some((excludedFileName) => path.endsWith(excludedFileName)))
+    // return metadata array
+    .map((path) => imageModules[path].default);
   return imagesMetadata;
 };
 
 const imagesMetadata = getAllImagesMetadata();
+
+const { class: className } = Astro.props;
 ---
 
-<ul>
+<ul class={cn('grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3', className)}>
   {
     imagesMetadata.map((image) => (
       <li>
-        <Image {...IMAGE_SIZES.FIXED.MDX_XS_16_9} src={image} alt="my image" />
+        <Image {...IMAGE_SIZES.FIXED.MDX_XXS_16_9} src={image} alt="my image" />
       </li>
     ))
   }

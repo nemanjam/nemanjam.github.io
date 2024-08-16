@@ -484,5 +484,14 @@ For image resizing I would use a CDN - depending on usage you might be able to u
 For Gallery - https://benhowell.github.io/react-grid-gallery - which is client side React. For onscroll I used react-intersection-observer - https://www.builder.io/blog/react-intersection-observer
 
 I hope this helps, sorry I can't share my code.
+----
+glob za slike
+poenta, ne sme da ima {} za jednu opciju
+ovo puca
+'/src/assets/images/all-images/*.{jpg}',
+ovo radi
+'/src/assets/images/all-images/*.jpg',
+
+
 ------------
 ```
