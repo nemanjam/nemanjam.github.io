@@ -200,6 +200,9 @@ https://lea.verou.me/blog/2023/going-lean/#public-or-private-repo%3F
 analytics, internationalisation, github issue template, small project
 https://github.com/wanoo21/tailwind-astro-starting-blog
 
+// good blog design
+https://www.builder.io/blog/react-intersection-observer
+
 -----------
 za local state mora react ili solid
 for state between pages nanostore with localStorage

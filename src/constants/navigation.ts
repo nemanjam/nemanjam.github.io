@@ -26,6 +26,10 @@ export const NAVIGATION_ITEMS = [
     title: 'About',
     path: ROUTES.ABOUT,
   },
+  {
+    title: 'Gallery',
+    path: ROUTES.GALLERY,
+  },
   // {
   //   title: 'Resume',
   //   path: ROUTES.RESUME,

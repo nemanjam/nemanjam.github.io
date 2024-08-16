@@ -48,6 +48,7 @@
     "object-treeify": "^4.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-grid-gallery": "^1.0.1",
     "reading-time": "^1.5.0",
     "sharp": "0.32.6",
     "tailwind-clip-path": "^1.0.0",
