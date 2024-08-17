@@ -38,6 +38,8 @@ const imageMetadataToAstroImageProps = (imagesMetadata: ImageMetadata): AstroIma
 });
 
 const astroImagePropsToReactImageProps = (astroImageProps: AstroImageProps): ImageProps => {
+  // console.log('astroImageProps', JSON.stringify(astroImageProps, null, 2));
+
   const astroImageSrc = astroImageProps.src as ImageMetadata;
 
   return {
@@ -51,11 +53,46 @@ const astroImagePropsToReactImageProps = (astroImageProps: AstroImageProps): Ima
 const astroImages = imagesMetadata.map((metadata) => imageMetadataToAstroImageProps(metadata));
 const reactImages = astroImages.map((astroProps) => astroImagePropsToReactImageProps(astroProps));
 
+console.log('images', JSON.stringify(reactImages, null, 2));
+
 const { class: className } = Astro.props;
 ---
 
 <div class={cn('', className)}>
-  <ReactGallery client:only="react" images={reactImages}>
-    <Image {...IMAGE_SIZES.FIXED.MDX_XXS_16_9} src="https://google.com" alt="default" />
-  </ReactGallery>
+  <ReactGallery
+    client:only="react"
+    images={reactImages}
+    thumbnailImageComponent={(<Image {...IMAGE_SIZES.FIXED.MDX_XXS_16_9} src="" alt="default" />)}
+  />
 </div>
+{
+  /*
+
+/@fs/home/username/Desktop/nemanjam.github.io/src/assets/images/all-images/cyco5.jpg?origWidth=4608&origHeight=2592&origFormat=jpg
+
+<ul class={cn('grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3', className)}>
+  {
+    imagesMetadata.map((image) => (
+      <li>
+        <Image {...IMAGE_SIZES.FIXED.MDX_XXS_16_9} src={image} alt="my image" />
+      </li>
+    ))
+  }
+</ul>
+
+interface Image {
+    key?: Key;
+    src: string;
+    width: number;
+    height: number;
+    nano?: string;
+    alt?: string;
+    tags?: ImageTag[];
+    isSelected?: boolean;
+    caption?: ReactNode;
+    customOverlay?: ReactNode;
+    thumbnailCaption?: ReactNode;
+    orientation?: number;
+}
+*/
+}
