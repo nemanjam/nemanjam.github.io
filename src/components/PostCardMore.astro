@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 
 import Link from '@/components/Link.astro';
-import { draftText } from '@/constants/data';
+import { DRAFT_TEXT } from '@/constants/data';
 import { IMAGE_SIZES } from '@/constants/image';
 import { ROUTES } from '@/constants/routes';
 
@@ -27,7 +27,7 @@ const { title, heroImage, heroAlt, description, draft } = data;
   <h4 class="b-h4 break-words line-clamp-2 mt-3 mb-2">
     <Link variant="link-heading" href={`${ROUTES.BLOG}${slug}`}>
       {title}
-      {draft && <sup class="text-sm text-red-500 ml-1">{draftText}</sup>}
+      {draft && <sup class="text-sm text-red-500 ml-1">{DRAFT_TEXT}</sup>}
     </Link>
   </h4>
   {description && <p class="text-base text-captions line-clamp-2">{description}</p>}

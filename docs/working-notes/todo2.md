@@ -203,6 +203,12 @@ https://github.com/wanoo21/tailwind-astro-starting-blog
 // good blog design
 https://www.builder.io/blog/react-intersection-observer
 
+// excellent resume page
+https://github.com/tjklint/tjklint.github.io
+
+// next.js, good gradients and framer motion
+https://github.com/kristianka/kristiankahkonen.com
+
 -----------
 za local state mora react ili solid
 for state between pages nanostore with localStorage

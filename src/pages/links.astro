@@ -1,0 +1,19 @@
+---
+import { Markdown } from 'astro-remote';
+
+import List from '@/layouts/List.astro';
+import { BOOKMARKS_README_URL } from '@/constants/data';
+import { getPageMetadata } from '@/utils/metadata';
+
+const readmeContent = await fetch(BOOKMARKS_README_URL).then((response) => response.text());
+
+const metadata = getPageMetadata('lists/links');
+
+// not generating id="..." links href="#..."
+---
+
+<List {metadata}>
+  <div class="my-prose">
+    <Markdown content={readmeContent} sanitize={{ dropElements: ['h1'] }} />
+  </div>
+</List>

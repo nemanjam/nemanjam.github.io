@@ -16,6 +16,7 @@ export const ROUTES = {
   EXPLORE_CATEGORIES: '/blog/explore/categories/',
   DESIGN: '/design/',
   GALLERY: '/gallery/',
+  LINKS: '/links/',
   /** maybe in future */
   DRAFTS: '/drafts/',
   _404: '/404/',

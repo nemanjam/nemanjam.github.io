@@ -54,6 +54,9 @@ export const PAGE_METADATA = {
     title: 'Projects',
     description: 'Ad duis incididunt reprehenderit elit in enim amet dolor.',
   },
+  'lists/links': {
+    title: 'Links',
+  },
 } as const;
 
 export type PageMetadataKey = keyof typeof PAGE_METADATA;

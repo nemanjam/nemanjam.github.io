@@ -4,7 +4,7 @@ import { Image } from 'astro:assets';
 
 import { getPublishedOrUpdatedDate } from '@/modules/common';
 import Link from '@/components/Link.astro';
-import { draftText } from '@/constants/data';
+import { DRAFT_TEXT } from '@/constants/data';
 import { IMAGE_SIZES } from '@/constants/image';
 import { ROUTES } from '@/constants/routes';
 import { setTransitionSlug, TRANSITION_ELEMENT_IDS } from '@/constants/transitions';
@@ -55,7 +55,7 @@ const getTransitionNameFromElementId = setTransitionSlug({ pageSlug: slug });
       })}
     >
       <Link variant="link-heading" href={`${ROUTES.BLOG}${slug}`}>
-        {draft && <sup class="text-sm text-red-500 mr-1">{draftText}</sup>}
+        {draft && <sup class="text-sm text-red-500 mr-1">{DRAFT_TEXT}</sup>}
         {title}
       </Link>
     </h4>

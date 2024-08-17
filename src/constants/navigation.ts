@@ -31,6 +31,10 @@ export const NAVIGATION_ITEMS = [
     path: ROUTES.GALLERY,
   },
   // {
+  //   title: 'Links',
+  //   path: ROUTES.LINKS,
+  // },
+  // {
   //   title: 'Resume',
   //   path: ROUTES.RESUME,
   // },
