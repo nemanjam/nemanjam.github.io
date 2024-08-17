@@ -3,6 +3,7 @@ import { getImage } from 'astro:assets';
 
 import ReactGallery from '@/components/react/Gallery';
 import { IMAGE_SIZES } from '@/constants/image';
+import { randomizeArray } from '@/utils/objects';
 import { cn } from '@/utils/styles';
 
 import type { ImageProps } from '@/types/common';
@@ -72,11 +73,13 @@ const reactImages = await Promise.all(
   imagesMetadata.map((metadata) => imageMetadataToReactImageProps(metadata))
 );
 
+const randomizedReactImages = randomizeArray(reactImages);
+
 // console.log('reactImages', reactImages);
 
 const { class: className } = Astro.props;
 ---
 
 <div class={cn('', className)}>
-  <ReactGallery client:only="react" images={reactImages} />
+  <ReactGallery client:only="react" images={randomizedReactImages} />
 </div>

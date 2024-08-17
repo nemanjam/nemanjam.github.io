@@ -1,4 +1,5 @@
 import { CONFIG } from '@/config';
+import { randomizeArray } from '@/utils/objects';
 
 import type { Post } from '@/types/post';
 
@@ -22,12 +23,9 @@ export const getRandomPosts = ({
 
   if (!(filteredPosts.length > 0)) return [];
 
-  const shuffledPosts = filteredPosts
-    .map((post) => ({ post, sort: Math.random() }))
-    .sort((a, b) => a.sort - b.sort)
-    .map(({ post }) => post);
+  const randomizedPosts = randomizeArray(filteredPosts);
 
-  if (shuffledPosts.length < count) return shuffledPosts;
+  if (randomizedPosts.length < count) return randomizedPosts;
 
-  return shuffledPosts.slice(0, count);
+  return randomizedPosts.slice(0, count);
 };
