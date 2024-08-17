@@ -1,11 +1,11 @@
 ---
-import { Image } from 'astro:assets';
+import { getImage } from 'astro:assets';
 
 import ReactGallery from '@/components/react/Gallery';
 import { IMAGE_SIZES } from '@/constants/image';
 import { cn } from '@/utils/styles';
 
-import type { AstroImageProps, ImageProps } from '@/types/common';
+import type { ImageProps } from '@/types/common';
 import type { ImageMetadata } from 'astro';
 
 export interface Props extends astroHTML.JSX.HTMLAttributes {}
@@ -31,31 +31,52 @@ const getAllImagesMetadata = (): ImageMetadata[] => {
 
 const imagesMetadata = getAllImagesMetadata();
 
-const imageMetadataToAstroImageProps = (imagesMetadata: ImageMetadata): AstroImageProps => ({
-  src: imagesMetadata,
-  ...IMAGE_SIZES.FIXED.MDX_XXS_16_9,
-  alt: 'Gallery image',
-});
-
-const astroImagePropsToReactImageProps = (astroImageProps: AstroImageProps): ImageProps => {
-  const astroImageSrc = astroImageProps.src as ImageMetadata;
-
-  return {
-    src: astroImageSrc.src,
-    originalSrc: astroImageSrc.src,
-    width: parseInt(String(astroImageProps.width)),
-    height: parseInt(String(astroImageProps.height)),
+const imageMetadataToReactImageProps = async (
+  imagesMetadata: ImageMetadata
+): Promise<ImageProps> => {
+  const astroImageProps = {
+    src: imagesMetadata,
+    format: 'webp',
   };
+
+  const thumbnailAstroImageProps = {
+    ...astroImageProps,
+    ...IMAGE_SIZES.FIXED.MDX_XXS_16_9,
+    alt: 'Thumbnail image',
+  };
+
+  const lightboxAstroImageProps = {
+    ...astroImageProps,
+    ...IMAGE_SIZES.FIXED.MDX_XL_16_9,
+    alt: 'Lightbox image',
+  };
+
+  const optimizedThumbnailAstroImageProps = await getImage(thumbnailAstroImageProps);
+  const { src, attributes } = optimizedThumbnailAstroImageProps;
+
+  const optimizedLightboxAstroImageProps = await getImage(lightboxAstroImageProps);
+  const { src: originalSrc } = optimizedLightboxAstroImageProps;
+
+  const reactImageProps = {
+    src,
+    originalSrc,
+    // width and height only for thumbnails
+    width: parseInt(String(attributes.width)),
+    height: parseInt(String(attributes.height)),
+  };
+
+  return reactImageProps;
 };
 
-const astroImages = imagesMetadata.map((metadata) => imageMetadataToAstroImageProps(metadata));
-const reactImages = astroImages.map((astroProps) => astroImagePropsToReactImageProps(astroProps));
+const reactImages = await Promise.all(
+  imagesMetadata.map((metadata) => imageMetadataToReactImageProps(metadata))
+);
+
+// console.log('reactImages', reactImages);
 
 const { class: className } = Astro.props;
 ---
 
 <div class={cn('', className)}>
-  <ReactGallery client:only="react" images={reactImages}>
-    <Image {...IMAGE_SIZES.FIXED.MDX_XXS_16_9} src="https://google.com" alt="default" />
-  </ReactGallery>
+  <ReactGallery client:only="react" images={reactImages} />
 </div>
