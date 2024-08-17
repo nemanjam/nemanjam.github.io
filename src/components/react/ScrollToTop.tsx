@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import debounce from 'lodash.debounce';
-
 import { cn } from '@/utils/styles';
 
 import type { ReactNode } from 'react';
@@ -56,10 +54,7 @@ const ScrollToTop: React.FC<Props> = ({ children }) => {
       }
     };
 
-    // bellow 100 or it will break again on fast scroll
-    // todo: set threshold and remove debounce
-    const debouncedCallback = debounce(callback, 20);
-    const intersect = new IntersectionObserver(debouncedCallback);
+    const intersect = new IntersectionObserver(callback, { threshold: 0 });
 
     if (topRef.current) intersect.observe(topRef.current);
     if (bottomRef.current) intersect.observe(bottomRef.current);
