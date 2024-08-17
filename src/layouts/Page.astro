@@ -1,6 +1,7 @@
 ---
 import Centered from '@/layouts/Centered.astro';
 import { getOpenGraphImagePath } from '@/libs/api/open-graph/image-path';
+import { cn } from '@/utils/styles';
 
 export interface Content {
   title: string;
@@ -8,6 +9,8 @@ export interface Content {
   readingTime: number;
   file: string;
   url: string;
+  /** set max-w-xxx */
+  class: string;
 }
 
 export interface Props {
@@ -16,7 +19,7 @@ export interface Props {
 
 // metadata from frontmatter
 const { content } = Astro.props;
-const { title, description } = content;
+const { title, description, class: className } = content;
 
 // available in Layouts
 const { pathname } = Astro.url;
@@ -28,7 +31,7 @@ const image = getOpenGraphImagePath(path);
 const metadata = { title, description, image };
 ---
 
-<Centered {metadata}>
+<Centered {metadata} class={cn(className)}>
   <article class="my-prose">
     <slot />
   </article>

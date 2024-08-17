@@ -57,6 +57,7 @@ const ScrollToTop: React.FC<Props> = ({ children }) => {
     };
 
     // bellow 100 or it will break again on fast scroll
+    // todo: set threshold and remove debounce
     const debouncedCallback = debounce(callback, 20);
     const intersect = new IntersectionObserver(debouncedCallback);
 

@@ -472,4 +472,26 @@ astro env vars sa schema
 astro component container, render component to string for rss 
 css directive transitions 
 remote collection 2.0, custom folder
+
+-------------
+// gallery
+
+
+For lazy loading checkout unpic - https://unpic.pics/lib/
+
+For image resizing I would use a CDN - depending on usage you might be able to use a free tier or pay very little.
+
+For Gallery - https://benhowell.github.io/react-grid-gallery - which is client side React. For onscroll I used react-intersection-observer - https://www.builder.io/blog/react-intersection-observer
+
+I hope this helps, sorry I can't share my code.
+----
+glob za slike
+poenta, ne sme da ima {} za jednu opciju
+ovo puca
+'/src/assets/images/all-images/*.{jpg}',
+ovo radi
+'/src/assets/images/all-images/*.jpg',
+
+
+------------
 ```
