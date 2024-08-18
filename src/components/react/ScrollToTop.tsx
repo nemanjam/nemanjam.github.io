@@ -1,12 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+import { SELECTORS } from '@/constants/dom';
 import { cn } from '@/utils/styles';
 
-import type { ReactNode } from 'react';
+import type { MouseEvent, ReactNode } from 'react';
 
 interface Props {
   children: ReactNode;
 }
+
+const { SCROLL_TO_TOP_SELECTOR } = SELECTORS;
 
 const fixedClasses = ['opacity-1', 'translate-y-0'];
 const hiddenClasses = ['opacity-0', 'translate-y-20'];
@@ -77,6 +80,15 @@ const ScrollToTop: React.FC<Props> = ({ children }) => {
     };
   }, []);
 
+  const handleScrollToTop = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+
+    const anchorElement = document.querySelector(SCROLL_TO_TOP_SELECTOR);
+    if (!anchorElement) return;
+
+    anchorElement.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  };
+
   return (
     <>
       <div
@@ -93,7 +105,8 @@ const ScrollToTop: React.FC<Props> = ({ children }) => {
       <a
         ref={linkRef}
         id="to-top"
-        href="#top"
+        href={SCROLL_TO_TOP_SELECTOR}
+        onClick={handleScrollToTop}
         className={cn(
           // default styles
           'z-10 fixed bottom-6 right-6 rounded bg-base-200 border border-base-300',

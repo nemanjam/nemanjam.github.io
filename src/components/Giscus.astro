@@ -1,16 +1,19 @@
 ---
+import { SELECTORS } from '@/constants/dom';
 import { cn } from '@/utils/styles';
 
 import type { HTMLAttributes } from 'astro/types';
 
 export interface Props extends HTMLAttributes<'div'> {}
 
+const { GISCUS_WIDGET_ID } = SELECTORS;
+
 const { class: className } = Astro.props;
 ---
 
 <div class={cn('giscus', className)}>
   <giscus-widget
-    id="giscus-comments"
+    id={GISCUS_WIDGET_ID}
     repo="nemanjam/nemanjam.github.io"
     repoid="R_kgDOKc-LeA"
     category="General"

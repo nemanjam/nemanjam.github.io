@@ -499,5 +499,8 @@ custom my-prose-links
 // dark theme for github markdown
 https://github.com/sindresorhus/github-markdown-css/issues/104
 https://github.com/sindresorhus/github-markdown-css
+
+table of contents id links
+a href open in new tab
 ------------
 ```

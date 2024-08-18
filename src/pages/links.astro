@@ -7,17 +7,21 @@ import { getPageMetadata } from '@/utils/metadata';
 
 import '@/assets/styles/github-markdown.css';
 
+import { SELECTORS } from '@/constants/dom';
+
 const { README_RAW_URL, REPO } = BOOKMARKS;
 
 const readmeContent = await fetch(README_RAW_URL).then((response) => response.text());
 
 const metadata = getPageMetadata('lists/links');
 
+const { GITHUB_MARKDOWN_BODY_ID } = SELECTORS;
+
 // not generating id="..." links href="#..."
 ---
 
 <List {metadata}>
-  <div id="markdown-body-id" class="markdown-body">
+  <div id={GITHUB_MARKDOWN_BODY_ID} class="markdown-body">
     <p>
       My personal bookmarks collection which is hosted in this repo: <a href={REPO} target="_blank"
         >{REPO}</a
@@ -49,8 +53,9 @@ const metadata = getPageMetadata('lists/links');
   import type { ChangeThemeCustomEvent, Mode } from '@/types/constants';
 
   const { CHANGE_EVENT } = THEME_CONFIG;
+  const { GITHUB_MARKDOWN_BODY_SELECTOR } = SELECTORS;
 
-  const markdownBodyElement = document.querySelector(SELECTORS.GITHUB_MARKDOWN_BODY_SELECTOR);
+  const markdownBodyElement = document.querySelector(GITHUB_MARKDOWN_BODY_SELECTOR);
 
   const loadGithubTheme = (mode: Mode) => {
     if (!markdownBodyElement) return;

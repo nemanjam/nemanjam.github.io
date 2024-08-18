@@ -6,6 +6,7 @@ import clsx from 'clsx';
 
 import HeaderLink from '@/components/HeaderLink.astro';
 import ThemeToggle from '@/components/ThemeToggle.astro';
+import { SELECTORS } from '@/constants/dom';
 import { IMAGE_SIZES } from '@/constants/image';
 import { NAVIGATION_ITEMS } from '@/constants/navigation';
 import { ROUTES } from '@/constants/routes';
@@ -14,6 +15,8 @@ import { getActiveNavItemPath } from '@/utils/navigation';
 
 import Avatar from '@/assets/images/avatar.jpg';
 
+const { SCROLL_TO_TOP_ID } = SELECTORS;
+
 const { pathname: routePathname } = Astro.url;
 const activeNavItemPath = getActiveNavItemPath(routePathname);
 
@@ -21,7 +24,7 @@ const activeNavItemPath = getActiveNavItemPath(routePathname);
 // group-[.menu-open]:flex-col md:!flex-row, both on flex-direction
 ---
 
-<header id="main-header" class="group border-b border-base-300">
+<header id={SCROLL_TO_TOP_ID} class="group border-b border-base-300">
   <div
     class={clsx(
       'flex gap-2',
