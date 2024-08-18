@@ -69,7 +69,11 @@ const activeNavItemPath = getActiveNavItemPath(routePathname);
         {
           NAVIGATION_ITEMS.map(({ title, path }) => (
             <li>
-              <HeaderLink href={path} isActive={path === activeNavItemPath}>
+              <HeaderLink
+                href={path}
+                isActive={path === activeNavItemPath}
+                {...(path === ROUTES.LINKS ? { 'data-astro-reload': true } : {})}
+              >
                 {title}
               </HeaderLink>
             </li>
