@@ -5,8 +5,6 @@ import List from '@/layouts/List.astro';
 import { BOOKMARKS } from '@/constants/data';
 import { getPageMetadata } from '@/utils/metadata';
 
-import '@/assets/styles/github-markdown.css';
-
 const { README_RAW_URL, REPO } = BOOKMARKS;
 
 const readmeContent = await fetch(README_RAW_URL).then((response) => response.text());
@@ -17,7 +15,7 @@ const metadata = getPageMetadata('lists/links');
 ---
 
 <List {metadata}>
-  <div id="markdown-body-id" class="markdown-body">
+  <div class="markdown-body">
     <p>
       My personal bookmarks collection which is hosted in this repo: <a href={REPO} target="_blank"
         >{REPO}</a
@@ -29,7 +27,7 @@ const metadata = getPageMetadata('lists/links');
 </List>
 
 <style is:global>
-  #markdown-body-id {
+  .markdown-body {
     /* set transparent bg-color */
     @apply !bg-transparent;
 
@@ -42,22 +40,35 @@ const metadata = getPageMetadata('lists/links');
 </style>
 
 <script>
-  import { SELECTORS } from '@/constants/dom';
-  import { MODES, THEME_CONFIG } from '@/constants/themes';
+  import { THEME_CONFIG } from '@/constants/themes';
   import { getCurrentMode } from '@/utils/dom';
+  import { removeTrailingSlash } from '@/utils/paths';
 
-  import type { ChangeThemeCustomEvent, Mode } from '@/types/constants';
+  import type { ChangeThemeCustomEvent } from '@/types/constants';
 
   const { CHANGE_EVENT } = THEME_CONFIG;
 
-  const markdownBodyElement = document.querySelector(SELECTORS.GITHUB_MARKDOWN_BODY_SELECTOR);
+  const loadStylesheet = (href: string) => {
+    const existingLink = document.querySelector('link[data-theme="dynamic"]');
+    if (existingLink) existingLink.remove();
 
-  const loadGithubTheme = (mode: Mode) => {
-    if (!markdownBodyElement) return;
+    const trimmedHref = removeTrailingSlash(href);
 
-    if (markdownBodyElement && mode === MODES.dark)
-      markdownBodyElement.setAttribute('data-theme', MODES.dark);
-    else markdownBodyElement.setAttribute('data-theme', MODES.light);
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = trimmedHref;
+    link.dataset.theme = 'dynamic';
+    document.head.appendChild(link);
+  };
+
+  const loadGithubTheme = (mode: 'dark' | 'light') => {
+    if (mode === 'dark') {
+      // loadStylesheet('node_modules/github-markdown-css/github-markdown-dark.css');
+      import('github-markdown-css/github-markdown-dark.css');
+    } else {
+      import('github-markdown-css/github-markdown-light.css');
+      // loadStylesheet('node_modules/github-markdown-css/github-markdown-light.css');
+    }
   };
 
   // will run only on page load

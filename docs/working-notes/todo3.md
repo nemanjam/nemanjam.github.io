@@ -495,5 +495,8 @@ ovo radi
 remote markdown
 not generating id="..." links href="#..."
 custom my-prose-links
+
+// dark theme for github markdown
+https://github.com/sindresorhus/github-markdown-css/issues/104
 ------------
 ```

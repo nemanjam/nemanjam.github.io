@@ -30,10 +30,10 @@ export const NAVIGATION_ITEMS = [
     title: 'Gallery',
     path: ROUTES.GALLERY,
   },
-  // {
-  //   title: 'Links',
-  //   path: ROUTES.LINKS,
-  // },
+  {
+    title: 'Links',
+    path: ROUTES.LINKS,
+  },
   // {
   //   title: 'Resume',
   //   path: ROUTES.RESUME,
