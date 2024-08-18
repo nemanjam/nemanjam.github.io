@@ -3,12 +3,12 @@ name: Deploy Nginx with bash file
 on:
   push:
     branches:
-      - 'disabled-main'
+      - 'main'
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
   pull_request:
     branches:
-      - 'disabled-main'
+      - 'main'
   workflow_dispatch:
 
 env:
