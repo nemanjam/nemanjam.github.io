@@ -4,6 +4,7 @@ import '@/styles/main.css';
 
 import { ViewTransitions } from 'astro:transitions';
 
+import ThemeScript from '@/components/ThemeScript.astro';
 import { DEFAULT_METADATA } from '@/constants/metadata';
 import { ROUTES } from '@/constants/routes';
 import { CONFIG } from '@/config';
@@ -41,6 +42,7 @@ const ogImageUrl = new URL(image, url);
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
 
+  {/* wrong, set from theme toggle */}
   <meta name="theme-color" content="#c1ddf9" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
 
@@ -107,6 +109,8 @@ const ogImageUrl = new URL(image, url);
   <script async data-goatcounter="set-url-here" src="set-url-here"></script>
   <script src="set-url-here" crossorigin="anonymous"></script>
  -->
+
+  <ThemeScript />
 
   <ViewTransitions fallback="none" />
 

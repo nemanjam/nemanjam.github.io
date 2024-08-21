@@ -503,5 +503,7 @@ https://github.com/sindresorhus/github-markdown-css
 table of contents id links
 a href open in new tab
 fix links page links color for history back view transition
+
+refactor theme script, osDefaultMode, appDefaultMode, storedMode
 ------------
 ```

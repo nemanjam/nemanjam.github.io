@@ -5,7 +5,7 @@ on:
     workflows:
       - 'Build and push Docker'
     types:
-      - success
+      - completed
 
   workflow_dispatch:
 
