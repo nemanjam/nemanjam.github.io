@@ -1,24 +1,29 @@
 ---
-import * as themeConstants from '@/constants/themes';
+import * as themeConstants from '@/constants/theme';
+import { getDefaultThemes } from '@/utils/theme';
+
+const defaultThemes = getDefaultThemes();
 ---
 
 {/* Inlined to avoid flash of white content. */}
-<script is:inline define:vars={{ themeConstants }}>
+<script is:inline define:vars={{ themeConstants, defaultThemes }}>
+  // this is JavaScript, not TypeScript
   const { MODES, THEMES, THEME_CONFIG } = themeConstants;
   const { DATA_ATTRIBUTE, CHANGE_EVENT, LOCAL_STORAGE_KEY } = THEME_CONFIG;
 
-  // this is JavaScript, not TypeScript
-  const defaultThemes = { light: THEMES[0], dark: THEMES[1] };
+  const darkModePreference = window.matchMedia('(prefers-color-scheme: dark)');
 
-  const lightModePreference = window.matchMedia('(prefers-color-scheme: light)');
+  // 1. stored mode
+  // 2. default app mode, config
+  // 3. OS mode
 
   // light is default
   const getMode = (themeMode) => (themeMode === MODES.dark ? MODES.dark : MODES.light);
 
   const getDefaultTheme = (themeMode) => defaultThemes[getMode(themeMode)];
 
-  const changeThemeMode = (themeMode) => {
-    const storedTheme = getTheme();
+  const setMode = (themeMode) => {
+    const storedTheme = getStoredTheme();
 
     if (!storedTheme) return getDefaultTheme(themeMode);
 
@@ -26,18 +31,26 @@ import * as themeConstants from '@/constants/themes';
     return newTheme;
   };
 
-  const getUserPreference = () => {
-    // either from storage
-    const storedTheme = getTheme();
-    if (storedTheme) return storedTheme;
+  const getOSMode = () => (darkModePreference.matches ? MODES.dark : MODES.light);
 
-    // or fallback to browser default
-    const preferedMode = lightModePreference.matches ? MODES.light : MODES.dark;
-    const defaultTheme = getDefaultTheme(preferedMode);
-    return defaultTheme;
+  const getOSTheme = () => {
+    const themeMode = getOSMode();
+    const defaultOSTheme = getDefaultTheme(themeMode);
+
+    return defaultOSTheme;
   };
 
   const getTheme = () => {
+    // either from storage
+    const storedTheme = getStoredTheme();
+    if (storedTheme) return storedTheme;
+
+    // or fallback to default theme for OS mode
+    const defaultOSTheme = getOSTheme();
+    return defaultOSTheme;
+  };
+
+  const getStoredTheme = () => {
     const storedThemeString =
       typeof localStorage !== 'undefined' && localStorage.getItem(LOCAL_STORAGE_KEY);
 
@@ -46,7 +59,7 @@ import * as themeConstants from '@/constants/themes';
     let storedTheme;
     try {
       storedTheme = JSON.parse(storedThemeString);
-    } catch (error) {
+    } catch (_error) {
       localStorage.removeItem(LOCAL_STORAGE_KEY);
       return null;
     }
@@ -100,21 +113,20 @@ import * as themeConstants from '@/constants/themes';
   };
 
   // initial setup
-  setTheme(getUserPreference());
+  setTheme(getTheme());
 
-  // fails in firefox
   // View Transitions hook to restore theme
-  document.addEventListener('astro:after-swap', () => setTheme(getUserPreference()));
+  document.addEventListener('astro:after-swap', () => setTheme(getTheme()));
 
   // listen for theme-change custom event, fired in src/components/ThemeToggle.astro
   document.addEventListener(CHANGE_EVENT, (event) => {
     setTheme(event.detail.theme);
   });
 
-  // listen for prefers-color-scheme change.
-  lightModePreference.addEventListener('change', (event) => {
-    const newMode = event.matches ? MODES.light : MODES.dark;
-    const newTheme = changeThemeMode(newMode);
+  // listen for prefers-color-scheme change
+  darkModePreference.addEventListener('change', (event) => {
+    const newMode = event.matches ? MODES.dark : MODES.light;
+    const newTheme = setMode(newMode);
     setTheme(newTheme);
   });
 </script>

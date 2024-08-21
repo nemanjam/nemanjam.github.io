@@ -1,7 +1,7 @@
 import type { CATEGORIES } from '@/constants/collections';
 import type { PAGE_METADATA } from '@/constants/metadata';
 import type { NAVIGATION_ITEMS } from '@/constants/navigation';
-import type { MODES, THEMES } from '@/constants/themes';
+import type { MODES, THEMES } from '@/constants/theme';
 import type { ValueUnion } from '@/types/utils';
 import type { LocalImageProps } from 'astro:assets';
 

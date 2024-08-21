@@ -35,6 +35,8 @@ const configData: ConfigType = {
   PAGE_SIZE_POST_CARD: 3,
   PAGE_SIZE_POST_CARD_SMALL: 6,
   MORE_POSTS_COUNT: 3,
+  DEFAULT_MODE: 'light',
+  DEFAULT_THEME: 'default-light',
   AUTHOR_NAME: 'Nemanja Mitic',
   AUTHOR_EMAIL: 'email@email.com',
   AUTHOR_GITHUB: 'https://github.com/nemanjam',

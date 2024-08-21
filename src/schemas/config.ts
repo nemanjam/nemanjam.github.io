@@ -3,6 +3,9 @@ import { z } from 'zod';
 export const nodeEnvValues = ['development', 'test', 'production'] as const;
 export const booleanValues = ['true', 'false', ''] as const;
 
+export const modeValues = ['light', 'dark'] as const;
+export const themeValues = ['default-light', 'default-dark', 'green-light', 'green-dark'] as const;
+
 export const configSchema = z.object({
   NODE_ENV: z.enum(nodeEnvValues),
   PREVIEW_MODE: z
@@ -16,6 +19,8 @@ export const configSchema = z.object({
   PAGE_SIZE_POST_CARD: z.number(),
   PAGE_SIZE_POST_CARD_SMALL: z.number(),
   MORE_POSTS_COUNT: z.number(),
+  DEFAULT_MODE: z.enum(modeValues), // check that theme and mode match
+  DEFAULT_THEME: z.enum(themeValues),
   AUTHOR_NAME: z.string().min(1),
   AUTHOR_EMAIL: z.string().email(),
   AUTHOR_GITHUB: z.string().url(),
