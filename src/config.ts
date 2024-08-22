@@ -1,35 +1,20 @@
-// all relative imports in config subtree
-import dotenv from 'dotenv';
+import { SITE_URL } from 'astro:env/client';
+import { NODE_ENV, PREVIEW_MODE } from 'astro:env/server';
 
-import { configSchema, nodeEnvValues } from './schemas/config';
-import { validateConfig } from './utils/config';
+import { configSchema } from '@/schemas/config';
+import { prettyPrintObject } from '@/utils/log';
+import { validateData } from '@/utils/validation';
 
-import type { ConfigType } from './types/config';
-
-/*------------------ load .env file -----------------*/
-
-// import.meta.env is not available in astro.config.mjs, only after the config is loaded.
-// ! MUST use process.env for vars used in astro.config.mjs.
-// https://github.com/withastro/astro/issues?q=.env+file+not+loaded
-
-const NODE_ENV = process.env.NODE_ENV;
-
-if (!nodeEnvValues.includes(NODE_ENV)) {
-  console.error('Invalid process.env.NODE_ENV: ', NODE_ENV);
-  throw new Error('Invalid process.env.NODE_ENV');
-}
-
-const envFileName = `.env.${NODE_ENV}`;
-dotenv.config({ path: envFileName });
+import type { ConfigType } from '@/types/config';
 
 /*-------------------- configData -------------------*/
 
 /** SSG - all env vars are build time only. */
 const configData: ConfigType = {
-  NODE_ENV: process.env.NODE_ENV,
-  PREVIEW_MODE: process.env.PREVIEW_MODE,
+  NODE_ENV,
+  PREVIEW_MODE,
   /** all urls without '/' */
-  SITE_URL: process.env.SITE_URL,
+  SITE_URL,
   SITE_TITLE: 'Nemanja Mitic',
   SITE_DESCRIPTION: 'I am Nemanja, full stack developer',
   PAGE_SIZE_POST_CARD: 3,
@@ -47,4 +32,6 @@ const configData: ConfigType = {
 };
 
 // todo: Config should go into import.meta.env in astro.config.ts
-export const CONFIG = validateConfig(configData, configSchema);
+export const CONFIG = validateData(configData, configSchema);
+
+prettyPrintObject(CONFIG, 'parsed CONFIG');
