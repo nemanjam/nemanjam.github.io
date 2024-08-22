@@ -1,21 +1,20 @@
 ---
 import * as themeConstants from '@/constants/theme';
+import { CONFIG } from '@/config';
 import { getDefaultThemes } from '@/utils/theme';
 
 const defaultThemes = getDefaultThemes();
 ---
 
 {/* Inlined to avoid flash of white content. */}
-<script is:inline define:vars={{ themeConstants, defaultThemes }}>
+<script is:inline define:vars={{ themeConstants, defaultThemes, CONFIG }}>
   // this is JavaScript, not TypeScript
+  const { DEFAULT_MODE } = CONFIG;
   const { MODES, THEMES, THEME_CONFIG } = themeConstants;
   const { DATA_ATTRIBUTE, CHANGE_EVENT, LOCAL_STORAGE_KEY } = THEME_CONFIG;
 
+  // used for event
   const darkModePreference = window.matchMedia('(prefers-color-scheme: dark)');
-
-  // 1. stored mode
-  // 2. default app mode, config
-  // 3. OS mode
 
   // light is default
   const getMode = (themeMode) => (themeMode === MODES.dark ? MODES.dark : MODES.light);
@@ -31,23 +30,46 @@ const defaultThemes = getDefaultThemes();
     return newTheme;
   };
 
-  const getOSMode = () => (darkModePreference.matches ? MODES.dark : MODES.light);
+  /** 'dark' | 'light' | null */
+  const getBrowserMode = () => {
+    const lightModePreference = window.matchMedia('(prefers-color-scheme: light)');
 
-  const getOSTheme = () => {
-    const themeMode = getOSMode();
-    const defaultOSTheme = getDefaultTheme(themeMode);
+    let browserMode;
 
-    return defaultOSTheme;
+    switch (true) {
+      case darkModePreference.matches:
+        browserMode = MODES.dark;
+        break;
+      case lightModePreference.matches:
+        browserMode = MODES.light;
+        break;
+      default:
+        browserMode = null;
+        break;
+    }
+    return browserMode;
   };
 
+  /**
+   * 1. stored mode
+   * 2. browser mode and theme
+   * 3. default app mode, config
+   */
   const getTheme = () => {
     // either from storage
     const storedTheme = getStoredTheme();
     if (storedTheme) return storedTheme;
 
-    // or fallback to default theme for OS mode
-    const defaultOSTheme = getOSTheme();
-    return defaultOSTheme;
+    // or fallback to default theme for browser mode
+    const browserMode = getBrowserMode();
+    if (browserMode) {
+      const defaultBrowserTheme = getDefaultTheme(browserMode);
+      return defaultBrowserTheme;
+    }
+
+    // fallback to app default
+    const defaultAppTheme = getDefaultTheme(DEFAULT_MODE);
+    return defaultAppTheme;
   };
 
   const getStoredTheme = () => {
@@ -80,6 +102,7 @@ const defaultThemes = getDefaultThemes();
     );
 
     if (!validatedTheme)
+      // eslint-disable-next-line no-console
       return console.warn(
         `Invalid theme value '${JSON.stringify(newTheme)}' received. Expected ${JSON.stringify(THEMES)}.`
       );
