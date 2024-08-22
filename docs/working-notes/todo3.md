@@ -511,5 +511,7 @@ replace import config with import.meta.env.VAR
 ask about app start handler for log env vars
 
 fix image sizes for gallery and other
+update bg color meta tag
+fix links page on user dark mode preference text color
 ------------
 ```
