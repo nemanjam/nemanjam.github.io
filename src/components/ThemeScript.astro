@@ -18,18 +18,30 @@ const defaultThemes = getDefaultThemes();
   // used for event
   const darkModePreference = window.matchMedia('(prefers-color-scheme: dark)');
 
-  // light is default
-  // const getMode = (themeMode) => (themeMode === MODES.dark ? MODES.dark : MODES.light);
-
   const getDefaultTheme = (themeMode) => defaultThemes[themeMode];
 
-  const setMode = (themeMode) => {
-    const storedTheme = getStoredTheme();
+  const getThemeNamePrefix = (themeName) => themeName.split('-')?.[0];
 
-    if (!storedTheme) return getDefaultTheme(themeMode);
+  const getThemeFromMode = (themeMode) => {
+    const currentTheme = getTheme();
 
-    const newTheme = { ...storedTheme, mode: themeMode };
-    return newTheme;
+    const newTheme = THEMES.find((theme) => {
+      const currentThemePrefix = getThemeNamePrefix(currentTheme.name);
+      const themePrefix = getThemeNamePrefix(theme.name);
+
+      const isModeMatch = theme.mode === themeMode;
+      const isThemeNameMatch =
+        themePrefix && currentThemePrefix && themePrefix === currentThemePrefix;
+
+      const isFound = isModeMatch && isThemeNameMatch;
+
+      return isFound;
+    });
+
+    const defaultTheme = getDefaultTheme(themeMode);
+    const resultTheme = newTheme ?? defaultTheme;
+
+    return resultTheme;
   };
 
   /** 'dark' | 'light' | null */
@@ -151,10 +163,7 @@ const defaultThemes = getDefaultThemes();
   // listen for prefers-color-scheme change
   darkModePreference.addEventListener('change', (event) => {
     const newMode = event.matches ? MODES.dark : MODES.light;
-    const newTheme = setMode(newMode);
-
-    console.log('newMode', newMode, 'newTheme', newTheme);
-    // has bug: { mode: "dark", name: "default-light" }
+    const newTheme = getThemeFromMode(newMode);
     setTheme(newTheme);
   });
 </script>
