@@ -8,7 +8,8 @@ import { defineConfig } from 'astro/config';
 import { remarkReadingTime } from './plugins/remark-reading-time.mjs';
 //
 // all relative imports in subtree
-import { envSchema, PROCESS_ENV } from './src/env';
+// any of these files must not import CONFIG with env vars
+import { envSchema, PROCESS_ENV } from './src/config/process-env';
 import { expressiveCodeIntegration } from './src/libs/integrations/expressive-code';
 import { sitemapIntegration } from './src/libs/integrations/sitemap';
 

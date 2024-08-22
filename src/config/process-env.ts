@@ -1,13 +1,12 @@
+// all relative imports in env subtree
 import { envField } from 'astro/config';
 
-// all relative imports in env subtree
 import dotenv from 'dotenv';
 
-import { nodeEnvValues, processEnvSchema } from './schemas/config';
-import { prettyPrintObject } from './utils/log';
-import { validateData } from './utils/validation';
+import { nodeEnvValues, processEnvSchema } from '../schemas/config';
+import { validateData } from '../utils/validation';
 
-import type { ProcessEnvType } from './types/config';
+import type { ProcessEnvType } from '../types/config';
 
 /*------------------ load .env file -----------------*/
 
@@ -18,6 +17,7 @@ import type { ProcessEnvType } from './types/config';
 const NODE_ENV = process.env.NODE_ENV;
 
 if (!nodeEnvValues.includes(NODE_ENV)) {
+  // eslint-disable-next-line no-console
   console.error('Invalid process.env.NODE_ENV: ', NODE_ENV);
   throw new Error('Invalid process.env.NODE_ENV');
 }
@@ -34,8 +34,6 @@ const processEnvData: ProcessEnvType = {
 };
 
 export const PROCESS_ENV = validateData(processEnvData, processEnvSchema);
-
-prettyPrintObject(PROCESS_ENV, 'parsed PROCESS_ENV');
 
 /*------------------ experimental.env.schema -----------------*/
 
@@ -56,7 +54,7 @@ export const envSchema = {
     SITE_URL: envField.string({
       context: 'client',
       access: 'public',
-      default: 'http://localhost:3000',
+      // default: omit to have explicit validation
     }),
   },
 };

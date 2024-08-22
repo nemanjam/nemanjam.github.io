@@ -15,13 +15,13 @@ import { DRAFT_TEXT } from '@/constants/data';
 import { IMAGE_SIZES } from '@/constants/image';
 import { ROUTES } from '@/constants/routes';
 import { setTransitionSlug, TRANSITION_ELEMENT_IDS } from '@/constants/transitions';
-import { CONFIG } from '@/config';
+import { CONFIG_CLIENT } from '@/config/client';
 import { getOpenGraphImagePath } from '@/libs/api/open-graph/image-path';
 
 import type { Metadata } from '@/types/common';
 import type { Post } from '@/types/post';
 
-const { SITE_URL } = CONFIG;
+const { SITE_URL } = CONFIG_CLIENT;
 
 export async function getStaticPaths() {
   const posts: Post[] = await getAllPostsWithReadingTime();

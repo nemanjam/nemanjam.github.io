@@ -23,7 +23,7 @@
       "@/styles/*": ["styles/*"],
       "@/types/*": ["types/*"],
       "@/utils/*": ["utils/*"],
-      "@/config": ["config.ts"]
+      "@/config/*": ["config/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.astro"],

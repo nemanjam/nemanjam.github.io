@@ -1,11 +1,11 @@
-import { CONFIG } from '@/config';
+import { CONFIG_CLIENT } from '@/config/client';
 
 import type { Metadata } from '@/types/common';
 import type { ValueUnion } from '@/types/utils';
 
 // can't import getDefaultOpenGraphImagePath here, circular dependency
 
-const { SITE_URL, SITE_DESCRIPTION, SITE_TITLE } = CONFIG;
+const { SITE_URL, SITE_DESCRIPTION, SITE_TITLE } = CONFIG_CLIENT;
 
 // todo: make default og image with png logo
 

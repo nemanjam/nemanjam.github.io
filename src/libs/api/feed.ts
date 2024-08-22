@@ -2,12 +2,12 @@ import { Feed } from 'feed';
 
 import { getAllPosts } from '@/modules/post/common';
 import { ROUTES } from '@/constants/routes';
-import { CONFIG } from '@/config';
+import { CONFIG_CLIENT } from '@/config/client';
 import { renderMarkdown } from '@/utils/markdown';
 
 import type { Item } from 'feed';
 
-const { SITE_DESCRIPTION, SITE_TITLE, SITE_URL, AUTHOR_NAME, AUTHOR_EMAIL } = CONFIG;
+const { SITE_DESCRIPTION, SITE_TITLE, SITE_URL, AUTHOR_NAME, AUTHOR_EMAIL } = CONFIG_CLIENT;
 
 export const getFeed = async (): Promise<Feed> => {
   const author = {

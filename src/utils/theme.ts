@@ -1,9 +1,9 @@
 import { MODES, THEME_CONFIG, THEMES } from '@/constants/theme';
-import { CONFIG } from '@/config';
+import { CONFIG_CLIENT } from '@/config/client';
 
 import type { Mode, Theme } from '@/types/constants';
 
-const { DEFAULT_THEME, DEFAULT_MODE } = CONFIG;
+const { DEFAULT_THEME, DEFAULT_MODE } = CONFIG_CLIENT;
 const { MODE_CLASS, DATA_ATTRIBUTE } = THEME_CONFIG;
 
 export const getCurrentMode = () =>

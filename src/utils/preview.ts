@@ -1,4 +1,4 @@
-import { CONFIG } from '@/config';
+import { CONFIG_SERVER } from '@/config/server';
 
 /** independent from prod or dev */
-export const isPreviewMode = () => CONFIG.PREVIEW_MODE === true;
+export const isPreviewMode = () => CONFIG_SERVER.PREVIEW_MODE === true;

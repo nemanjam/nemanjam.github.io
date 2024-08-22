@@ -1,9 +1,9 @@
-import { CONFIG } from '@/config';
+import { CONFIG_CLIENT } from '@/config/client';
 import { randomizeArray } from '@/utils/objects';
 
 import type { Post } from '@/types/post';
 
-const { MORE_POSTS_COUNT } = CONFIG;
+const { MORE_POSTS_COUNT } = CONFIG_CLIENT;
 
 export interface RandomPostsArgs {
   posts: Post[];

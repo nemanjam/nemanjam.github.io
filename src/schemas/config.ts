@@ -16,8 +16,12 @@ export const processEnvSchema = z.object({
   SITE_URL: z.string().url().regex(/[^/]$/, 'SITE_URL should not end with a slash "/"'),
 });
 
-export const configSchema = z
-  .object({
+export const configServerSchema = processEnvSchema
+  .omit({ SITE_URL: true, PREVIEW_MODE: true })
+  .extend({ PREVIEW_MODE: z.boolean() }); // here its boolean, not 'true' | 'false'
+
+export const configClientSchema = processEnvSchema.pick({ SITE_URL: true }).merge(
+  z.object({
     SITE_TITLE: z.string().min(1),
     SITE_DESCRIPTION: z.string().min(1),
     PAGE_SIZE_POST_CARD: z.number(),
@@ -33,4 +37,4 @@ export const configSchema = z
     AUTHOR_YOUTUBE: z.string().url(),
     REPO_URL: z.string().url(),
   })
-  .merge(processEnvSchema);
+);

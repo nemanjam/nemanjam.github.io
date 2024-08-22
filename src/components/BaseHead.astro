@@ -7,13 +7,13 @@ import { ViewTransitions } from 'astro:transitions';
 import ThemeScript from '@/components/ThemeScript.astro';
 import { DEFAULT_METADATA } from '@/constants/metadata';
 import { ROUTES } from '@/constants/routes';
-import { CONFIG } from '@/config';
+import { CONFIG_CLIENT } from '@/config/client';
 import { handleTitle } from '@/utils/metadata';
 import { filterUndefined } from '@/utils/objects';
 
 import type { Metadata } from '@/types/common';
 
-const { AUTHOR_NAME } = CONFIG;
+const { AUTHOR_NAME } = CONFIG_CLIENT;
 
 export interface BaseHeadProps {
   metadata: Metadata;
@@ -110,6 +110,7 @@ const ogImageUrl = new URL(image, url);
   <script src="set-url-here" crossorigin="anonymous"></script>
  -->
 
+  {/* MUST be inside <head /> to avoid white flash, IMPORTANT */}
   <ThemeScript />
 
   <ViewTransitions fallback="none" />

@@ -3,12 +3,12 @@ import { getAllProjects } from '@/modules/project';
 import Project from '@/layouts/Project.astro';
 import Share from '@/components/Share.astro';
 import { ROUTES } from '@/constants/routes';
-import { CONFIG } from '@/config';
+import { CONFIG_CLIENT } from '@/config/client';
 import { getOpenGraphImagePath } from '@/libs/api/open-graph/image-path';
 
 import type { Metadata } from '@/types/common';
 
-const { SITE_URL } = CONFIG;
+const { SITE_URL } = CONFIG_CLIENT;
 
 export async function getStaticPaths() {
   const sortedProjects = await getAllProjects();

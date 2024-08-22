@@ -2,7 +2,7 @@
 import { getAllProjects } from '@/modules/project';
 import List from '@/layouts/List.astro';
 import ProjectList from '@/components/ProjectList.astro';
-import { CONFIG } from '@/config';
+import { CONFIG_CLIENT } from '@/config/client';
 import { getPageMetadata } from '@/utils/metadata';
 import { pickPaginationPropsFromPage } from '@/utils/pagination';
 
@@ -11,7 +11,7 @@ import type { GetStaticPathsOptions, Page } from 'astro';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const sortedProjects = await getAllProjects();
-  const pageSize = CONFIG.PAGE_SIZE_POST_CARD;
+  const pageSize = CONFIG_CLIENT.PAGE_SIZE_POST_CARD;
 
   const pagination = paginate(sortedProjects, { pageSize });
   pagination.push({ params: { page: '1' }, props: pagination[0].props });

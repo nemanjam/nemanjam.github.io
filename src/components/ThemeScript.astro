@@ -1,15 +1,17 @@
 ---
 import * as themeConstants from '@/constants/theme';
-import { CONFIG } from '@/config';
+import { CONFIG_CLIENT } from '@/config/client';
 import { getDefaultThemes } from '@/utils/theme';
 
+// can not import server vars, is:inline
+
+const { DEFAULT_MODE } = CONFIG_CLIENT;
 const defaultThemes = getDefaultThemes();
 ---
 
 {/* Inlined to avoid flash of white content. */}
-<script is:inline define:vars={{ themeConstants, defaultThemes, CONFIG }}>
+<script is:inline define:vars={{ themeConstants, defaultThemes, DEFAULT_MODE }}>
   // this is JavaScript, not TypeScript
-  const { DEFAULT_MODE } = CONFIG;
   const { MODES, THEMES, THEME_CONFIG } = themeConstants;
   const { DATA_ATTRIBUTE, CHANGE_EVENT, LOCAL_STORAGE_KEY } = THEME_CONFIG;
 
@@ -17,16 +19,16 @@ const defaultThemes = getDefaultThemes();
   const darkModePreference = window.matchMedia('(prefers-color-scheme: dark)');
 
   // light is default
-  const getMode = (themeMode) => (themeMode === MODES.dark ? MODES.dark : MODES.light);
+  // const getMode = (themeMode) => (themeMode === MODES.dark ? MODES.dark : MODES.light);
 
-  const getDefaultTheme = (themeMode) => defaultThemes[getMode(themeMode)];
+  const getDefaultTheme = (themeMode) => defaultThemes[themeMode];
 
   const setMode = (themeMode) => {
     const storedTheme = getStoredTheme();
 
     if (!storedTheme) return getDefaultTheme(themeMode);
 
-    const newTheme = { ...storedTheme, mode: getMode(themeMode) };
+    const newTheme = { ...storedTheme, mode: themeMode };
     return newTheme;
   };
 
@@ -150,6 +152,9 @@ const defaultThemes = getDefaultThemes();
   darkModePreference.addEventListener('change', (event) => {
     const newMode = event.matches ? MODES.dark : MODES.light;
     const newTheme = setMode(newMode);
+
+    console.log('newMode', newMode, 'newTheme', newTheme);
+    // has bug: { mode: "dark", name: "default-light" }
     setTheme(newTheme);
   });
 </script>

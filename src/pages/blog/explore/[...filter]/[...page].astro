@@ -7,7 +7,7 @@ import List from '@/layouts/List.astro';
 import Explore from '@/components/Explore.astro';
 import PostCardSmall from '@/components/PostCardSmall.astro';
 import { getTransitionName, TRANSITION_ELEMENT_IDS } from '@/constants/transitions';
-import { CONFIG } from '@/config';
+import { CONFIG_CLIENT } from '@/config/client';
 import { getPageMetadata } from '@/utils/metadata';
 import { pickPaginationPropsFromPage } from '@/utils/pagination';
 import { getPathnameFromFilterParams } from '@/utils/paths';
@@ -17,7 +17,7 @@ import type { GetStaticPathsOptions } from 'astro';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const posts: Post[] = await getAllPostsWithReadingTime();
-  const pageSize = CONFIG.PAGE_SIZE_POST_CARD_SMALL;
+  const pageSize = CONFIG_CLIENT.PAGE_SIZE_POST_CARD_SMALL;
 
   // grouping is outside of getStaticPaths
 

@@ -8,7 +8,7 @@ import YouTube from '../../components/YouTube.astro';
 import Share from '../../components/Share.astro';
 
 import { ROUTES } from '../../constants/routes'; 
-import { CONFIG } from '../../config';
+import { CONFIG_CLIENT } from '../../config/client';
 
 
 
@@ -24,7 +24,7 @@ back to [Index](/design)
 export const shareProps = {
   title: 'Embed page',
   description: 'Embed page description',
-  url: `${CONFIG.SITE_URL}${ROUTES.DESIGN}embeds`,
+  url: `${CONFIG_CLIENT.SITE_URL}${ROUTES.DESIGN}embeds`,
 };
 
 <Share {...shareProps} />

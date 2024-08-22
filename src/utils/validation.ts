@@ -4,8 +4,8 @@ export const validateData = <T extends ZodSchema>(config: z.infer<T>, schema: T)
   const parsedConfig = schema.safeParse(config);
 
   if (!parsedConfig.success) {
-    console.error('Validation failed: ', parsedConfig.error.flatten().fieldErrors);
-    throw new Error('Validation failed');
+    console.error('Zod validation failed: ', parsedConfig.error.flatten().fieldErrors);
+    throw new Error('Zod validation failed');
   }
 
   const { data: parsedConfigData } = parsedConfig;
