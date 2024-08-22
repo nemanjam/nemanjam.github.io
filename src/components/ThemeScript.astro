@@ -164,6 +164,11 @@ const defaultThemes = getDefaultThemes();
   darkModePreference.addEventListener('change', (event) => {
     const newMode = event.matches ? MODES.dark : MODES.light;
     const newTheme = getThemeFromMode(newMode);
-    setTheme(newTheme);
+
+    // trigger event instead of setTheme(newTheme), for Links page
+    const payload = { detail: { theme: newTheme } };
+    const themeChangeEvent = new CustomEvent(CHANGE_EVENT, payload);
+
+    document.dispatchEvent(themeChangeEvent);
   });
 </script>
