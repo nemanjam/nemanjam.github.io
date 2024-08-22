@@ -509,5 +509,7 @@ change meta theme bg color with js, astro-paper
 
 replace import config with import.meta.env.VAR
 ask about app start handler for log env vars
+
+fix image sizes for gallery and other
 ------------
 ```
