@@ -5,7 +5,7 @@ import List from '@/layouts/List.astro';
 import Link from '@/components/Link.astro';
 import PostList from '@/components/PostList.astro';
 import { ROUTES } from '@/constants/routes';
-import { CONFIG } from '@/config';
+import { CONFIG_CLIENT } from '@/config/client';
 import { getPageMetadata } from '@/utils/metadata';
 import { pickPaginationPropsFromPage } from '@/utils/pagination';
 
@@ -15,7 +15,7 @@ import type { GetStaticPathsOptions } from 'astro';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const posts: Post[] = await getAllPostsWithReadingTime();
-  const pageSize = CONFIG.PAGE_SIZE_POST_CARD;
+  const pageSize = CONFIG_CLIENT.PAGE_SIZE_POST_CARD;
 
   const uniqueTags = getUniqueTags(posts);
 

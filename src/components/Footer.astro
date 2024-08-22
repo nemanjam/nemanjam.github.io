@@ -3,12 +3,12 @@ import { Icon } from 'astro-icon/components';
 
 import Link from '@/components/Link.astro';
 import { ROUTES } from '@/constants/routes';
-import { CONFIG } from '@/config';
+import { CONFIG_CLIENT } from '@/config/client';
 import { getLatestCommitInfo } from '@/libs/git';
 import { shortDate } from '@/utils/datetime';
 import { limitString, trimHttpProtocol } from '@/utils/strings';
 
-const { SITE_URL, AUTHOR_LINKEDIN, AUTHOR_GITHUB, REPO_URL } = CONFIG;
+const { SITE_URL, AUTHOR_LINKEDIN, AUTHOR_GITHUB, REPO_URL } = CONFIG_CLIENT;
 const domain = trimHttpProtocol(SITE_URL);
 const messageLength = 20 as const;
 

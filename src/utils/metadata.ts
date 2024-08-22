@@ -1,5 +1,5 @@
 import { DEFAULT_METADATA, PAGE_METADATA, titleSeparator } from '@/constants/metadata';
-import { CONFIG } from '@/config';
+import { CONFIG_CLIENT } from '@/config/client';
 import { getOpenGraphImagePath } from '@/libs/api/open-graph/image-path';
 
 import type { Metadata } from '@/types/common';
@@ -7,7 +7,7 @@ import type { PageMetadataKey } from '@/types/constants';
 
 // can't import getDefaultOpenGraphImagePath here, circular dependency
 
-const { AUTHOR_NAME } = CONFIG;
+const { AUTHOR_NAME } = CONFIG_CLIENT;
 
 export const getPageMetadata = (path: PageMetadataKey): Metadata => {
   const image = getOpenGraphImagePath(path);

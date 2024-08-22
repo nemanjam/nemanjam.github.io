@@ -9,7 +9,7 @@ import {
 } from 'astro-social-share';
 
 import { DEFAULT_METADATA } from '@/constants/metadata';
-import { CONFIG } from '@/config';
+import { CONFIG_CLIENT } from '@/config/client';
 import { cn } from '@/utils/styles';
 
 import type { ComponentProps } from 'astro/types';
@@ -21,7 +21,7 @@ export interface Props extends SocialShareProps {
 const { class: className, ...shareProps } = Astro.props;
 
 const { title, description } = DEFAULT_METADATA;
-const { AUTHOR_TWITTER } = CONFIG;
+const { AUTHOR_TWITTER } = CONFIG_CLIENT;
 
 // via is only for twitter
 const defaultProps = { description, title, via: AUTHOR_TWITTER };

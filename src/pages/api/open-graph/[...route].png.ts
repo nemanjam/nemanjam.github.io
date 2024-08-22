@@ -5,7 +5,7 @@ import satori from 'satori';
 import sharp from 'sharp';
 
 import { FILE_PATHS } from '@/constants/file-paths';
-import { CONFIG } from '@/config';
+import { CONFIG_CLIENT } from '@/config/client';
 import { getPages } from '@/libs/api/open-graph/pages';
 import templateHtml from '@/libs/api/open-graph/template-html';
 import { removeTrailingSlash } from '@/utils/paths';
@@ -13,7 +13,7 @@ import { trimHttpProtocol } from '@/utils/strings';
 
 import type { APIContext, APIRoute } from 'astro';
 
-const { SITE_URL } = CONFIG;
+const { SITE_URL } = CONFIG_CLIENT;
 const { FONTS_FOLDER, OG_FOLDER, IMAGE_404, AVATAR } = FILE_PATHS;
 
 export const getStaticPaths = async () => {

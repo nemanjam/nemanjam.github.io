@@ -10,7 +10,7 @@ import { SELECTORS } from '@/constants/dom';
 import { IMAGE_SIZES } from '@/constants/image';
 import { NAVIGATION_ITEMS } from '@/constants/navigation';
 import { ROUTES } from '@/constants/routes';
-import { CONFIG } from '@/config';
+import { CONFIG_CLIENT } from '@/config/client';
 import { getActiveNavItemPath } from '@/utils/navigation';
 
 import Avatar from '@/assets/images/avatar.jpg';
@@ -43,7 +43,7 @@ const activeNavItemPath = getActiveNavItemPath(routePathname);
           alt="Profile picture"
         />
         <span>
-          {CONFIG.AUTHOR_NAME}
+          {CONFIG_CLIENT.AUTHOR_NAME}
         </span>
       </HeaderLink>
       <mobile-button class="md:hidden">

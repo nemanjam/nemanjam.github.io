@@ -1,43 +1,92 @@
 ---
-import * as themeConstants from '@/constants/themes';
+import * as themeConstants from '@/constants/theme';
+import { CONFIG_CLIENT } from '@/config/client';
+import { getDefaultThemes } from '@/utils/theme';
+
+// can not import server vars, is:inline
+
+const { DEFAULT_MODE } = CONFIG_CLIENT;
+const defaultThemes = getDefaultThemes();
 ---
 
 {/* Inlined to avoid flash of white content. */}
-<script is:inline define:vars={{ themeConstants }}>
+<script is:inline define:vars={{ themeConstants, defaultThemes, DEFAULT_MODE }}>
+  // this is JavaScript, not TypeScript
   const { MODES, THEMES, THEME_CONFIG } = themeConstants;
   const { DATA_ATTRIBUTE, CHANGE_EVENT, LOCAL_STORAGE_KEY } = THEME_CONFIG;
 
-  // this is JavaScript, not TypeScript
-  const defaultThemes = { light: THEMES[0], dark: THEMES[1] };
+  // used for event
+  const darkModePreference = window.matchMedia('(prefers-color-scheme: dark)');
 
-  const lightModePreference = window.matchMedia('(prefers-color-scheme: light)');
+  const getDefaultTheme = (themeMode) => defaultThemes[themeMode];
 
-  // light is default
-  const getMode = (themeMode) => (themeMode === MODES.dark ? MODES.dark : MODES.light);
+  const getThemeNamePrefix = (themeName) => themeName.split('-')?.[0];
 
-  const getDefaultTheme = (themeMode) => defaultThemes[getMode(themeMode)];
+  const getThemeFromMode = (themeMode) => {
+    const currentTheme = getTheme();
 
-  const changeThemeMode = (themeMode) => {
-    const storedTheme = getTheme();
+    const newTheme = THEMES.find((theme) => {
+      const currentThemePrefix = getThemeNamePrefix(currentTheme.name);
+      const themePrefix = getThemeNamePrefix(theme.name);
 
-    if (!storedTheme) return getDefaultTheme(themeMode);
+      const isModeMatch = theme.mode === themeMode;
+      const isThemeNameMatch =
+        themePrefix && currentThemePrefix && themePrefix === currentThemePrefix;
 
-    const newTheme = { ...storedTheme, mode: getMode(themeMode) };
-    return newTheme;
+      const isFound = isModeMatch && isThemeNameMatch;
+
+      return isFound;
+    });
+
+    const defaultTheme = getDefaultTheme(themeMode);
+    const resultTheme = newTheme ?? defaultTheme;
+
+    return resultTheme;
   };
 
-  const getUserPreference = () => {
+  /** 'dark' | 'light' | null */
+  const getBrowserMode = () => {
+    const lightModePreference = window.matchMedia('(prefers-color-scheme: light)');
+
+    let browserMode;
+
+    switch (true) {
+      case darkModePreference.matches:
+        browserMode = MODES.dark;
+        break;
+      case lightModePreference.matches:
+        browserMode = MODES.light;
+        break;
+      default:
+        browserMode = null;
+        break;
+    }
+    return browserMode;
+  };
+
+  /**
+   * 1. stored mode
+   * 2. browser mode and theme
+   * 3. default app mode, config
+   */
+  const getTheme = () => {
     // either from storage
-    const storedTheme = getTheme();
+    const storedTheme = getStoredTheme();
     if (storedTheme) return storedTheme;
 
-    // or fallback to browser default
-    const preferedMode = lightModePreference.matches ? MODES.light : MODES.dark;
-    const defaultTheme = getDefaultTheme(preferedMode);
-    return defaultTheme;
+    // or fallback to default theme for browser mode
+    const browserMode = getBrowserMode();
+    if (browserMode) {
+      const defaultBrowserTheme = getDefaultTheme(browserMode);
+      return defaultBrowserTheme;
+    }
+
+    // fallback to app default
+    const defaultAppTheme = getDefaultTheme(DEFAULT_MODE);
+    return defaultAppTheme;
   };
 
-  const getTheme = () => {
+  const getStoredTheme = () => {
     const storedThemeString =
       typeof localStorage !== 'undefined' && localStorage.getItem(LOCAL_STORAGE_KEY);
 
@@ -46,7 +95,7 @@ import * as themeConstants from '@/constants/themes';
     let storedTheme;
     try {
       storedTheme = JSON.parse(storedThemeString);
-    } catch (error) {
+    } catch (_error) {
       localStorage.removeItem(LOCAL_STORAGE_KEY);
       return null;
     }
@@ -67,6 +116,7 @@ import * as themeConstants from '@/constants/themes';
     );
 
     if (!validatedTheme)
+      // eslint-disable-next-line no-console
       return console.warn(
         `Invalid theme value '${JSON.stringify(newTheme)}' received. Expected ${JSON.stringify(THEMES)}.`
       );
@@ -100,21 +150,20 @@ import * as themeConstants from '@/constants/themes';
   };
 
   // initial setup
-  setTheme(getUserPreference());
+  setTheme(getTheme());
 
-  // fails in firefox
   // View Transitions hook to restore theme
-  document.addEventListener('astro:after-swap', () => setTheme(getUserPreference()));
+  document.addEventListener('astro:after-swap', () => setTheme(getTheme()));
 
   // listen for theme-change custom event, fired in src/components/ThemeToggle.astro
   document.addEventListener(CHANGE_EVENT, (event) => {
     setTheme(event.detail.theme);
   });
 
-  // listen for prefers-color-scheme change.
-  lightModePreference.addEventListener('change', (event) => {
-    const newMode = event.matches ? MODES.light : MODES.dark;
-    const newTheme = changeThemeMode(newMode);
+  // listen for prefers-color-scheme change
+  darkModePreference.addEventListener('change', (event) => {
+    const newMode = event.matches ? MODES.dark : MODES.light;
+    const newTheme = getThemeFromMode(newMode);
     setTheme(newTheme);
   });
 </script>

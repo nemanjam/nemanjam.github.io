@@ -1,9 +1,12 @@
 import sitemap, { ChangeFreqEnum } from '@astrojs/sitemap';
 
-import { CONFIG } from '../../config';
+import { PROCESS_ENV } from '../../config/process-env';
 import { ROUTES } from '../../constants/routes';
 
-const { SITE_URL } = CONFIG;
+const { SITE_URL } = PROCESS_ENV;
+
+// imported in astro.config.ts
+// !must not use CONFIG, but process-env.ts
 
 /** generated at build-time only */
 export const sitemapIntegration = () =>
