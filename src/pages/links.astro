@@ -5,7 +5,8 @@ import '@/assets/styles/github-markdown.css';
 import { Markdown } from 'astro-remote';
 
 import List from '@/layouts/List.astro';
-import Heading from '@/components/remote-markdown/Heading.astro';
+import Anchor from '@/components/astro-remote/Anchor.astro';
+import Heading from '@/components/astro-remote/Heading.astro';
 import { BOOKMARKS } from '@/constants/data';
 import { SELECTORS } from '@/constants/dom';
 import { getPageMetadata } from '@/utils/metadata';
@@ -30,7 +31,7 @@ const { GITHUB_MARKDOWN_BODY_ID } = SELECTORS;
     <Markdown
       content={readmeContent}
       sanitize={{ dropElements: ['h1'], allowComponents: true }}
-      components={{ Heading }}
+      components={{ Heading, a: Anchor }}
     />
   </div>
 </List>

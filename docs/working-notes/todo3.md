@@ -492,8 +492,8 @@ ovo puca
 ovo radi
 '/src/assets/images/all-images/*.jpg',
 ----
-remote markdown
-not generating id="..." links href="#..."
+    remote markdown
+    not generating id="..." links href="#..."
 custom my-prose-links
 
 // dark theme for github markdown
@@ -501,7 +501,7 @@ https://github.com/sindresorhus/github-markdown-css/issues/104
 https://github.com/sindresorhus/github-markdown-css
 
     table of contents id links
-a href open in new tab
+    a href open in new tab
 fix links page links color for history back view transition
 
     refactor theme script, browserDefaultMode, appDefaultMode, storedMode
@@ -514,6 +514,11 @@ fix image sizes for gallery and other
     update bg color meta tag
     fix links page on user dark mode preference text color
 
-Links page open links in new tab
+    Links page open links in new tab
+// astro-remote, glavna fora je ovo
+<Markdown
+  sanitize={{ allowComponents: true }} // enable custom components
+  components={{ Heading, a: Anchor }} // a - koji tag predefinises // glavna fora
+/>
 ------------
 ```
