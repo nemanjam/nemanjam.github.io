@@ -1,4 +1,5 @@
 ---
+import { SELECTORS } from '@/constants/dom';
 import * as themeConstants from '@/constants/theme';
 import { CONFIG_CLIENT } from '@/config/client';
 import { getDefaultThemes } from '@/utils/theme';
@@ -6,11 +7,15 @@ import { getDefaultThemes } from '@/utils/theme';
 // can not import server vars, is:inline
 
 const { DEFAULT_MODE } = CONFIG_CLIENT;
+const { THEME_META_TAG_SELECTOR } = SELECTORS;
 const defaultThemes = getDefaultThemes();
 ---
 
 {/* Inlined to avoid flash of white content. */}
-<script is:inline define:vars={{ themeConstants, defaultThemes, DEFAULT_MODE }}>
+<script
+  is:inline
+  define:vars={{ themeConstants, defaultThemes, DEFAULT_MODE, THEME_META_TAG_SELECTOR }}
+>
   // this is JavaScript, not TypeScript
   const { MODES, THEMES, THEME_CONFIG } = themeConstants;
   const { DATA_ATTRIBUTE, CHANGE_EVENT, LOCAL_STORAGE_KEY } = THEME_CONFIG;
@@ -147,6 +152,22 @@ const defaultThemes = getDefaultThemes();
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newTheme));
     }
+
+    // must have dealy for bg color to apply
+    setTimeout(() => updateMetaTag(), 1000);
+  };
+
+  const updateMetaTag = () => {
+    const bodyElement = document.body;
+    if (!bodyElement) return;
+
+    const computedStyles = window.getComputedStyle(bodyElement);
+    const bgColor = computedStyles.backgroundColor;
+
+    const metaElement = document.querySelector(THEME_META_TAG_SELECTOR);
+    if (!metaElement) return;
+
+    metaElement.setAttribute('content', bgColor);
   };
 
   // initial setup
