@@ -1,13 +1,13 @@
 ---
+// must be at top
+import '@/assets/styles/github-markdown.css';
+
 import { Markdown } from 'astro-remote';
 
 import List from '@/layouts/List.astro';
 import { BOOKMARKS } from '@/constants/data';
-import { getPageMetadata } from '@/utils/metadata';
-
-import '@/assets/styles/github-markdown.css';
-
 import { SELECTORS } from '@/constants/dom';
+import { getPageMetadata } from '@/utils/metadata';
 
 const { README_RAW_URL, REPO } = BOOKMARKS;
 

@@ -209,6 +209,10 @@ https://github.com/tjklint/tjklint.github.io
 // next.js, good gradients and framer motion
 https://github.com/kristianka/kristiankahkonen.com
 
+// excellent styling, vite, svelte core member
+https://bjornlu.com/
+https://github.com/bluwy/website
+
 -----------
 za local state mora react ili solid
 for state between pages nanostore with localStorage
