@@ -17,6 +17,7 @@ jobs:
   deploy:
     name: Deploy image from Dockerhub to remote host with ssh
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - name: Checkout code
