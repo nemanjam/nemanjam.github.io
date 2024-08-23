@@ -500,7 +500,7 @@ custom my-prose-links
 https://github.com/sindresorhus/github-markdown-css/issues/104
 https://github.com/sindresorhus/github-markdown-css
 
-table of contents id links
+    table of contents id links
 a href open in new tab
 fix links page links color for history back view transition
 
@@ -513,5 +513,7 @@ ask about app start handler for log env vars
 fix image sizes for gallery and other
     update bg color meta tag
     fix links page on user dark mode preference text color
+
+Links page open links in new tab
 ------------
 ```

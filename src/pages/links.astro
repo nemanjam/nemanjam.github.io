@@ -5,6 +5,7 @@ import '@/assets/styles/github-markdown.css';
 import { Markdown } from 'astro-remote';
 
 import List from '@/layouts/List.astro';
+import Heading from '@/components/Heading.astro';
 import { BOOKMARKS } from '@/constants/data';
 import { SELECTORS } from '@/constants/dom';
 import { getPageMetadata } from '@/utils/metadata';
@@ -16,8 +17,6 @@ const readmeContent = await fetch(README_RAW_URL).then((response) => response.te
 const metadata = getPageMetadata('lists/links');
 
 const { GITHUB_MARKDOWN_BODY_ID } = SELECTORS;
-
-// not generating id="..." links href="#..."
 ---
 
 <List {metadata}>
@@ -28,7 +27,11 @@ const { GITHUB_MARKDOWN_BODY_ID } = SELECTORS;
       >
     </p>
 
-    <Markdown content={readmeContent} sanitize={{ dropElements: ['h1'] }} />
+    <Markdown
+      content={readmeContent}
+      sanitize={{ dropElements: ['h1'], allowComponents: true }}
+      components={{ Heading }}
+    />
   </div>
 </List>
 
