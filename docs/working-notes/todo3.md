@@ -504,14 +504,14 @@ table of contents id links
 a href open in new tab
 fix links page links color for history back view transition
 
-refactor theme script, osDefaultMode, appDefaultMode, storedMode
-change meta theme bg color with js, astro-paper
+    refactor theme script, browserDefaultMode, appDefaultMode, storedMode
+    change meta theme bg color with js, astro-paper
 
 replace import config with import.meta.env.VAR
 ask about app start handler for log env vars
 
 fix image sizes for gallery and other
-update bg color meta tag
-fix links page on user dark mode preference text color
+    update bg color meta tag
+    fix links page on user dark mode preference text color
 ------------
 ```
