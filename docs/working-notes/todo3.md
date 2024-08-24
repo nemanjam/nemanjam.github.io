@@ -521,5 +521,9 @@ fix image sizes for gallery and other
   sanitize={{ allowComponents: true }} // enable custom components
   components={{ Heading, a: Anchor }} // a - koji tag predefinises // glavna fora
 />
+
+-----
+gallery scroll pagination, blur loading
+
 ------------
 ```
