@@ -7,7 +7,7 @@ This is the repository for my coding blog [nemanjamitic.com](https://nemanjamiti
 | Method       | Url                                      |
 | :----------- | :--------------------------------------- |
 | Nginx        | https://nemanjamitic.com                 |
-| Github pages | https://nemanjam.github.io               |
+| Github Pages | https://nemanjam.github.io               |
 | Docker       | https://nmc-docker.arm1.nemanjamitic.com |
 
 ## Screenshots
