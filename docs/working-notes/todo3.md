@@ -485,6 +485,7 @@ For Gallery - https://benhowell.github.io/react-grid-gallery - which is client s
 
 I hope this helps, sorry I can't share my code.
 ----
+// resenje
 glob za slike
 poenta, ne sme da ima {} za jednu opciju
 ovo puca
@@ -507,7 +508,7 @@ fix links page links color for history back view transition
     refactor theme script, browserDefaultMode, appDefaultMode, storedMode
     change meta theme bg color with js, astro-paper
 
-replace import config with import.meta.env.VAR
+    replace import config with import.meta.env.VAR
 ask about app start handler for log env vars
 
 fix image sizes for gallery and other

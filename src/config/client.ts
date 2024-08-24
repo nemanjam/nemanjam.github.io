@@ -1,9 +1,9 @@
 import { SITE_URL } from 'astro:env/client';
 
-import { configClientSchema } from '../schemas/config';
-import { validateData } from '../utils/validation';
+import { configClientSchema } from '@/schemas/config';
+import { validateData } from '@/utils/validation';
 
-import type { ConfigClientType } from '../types/config';
+import type { ConfigClientType } from '@/types/config';
 
 const configClientData: ConfigClientType = {
   /** all urls without '/' */
@@ -24,5 +24,4 @@ const configClientData: ConfigClientType = {
   REPO_URL: 'https://github.com/nemanjam/nemanjam.github.io',
 };
 
-// todo: Config should go into import.meta.env in astro.config.ts
 export const CONFIG_CLIENT = validateData(configClientData, configClientSchema);
