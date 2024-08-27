@@ -28,7 +28,8 @@ https://github.com/user-attachments/assets/5bf85aee-a3bd-4ca0-9b6d-d5b4f555934b
 - Full TypeScript, Zod schemas, validated config
 - ESLint, Prettier, path aliases, sorted imports
 - React for interactive components
-- Design system pages, latest commit info in footer
+- Remote markdown content option
+- Design system pages, latest commit info in the footer
 - Hierarchical layouts
 - SEO friendly - sitemap, metadata
 - Open Graph image, Satori generated

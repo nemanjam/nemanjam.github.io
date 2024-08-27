@@ -524,6 +524,6 @@ fix image sizes for gallery and other
 
 -----
 gallery scroll pagination, blur loading
-
+odvojen ARG_SITE_URL za x86 i arm
 ------------
 ```
