@@ -18,7 +18,7 @@ export const processEnvSchema = z.object({
 });
 
 export const configServerSchema = processEnvSchema
-  .omit({ SITE_URL: true, PREVIEW_MODE: true })
+  .omit({ SITE_URL: true, PREVIEW_MODE: true, PLAUSIBLE_SCRIPT_URL: true })
   .extend({ PREVIEW_MODE: z.boolean() }); // here its boolean, not 'true' | 'false'
 
 export const configClientSchema = processEnvSchema

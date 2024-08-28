@@ -530,5 +530,6 @@ folder name for slug and index.mdx and images
 // plausible
 <script defer data-domain="nemanjamitic.com" src="https://plausible.arm1.nemanjamitic.com/js/script.js"></script>
 add zod schema that checks node_env for plausible_url instead of optional
+moze samo za 1 url data-domain="nemanjamitic.com" 
 ------------
 ```
