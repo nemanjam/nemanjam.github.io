@@ -1,4 +1,4 @@
-import { NODE_ENV as NODE_ENV_STRING, PLAUSIBLE_SCRIPT_URL, PREVIEW_MODE } from 'astro:env/server';
+import { NODE_ENV as NODE_ENV_STRING, PREVIEW_MODE } from 'astro:env/server';
 
 import { configServerSchema } from '@/schemas/config';
 import { CONFIG_CLIENT } from '@/config/client';
@@ -11,7 +11,7 @@ import type { ConfigServerType } from '@/types/config';
 const NODE_ENV = NODE_ENV_STRING as ConfigServerType['NODE_ENV'];
 
 /** SSG - all env vars are build time only. */
-const configServerData: ConfigServerType = { NODE_ENV, PREVIEW_MODE, PLAUSIBLE_SCRIPT_URL };
+const configServerData: ConfigServerType = { NODE_ENV, PREVIEW_MODE };
 
 export const CONFIG_SERVER = validateData(configServerData, configServerSchema);
 
