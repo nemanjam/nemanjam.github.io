@@ -166,6 +166,14 @@
     unist-util-visit "^5.0.0"
     vfile "^6.0.2"
 
+"@astrojs/partytown@^2.1.2":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/@astrojs/partytown/-/partytown-2.1.2.tgz#2df6745eb6add076e721ebd7e32c1bcd28063d1f"
+  integrity sha512-1a9T5lqxtnrw0qLPo1KwliUvaaUzPNPtWucD8VxdwT7zqcpODFk1RzGgAgqVo+YhutFrTu/qclbtnOfXBuskjw==
+  dependencies:
+    "@builder.io/partytown" "^0.10.2"
+    mrmime "^2.0.0"
+
 "@astrojs/prism@3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@astrojs/prism/-/prism-3.1.0.tgz#1b70432e0b16fafda191ce780c2820822a55bc46"
@@ -414,6 +422,11 @@
     "@babel/helper-string-parser" "^7.24.8"
     "@babel/helper-validator-identifier" "^7.24.7"
     to-fast-properties "^2.0.0"
+
+"@builder.io/partytown@^0.10.2":
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/@builder.io/partytown/-/partytown-0.10.2.tgz#102c909f805c945a638e249275003ef6ba828287"
+  integrity sha512-A9U+4PREWcS+CCYzKGIPovtGB/PBgnH/8oQyCE6Nr9drDJk6cMPpLQIEajpGPmG9tYF7N3FkRvhXm/AS9+0iKg==
 
 "@ctrl/tinycolor@^4.0.4":
   version "4.1.0"

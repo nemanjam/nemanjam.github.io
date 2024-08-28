@@ -14,6 +14,7 @@ export const processEnvSchema = z.object({
     .default('false'),
   // ensure no trailing slash
   SITE_URL: z.string().url().regex(/[^/]$/, 'SITE_URL should not end with a slash "/"'),
+  PLAUSIBLE_SCRIPT_URL: z.string().url().or(z.literal('')).optional(),
 });
 
 export const configServerSchema = processEnvSchema

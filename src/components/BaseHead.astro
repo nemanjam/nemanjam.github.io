@@ -13,7 +13,7 @@ import { filterUndefined } from '@/utils/objects';
 
 import type { Metadata } from '@/types/common';
 
-const { AUTHOR_NAME } = CONFIG_CLIENT;
+const { AUTHOR_NAME, PLAUSIBLE_SCRIPT_URL } = CONFIG_CLIENT;
 
 export interface BaseHeadProps {
   metadata: Metadata;
@@ -25,7 +25,7 @@ const { metadata } = Astro.props as BaseHeadProps;
 // site: SITE_URL var + '/'
 // url: full page url, cannonical url, per page
 const { url } = Astro; // objects
-const { host } = url;
+const { host } = url; // host - nemanjamitic.com
 
 const handledMetadata = handleTitle(metadata);
 
@@ -103,12 +103,16 @@ const ogImageUrl = new URL(image, url);
   <meta property="twitter:image" content={ogImageUrl} />
 
   {/* Analytics */}
-  <!-- 
-  <link rel="preconnect" href="set-url-here" />
-  <script async data-goatcounter="set-url-here" src="set-url-here"></script>
-  <script src="set-url-here" crossorigin="anonymous"></script>
- -->
+  {
+    PLAUSIBLE_SCRIPT_URL && (
+      <>
+        <link rel="preconnect" href={PLAUSIBLE_SCRIPT_URL} />
+        <script defer type="text/partytown" data-domain={host} src={PLAUSIBLE_SCRIPT_URL} />
+      </>
+    )
+  }
 
+  {/* Theme */}
   {/* MUST be inside <head /> to avoid white flash, IMPORTANT */}
   <ThemeScript />
 

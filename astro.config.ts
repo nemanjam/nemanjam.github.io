@@ -1,4 +1,5 @@
 import mdx from '@astrojs/mdx';
+import partytown from '@astrojs/partytown';
 import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 import icon from 'astro-icon';
@@ -32,6 +33,9 @@ export default defineConfig({
     // applyBaseStyles: false prevents double loading of tailwind
     tailwind({ applyBaseStyles: false }),
     icon({ iconDir: 'src/assets/icons' }),
+    partytown({
+      config: { forward: ['dataLayer.push'] },
+    }),
   ],
   markdown: { remarkPlugins },
   vite: {

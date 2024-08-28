@@ -14,6 +14,7 @@ on:
 env:
   IMAGE_NAME: ${{ github.event.repository.name }}
   SITE_URL: 'https://nmc-docker.arm1.nemanjamitic.com'
+  PLAUSIBLE_SCRIPT_URL: 'https://plausible.arm1.nemanjamitic.com/js/script.js'
 
 jobs:
   build:

@@ -31,6 +31,7 @@ const processEnvData: ProcessEnvType = {
   NODE_ENV: process.env.NODE_ENV,
   PREVIEW_MODE: process.env.PREVIEW_MODE,
   SITE_URL: process.env.SITE_URL,
+  PLAUSIBLE_SCRIPT_URL: process.env.PLAUSIBLE_SCRIPT_URL,
 };
 
 export const PROCESS_ENV = validateData(processEnvData, processEnvSchema);
@@ -55,6 +56,11 @@ export const envSchema = {
       context: 'client',
       access: 'public',
       // default: omit to have explicit validation
+    }),
+    PLAUSIBLE_SCRIPT_URL: envField.string({
+      context: 'client',
+      access: 'public',
+      optional: true,
     }),
   },
 };
