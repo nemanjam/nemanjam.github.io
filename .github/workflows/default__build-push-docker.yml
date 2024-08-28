@@ -69,6 +69,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           build-args: |
             "ARG_SITE_URL=${{ env.SITE_URL }}"
+            "ARG_PLAUSIBLE_SCRIPT_URL=${{ env.PLAUSIBLE_SCRIPT_URL }}"
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
           # disabled metadata step
