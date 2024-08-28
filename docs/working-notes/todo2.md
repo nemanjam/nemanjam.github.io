@@ -213,6 +213,9 @@ https://github.com/kristianka/kristiankahkonen.com
 https://bjornlu.com/
 https://github.com/bluwy/website
 
+// google tag manager, partytown
+https://github.com/devaradise/devolio
+
 -----------
 za local state mora react ili solid
 for state between pages nanostore with localStorage
