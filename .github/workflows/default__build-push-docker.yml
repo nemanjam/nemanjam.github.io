@@ -82,8 +82,8 @@ jobs:
           context: ./
           # Dockerfile dir
           file: ./docker/Dockerfile
-          # available linux/amd64,linux/arm64
-          platforms: linux/amd64,linux/arm64
+          # platforms: linux/amd64,linux/arm64
+          platforms: ${{ matrix.platform }}
           build-args: |
             "ARG_SITE_URL=${{ env.SITE_URL }}"
             "ARG_PLAUSIBLE_SCRIPT_URL=${{ env.PLAUSIBLE_SCRIPT_URL }}"
