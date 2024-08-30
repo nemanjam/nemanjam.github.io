@@ -93,4 +93,5 @@ jobs:
           # tags: ${{ steps.metadata.outputs.tags }}
           # labels: ${{ steps.metadata.outputs.labels }}
           cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:buildcache
-          cache-to: type=inline
+          cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:buildcache,mode=max
+          # cache-to: type=inline
