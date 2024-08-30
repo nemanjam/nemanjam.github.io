@@ -70,6 +70,9 @@ jobs:
             echo "SITE_URL=${{ env.SITE_URL_ARM64 }}" >> $GITHUB_ENV
           fi
 
+          # Debug assigned var
+          echo "Debug: SITE_URL is set to $SITE_URL"
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
