@@ -503,13 +503,13 @@ https://github.com/sindresorhus/github-markdown-css
 
     table of contents id links
     a href open in new tab
-fix links page links color for history back view transition
+    fix links page links color for history back view transition
 
     refactor theme script, browserDefaultMode, appDefaultMode, storedMode
     change meta theme bg color with js, astro-paper
 
     replace import config with import.meta.env.VAR
-ask about app start handler for log env vars
+    ask about app start handler for log env vars
 
 fix image sizes for gallery and other
     update bg color meta tag
@@ -524,7 +524,7 @@ fix image sizes for gallery and other
 
 -----
 gallery scroll pagination, blur loading
-odvojen ARG_SITE_URL za x86 i arm
+    odvojen ARG_SITE_URL za x86 i arm
 folder name for slug and index.mdx and images
 sentry
 

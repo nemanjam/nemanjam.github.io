@@ -13,13 +13,17 @@ on:
 
 env:
   IMAGE_NAME: ${{ github.event.repository.name }}
-  SITE_URL: 'https://nmc-docker.arm1.nemanjamitic.com'
+  SITE_URL_AMD64: 'https://nmc-docker.arm1.nemanjamitic.com'
+  SITE_URL_ARM64: 'https://nmc-docker.local.nemanjamitic.com'
   PLAUSIBLE_SCRIPT_URL: 'https://plausible.arm1.nemanjamitic.com/js/script.js'
 
 jobs:
   build:
     name: Build and push docker image
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: [linux/amd64, linux/arm64]
 
     steps:
       - name: Checkout
@@ -57,6 +61,14 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Set environment variables for each architecture
+        run: |
+          if [[ "${{ matrix.platform }}" == "linux/amd64" ]]; then
+            echo "SITE_URL=${{ env.SITE_URL_AMD64 }}" >> $GITHUB_ENV
+          elif [[ "${{ matrix.platform }}" == "linux/arm64" ]]; then
+            echo "SITE_URL=${{ env.SITE_URL_ARM64 }}" >> $GITHUB_ENV
+          fi
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
