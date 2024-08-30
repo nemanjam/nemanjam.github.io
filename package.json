@@ -21,7 +21,8 @@
     "deploy:docker:local": "bash scripts/deploy-docker.sh lxc11 '~/traefik-proxy/apps/nmc-docker' nemanjamitic/nemanjam.github.io",
     "docker:build:push:arm": "docker buildx build -f ./docker/Dockerfile -t nemanjamitic/nemanjam.github.io --build-arg ARG_SITE_URL='https://nmc-docker.arm1.nemanjamitic.com' ARG_PLAUSIBLE_SCRIPT_URL='https://plausible.arm1.nemanjamitic.com/js/script.js' --platform linux/arm64 --push .",
     "docker:build:push:x86": "docker buildx build -f ./docker/Dockerfile -t nemanjamitic/nemanjam.github.io --build-arg ARG_SITE_URL='https://nmc-docker.local.nemanjamitic.com' ARG_PLAUSIBLE_SCRIPT_URL='https://plausible.arm1.nemanjamitic.com/js/script.js' --platform linux/amd64 --push .",
-    "docker:push": "docker push nemanjamitic/nemanjam.github.io"
+    "docker:push": "docker push nemanjamitic/nemanjam.github.io",
+    "dc:up": "docker compose up --build --force-recreate -d"
   },
   "dependencies": {
     "@astrojs/mdx": "^3.1.3",
