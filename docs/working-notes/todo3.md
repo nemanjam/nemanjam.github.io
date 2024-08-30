@@ -526,6 +526,7 @@ fix image sizes for gallery and other
 gallery scroll pagination, blur loading
 odvojen ARG_SITE_URL za x86 i arm
 folder name for slug and index.mdx and images
+sentry
 
 // plausible
 <script defer data-domain="nemanjamitic.com" src="https://plausible.arm1.nemanjamitic.com/js/script.js"></script>

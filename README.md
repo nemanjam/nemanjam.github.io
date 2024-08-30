@@ -33,6 +33,7 @@ https://github.com/user-attachments/assets/5bf85aee-a3bd-4ca0-9b6d-d5b4f555934b
 - Hierarchical layouts
 - SEO friendly - sitemap, metadata
 - Open Graph image, Satori generated
+- Plausible analytics
 - Code syntax highlighting, Twitter/YouTube/OG-links embeds
 - Giscus comments, Share post
 - Draft posts, RSS and JSON feeds
