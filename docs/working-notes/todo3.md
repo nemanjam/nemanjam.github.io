@@ -532,5 +532,10 @@ sentry
 <script defer data-domain="nemanjamitic.com" src="https://plausible.arm1.nemanjamitic.com/js/script.js"></script>
 add zod schema that checks node_env for plausible_url instead of optional
 moze samo za 1 url data-domain="nemanjamitic.com" 
+
+paralelizuj docker arm x86 build, reuse cache, test
+accessibility
+image sizes
+astro gallery, blur onload, infinite scroll
 ------------
 ```
