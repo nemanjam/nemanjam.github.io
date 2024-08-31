@@ -14,7 +14,9 @@ fi
 ssh $REMOTE_HOST "cd $REMOTE_PATH && \
 
             docker compose down && \
-            docker image rm $IMAGE_NAME_WITH_TAG && \
+
+            # allow rm to fail, if no image
+            docker image rm $IMAGE_NAME_WITH_TAG || true && \
 
             docker compose up -d"
             
