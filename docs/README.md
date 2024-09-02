@@ -15,6 +15,12 @@ sudo iptables -F
 sudo iptables -L
 # check
 ss -tuln | grep 1080
+
+# https tunnel
+# MUST have *: before, important
+# 1082 is tunnel only port, doesnt need to be opened on host 
+ssh -R *:1082:localhost:3000 amd1c
+https://preview.amd1.nemanjamitic.com
 ```
 
 ### Sitemap, RSS and Json feed links
