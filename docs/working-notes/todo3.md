@@ -538,5 +538,7 @@ accessibility
 image sizes
 astro gallery, blur onload, infinite scroll
 define real color themes
+IPv6 Traefik
+pitaj plausible zasto ne radi za razlicite poddomene i domene
 ------------
 ```
