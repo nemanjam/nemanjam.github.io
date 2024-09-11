@@ -540,5 +540,7 @@ astro gallery, blur onload, infinite scroll
 define real color themes
 IPv6 Traefik
 pitaj plausible zasto ne radi za razlicite poddomene i domene
+text float around images on blog, home and about page 
+design system pages, typography
 ------------
 ```
