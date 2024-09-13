@@ -2,8 +2,6 @@
 import { Icon } from 'astro-icon/components';
 import { Image } from 'astro:assets';
 
-import clsx from 'clsx';
-
 import HeaderLink from '@/components/HeaderLink.astro';
 import ThemeToggle from '@/components/ThemeToggle.astro';
 import { SELECTORS } from '@/constants/dom';
@@ -12,6 +10,7 @@ import { NAVIGATION_ITEMS } from '@/constants/navigation';
 import { ROUTES } from '@/constants/routes';
 import { CONFIG_CLIENT } from '@/config/client';
 import { getActiveNavItemPath } from '@/utils/navigation';
+import { cn } from '@/utils/styles';
 
 import Avatar from '@/assets/images/avatar.jpg';
 
@@ -26,7 +25,7 @@ const activeNavItemPath = getActiveNavItemPath(routePathname);
 
 <header id={SCROLL_TO_TOP_ID} class="group border-b border-base-300">
   <div
-    class={clsx(
+    class={cn(
       'flex gap-2',
       'group-[.menu-open]:flex-col md:!flex-row md:justify-between md:items-center',
       'max-w-6xl py-2 px-4 md:mx-auto'

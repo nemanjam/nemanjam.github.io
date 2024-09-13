@@ -542,5 +542,6 @@ IPv6 Traefik
 pitaj plausible zasto ne radi za razlicite poddomene i domene
 text float around images on blog, home and about page 
 design system pages, typography
+js function to print image dom and src size over image for debugging, moze npm paket
 ------------
 ```
