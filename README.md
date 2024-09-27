@@ -10,6 +10,10 @@ This is the repository for my coding blog [nemanjamitic.com](https://nemanjamiti
 | Github Pages | https://nemanjam.github.io               |
 | Docker       | https://nmc-docker.arm1.nemanjamitic.com |
 
+#### Plausible analytics
+
+https://plausible.arm1.nemanjamitic.com/nemanjamitic.com
+
 ## Screenshots
 
 https://github.com/user-attachments/assets/5bf85aee-a3bd-4ca0-9b6d-d5b4f555934b
@@ -279,11 +283,11 @@ Latest git commit info is included in the website footer for easy identification
 
 - Component to float text around images
 - Add accessibility attributes
-- Fix View transitions flash in Firefox dark theme
-- Add analytics
-- Add image gallery page
-- Add remote markdown page
-- Validate config with `astro:env`
+- Fix View transitions flash in Firefox dark theme - done
+- Add analytics - done
+- Add image gallery page - done
+- Add remote markdown page - done
+- Validate config with `astro:env` - done
 - Render `.mdx` for RSS using component containers
 - Review and improve ESLint, (strictest) Typescript and Prettier configs
 - Improve visual design
