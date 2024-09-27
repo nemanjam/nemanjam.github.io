@@ -543,5 +543,12 @@ pitaj plausible zasto ne radi za razlicite poddomene i domene
 text float around images on blog, home and about page 
 design system pages, typography
 js function to print image dom and src size over image for debugging, moze npm paket
+
+-----
+fix github action docker arm x86
+restructure folders, folder name, mdx and images in same folder
+conent collections to content layer
+fix plausible for all subdomains
+gallery astro image
 ------------
 ```

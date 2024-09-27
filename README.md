@@ -291,6 +291,8 @@ Latest git commit info is included in the website footer for easy identification
 - Render `.mdx` for RSS using component containers
 - Review and improve ESLint, (strictest) Typescript and Prettier configs
 - Improve visual design
+- Restructure content folders
+- Update to Astro content layer
 
 ## Credits
 

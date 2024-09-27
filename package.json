@@ -85,8 +85,8 @@
   "resolutions": {
     "sharp": "0.32.6"
   },
-  "packageManager": "yarn@1.22.19",
+  "packageManager": "yarn@1.22.22",
   "engines": {
-    "node": ">=20.10.0"
+    "node": ">=v22.9.0"
   }
 }
