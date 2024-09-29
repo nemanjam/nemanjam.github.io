@@ -15,6 +15,8 @@ import type { Metadata } from '@/types/common';
 
 const { AUTHOR_NAME, PLAUSIBLE_SCRIPT_URL } = CONFIG_CLIENT;
 
+// this must be the same for all mirrors
+const PLAUSIBLE_DATA_DOMAIN = 'nemanjamitic.com';
 export interface BaseHeadProps {
   metadata: Metadata;
 }
@@ -107,7 +109,12 @@ const ogImageUrl = new URL(image, url);
     PLAUSIBLE_SCRIPT_URL && (
       <>
         <link rel="preconnect" href={PLAUSIBLE_SCRIPT_URL} />
-        <script defer type="text/partytown" data-domain={host} src={PLAUSIBLE_SCRIPT_URL} />
+        <script
+          defer
+          type="text/partytown"
+          data-domain={PLAUSIBLE_DATA_DOMAIN}
+          src={PLAUSIBLE_SCRIPT_URL}
+        />
       </>
     )
   }
