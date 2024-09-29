@@ -13,10 +13,8 @@ import { filterUndefined } from '@/utils/objects';
 
 import type { Metadata } from '@/types/common';
 
-const { AUTHOR_NAME, PLAUSIBLE_SCRIPT_URL } = CONFIG_CLIENT;
+const { AUTHOR_NAME, PLAUSIBLE_SCRIPT_URL, PLAUSIBLE_DOMAIN } = CONFIG_CLIENT;
 
-// this must be the same for all mirrors
-const PLAUSIBLE_DATA_DOMAIN = 'nemanjamitic.com';
 export interface BaseHeadProps {
   metadata: Metadata;
 }
@@ -109,11 +107,12 @@ const ogImageUrl = new URL(image, url);
     PLAUSIBLE_SCRIPT_URL && (
       <>
         <link rel="preconnect" href={PLAUSIBLE_SCRIPT_URL} />
+        {/* PLAUSIBLE_DOMAIN must be the same for all mirrors */}
         <script
           defer
           type="text/partytown"
-          data-domain={PLAUSIBLE_DATA_DOMAIN}
           src={PLAUSIBLE_SCRIPT_URL}
+          data-domain={PLAUSIBLE_DOMAIN}
         />
       </>
     )

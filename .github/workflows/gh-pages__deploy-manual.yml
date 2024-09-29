@@ -21,6 +21,7 @@ permissions:
 env:
   SITE_URL: 'https://nemanjam.github.io'
   PLAUSIBLE_SCRIPT_URL: 'https://plausible.arm1.nemanjamitic.com/js/script.js'
+  PLAUSIBLE_DOMAIN: 'nemanjamitic.com'
 
 jobs:
   build-manual:

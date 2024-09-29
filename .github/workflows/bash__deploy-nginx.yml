@@ -2,6 +2,7 @@ name: Deploy Nginx with bash file
 
 on:
   push:
+    # this one is enabled
     branches:
       - 'main'
     tags:
@@ -15,6 +16,8 @@ env:
   SITE_URL: 'https://nemanjamitic.com'
   PLAUSIBLE_SCRIPT_URL: 'https://plausible.arm1.nemanjamitic.com/js/script.js'
   SSH_ALIAS: arm1
+  # can be omitted for main domain, will default to SITE_URL
+  # PLAUSIBLE_DOMAIN: 'nemanjamitic.com'
 
 jobs:
   deploy:

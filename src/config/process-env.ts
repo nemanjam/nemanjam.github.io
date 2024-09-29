@@ -4,6 +4,7 @@ import { envField } from 'astro/config';
 import dotenv from 'dotenv';
 
 import { nodeEnvValues, processEnvSchema } from '../schemas/config';
+import { getHostnameFromUrl } from '../utils/urls';
 import { validateData } from '../utils/validation';
 
 import type { ProcessEnvType } from '../types/config';
@@ -32,6 +33,7 @@ const processEnvData: ProcessEnvType = {
   PREVIEW_MODE: process.env.PREVIEW_MODE,
   SITE_URL: process.env.SITE_URL,
   PLAUSIBLE_SCRIPT_URL: process.env.PLAUSIBLE_SCRIPT_URL,
+  PLAUSIBLE_DOMAIN: process.env.PLAUSIBLE_DOMAIN,
 };
 
 export const PROCESS_ENV = validateData(processEnvData, processEnvSchema);
@@ -61,6 +63,12 @@ export const envSchema = {
       context: 'client',
       access: 'public',
       optional: true,
+    }),
+    PLAUSIBLE_DOMAIN: envField.string({
+      context: 'client',
+      access: 'public',
+      optional: true,
+      default: getHostnameFromUrl(PROCESS_ENV.SITE_URL),
     }),
   },
 };

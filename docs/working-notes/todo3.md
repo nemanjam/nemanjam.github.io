@@ -550,5 +550,6 @@ restructure folders, folder name, mdx and images in same folder
 content collections to content layer
 fix plausible for all subdomains
 gallery astro image
+prettyPrintObject in_ dev works after page load, ok
 ------------
 ```

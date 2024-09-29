@@ -16,6 +16,7 @@ env:
   SITE_URL_ARM64: 'https://nmc-docker.arm1.nemanjamitic.com'
   SITE_URL_AMD64: 'https://nmc-docker.local.nemanjamitic.com'
   PLAUSIBLE_SCRIPT_URL: 'https://plausible.arm1.nemanjamitic.com/js/script.js'
+  PLAUSIBLE_DOMAIN: 'nemanjamitic.com'
 
 jobs:
   build:
@@ -87,6 +88,7 @@ jobs:
           build-args: |
             "ARG_SITE_URL=${{ env.SITE_URL }}"
             "ARG_PLAUSIBLE_SCRIPT_URL=${{ env.PLAUSIBLE_SCRIPT_URL }}"
+            "ARG_PLAUSIBLE_DOMAIN=${{ env.PLAUSIBLE_DOMAIN }}"
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
           # disabled metadata step

@@ -1,11 +1,18 @@
 import { z, ZodSchema } from 'zod';
 
+export const zodErrorToString = (error: z.ZodError): string => {
+  return error.errors.map((err: z.ZodIssue) => `${err.path.join('.')}: ${err.message}`).join(', ');
+};
+
 export const validateData = <T extends ZodSchema>(config: z.infer<T>, schema: T): z.infer<T> => {
   const parsedConfig = schema.safeParse(config);
 
   if (!parsedConfig.success) {
-    console.error('Zod validation failed: ', parsedConfig.error.flatten().fieldErrors);
-    throw new Error('Zod validation failed');
+    const zodErrors = zodErrorToString(parsedConfig.error);
+    const errorMessage = `Zod validation failed: , ${zodErrors}`;
+
+    console.error(errorMessage);
+    throw new Error(errorMessage);
   }
 
   const { data: parsedConfigData } = parsedConfig;
