@@ -17,7 +17,7 @@ env:
   PLAUSIBLE_SCRIPT_URL: 'https://plausible.arm1.nemanjamitic.com/js/script.js'
   SSH_ALIAS: arm1
   # can be omitted for main domain, will default to SITE_URL
-  # PLAUSIBLE_DOMAIN: 'nemanjamitic.com'
+  PLAUSIBLE_DOMAIN: 'nemanjamitic.com'
 
 jobs:
   deploy:
