@@ -88,10 +88,10 @@ jobs:
             "ARG_SITE_URL=${{ env.SITE_URL }}"
             "ARG_PLAUSIBLE_SCRIPT_URL=${{ env.PLAUSIBLE_SCRIPT_URL }}"
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+          # tags: ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
           # disabled metadata step
-          # tags: ${{ steps.metadata.outputs.tags }}
-          # labels: ${{ steps.metadata.outputs.labels }}
+          tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
           cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:buildcache
           cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:buildcache,mode=max
           # cache-to: type=inline

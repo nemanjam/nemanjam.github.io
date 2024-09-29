@@ -547,7 +547,7 @@ js function to print image dom and src size over image for debugging, moze npm p
 -----
 fix github action docker arm x86
 restructure folders, folder name, mdx and images in same folder
-conent collections to content layer
+content collections to content layer
 fix plausible for all subdomains
 gallery astro image
 ------------
