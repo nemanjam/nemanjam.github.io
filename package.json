@@ -19,8 +19,8 @@
     "deploy:nginx:local": "bash scripts/deploy-nginx.sh '~/traefik-proxy/apps/nmc-nginx-with-volume/website' lxc11",
     "deploy:docker": "bash scripts/deploy-docker.sh arm1 '~/traefik-proxy/apps/nmc-docker' nemanjamitic/nemanjam.github.io",
     "deploy:docker:local": "bash scripts/deploy-docker.sh lxc11 '~/traefik-proxy/apps/nmc-docker' nemanjamitic/nemanjam.github.io",
-    "docker:build:push:arm": "docker buildx build -f ./docker/Dockerfile -t nemanjamitic/nemanjam.github.io --build-arg ARG_SITE_URL='https://nmc-docker.arm1.nemanjamitic.com' --build-arg ARG_PLAUSIBLE_SCRIPT_URL='https://plausible.arm1.nemanjamitic.com/js/script.js' --build-arg ARG_PLAUSIBLE_DOMAIN='nemanjamitic.com' --platform linux/arm64 --push .",
-    "docker:build:push:x86": "docker buildx build -f ./docker/Dockerfile -t nemanjamitic/nemanjam.github.io --build-arg ARG_SITE_URL='https://nmc-docker.local.nemanjamitic.com' --build-arg ARG_PLAUSIBLE_SCRIPT_URL='https://plausible.arm1.nemanjamitic.com/js/script.js' --build-arg ARG_PLAUSIBLE_DOMAIN='nemanjamitic.com' --platform linux/amd64 --push .",
+    "docker:build:push:arm": "docker buildx build -f ./docker/Dockerfile -t nemanjamitic/nemanjam.github.io --build-arg ARG_SITE_URL_ARM64='https://nmc-docker.arm1.nemanjamitic.com' --build-arg ARG_PLAUSIBLE_SCRIPT_URL='https://plausible.arm1.nemanjamitic.com/js/script.js' --build-arg ARG_PLAUSIBLE_DOMAIN='nemanjamitic.com' --platform linux/arm64 --push .",
+    "docker:build:push:x86": "docker buildx build -f ./docker/Dockerfile -t nemanjamitic/nemanjam.github.io --build-arg ARG_SITE_URL_AMD64='https://nmc-docker.local.nemanjamitic.com' --build-arg ARG_PLAUSIBLE_SCRIPT_URL='https://plausible.arm1.nemanjamitic.com/js/script.js' --build-arg ARG_PLAUSIBLE_DOMAIN='nemanjamitic.com' --platform linux/amd64 --push .",
     "docker:push": "docker push nemanjamitic/nemanjam.github.io",
     "dc:up": "docker compose up --build --force-recreate -d"
   },

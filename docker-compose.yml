@@ -10,7 +10,7 @@ services:
       context: .
       dockerfile: ./docker/Dockerfile
       args:
-        ARG_SITE_URL: 'http://localhost:8080'
+        ARG_SITE_URL_AMD64: 'http://localhost:8080'
         # make separate script with localhost enabled
         ARG_PLAUSIBLE_SCRIPT_URL: 'https://plausible.arm1.nemanjamitic.com/js/script.js'
         # will trigger analytics
