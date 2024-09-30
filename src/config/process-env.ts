@@ -36,6 +36,8 @@ const processEnvData: ProcessEnvType = {
   PLAUSIBLE_DOMAIN: process.env.PLAUSIBLE_DOMAIN,
 };
 
+console.log('processEnvData', processEnvData);
+
 export const PROCESS_ENV = validateData(processEnvData, processEnvSchema);
 
 /*------------------ experimental.env.schema -----------------*/
