@@ -67,6 +67,7 @@ jobs:
           file: ./docker/Dockerfile
           # cant use matrix, must pass platforms like this
           platforms: linux/amd64,linux/arm64
+          progress: plain
           build-args: |
             "ARG_SITE_URL_ARM64=${{ env.SITE_URL_ARM64 }}"
             "ARG_SITE_URL_AMD64=${{ env.SITE_URL_AMD64 }}"

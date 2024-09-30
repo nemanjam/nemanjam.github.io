@@ -24,15 +24,20 @@ ARG ARG_SITE_URL_ARM64
 ARG ARG_SITE_URL_AMD64
 ARG TARGETARCH
 
+ENV TARGETARCH=$TARGETARCH
+RUN echo "TARGETARCH=$TARGETARCH"
+
 RUN if [ "$TARGETARCH" = "arm64" ]; then \
     SITE_URL=$ARG_SITE_URL_ARM64; \
   else \
     SITE_URL=$ARG_SITE_URL_AMD64; \
   fi && \
   echo "SITE_URL=$SITE_URL" && \
-  echo "ENV SITE_URL=$SITE_URL" >> /etc/environment
+  # must set SITE_URL via .env file for yarn build, important
+  echo SITE_URL=$SITE_URL > .env;
 
-ENV SITE_URL=${SITE_URL}
+RUN echo "ls -la=" && ls -la
+RUN echo ".env file=" && cat .env
 
 ARG ARG_PLAUSIBLE_SCRIPT_URL
 ENV PLAUSIBLE_SCRIPT_URL=$ARG_PLAUSIBLE_SCRIPT_URL
