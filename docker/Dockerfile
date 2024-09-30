@@ -33,11 +33,11 @@ RUN if [ "$TARGETARCH" = "arm64" ]; then \
     SITE_URL=$ARG_SITE_URL_AMD64; \
   fi && \
   echo "SITE_URL=$SITE_URL" && \
-  # must set SITE_URL via .env file for yarn build, important
-  echo SITE_URL=$SITE_URL > .env;
+  # must set SITE_URL via .env.production file for yarn build, important
+  echo SITE_URL=$SITE_URL > .env.production;
 
 RUN echo "ls -la=" && ls -la
-RUN echo ".env file=" && cat .env
+RUN echo ".env.production file=" && cat .env.production
 
 ARG ARG_PLAUSIBLE_SCRIPT_URL
 ENV PLAUSIBLE_SCRIPT_URL=$ARG_PLAUSIBLE_SCRIPT_URL
