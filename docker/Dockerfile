@@ -22,16 +22,17 @@ COPY . .
 
 ARG ARG_SITE_URL_ARM64
 ARG ARG_SITE_URL_AMD64
-
-# Set SITE_URL based on the target architecture
-# Docker provides TARGETARCH for this purpose
 ARG TARGETARCH
+
 RUN if [ "$TARGETARCH" = "arm64" ]; then \
-      export SITE_URL=$ARG_SITE_URL_ARM64; \
-    else \
-      export SITE_URL=$ARG_SITE_URL_AMD64; \
-    fi && \
-    echo "SITE_URL=$SITE_URL"
+    SITE_URL=$ARG_SITE_URL_ARM64; \
+  else \
+    SITE_URL=$ARG_SITE_URL_AMD64; \
+  fi && \
+  echo "SITE_URL=$SITE_URL" && \
+  echo "ENV SITE_URL=$SITE_URL" >> /etc/environment
+
+ENV SITE_URL=${SITE_URL}
 
 ARG ARG_PLAUSIBLE_SCRIPT_URL
 ENV PLAUSIBLE_SCRIPT_URL=$ARG_PLAUSIBLE_SCRIPT_URL
