@@ -4,6 +4,7 @@ import { envField } from 'astro/config';
 import dotenv from 'dotenv';
 
 import { nodeEnvValues, processEnvSchema } from '../schemas/config';
+import { prettyPrintObject } from '../utils/log';
 import { getHostnameFromUrl } from '../utils/urls';
 import { validateData } from '../utils/validation';
 
@@ -36,7 +37,7 @@ const processEnvData: ProcessEnvType = {
   PLAUSIBLE_DOMAIN: process.env.PLAUSIBLE_DOMAIN,
 };
 
-console.log('processEnvData', processEnvData);
+prettyPrintObject(processEnvData, 'processEnvData');
 
 export const PROCESS_ENV = validateData(processEnvData, processEnvSchema);
 

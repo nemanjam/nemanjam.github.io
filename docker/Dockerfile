@@ -34,6 +34,7 @@ RUN if [ "$TARGETARCH" = "arm64" ]; then \
   fi && \
   echo "SITE_URL=$SITE_URL" && \
   # must set SITE_URL via .env.production file for yarn build, important
+  # must use .env.production, .env doesn't work
   echo SITE_URL=$SITE_URL > .env.production;
 
 RUN echo "ls -la=" && ls -la
