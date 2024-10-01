@@ -531,21 +531,21 @@ sentry
 // plausible
 <script defer data-domain="nemanjamitic.com" src="https://plausible.arm1.nemanjamitic.com/js/script.js"></script>
 add zod schema that checks node_env for plausible_url instead of optional
-moze samo za 1 url data-domain="nemanjamitic.com" 
+moze samo za 1 url data-domain="nemanjamitic.com", to je ok, tako i treba
 
-paralelizuj docker arm x86 build, reuse cache, test
+    paralelizuj docker arm x86 build, reuse cache, test
 accessibility
-image sizes
+    image sizes
 astro gallery, blur onload, infinite scroll
 define real color themes
 IPv6 Traefik
-pitaj plausible zasto ne radi za razlicite poddomene i domene
+    pitaj plausible zasto ne radi za razlicite poddomene i domene
 text float around images on blog, home and about page 
 design system pages, typography
 js function to print image dom and src size over image for debugging, moze npm paket
 
 -----
-fix github action docker arm x86
+    fix github action docker arm x86, move condition in Dockerfile, remove matrix
 restructure folders, folder name, mdx and images in same folder
 content collections to content layer
     fix plausible for all subdomains, done same data-domain="nemanjamitic.com", ok
