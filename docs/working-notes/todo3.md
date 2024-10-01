@@ -535,7 +535,7 @@ moze samo za 1 url data-domain="nemanjamitic.com", to je ok, tako i treba
 
     paralelizuj docker arm x86 build, reuse cache, test
 accessibility
-    image sizes
+    image sizes, poenta je i koliku sirinu u contentu zauzima slika, ne samo sirina ekrana, to
 astro gallery, blur onload, infinite scroll
 define real color themes
 IPv6 Traefik

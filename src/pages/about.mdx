@@ -7,16 +7,22 @@ description: 'About me page'
 import { Image } from 'astro:assets';
 
 import { CONFIG_CLIENT } from '../config/client';
-import { IMAGE_SIZES } from '../constants/image';
+import { IMAGE_SIZES, TW_SCREENS } from '../constants/image';
 import Link from '../components/Link.astro';
 import Electronics1Image from '../assets/images/all-images/electronics1.jpg';
 
 
 export const { AUTHOR_GITHUB, AUTHOR_LINKEDIN, AUTHOR_TWITTER, AUTHOR_YOUTUBE } = CONFIG_CLIENT;
 
+{/* bellow SM image is full width of content so higher resolution image */}
+export const imageSizes = {
+  widths: [TW_SCREENS.SM, TW_SCREENS.MD, TW_SCREENS.SM],
+  sizes: `(max-width: ${TW_SCREENS.SM}px) ${TW_SCREENS.SM}px, (max-width: ${TW_SCREENS.MD}px) ${TW_SCREENS.MD}px, ${TW_SCREENS.SM}px`,
+};
+
 # About
 
-<Image {...IMAGE_SIZES.FIXED.MDX_SM} src={Electronics1Image} alt="Veronica transmitter board" /> 
+<Image {...imageSizes} src={Electronics1Image} alt="Veronica transmitter board" class="md:max-w-sm lg:max-w-md md:float-right md:mt-2 md:ml-8" /> 
 
 My name is Nemanja, I am a full-stack developer with experience in React.js, Next.js, and Node.js. In the past, I have worked with C# and ASP.NET, and lately, I have developed an interest in Python and FastAPI. I also like to experiment with DevOps and homelab self-hosting.
 

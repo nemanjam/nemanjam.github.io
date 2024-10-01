@@ -37,7 +37,7 @@ const processEnvData: ProcessEnvType = {
   PLAUSIBLE_DOMAIN: process.env.PLAUSIBLE_DOMAIN,
 };
 
-prettyPrintObject(processEnvData, 'processEnvData');
+prettyPrintObject(processEnvData, 'received PROCESS_ENV');
 
 export const PROCESS_ENV = validateData(processEnvData, processEnvSchema);
 
