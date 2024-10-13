@@ -1439,10 +1439,10 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.13.tgz#2af91918ee12d9d32914feb13f5326658461b451"
   integrity sha512-hCZTSvwbzWGvhqxp/RqVqwU999pBf2vp7hzIjiYOsl8wqOmUxkQ6ddw1cV3l8811+kdUFus/q4d1Y3E3SyEifA==
 
-"@types/react-dom@^18.3.0":
-  version "18.3.0"
-  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.3.0.tgz#0cbc818755d87066ab6ca74fbedb2547d74a82b0"
-  integrity sha512-EhwApuTmMBmXuFOikhQLIBUn6uFg81SwLMOAUgodJF14SOBOCMdU04gDoYi0WOJJHD144TL32z4yDqCW3dnkQg==
+"@types/react-dom@^18.3.1":
+  version "18.3.1"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.3.1.tgz#1e4654c08a9cdcfb6594c780ac59b55aad42fe07"
+  integrity sha512-qW1Mfv8taImTthu4KoXgDfLuk4bydU6Q/TkADnDWWHwi4NX4BR+LWfTp2sVmTqRrsHvyDDTelgelxJ+SsejKKQ==
   dependencies:
     "@types/react" "*"
 
@@ -1928,10 +1928,10 @@ astro-social-share@^2.0.2:
   resolved "https://registry.yarnpkg.com/astro-social-share/-/astro-social-share-2.0.2.tgz#81497f8e8bc072934a4e0a96ebeff7607c7ce3fd"
   integrity sha512-bPeZUOzOTuXIJjVYmRrnsP8bK+qv3aviey+F8tFgG30rR1npc4SkyOb05hsp2BLuDci9kbuoHFW6Vr3L4ozjSw==
 
-astro@^4.16.0:
-  version "4.16.0"
-  resolved "https://registry.yarnpkg.com/astro/-/astro-4.16.0.tgz#59359d5e1072a3ae5d7f3ee097ff42552abbc29a"
-  integrity sha512-R5voBFy0yOg57uFnW24WV+RvqPerp9eOoDQoT0pQYqECuGuyV1PsZaSb9Nm0ec+KMLrfO9jvvESFw9LIN6XiUw==
+astro@^4.16.2:
+  version "4.16.2"
+  resolved "https://registry.yarnpkg.com/astro/-/astro-4.16.2.tgz#832b79e1d22397c1706cb56fe895ef15fec80d83"
+  integrity sha512-Dfkpyt6sA+nv6LnOJr+7bt+gQF5Qh02yqVgyes4c4SvcPScteq1bLX22/z/XW+VU0vlciJOMiM8GWtcDiF6gUQ==
   dependencies:
     "@astrojs/compiler" "^2.10.3"
     "@astrojs/internal-helpers" "0.4.1"
@@ -1963,7 +1963,6 @@ astro@^4.16.0:
     esbuild "^0.21.5"
     estree-walker "^3.0.3"
     fast-glob "^3.3.2"
-    fastq "^1.17.1"
     flattie "^1.1.1"
     github-slugger "^2.0.0"
     gray-matter "^4.0.3"
@@ -1984,7 +1983,6 @@ astro@^4.16.0:
     rehype "^13.0.2"
     semver "^7.6.3"
     shiki "^1.22.0"
-    string-width "^7.2.0"
     tinyexec "^0.3.0"
     tsconfck "^3.1.3"
     unist-util-visit "^5.0.0"
@@ -3284,7 +3282,7 @@ fast-url-parser@1.1.3:
   dependencies:
     punycode "^1.3.2"
 
-fastq@^1.17.1, fastq@^1.6.0:
+fastq@^1.6.0:
   version "1.17.1"
   resolved "https://registry.yarnpkg.com/fastq/-/fastq-1.17.1.tgz#2a523f07a4e7b1e81a42b91b8bf2254107753b47"
   integrity sha512-sRVD3lWVIXWg6By68ZN7vho9a1pQcN/WBFaAAsDDFzlJjvoGx0P8z7V1t72grFJfJhu3YPZBuu25f7Kaw2jN1w==
