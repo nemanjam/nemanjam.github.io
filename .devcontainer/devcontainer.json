@@ -1,0 +1,39 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/debian
+{
+	"name": "astro-webapps-course",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"dockerComposeFile": "../docker/docker-compose.yml",
+	"service": "web_dev",
+	"workspaceFolder": "/home/node/workspace",
+	"shutdownAction": "stopCompose",
+	"features": {
+		"ghcr.io/devcontainers/features/git:1": {}
+	},
+	"mounts": [
+		"source=/home/madpad/.gitconfig-maf,target=/home/node/.gitconfig,type=bind,consistency=cached",
+		"source=/home/madpad/.ssh/id_ed25519,target=/home/node/.ssh/id_ed25519_itqualab,type=bind,consistency=cached"
+	],
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"extensions.ignoreRecommendations": true
+			},
+			"extensions": [
+				"astro-build.astro-vscode",
+				"sheltonlouis.astro-snippets",
+				"astro-build.houston",
+				"mhutchie.git-graph",
+				"sourcegraph.cody-ai",
+				"bradlc.vscode-tailwindcss",
+				"esbenp.prettier-vscode",
+				"fallenmax.mithril-emmet",
+				"unifiedjs.vscode-mdx"
+				//"wallabyjs.console-ninja" Not yet supported until 12/2024
+			]
+		}
+	},
+	"forwardPorts": [
+		3002
+	]
+}

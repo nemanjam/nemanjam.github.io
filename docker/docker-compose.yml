@@ -1,0 +1,25 @@
+name: maf-website-dev-env
+
+services:
+
+  web_dev:
+    build:
+      context: .
+      dockerfile: dockerfile-web
+    image: maf-website-dev-img
+    container_name: maf-website-dev-container
+    user: node
+    ports:
+      - "3005:3005"
+    volumes:
+      - ../:/home/node/workspace:cached
+      - ${HOME}/.local/share/pnpm:/home/node/.local/share/pnpm:cached
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "true"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+

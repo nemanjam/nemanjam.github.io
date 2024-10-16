@@ -23,7 +23,10 @@ export default defineConfig({
   trailingSlash: 'ignore',
   // default
   compressHTML: true,
-  server: { port: 3000 },
+  server: {
+    host: true,
+    port: 3005,
+  },
   devToolbar: { enabled: false },
   integrations: [
     expressiveCodeIntegration(),
