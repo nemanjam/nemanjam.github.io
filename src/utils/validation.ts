@@ -1,4 +1,6 @@
-import { z, ZodSchema } from 'zod';
+import { z } from 'zod';
+
+import type { ZodSchema } from 'zod';
 
 export const zodErrorToString = (error: z.ZodError): string => {
   return error.errors.map((err: z.ZodIssue) => `${err.path.join('.')}: ${err.message}`).join(', ');
