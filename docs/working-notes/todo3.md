@@ -549,7 +549,9 @@ js function to print image dom and src size over image for debugging, moze npm p
 restructure folders, folder name, mdx and images in same folder
 content collections to content layer
     fix plausible for all subdomains, done same data-domain="nemanjamitic.com", ok
-gallery astro image
+gallery astro image, blur, infinite scroll
 prettyPrintObject in_ dev works after page load, ok
+pi, local, arm, x86 yarn scripts and github actions, plausible url, blog.pi to pi
+add projects
 ------------
 ```
