@@ -553,5 +553,6 @@ gallery astro image, blur, infinite scroll
 prettyPrintObject in_ dev works after page load, ok
 pi, local, arm, x86 yarn scripts and github actions, plausible url, blog.pi to pi
 add projects
+transitions za projekte, in markdown
 ------------
 ```

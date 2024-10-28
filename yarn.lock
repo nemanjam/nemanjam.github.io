@@ -28,6 +28,13 @@
   resolved "https://registry.yarnpkg.com/@antfu/utils/-/utils-0.7.10.tgz#ae829f170158e297a9b6a28f161a8e487d00814d"
   integrity sha512-+562v9k4aI80m1+VuMHehNJWLOFjBnXn3tdOitzD0il5b7smkSBal4+a3oKiQTbrwMmN/TBUMDvbdoWDehgOww==
 
+"@astro-community/astro-embed-baseline-status@^0.1.0":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@astro-community/astro-embed-baseline-status/-/astro-embed-baseline-status-0.1.1.tgz#c52682587e559717efb7a2c259f8031618d6b37d"
+  integrity sha512-BiTQf4EP3SjMb/U5YN984BiGoGQNfc/lsJG0PosvNjUn5Q6+GjkSs77RjW3mQXOo64+sC3A0iOgdw2rlOmmjcQ==
+  dependencies:
+    "@astro-community/astro-embed-utils" "^0.1.0"
+
 "@astro-community/astro-embed-integration@^0.7.2":
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/@astro-community/astro-embed-integration/-/astro-embed-integration-0.7.2.tgz#dbe016e22369d8dd392a694855cabbf925da0798"
@@ -1954,11 +1961,12 @@ astro-auto-import@^0.4.2:
     "@types/node" "^18.0.0"
     acorn "^8.8.0"
 
-astro-embed@^0.7.4:
-  version "0.7.4"
-  resolved "https://registry.yarnpkg.com/astro-embed/-/astro-embed-0.7.4.tgz#eb4b25616c0ecad70f25ef8562c33099b862c687"
-  integrity sha512-meDmEpmwu1wcz1i1KT4yAPJhydq/C4iyh1Pn7sepSbtXF85C05nJoE0cTDJHf0cwM4zMoYTYDluqFIQIfsdhHA==
+astro-embed@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/astro-embed/-/astro-embed-0.8.0.tgz#8bc59b7fb9d300d28520c54de0c82023edd51d29"
+  integrity sha512-zG7SjRKo2TT4LsZLQfttf+Yb9OJ2oty+/qj7SZ9RPPAo0olfbWgoXkAdrDHBJyvVMss9GCgCunIp/kqQ32t9ZA==
   dependencies:
+    "@astro-community/astro-embed-baseline-status" "^0.1.0"
     "@astro-community/astro-embed-integration" "^0.7.2"
     "@astro-community/astro-embed-link-preview" "^0.2.2"
     "@astro-community/astro-embed-twitter" "^0.5.6"
