@@ -12,7 +12,7 @@
 	},
 	"mounts": [
 		"source=/home/madpad/.gitconfig-maf,target=/home/node/.gitconfig,type=bind,consistency=cached",
-		"source=/home/madpad/.ssh/id_ed25519,target=/home/node/.ssh/id_ed25519_itqualab,type=bind,consistency=cached"
+		"source=/home/madpad/.ssh/id_ed25519,target=/home/node/.ssh/id_ed25519,type=bind,consistency=cached"
 	],
 	"customizations": {
 		"vscode": {
