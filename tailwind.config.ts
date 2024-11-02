@@ -29,7 +29,8 @@ const config: Config = {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter Variable', 'Inter', ...defaultTheme.fontFamily.sans],
+        sans: ['Raleway', 'Inter Variable', 'Inter', ...defaultTheme.fontFamily.sans],
+        body: ['Raleway']
       },
       colors: {
         // background

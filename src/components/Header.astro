@@ -23,7 +23,7 @@ const activeNavItemPath = getActiveNavItemPath(routePathname);
 // group-[.menu-open]:flex-col md:!flex-row, both on flex-direction
 ---
 
-<header id={SCROLL_TO_TOP_ID} class="group border-b border-base-300">
+<header id={SCROLL_TO_TOP_ID} class="font-body group border-b border-base-300">
   <div
     class={cn(
       'flex gap-2',
@@ -41,7 +41,7 @@ const activeNavItemPath = getActiveNavItemPath(routePathname);
           src={Avatar}
           alt="Profile picture"
         />
-        <span>
+        <span >
           {CONFIG_CLIENT.AUTHOR_NAME}
         </span>
       </HeaderLink>
