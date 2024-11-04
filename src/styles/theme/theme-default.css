@@ -2,7 +2,7 @@
   /* default-light */
   :root {
     /* background */
-    --th-base-100: var(--var-color-white);
+    --th-base-100: var(--var-color-neutral);
     --th-base-200: var(--var-color-slate-100);
     --th-base-300: var(--var-color-slate-300);
     --th-base-code: var(--var-color-slate-400);
@@ -44,10 +44,10 @@
   /* default-dark */
   :root.dark {
     /* background */
-    --th-base-100: var(--var-color-dark-slate-800);
-    --th-base-200: var(--var-color-dark-slate-900);
-    --th-base-300: var(--var-color-dark-slate-950);
-    --th-base-code: var(--var-color-slate-700);
+    --th-base-100: var(--var-color-dark-zinc-800);
+    --th-base-200: var(--var-color-dark-zinc-900);
+    --th-base-300: var(--var-color-dark-zinc-950);
+    --th-base-code: var(--var-color-zinc-700);
 
     /* reused from tw-prose-invert-xxx */
     --th-content: var(--var-color-dark-slate-300);

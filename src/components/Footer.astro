@@ -4,22 +4,12 @@ import { Icon } from 'astro-icon/components';
 import Link from '@/components/Link.astro';
 import { ROUTES } from '@/constants/routes';
 import { CONFIG_CLIENT } from '@/config/client';
-import { getLatestCommitInfo } from '@/libs/git';
-import { shortDate } from '@/utils/datetime';
-import { limitString, trimHttpProtocol } from '@/utils/strings';
+import { trimHttpProtocol } from '@/utils/strings';
 
-const { SITE_URL, AUTHOR_LINKEDIN, AUTHOR_GITHUB, REPO_URL } = CONFIG_CLIENT;
+const { SITE_URL, AUTHOR_LINKEDIN, AUTHOR_GITHUB, AUTHOR_NAME } = CONFIG_CLIENT;
 const domain = trimHttpProtocol(SITE_URL);
-const messageLength = 20 as const;
+const year = new Date().getFullYear();
 
-const { time, fullHash, message } = getLatestCommitInfo();
-
-const commitUrl = `${REPO_URL}/commit/${fullHash}`;
-
-const shortDateStr = shortDate(new Date(time));
-const trimmedMessage = limitString(message, messageLength);
-
-// footer is full width for border, div has max-w
 ---
 
 <footer class="border-t border-base-300 py-8 px-4">
@@ -28,15 +18,9 @@ const trimmedMessage = limitString(message, messageLength);
       <!-- left column -->
       <div class="flex items-center gap-2 flex-wrap text-sm text-content whitespace-nowrap">
         <div class="flex items-center gap-2">
-          <label class="font-bold">Latest commit:</label>
-          <Link href={commitUrl} title={shortDateStr} target="_blank">
-            {trimmedMessage}
-          </Link>
+          <p>© Copyright {year} · Marc Andreu · All rights reserved.</p>
         </div>
-        <div class="flex items-center gap-2">
-          <label class="font-bold">Design system:</label>
-          <Link href={`${ROUTES.DESIGN}`} title="Design system">link</Link>
-        </div>
+        
       </div>
 
       <!-- right column -->
@@ -46,7 +30,7 @@ const trimmedMessage = limitString(message, messageLength);
             href={AUTHOR_GITHUB}
             target="_blank"
             rel="me noreferrer noopener"
-            title="@nemanjam on Github"
+            title=`${AUTHOR_NAME} on GitHub`
             class="flex items-center gap-2 text-base xs:text-lg"
             variant="link-nav"
           >
@@ -59,7 +43,7 @@ const trimmedMessage = limitString(message, messageLength);
             href={AUTHOR_LINKEDIN}
             target="_blank"
             rel="me noreferrer noopener"
-            title="Nemanja on LinkedIn"
+            title=`${AUTHOR_NAME} on Linkedin`
             class="flex items-center gap-2 text-base xs:text-lg"
             variant="link-nav"
           >

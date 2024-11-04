@@ -5,6 +5,7 @@
     /* from prose-slate */
     /* background */
     --var-color-white: theme('colors.white');
+    --var-color-neutral: theme('colors.neutral.50');
     --var-color-slate-100: theme('colors.slate.100');
     --var-color-slate-300: theme('colors.slate.300');
     --var-color-slate-400: theme('colors.slate.400');
@@ -13,6 +14,9 @@
     --var-color-slate-500: theme('colors.slate.500');
     --var-color-slate-700: theme('colors.slate.700');
     --var-color-slate-900: theme('colors.slate.900');
+    --var-color-zinc-500: theme('colors.zinc.500');
+    --var-color-zinc-700: theme('colors.zinc.700');
+    --var-color-zinc-900: theme('colors.zinc.900');
 
     /* primary, secondary... */
     --var-color-blue-500: theme('colors.blue.500');
@@ -46,6 +50,9 @@
     --var-color-dark-slate-800: theme('colors.slate.800');
     --var-color-dark-slate-900: theme('colors.slate.900');
     --var-color-dark-slate-950: theme('colors.slate.950');
+    --var-color-dark-zinc-800: theme('colors.zinc.800');
+    --var-color-dark-zinc-900: theme('colors.zinc.900');
+    --var-color-dark-zinc-950: theme('colors.zinc.950');
 
     /* content */
     --var-color-dark-slate-300: theme('colors.slate.300');
