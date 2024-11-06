@@ -1,8 +1,37 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=La+Belle+Aurore&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
-
 @import './base.css';
 @import './my-prose.css';
 /* after, for override */
 @import './tags.css';
+
+@font-face {
+    font-family: 'Segoe';
+    src: url('./fonts/segoeuithibd.ttf') format('truetype'); /* Bold */
+    font-weight: bold;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Segoe';
+    src: url('./fonts/segoeuithis.ttf') format('truetype'); /* Regular */
+    font-weight: normal; 
+    font-style: normal; 
+  }
+  
+  @font-face {
+    font-family: 'Segoe';
+    src: url('./fonts/segoeuithisi.ttf') format('truetype'); /* Italic */
+    font-weight: normal; 
+    font-style: italic; 
+  }
+  
+  @font-face {
+    font-family: 'Segoe';
+    src: url('./fonts/segoeuithisz.ttf') format('truetype'); /* Bold Italic */
+    font-weight: bold; 
+    font-style: italic; 
+  }
+
+

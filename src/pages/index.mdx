@@ -9,32 +9,37 @@ import Button from '@/components/Button.astro';
 import { Image } from 'astro:assets';
 import { IMAGE_SIZES } from '../constants/image';
 import profile from '../assets/images/index/profile2023.png';
+import heroImg from '../assets/images/index/dev-hero.jpg'
 
 
-<div>
-<span>I'm an full stack developer based in South Korea.</span>
-<Image class="rounded-3xl" src={profile} alt="Fishing spot" />
-</div>
-
-# Marc Andreu
-
-<section class="flex flex-col md:flex-row shadow-neutral-400 shadow-md rounded-md items-center justify-center">
-    <div class="w-full md:w-1/2 p-3 sm:p-6 md:p-9 lg:p-12 ">
-        
-    </div>        
-    <div class="w-full md:w-1/2 p-3 sm:p-6 md:p-9 lg:p-12 items-center">
-        <h2 class="text-md font-bold bg-zinc-50">I'm an full stack developer based in South Korea.</h2>
-        <p>Welcome to my coding blog. Here, I will share my coding experiments and thoughts on React.js, Next.js, Node.js, Astro, Python, DevOps, and more. Feel free to read, explore, and comment. Or, if you are feeling overwhelmed by coding, you can take a break and enjoy some random landscape photos from the articles. Maybe in the future, we will create a separate gallery for them. We will see.</p>
+<section class="flex flex-col w-full items-center justify-center">
+    <div class="flex flex-col w-2/3 gap-2">
+        <div class="flex flex-col gap-1 items-center">
+            <Image class="rounded-3xl" src={heroImg} alt="Dev on a desktop" height="400" />
+        </div>
+        <div  class="text-md text-center bg-lightBeig py-2 px-auto rounded-md dark:bg-zinc-700">I'm a full stack developer based in South Korea.</div>
+        <div class="flex flex-row justify-between mt-5">
+            <div>
+                <h1 class="text-4xl font-bold m-0">Marc Andreu</h1>
+                <p class="m-0 font-semibold text-md ">Software Craftsman (Web-dev/QA/Appsec)</p>
+            </div>
+            <div>
+                <Image class="rounded-full mr-1 m-0" src={profile} alt="Fishing spot" width="100" />
+            </div>
+        </div>
     </div>
-</section>
 
-### Work: 
-
-
-### Bio:
+</section>     
 
 
-### On the web: 
+## Work: 
+Welcome to my coding blog. Here, I will share my coding experiments and thoughts on React.js, Next.js, Node.js, Astro, Python, DevOps, and more. Feel free to read, explore, and comment. Or, if you are feeling overwhelmed by coding, you can take a break and enjoy some random landscape photos from the articles. Maybe in the future, we will create a separate gallery for them. We will see.
+
+
+## Bio:
+
+
+## On the web: 
 
 <Button href="#" target="_blank">
     <Icon name="mdi:github" class="inline mr-2" />Github
@@ -52,7 +57,7 @@ import profile from '../assets/images/index/profile2023.png';
 </button>
 </a>
 
-### Projects
+## Projects
 It Quality Lab
 
 Test Automation Agency

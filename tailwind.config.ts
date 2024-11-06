@@ -29,8 +29,8 @@ const config: Config = {
     },
     extend: {
       fontFamily: {
-        sans: ['Raleway', 'Inter Variable', 'Inter', ...defaultTheme.fontFamily.sans],
-        body: ['Raleway']
+        sans: ['Segoe','Inter Variable', 'Inter', ...defaultTheme.fontFamily.sans],
+        
       },
       colors: {
         // background
@@ -39,6 +39,7 @@ const config: Config = {
         'base-300': 'var(--th-base-300)',
         'base-code': 'var(--th-base-code)',
         'customBeige': '#F0E7DB',
+        'lightBeig': '#FFFFFF5C',
         // text
         content: 'var(--th-content)',
         headings: 'var(--th-headings)',
