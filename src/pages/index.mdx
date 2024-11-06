@@ -9,11 +9,13 @@ import Button from '@/components/Button.astro';
 import { Image } from 'astro:assets';
 import { IMAGE_SIZES } from '../constants/image';
 import profile from '../assets/images/index/profile2023.png';
-import heroImg from '../assets/images/index/dev-hero.jpg'
+import heroImg from '../assets/images/index/dev-hero.jpg';
+import itqualabHomePage from '../assets/images/index/itqualab-home-page.png';
+import taaHomePage from '../assets/images/index/taa-home-page.png';
 
 
 <section class="flex flex-col w-full items-center justify-center">
-    <div class="flex flex-col w-2/3 gap-2">
+    <div class="flex flex-col w-full  gap-2">
         <div class="flex flex-col gap-1 items-center">
             <Image class="rounded-3xl" src={heroImg} alt="Dev on a desktop" height="400" />
         </div>
@@ -24,7 +26,7 @@ import heroImg from '../assets/images/index/dev-hero.jpg'
                 <p class="m-0 font-semibold text-md ">Software Craftsman (Web-dev/QA/Appsec)</p>
             </div>
             <div>
-                <Image class="rounded-full mr-1 m-0" src={profile} alt="Fishing spot" width="100" />
+                <Image class="rounded-full mr-1 m-0 border-2 border-white" src={profile} alt="Foto profile" width="100" />
             </div>
         </div>
     </div>
@@ -32,35 +34,55 @@ import heroImg from '../assets/images/index/dev-hero.jpg'
 </section>     
 
 
-## Work: 
-Welcome to my coding blog. Here, I will share my coding experiments and thoughts on React.js, Next.js, Node.js, Astro, Python, DevOps, and more. Feel free to read, explore, and comment. Or, if you are feeling overwhelmed by coding, you can take a break and enjoy some random landscape photos from the articles. Maybe in the future, we will create a separate gallery for them. We will see.
+### Work: 
+Marc is a freelance and full-stack developer in South Korea who is passionate about building Web Applications, AI automation and QA consulting. He has a knack for all things launching solutions, from planning and designing to crafting business needs with code. He loves hanging out with his family, playing football, and reading when he is not online. Currently, he is living off his development services, which are called to build web apps and test automated frameworks. He publishes blog posts to share everything he learns so others can reuse the code and solve problems faster. 
 
 
-## Bio:
+### Bio:
+
+* **1979** Born in Sabadell (Barcelona)
+* **2004** Completed Bachelor's degree in the UAB (Barcelona).
+* **2010** Worked at Electronic Arts! London
+* **2017** Worked at Ocado Technology. Barcelona
+* **2021** to present Working as a freelancer. ItQuaLab
+* **2024** Co-founder or Test Automation Agency. TAA
 
 
-## On the web: 
 
-<Button href="#" target="_blank">
-    <Icon name="mdi:github" class="inline mr-2" />Github
-</Button>
-<Button href="#" target="_blank">
-    <Icon name="mdi:linkedin" class="inline mr-2" />Linkeid
-</Button>
-<Button href="#" target="_blank">
-    <Icon name="mdi:twitter" class="inline mr-2" />Linkeid
-</Button>
+### On the web: 
 
-<a href="https://github.com/marcandreuf" class="no-underline hover:no-underline visited:text-inherit">
-<button class="flex flex-row items-center justify-center mt-2 gap-2 text-teal-600 hover:bg-teal-50 dark:text-teal-200 dark:hover:bg-links-hoverGreen p-2 rounded-lg">
-<Icon name="mdi:github" size={32} /><span class="font-bold text-lg ">@marcandreuf</span>
-</button>
+<a href="https://github.com/marcandreuf" target="_blank" class="no-underline hover:no-underline visited:text-inherit">
+    <button class="flex flex-row items-center justify-center mt-2 gap-2 text-teal-600 hover:bg-teal-50 dark:text-teal-200 dark:hover:bg-links-hoverGreen p-2 rounded-lg">
+        <Icon name="mdi:github" size={32} /><span class="font-bold text-lg ">@marcandreuf</span>
+    </button>
+</a>
+<a href="https://www.linkedin.com/in/marcandreuf/" target="_blank" class="no-underline hover:no-underline visited:text-inherit">
+    <button class="flex flex-row items-center justify-center mt-2 gap-2 text-teal-600 hover:bg-teal-50 dark:text-teal-200 dark:hover:bg-links-hoverGreen p-2 rounded-lg">
+        <Icon name="mdi:linkedin" size={32} /><span class="font-bold text-lg ">@marcandreuf</span>
+    </button>
+</a>
+<a href="https://x.com/marcandreuf" target="_blank" class="no-underline hover:no-underline visited:text-inherit">
+    <button class="flex flex-row items-center justify-center mt-2 gap-2 text-teal-600 hover:bg-teal-50 dark:text-teal-200 dark:hover:bg-links-hoverGreen p-2 rounded-lg">
+        <Icon name="mdi:twitter" size={32} /><span class="font-bold text-lg ">@marcandreuf</span>
+    </button>
 </a>
 
-## Projects
+### I ♥
+
+Coding, Learning, Reading, Phylosopy, DevOps and Building Automated tools.
+
+### Projects
+
+{/* create a grid to position the projects in two columns */}
+
 It Quality Lab
+<Image class="rounded-md mr-1 m-0 border-2 border-white" src={itqualabHomePage} 
+alt="ItQuaLab home page screenshot" width="350" />
+
 
 Test Automation Agency
+<Image class="rounded-md mr-1 m-0 border-2 border-white" src={taaHomePage} 
+alt="ItQuaLab home page screenshot" width="350" />
 
 
 
