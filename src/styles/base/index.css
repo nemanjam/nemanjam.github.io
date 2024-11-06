@@ -8,28 +8,28 @@
 
 @font-face {
     font-family: 'Segoe';
-    src: url('./fonts/segoeuithibd.ttf') format('truetype'); /* Bold */
+    src: url('src/assets/fonts/segoeuithibd.ttf') format('truetype'); /* Bold */
     font-weight: bold;
     font-style: normal;
   }
   
   @font-face {
     font-family: 'Segoe';
-    src: url('./fonts/segoeuithis.ttf') format('truetype'); /* Regular */
+    src: url('src/assets/fonts/segoeuithis.ttf') format('truetype'); /* Regular */
     font-weight: normal; 
     font-style: normal; 
   }
   
   @font-face {
     font-family: 'Segoe';
-    src: url('./fonts/segoeuithisi.ttf') format('truetype'); /* Italic */
+    src: url('src/assets/fonts/segoeuithisi.ttf') format('truetype'); /* Italic */
     font-weight: normal; 
     font-style: italic; 
   }
   
   @font-face {
     font-family: 'Segoe';
-    src: url('./fonts/segoeuithisz.ttf') format('truetype'); /* Bold Italic */
+    src: url('src/assets/fonts/segoeuithisz.ttf') format('truetype'); /* Bold Italic */
     font-weight: bold; 
     font-style: italic; 
   }
