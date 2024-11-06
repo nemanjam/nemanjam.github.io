@@ -10,14 +10,19 @@ import { Image } from 'astro:assets';
 import { IMAGE_SIZES } from '../constants/image';
 import profile from '../assets/images/index/profile2023.png';
 
-# Hello thanks for coming,
+
+<div>
+<span>I'm an full stack developer based in South Korea.</span>
+</div>
+
+# Marc Andreu
 
 <section class="flex flex-col md:flex-row shadow-neutral-400 shadow-md rounded-md items-center justify-center">
     <div class="w-full md:w-1/2 p-3 sm:p-6 md:p-9 lg:p-12 ">
         <Image class="rounded-3xl" src={profile} alt="Fishing spot" />
     </div>        
     <div class="w-full md:w-1/2 p-3 sm:p-6 md:p-9 lg:p-12 items-center">
-        <h2 class="text-2xl font-bold">Hello there, I am Marc Andreu</h2>
+        <h2 class="text-md font-bold bg-zinc-50">I'm an full stack developer based in South Korea.</h2>
         <p>Welcome to my coding blog. Here, I will share my coding experiments and thoughts on React.js, Next.js, Node.js, Astro, Python, DevOps, and more. Feel free to read, explore, and comment. Or, if you are feeling overwhelmed by coding, you can take a break and enjoy some random landscape photos from the articles. Maybe in the future, we will create a separate gallery for them. We will see.</p>
     </div>
 </section>
@@ -39,6 +44,12 @@ import profile from '../assets/images/index/profile2023.png';
 <Button href="#" target="_blank">
     <Icon name="mdi:twitter" class="inline mr-2" />Linkeid
 </Button>
+
+<a href="https://github.com/marcandreuf" class="no-underline hover:no-underline visited:text-inherit">
+<button class="flex flex-row items-center justify-center mt-2 gap-2 text-teal-600 hover:bg-teal-50 dark:text-teal-200 dark:hover:bg-links-hoverGreen p-2 rounded-lg">
+<Icon name="mdi:github" size={32} /><span class="font-bold text-lg ">@marcandreuf</span>
+</button>
+</a>
 
 ### Projects
 It Quality Lab

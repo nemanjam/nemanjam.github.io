@@ -38,6 +38,7 @@ const config: Config = {
         'base-200': 'var(--th-base-200)',
         'base-300': 'var(--th-base-300)',
         'base-code': 'var(--th-base-code)',
+        'customBeige': '#F0E7DB',
         // text
         content: 'var(--th-content)',
         headings: 'var(--th-headings)',
@@ -45,6 +46,7 @@ const config: Config = {
         links: {
           DEFAULT: 'var(--th-links)',
           hover: 'var(--th-links-hover)',
+          hoverGreen : '#81E6D91E',
           visited: 'var(--th-links-visited)',
         },
         // brand

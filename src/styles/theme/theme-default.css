@@ -44,7 +44,7 @@
   /* default-dark */
   :root.dark {
     /* background */
-    --th-base-100: var(--var-color-dark-zinc-800);
+    --th-base-100: var(--var-color-dark-default);
     --th-base-200: var(--var-color-dark-zinc-900);
     --th-base-300: var(--var-color-dark-zinc-950);
     --th-base-code: var(--var-color-zinc-700);
