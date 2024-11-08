@@ -13,4 +13,4 @@ User-agent: Omgilibot
 User-Agent: FacebookBot
 Disallow: /
 
-Sitemap: https://nemanjamitic.com/sitemap-index.xml
+Sitemap: https://marcandreuf.com/sitemap-index.xml
