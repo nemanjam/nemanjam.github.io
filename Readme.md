@@ -2,4 +2,4 @@
 
 
 # Credits
-* This project is a frok from the developer blog [nemanjamitic.com](https://nemanjamitic.com)
+* This project is a frok from the developer blog [marcandreuf.com](https://marcandreuf.com)

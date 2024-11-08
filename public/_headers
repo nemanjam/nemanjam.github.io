@@ -1,7 +1,7 @@
 /*
   accept-ch: sec-ch-prefers-color-scheme
-  link: <https://nemanjamitic.com/>; rel=preconnect
-  permissions-policy: ch-prefers-color-scheme=("https://nemanjamitic.com")
+  link: <https://marcandreuf.com/>; rel=preconnect
+  permissions-policy: ch-prefers-color-scheme=("https://marcandreuf.com")
   x-frame-options: DENY
   x-content-type-options: nosniff
   referrer-policy: same-origin
