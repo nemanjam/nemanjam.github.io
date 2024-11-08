@@ -16,10 +16,7 @@ import type { ProcessEnvType } from '../types/config';
 // ! MUST use process.env for vars used in astro.config.mjs.
 // https://github.com/withastro/astro/issues?q=.env+file+not+loaded
 
-console.log('env: ', process.env);
-
 const NODE_ENV = process.env.NODE_ENV;
-console.log('Node env: ',NODE_ENV )
 
 if (!nodeEnvValues.includes(NODE_ENV)) {
   // eslint-disable-next-line no-console
