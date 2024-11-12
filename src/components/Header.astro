@@ -6,18 +6,18 @@ import HeaderLink from '@/components/HeaderLink.astro';
 import ThemeToggle from '@/components/ThemeToggle.astro';
 import { SELECTORS } from '@/constants/dom';
 import { IMAGE_SIZES } from '@/constants/image';
-//import { NAVIGATION_ITEMS } from '@/constants/navigation';
+import { NAVIGATION_ITEMS } from '@/constants/navigation';
 import { ROUTES } from '@/constants/routes';
 import { CONFIG_CLIENT } from '@/config/client';
-//import { getActiveNavItemPath } from '@/utils/navigation';
-//import { cn } from '@/utils/styles';
+import { getActiveNavItemPath } from '@/utils/navigation';
+// import { cn } from '@/utils/styles';
 
 import Avatar from '@/assets/images/red-led.webp';
 
 const { SCROLL_TO_TOP_ID } = SELECTORS;
 
 const { pathname: routePathname } = Astro.url;
-//const activeNavItemPath = getActiveNavItemPath(routePathname);
+const activeNavItemPath = getActiveNavItemPath(routePathname);
 
 ---
 
@@ -26,7 +26,7 @@ const { pathname: routePathname } = Astro.url;
   <div class="flex group-[.menu-open]:flex-col md:!flex-row md:max-w-4xl py-2 px-4       
     md:container md:mx-auto md:justify-between md:items-center md:py-4 md:w-1/2 md:px-0 md:flex-grow" >
     {/* mobile nav */}
-    <div class="w-full md:w-auto flex justify-between md:justify-stretch items-center">
+    <div class="w-full md:w-auto flex justify-between md:justify-stretch items-center md:mr-10 lg:mr-5">
       <HeaderLink href={ROUTES.HOME} 
       class="flex flex-row items-center gap-2 text-xl xs:text-2xl hover:text-inherit ">
         <Image
@@ -52,47 +52,33 @@ const { pathname: routePathname } = Astro.url;
           <Icon name="mdi:close" class="h-6 w-6 hidden group-aria-expanded:block" />
         </button>
       </mobile-button>
-    </div>
-
-
-    {/* nav items */    
-    // <nav
-    //   class="select-none hidden md:block group-[.menu-open]:block mt-0 group-[.menu-open]:mt-2"
-    //   aria-label="Site navigation"
-    // >
-    //   <ul class="flex gap-4 group-[.menu-open]:flex-col md:!flex-row md:items-center">
-    //     {
-    //       NAVIGATION_ITEMS.map(({ title, path }) => (
-    //         <li>
-    //           <HeaderLink
-    //             href={path}
-    //             isActive={path === activeNavItemPath}
-    //             {...(path === ROUTES.LINKS ? { 'data-astro-reload': true } : {})}
-    //           >
-    //             {title}
-    //           </HeaderLink>
-    //         </li>
-    //       ))
-    //     }
-    //     <li class="shrink-0">
-    //       <ThemeToggle />
-    //     </li>
-    //   </ul>
-    // </nav>
-    }
-
+    </div>   
     <nav
       class="select-none hidden md:block group-[.menu-open]:block mt-0 group-[.menu-open]:mt-2"
       aria-label="Site navigation"
     >
-    <ul class="flex gap-4 group-[.menu-open]:flex-col md:!flex-row md:items-center items-end md:ml-12">
+      <ul class="flex gap-4 group-[.menu-open]:flex-col md:!flex-row md:items-center items-end md:ml-12">
+        {
+          NAVIGATION_ITEMS.map(({ title, path }) => (
+            <li>
+              <HeaderLink
+                href={path}
+                isActive={path === activeNavItemPath}
+                {...(/**TODO. Disabled this condition as there is not links route. 
+                  Check this when implementing the links. Remove false and review 
+                  why do we need this data astro reload attribute
+                    path === ROUTES.LINKS */ false ? { 'data-astro-reload': true } : {})}
+              >
+                {title}
+              </HeaderLink>
+            </li>
+          ))
+        }
         <li class="shrink-0">
           <ThemeToggle />
         </li>
       </ul>
     </nav>
-
-
   </div>
 </header>
 
