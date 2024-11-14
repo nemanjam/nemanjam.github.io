@@ -556,5 +556,6 @@ add projects
 transitions za projekte, in markdown
 render mdx rss
 https://github.com/withastro/roadmap/discussions/419#discussioncomment-11256751
+https://github.com/delucis/astro-blog-full-text-rss/
 ------------
 ```
