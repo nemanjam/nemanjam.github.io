@@ -554,5 +554,7 @@ prettyPrintObject in_ dev works after page load, ok
 pi, local, arm, x86 yarn scripts and github actions, plausible url, blog.pi to pi
 add projects
 transitions za projekte, in markdown
+render mdx rss
+https://github.com/withastro/roadmap/discussions/419#discussioncomment-11256751
 ------------
 ```
