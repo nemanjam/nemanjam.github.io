@@ -1881,10 +1881,10 @@ astro-expressive-code@^0.38.3:
   dependencies:
     rehype-expressive-code "^0.38.3"
 
-astro-icon@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/astro-icon/-/astro-icon-1.1.2.tgz#4f7fdeb6ae15ce8bb27bad0b0c8f0c160e2d5510"
-  integrity sha512-2qAHBtZLYuFEIMP0Ck0edyLi5fQmJjwP2Qbv41f8L4KAJ2sra/dH7q5lCOn4q0DHVtS0w3tPG8UKQRits3UPcg==
+astro-icon@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/astro-icon/-/astro-icon-1.1.4.tgz#64cb630a82d42d4bf3814d7c56192e1b066de08a"
+  integrity sha512-sMLkQaevIQLv38WBzb/RDbsmxhg5+X+KcNmpTi9cE6MLurNWU1MPnlO87d9Vwg4HxTenKpDlYp81A3syXFW/gw==
   dependencies:
     "@iconify/tools" "^4.0.5"
     "@iconify/types" "^2.0.0"
@@ -1901,10 +1901,10 @@ astro-remote@^0.3.3:
     marked-smartypants "^1.1.6"
     ultrahtml "^1.5.3"
 
-astro-social-share@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/astro-social-share/-/astro-social-share-2.0.2.tgz#81497f8e8bc072934a4e0a96ebeff7607c7ce3fd"
-  integrity sha512-bPeZUOzOTuXIJjVYmRrnsP8bK+qv3aviey+F8tFgG30rR1npc4SkyOb05hsp2BLuDci9kbuoHFW6Vr3L4ozjSw==
+astro-social-share@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/astro-social-share/-/astro-social-share-2.0.3.tgz#69fe973653ae9fcf61d58afc43f870097be2e483"
+  integrity sha512-c5y6eIgUaE5WNWqkhRWXn7ILFjEUkD8ftYH9b1AmB2ZV7tLGktAHk0gWxVG3e7S5J5TLWlA88Q59NaXTvg4Smg==
 
 astro@^4.16.14:
   version "4.16.14"
