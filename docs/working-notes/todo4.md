@@ -13,4 +13,8 @@ blog card category and time bellow, image on top
 blog wider main 
 change base font (in themes)
 breadcrumbs
+-----
+
+gallery lazy load, blur, pagination on scroll
+
 ```
