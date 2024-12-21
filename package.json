@@ -28,13 +28,13 @@
     "dc:up": "docker compose up --build --force-recreate -d"
   },
   "dependencies": {
-    "@astrojs/mdx": "^3.1.9",
+    "@astrojs/mdx": "^4.0.3",
     "@astrojs/partytown": "^2.1.2",
-    "@astrojs/react": "^3.6.3",
+    "@astrojs/react": "^4.1.2",
     "@astrojs/sitemap": "^3.2.1",
     "@astrojs/tailwind": "^5.1.2",
     "@fontsource-variable/inter": "^5.1.0",
-    "astro": "^4.16.16",
+    "astro": "^5.1.1",
     "astro-embed": "^0.9.0",
     "astro-expressive-code": "^0.38.3",
     "astro-icon": "^1.1.4",

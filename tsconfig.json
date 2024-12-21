@@ -26,6 +26,6 @@
       "@/config/*": ["config/*"]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.astro"],
+  "include": ["**/*.ts", "**/*.tsx", "**/*.astro", ".astro/types.d.ts"],
   "exclude": ["dist", "docs", "node_modules"]
 }

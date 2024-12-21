@@ -17,4 +17,16 @@ breadcrumbs
 
 gallery lazy load, blur, pagination on scroll
 
+
+git checkout -b feature/astro-v5
+
+------------
+astro v5
+// these 2 fail with react 19, unrelated to astro 5, gallery page fails
+"react-grid-gallery": "^1.0.1",
+"react-image-lightbox": "^5.1.4",
+
+migrate gallery to astro components
+migrate content collections to content layer, restructure folder with slug to contain images
+
 ```

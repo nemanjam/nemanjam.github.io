@@ -19,8 +19,11 @@ const remarkPlugins = [remarkReadingTime];
 
 export default defineConfig({
   site: SITE_URL,
-  experimental: { env: envSchema },
   trailingSlash: 'ignore',
+  env: envSchema,
+  legacy: {
+    collections: true,
+  },
   // default
   compressHTML: true,
   server: { port: 3000 },
