@@ -2,7 +2,7 @@
 import '@fontsource-variable/inter/index.css';
 import '@/styles/main.css';
 
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 
 import ThemeScript from '@/components/ThemeScript.astro';
 import { DEFAULT_METADATA } from '@/constants/metadata';
@@ -122,13 +122,13 @@ const ogImageUrl = new URL(image, url);
   {/* MUST be inside <head /> to avoid white flash, IMPORTANT */}
   <ThemeScript />
 
-  <ViewTransitions fallback="none" />
+  <ClientRouter fallback="none" />
 
   <!-- 
     <style>
-      @view-transition {
-        navigation: auto; /* enabled! */
-      }
+    @view-transition {
+      navigation: auto; /* enabled! */
+    }
     </style> 
   -->
 </head>
