@@ -1,27 +1,30 @@
 ---
+import { render } from 'astro:content';
+
 import { getAllProjects } from '@/modules/project';
-import Project from '@/layouts/Project.astro';
+import ProjectLayout from '@/layouts/Project.astro';
 import Share from '@/components/Share.astro';
 import { ROUTES } from '@/constants/routes';
 import { CONFIG_CLIENT } from '@/config/client';
 import { getOpenGraphImagePath } from '@/libs/api/open-graph/image-path';
 
 import type { Metadata } from '@/types/common';
+import type { Project } from '@/types/project';
 
 const { SITE_URL } = CONFIG_CLIENT;
 
 export async function getStaticPaths() {
-  const sortedProjects = await getAllProjects();
+  const sortedProjects: Project[] = await getAllProjects();
 
-  const paths = sortedProjects.map((page) => ({
-    params: { slug: page.slug },
-    props: { page },
+  const paths = sortedProjects.map((project) => ({
+    params: { slug: project.slug },
+    props: { ...project },
   }));
 
   return paths;
 }
 
-const { data, render } = Astro.props.page;
+const { data } = Astro.props;
 const { pathname } = Astro.url;
 const { slug } = Astro.params;
 
@@ -36,10 +39,10 @@ const shareProps = {
   url: `${SITE_URL}${ROUTES.PROJECTS}${slug}`,
 };
 
-const { Content } = await render();
+const { Content } = await render(Astro.props);
 ---
 
-<Project {metadata}>
+<ProjectLayout {metadata}>
   <Content />
   <Share {...shareProps} />
-</Project>
+</ProjectLayout>

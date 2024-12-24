@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import { render } from 'astro:content';
 
 import { getAllPostsWithReadingTime } from '@/modules/post/common';
 import { getRandomPosts } from '@/modules/post/random';
@@ -39,7 +40,7 @@ export async function getStaticPaths() {
   return paths;
 }
 
-const { data, render, readingTime, randomPosts } = Astro.props;
+const { data, readingTime, randomPosts } = Astro.props;
 const {
   draft,
   title,
@@ -57,7 +58,7 @@ const {
 const { slug } = Astro.params;
 const { pathname } = Astro.url;
 
-const { Content, headings: postHeadings } = await render();
+const { Content, headings: postHeadings } = await render(Astro.props);
 const headings = getHeadingsForTableOfContents(postHeadings);
 
 const postMetaProps = {

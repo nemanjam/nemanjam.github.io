@@ -28,5 +28,9 @@ astro v5
 
 migrate gallery to astro components
 migrate content collections to content layer, restructure folder with slug to contain images
+------------
+// content layer
+git checkout -b feature/content-layer
 
+id, slug, decoupled with my custom type Post[], Project[], from CollectionEntry<T>
 ```
