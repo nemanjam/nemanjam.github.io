@@ -21,9 +21,6 @@ export default defineConfig({
   site: SITE_URL,
   trailingSlash: 'ignore',
   env: envSchema,
-  legacy: {
-    collections: true,
-  },
   // default
   compressHTML: true,
   server: { port: 3000 },

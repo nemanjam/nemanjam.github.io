@@ -1,6 +1,13 @@
-import { getAllEntries } from '@/modules/common';
+import { getAllEntries, idToSlug } from '@/modules/common';
 import { COLLECTIONS } from '@/constants/collections';
+
+import type { Project } from '@/types/project';
 
 /*-------------------------------- getAllProjects ------------------------------*/
 
-export const getAllProjects = () => getAllEntries(COLLECTIONS.PROJECT);
+/**
+ * From this point Project[] instead of CollectionEntry<'project'>[].
+ * My custom type with slug, etc.
+ */
+export const getAllProjects = (): Promise<Project[]> =>
+  getAllEntries(COLLECTIONS.PROJECT).then((entries) => entries.map(idToSlug));
