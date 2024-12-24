@@ -20,9 +20,11 @@ export const getPostsWithReadingTimeFromPosts = async (
 
   // other frontmatter props are in post.data...
   // readingTimes is in post.readingTimes
-  const postsWithReadingTimeAndSlug = posts
-    .map((post, index) => ({ ...post, ...readingTimes[index] }))
-    .map(idToSlug);
+  const postsWithReadingTimeAndSlug = posts.map((post, index) => ({
+    ...idToSlug(post),
+    ...readingTimes[index],
+  }));
+
   return postsWithReadingTimeAndSlug;
 };
 
