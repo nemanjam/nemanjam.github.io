@@ -33,4 +33,6 @@ migrate content collections to content layer, restructure folder with slug to co
 git checkout -b feature/content-layer
 
 id, slug, decoupled with my custom type Post[], Project[], from CollectionEntry<T>
+folder name with slug and colocated images
+remote collection for links page?
 ```
