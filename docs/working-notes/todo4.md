@@ -35,4 +35,11 @@ git checkout -b feature/content-layer
 id, slug, decoupled with my custom type Post[], Project[], from CollectionEntry<T>
 folder name with slug and colocated images
 remote collection for links page?
+-----------
+folders with index 
+https://github.dev/LeaVerou/lea.verou.me
+
+git checkout -b refactor/folder-slug
+
+
 ```
