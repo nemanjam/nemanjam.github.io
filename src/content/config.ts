@@ -7,12 +7,15 @@ import { BASE_FOLDERS } from '@/constants/collections';
 
 const { POST, PROJECT } = BASE_FOLDERS;
 
+type GenerateIdFn = Parameters<typeof glob>[0]['generateId'];
+
 /**
  * Format id slug. Remove '/' to avoid catch all [...page].astro route.
  *
  * @example filepath: 2024/03-15-example-project-2/index.mdx -> slug: 2024-03-15-example-project-2
  */
-const generateId = ({ entry }: { entry: string }) => entry.split('/').slice(0, 2).join('-');
+const generateId: GenerateIdFn = ({ entry }: { entry: string }) =>
+  entry.split('/').slice(0, 2).join('-');
 
 export const postCollection = defineCollection({
   loader: glob({ pattern: '**/*.mdx', base: POST, generateId }),
