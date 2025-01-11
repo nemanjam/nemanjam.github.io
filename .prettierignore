@@ -7,7 +7,8 @@ yarn.yaml
 .astro
 
 # enable for .md
-docs
+docs/*
+!docs/working-notes/templates/project.md
 
 
 # formatting breaks them
