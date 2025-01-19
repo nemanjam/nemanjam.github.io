@@ -40,6 +40,11 @@ folders with index
 https://github.dev/LeaVerou/lea.verou.me
 
 git checkout -b refactor/folder-slug
+----------
 
+git checkout -b feat/add-hn-project
+
+markdown link in new tab, styles
+my-prose-project
 
 ```
