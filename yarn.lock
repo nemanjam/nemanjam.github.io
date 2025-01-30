@@ -5220,10 +5220,10 @@ object-hash@^3.0.0:
   resolved "https://registry.yarnpkg.com/object-hash/-/object-hash-3.0.0.tgz#73f97f753e7baffc0e2cc9d6e079079744ac82e9"
   integrity sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==
 
-object-treeify@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/object-treeify/-/object-treeify-4.0.1.tgz#f91a7dec795d8275886e7f1bd78408f6975be825"
-  integrity sha512-Y6tg5rHfsefSkfKujv2SwHulInROy/rCL5F4w0QOWxut8AnxYxf0YmNhTh95Zfyxpsudo66uqkux0ACFnyMSgQ==
+object-treeify@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/object-treeify/-/object-treeify-5.0.1.tgz#7600a73f6e25dc39a74404576cbf0f7316449b93"
+  integrity sha512-aDGtugyvfo11wpiectzpyikBzV2iBhyp9Z8xnRE6Z67VH+wbmkLzCh7bC6rfi7RzgEVprKYf0GeqksHrMobdJg==
 
 ofetch@^1.4.1:
   version "1.4.1"

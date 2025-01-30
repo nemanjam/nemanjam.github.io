@@ -49,7 +49,7 @@
     "github-slugger": "^2.0.0",
     "mdast-util-to-string": "^4.0.0",
     "nanostores": "^0.11.3",
-    "object-treeify": "^4.0.1",
+    "object-treeify": "^5.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-grid-gallery": "^1.0.1",

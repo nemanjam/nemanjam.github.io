@@ -46,5 +46,5 @@ git checkout -b feat/add-hn-project
 
 markdown link in new tab, styles
 my-prose-project
-
+semantic release, conventional commits
 ```
