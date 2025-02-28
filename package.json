@@ -34,7 +34,7 @@
     "@astrojs/sitemap": "^3.2.1",
     "@astrojs/tailwind": "^5.1.5",
     "@fontsource-variable/inter": "^5.1.1",
-    "astro": "^5.4.0",
+    "astro": "^5.4.1",
     "astro-embed": "^0.9.0",
     "astro-expressive-code": "^0.40.2",
     "astro-icon": "^1.1.5",
@@ -82,7 +82,7 @@
     "satori-html": "^0.3.2",
     "serve": "^14.2.4",
     "tailwindcss": "^3.4.15",
-    "typescript": "^5.7.3"
+    "typescript": "^5.8.2"
   },
   "packageManager": "yarn@1.22.22",
   "engines": {

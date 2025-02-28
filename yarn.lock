@@ -106,6 +106,11 @@
   resolved "https://registry.yarnpkg.com/@astrojs/compiler/-/compiler-2.10.3.tgz#852386445029f7765a70b4c1d1140e175e1d8c27"
   integrity sha512-bL/O7YBxsFt55YHU021oL+xz+B/9HvGNId3F9xURN16aeqDK9juHGktdkCSXz+U4nqFACq6ZFvWomOzhV+zfPw==
 
+"@astrojs/compiler@^2.10.4":
+  version "2.10.4"
+  resolved "https://registry.yarnpkg.com/@astrojs/compiler/-/compiler-2.10.4.tgz#883e469600d06d101d77829c91c4215b270cd503"
+  integrity sha512-86B3QGagP99MvSNwuJGiYSBHnh8nLvm2Q1IFI15wIUJJsPeQTO3eb2uwBmrqRsXykeR/mBzH8XCgz5AAt1BJrQ==
+
 "@astrojs/internal-helpers@0.6.0":
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/@astrojs/internal-helpers/-/internal-helpers-0.6.0.tgz#8d2a34923a6a12d8ebf86912698a97c38e48fd43"
@@ -1931,12 +1936,12 @@ astro-social-share@^2.0.3:
   resolved "https://registry.yarnpkg.com/astro-social-share/-/astro-social-share-2.1.0.tgz#7c0da29b24e8c900d46164cdc306e2509e1b4403"
   integrity sha512-t5DykR+T7gGNLTnrFXASCyufCpXcWhLdXFLSRYRKvMOFSUaaPIWMPu1ncIhxdFD7hm7SWHboAb33nJUUZxJH2Q==
 
-astro@^5.4.0:
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/astro/-/astro-5.4.0.tgz#481e9866c9632bdde13bd426af7f8ee43155892e"
-  integrity sha512-7A//zrCtJUGfJcQAt6PDhMu4a6pogvnK54HLXnYlPnKSWQZu/tKIYWfyvocVnTuEYIPExIN3CpjNAFFLoweJVw==
+astro@^5.4.1:
+  version "5.4.1"
+  resolved "https://registry.yarnpkg.com/astro/-/astro-5.4.1.tgz#7f24f8408b3f7a12cec6736ccbdb5bc7dc0bbd4d"
+  integrity sha512-z9BiBz8pV7pZVn1evZv/9bJil3A9UZNyEjDFH3IjD87ioz95HHGLgbjRbbqF1EwSy8JOLKlMNyuQPqjrX8xqWw==
   dependencies:
-    "@astrojs/compiler" "^2.10.3"
+    "@astrojs/compiler" "^2.10.4"
     "@astrojs/internal-helpers" "0.6.0"
     "@astrojs/markdown-remark" "6.2.0"
     "@astrojs/telemetry" "3.2.0"
@@ -6751,10 +6756,10 @@ typescript-auto-import-cache@^0.3.3:
   dependencies:
     semver "^7.3.8"
 
-typescript@^5.7.3:
-  version "5.7.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.7.3.tgz#919b44a7dbb8583a9b856d162be24a54bf80073e"
-  integrity sha512-84MVSjMEHP+FQRPy3pX9sTVV/INIex71s9TL2Gm5FG/WG1SqXeKyZ0k7/blY/4FdOzI12CBy1vGc4og/eus0fw==
+typescript@^5.8.2:
+  version "5.8.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.8.2.tgz#8170b3702f74b79db2e5a96207c15e65807999e4"
+  integrity sha512-aJn6wq13/afZp/jT9QZmwEjDqqvSGp1VT5GVg+f/t6/oVyrgXM6BY1h9BRh/O5p3PlUPAe+WuiEZOmb/49RqoQ==
 
 ufo@^1.5.4:
   version "1.5.4"
