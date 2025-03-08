@@ -7,7 +7,7 @@ import type { PluginUtils } from 'tailwindcss/types/config';
 const config: Config = {
   content: ['src/**/*.{astro,md,mdx,tsx,ts}', 'astro.config.mjs'],
   // activates only dark: modifier, not color theme
-  darkMode: ['selector'],
+  darkMode: ['selector', '.dark'],
   plugins: [
     require('@tailwindcss/typography'),
     plugin(({ addVariant }) => {

@@ -3,9 +3,11 @@
   @apply inline-block lowercase no-underline rounded-tag;
 }
 
+/* 
 @utility tag-default {
-  /* @apply  */
+  @apply  
 }
+*/
 
 @utility tag-text {
   @apply hover:underline;

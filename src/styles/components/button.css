@@ -7,9 +7,11 @@
   @apply border;
 }
 
+/* 
+empty for now 
 @utility button-solid {
-  /* empry for now */
 }
+*/
 
 @utility button-outline-primary {
   /* compound variants */
