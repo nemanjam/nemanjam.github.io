@@ -48,3 +48,8 @@ markdown link in new tab, styles
 my-prose-project
 semantic release, conventional commits
 ```
+------------------
+git checkout -b feat/tailwind4-v2
+
+where to see compiled tailwind output
+pogledaj layers u v4 docs

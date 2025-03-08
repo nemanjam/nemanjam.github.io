@@ -1,6 +1,5 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+/* tailwind */
+@import './my-tailwind.css';
 
 /* first, so base, components, utilities can use it */
 @import './theme/index.css';

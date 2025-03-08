@@ -1,5 +1,7 @@
 /* Post content, entire Page, entire Project */
 
+/* @reference "../my-tailwind.css"; */
+
 /* prose override */
 @layer base {
   .my-prose:not(:where([class~='not-prose'], [class~='not-prose'] *)) {

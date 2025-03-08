@@ -1,5 +1,5 @@
-@layer components {
-  ol.ol-nested-decimal {
+@utility ol-nested-decimal {
+  &ol {
     counter-reset: first-index;
     padding-inline-start: 0;
 
@@ -25,11 +25,14 @@
 
     ol li:before {
       counter-increment: second-index;
-      content: counter(first-index, decimal) '.' counter(second-index, decimal) ' ';
+      content: counter(first-index, decimal) '.' counter(second-index, decimal)
+        ' ';
     }
   }
+}
 
-  ol.ol-nested-latin {
+@utility ol-nested-latin {
+  &ol {
     counter-reset: first-index;
     padding-inline-start: 0;
 
