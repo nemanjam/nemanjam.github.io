@@ -1,38 +1,36 @@
-@layer components {
-  .tag {
-    @apply text-content;
-    @apply inline-block lowercase no-underline rounded-tag;
-  }
+@utility tag {
+  @apply text-content;
+  @apply inline-block lowercase no-underline rounded-tag;
+}
 
-  .tag-default {
-    /* @apply  */
-  }
+@utility tag-default {
+  /* @apply  */
+}
 
-  .tag-text {
-    @apply hover:underline;
-  }
+@utility tag-text {
+  @apply hover:underline;
+}
 
-  .tag-solid {
-    @apply bg-base-200 hover:bg-base-300;
-  }
+@utility tag-solid {
+  @apply bg-base-200 hover:bg-base-300;
+}
 
-  .tag-sm {
-    @apply text-sm;
-  }
+@utility tag-sm {
+  @apply text-sm;
+}
 
-  .tag-solid-sm {
-    @apply px-2 py-0.5;
-  }
+@utility tag-solid-sm {
+  @apply px-2 py-0.5;
+}
 
-  .tag-md {
-    @apply text-base;
-  }
+@utility tag-md {
+  @apply text-base;
+}
 
-  .tag-solid-md {
-    @apply px-3 py-1;
-  }
+@utility tag-solid-md {
+  @apply px-3 py-1;
+}
 
-  .tag-solid-primary {
-    @apply bg-primary text-primary-content hover:bg-primary-hover;
-  }
+@utility tag-solid-primary {
+  @apply bg-primary text-primary-content hover:bg-primary-hover;
 }

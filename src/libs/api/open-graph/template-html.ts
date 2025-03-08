@@ -26,7 +26,7 @@ const templateHtml = ({ title, heroImageUrl, avatarImageUrl, siteUrl }: Template
         <!-- left column -->
         <div class="w-[550px] flex flex-col justify-between mr-6">
           <!-- title -->
-          <div class="flex flex-grow text-6xl font-semibold mb-4">${limitedTitle}</div>
+          <div class="flex grow text-6xl font-semibold mb-4">${limitedTitle}</div>
 
           <!-- avatar and site -->
           <div class="flex items-center ${isLongSiteUrl ? 'flex-col justify-end items-start' : ''}">

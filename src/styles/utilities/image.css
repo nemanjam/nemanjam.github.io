@@ -1,14 +1,9 @@
-@layer utilities {
-  .no-expand {
-  }
+@utility expand-lg {
+  @apply xl:mx-[calc(50%-50vw)] xl:translate-x-[calc(50vw-50%)];
+  @apply xl:w-[80vw] max-w-7xl;
+}
 
-  .expand-lg {
-    @apply xl:mx-[calc(50%-50vw)] xl:translate-x-[calc(50vw-50%)];
-    @apply xl:w-[80vw] max-w-7xl;
-  }
-
-  .expand-sm {
-    @apply xl:mx-[calc(50%-50vw)] xl:translate-x-[calc(50vw-50%)];
-    @apply xl:w-[70vw] max-w-5xl;
-  }
+@utility expand-sm {
+  @apply xl:mx-[calc(50%-50vw)] xl:translate-x-[calc(50vw-50%)];
+  @apply xl:w-[70vw] max-w-5xl;
 }

@@ -1,50 +1,48 @@
-@layer components {
-  .button {
-    @apply inline-flex items-center gap-2 no-underline;
-    @apply rounded-button text-base;
-  }
+@utility button {
+  @apply inline-flex items-center gap-2 no-underline;
+  @apply rounded-button text-base;
+}
 
-  .button-outline {
-    @apply border;
-  }
+@utility button-outline {
+  @apply border;
+}
 
-  .button-solid {
-    /* empry for now */
-  }
+@utility button-solid {
+  /* empry for now */
+}
 
+@utility button-outline-primary {
   /* compound variants */
-  .button-outline-primary {
-    @apply text-primary border-primary;
-    @apply hover:bg-primary hover:text-primary-content;
+  @apply text-primary border-primary;
+  @apply hover:bg-primary hover:text-primary-content;
+}
+
+@utility button-outline-default {
+  @apply text-content border-content;
+  @apply hover:bg-base-200;
+}
+
+@utility button-solid-primary {
+  @apply bg-primary text-primary-content;
+  /* no primary-hover yet */
+}
+
+@utility button-solid-default {
+  @apply bg-base-200 text-content;
+}
+
+@utility button-sm {
+  @apply px-3 py-0.5;
+
+  [data-icon] {
+    @apply w-6 h-6;
   }
+}
 
-  .button-outline-default {
-    @apply text-content border-content;
-    @apply hover:bg-base-200;
-  }
+@utility button-md {
+  @apply text-lg px-5 py-1.5;
 
-  .button-solid-primary {
-    @apply bg-primary text-primary-content;
-    /* no primary-hover yet */
-  }
-
-  .button-solid-default {
-    @apply bg-base-200 text-content;
-  }
-
-  .button-sm {
-    @apply px-3 py-0.5;
-
-    [data-icon] {
-      @apply w-6 h-6;
-    }
-  }
-
-  .button-md {
-    @apply text-lg px-5 py-1.5;
-
-    [data-icon] {
-      @apply w-8 h-8;
-    }
+  [data-icon] {
+    @apply w-8 h-8;
   }
 }
