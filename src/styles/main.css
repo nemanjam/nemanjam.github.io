@@ -1,21 +1,9 @@
-@import 'tailwindcss';
+/* tailwind */
+@import './my-tailwind.css';
 
 /* first, so base, components, utilities can use it */
-@import './theme/index.css' layer(utilities);
+@import './theme/index.css';
 
-@import './base/index.css' layer(utilities);
+@import './base/index.css';
 @import './components/index.css';
 @import './utilities/index.css';
-
-@config '../../tailwind.config.ts';
-
-/* v4 border color */
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
-}

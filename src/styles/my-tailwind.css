@@ -1,0 +1,64 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+@custom-variant dark (&:is(.dark *));
+
+/* @config '../../tailwind.config.ts'; */
+
+@theme {
+  /* -------------- fonts -------------- */
+
+  --font-family-sans: 'Inter Variable', 'Inter';
+
+  /* -------------- colors -------------- */
+
+  /* background */
+  --color-base-100: var(--th-base-100);
+  --color-base-200: var(--th-base-200);
+  --color-base-300: var(--th-base-300);
+  --color-base-code: var(--th-base-code);
+
+  /* text */
+  --color-content: var(--th-content);
+  --color-headings: var(--th-headings);
+  --color-captions: var(--th-captions);
+
+  /* links */
+  --color-links: var(--th-links);
+  --color-links-hover: var(--th-links-hover);
+  --color-links-visited: var(--th-links-visited);
+
+  /* brand */
+  --color-primary: var(--th-primary);
+  --color-primary-hover: var(--th-primary-hover);
+  --color-primary-content: var(--th-primary-content);
+  --color-primary-base-200: var(--th-primary-base-200);
+  --color-primary-base-300: var(--th-primary-base-300);
+
+  --color-secondary: var(--th-secondary);
+  --color-secondary-hover: var(--th-secondary-hover);
+  --color-secondary-content: var(--th-secondary-content);
+
+  --color-accent: var(--th-accent);
+  --color-accent-hover: var(--th-accent-hover);
+  --color-accent-content: var(--th-accent-content);
+
+  /* -------------- border radius -------------- */
+
+  --radius-box: var(--th-rounded-box);
+  --radius-button: var(--th-rounded-button);
+  --radius-tag: var(--th-rounded-tag);
+
+  /* -------- */
+}
+
+/* v4 border color */
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
