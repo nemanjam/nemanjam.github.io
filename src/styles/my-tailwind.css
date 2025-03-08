@@ -6,6 +6,10 @@
 /* @config '../../tailwind.config.ts'; */
 
 @theme {
+  /* -------- custom breakpoints -------- */
+
+  --breakpoint-xs: 30rem; /* 480px */
+
   /* -------------- fonts -------------- */
 
   --font-family-sans: 'Inter Variable', 'Inter';

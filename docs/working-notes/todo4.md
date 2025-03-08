@@ -53,3 +53,11 @@ git checkout -b feat/tailwind4-v2
 
 where to see compiled tailwind output
 pogledaj layers u v4 docs
+vidi @layer components sto su predefinisane sa @utility
+----------
+not-* variant je sad dostupan 
+ne treba mi vise plugin
+plugin(({ addVariant }) => {
+  addVariant('not-first', '&:not(:first-child)');
+  addVariant('not-last', '&:not(:last-child)');
+}),
