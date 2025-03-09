@@ -4,6 +4,7 @@
 
 /* prose override */
 @layer base {
+  /* not used with @apply */
   .my-prose:not(:where([class~='not-prose'], [class~='not-prose'] *)) {
     @apply prose prose-slate max-w-none dark:prose-invert;
 

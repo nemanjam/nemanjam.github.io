@@ -1,7 +1,11 @@
 @utility centered {
-  @apply w-full md:mx-auto;
+  @layer components {
+    @apply w-full md:mx-auto;
+  }
 }
 
 @utility centered-px {
-  @apply centered px-4 lg:px-0;
+  @layer components {
+    @apply centered px-4 lg:px-0;
+  }
 }

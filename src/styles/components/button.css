@@ -1,10 +1,14 @@
 @utility button {
-  @apply inline-flex items-center gap-2 no-underline;
-  @apply rounded-button text-base;
+  @layer components {
+    @apply inline-flex items-center gap-2 no-underline;
+    @apply rounded-button text-base;
+  }
 }
 
 @utility button-outline {
-  @apply border;
+  @layer components {
+    @apply border;
+  }
 }
 
 /* 
@@ -14,37 +18,49 @@ empty for now
 */
 
 @utility button-outline-primary {
-  /* compound variants */
-  @apply text-primary border-primary;
-  @apply hover:bg-primary hover:text-primary-content;
+  @layer components {
+    /* compound variants */
+    @apply text-primary border-primary;
+    @apply hover:bg-primary hover:text-primary-content;
+  }
 }
 
 @utility button-outline-default {
-  @apply text-content border-content;
-  @apply hover:bg-base-200;
+  @layer components {
+    @apply text-content border-content;
+    @apply hover:bg-base-200;
+  }
 }
 
 @utility button-solid-primary {
-  @apply bg-primary text-primary-content;
-  /* no primary-hover yet */
+  @layer components {
+    @apply bg-primary text-primary-content;
+    /* no primary-hover yet */
+  }
 }
 
 @utility button-solid-default {
-  @apply bg-base-200 text-content;
+  @layer components {
+    @apply bg-base-200 text-content;
+  }
 }
 
 @utility button-sm {
-  @apply px-3 py-0.5;
+  @layer components {
+    @apply px-3 py-0.5;
 
-  [data-icon] {
-    @apply w-6 h-6;
+    [data-icon] {
+      @apply w-6 h-6;
+    }
   }
 }
 
 @utility button-md {
-  @apply text-lg px-5 py-1.5;
+  @layer components {
+    @apply text-lg px-5 py-1.5;
 
-  [data-icon] {
-    @apply w-8 h-8;
+    [data-icon] {
+      @apply w-8 h-8;
+    }
   }
 }

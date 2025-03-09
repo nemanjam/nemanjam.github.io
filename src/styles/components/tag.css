@@ -1,6 +1,8 @@
 @utility tag {
-  @apply text-content;
-  @apply inline-block lowercase no-underline rounded-tag;
+  @layer components {
+    @apply text-content;
+    @apply inline-block lowercase no-underline rounded-tag;
+  }
 }
 
 /* 
@@ -10,29 +12,43 @@
 */
 
 @utility tag-text {
-  @apply hover:underline;
+  @layer components {
+    @apply hover:underline;
+  }
 }
 
 @utility tag-solid {
-  @apply bg-base-200 hover:bg-base-300;
+  @layer components {
+    @apply bg-base-200 hover:bg-base-300;
+  }
 }
 
 @utility tag-sm {
-  @apply text-sm;
+  @layer components {
+    @apply text-sm;
+  }
 }
 
 @utility tag-solid-sm {
-  @apply px-2 py-0.5;
+  @layer components {
+    @apply px-2 py-0.5;
+  }
 }
 
 @utility tag-md {
-  @apply text-base;
+  @layer components {
+    @apply text-base;
+  }
 }
 
 @utility tag-solid-md {
-  @apply px-3 py-1;
+  @layer components {
+    @apply px-3 py-1;
+  }
 }
 
 @utility tag-solid-primary {
-  @apply bg-primary text-primary-content hover:bg-primary-hover;
+  @layer components {
+    @apply bg-primary text-primary-content hover:bg-primary-hover;
+  }
 }
