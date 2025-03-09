@@ -1,7 +1,5 @@
 /* Post content, entire Page, entire Project */
 
-/* @reference "../my-tailwind.css"; */
-
 /* prose override */
 @layer base {
   /* not used with @apply */
