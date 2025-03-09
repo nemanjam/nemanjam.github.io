@@ -48,3 +48,7 @@ markdown link in new tab, styles
 my-prose-project
 semantic release, conventional commits
 ```
+// tailwind 4
+git checkout feat/tailwind4-v2
+
+
