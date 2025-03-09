@@ -32,6 +32,7 @@
 
 @utility link-nav {
   @layer components {
+    /* here, specificity fails, text-headings */
     @apply text-headings whitespace-nowrap underline-offset-4 text-lg;
     @apply hover:text-links-hover;
     @apply focus:text-links-hover focus:underline;

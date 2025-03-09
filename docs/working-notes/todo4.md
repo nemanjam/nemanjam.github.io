@@ -61,3 +61,5 @@ plugin(({ addVariant }) => {
   addVariant('not-first', '&:not(:first-child)');
   addVariant('not-last', '&:not(:last-child)');
 }),
+--------------
+migrate all @apply in css to inline jsx classes
