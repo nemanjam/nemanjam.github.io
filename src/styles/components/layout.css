@@ -1,9 +1,11 @@
-@layer components {
-  .centered {
+@utility centered {
+  @layer components {
     @apply w-full md:mx-auto;
   }
+}
 
-  .centered-px {
+@utility centered-px {
+  @layer components {
     @apply centered px-4 lg:px-0;
   }
 }

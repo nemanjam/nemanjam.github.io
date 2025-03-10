@@ -109,7 +109,7 @@ const ScrollToTop: React.FC<Props> = ({ children }) => {
         onClick={handleScrollToTop}
         className={cn(
           // default styles
-          'z-10 fixed bottom-6 right-6 rounded bg-base-200 border border-base-300',
+          'z-10 fixed bottom-6 right-6 rounded-sm bg-base-200 border border-base-300',
           // initial state
           hiddenClasses,
           // transition classes

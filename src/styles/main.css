@@ -1,9 +1,12 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+/* tailwind */
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
 
-/* first, so base, components, utilities can use it */
+/* first, so config, base, components, utilities can use it */
 @import './theme/index.css';
+
+/* tailwind.config.js */
+@import './tailwind-config.css';
 
 @import './base/index.css';
 @import './components/index.css';

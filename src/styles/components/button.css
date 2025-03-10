@@ -1,46 +1,62 @@
-@layer components {
-  .button {
+@utility button {
+  @layer components {
     @apply inline-flex items-center gap-2 no-underline;
     @apply rounded-button text-base;
   }
+}
 
-  .button-outline {
+@utility button-outline {
+  @layer components {
     @apply border;
   }
+}
 
-  .button-solid {
-    /* empry for now */
-  }
+/* 
+empty for now 
+@utility button-solid {
+}
+*/
 
-  /* compound variants */
-  .button-outline-primary {
+@utility button-outline-primary {
+  @layer components {
+    /* compound variants */
     @apply text-primary border-primary;
     @apply hover:bg-primary hover:text-primary-content;
   }
+}
 
-  .button-outline-default {
+@utility button-outline-default {
+  @layer components {
     @apply text-content border-content;
     @apply hover:bg-base-200;
   }
+}
 
-  .button-solid-primary {
+@utility button-solid-primary {
+  @layer components {
     @apply bg-primary text-primary-content;
     /* no primary-hover yet */
   }
+}
 
-  .button-solid-default {
+@utility button-solid-default {
+  @layer components {
     @apply bg-base-200 text-content;
   }
+}
 
-  .button-sm {
+@utility button-sm {
+  @layer components {
     @apply px-3 py-0.5;
 
     [data-icon] {
       @apply w-6 h-6;
     }
   }
+}
 
-  .button-md {
+@utility button-md {
+  @layer components {
     @apply text-lg px-5 py-1.5;
 
     [data-icon] {

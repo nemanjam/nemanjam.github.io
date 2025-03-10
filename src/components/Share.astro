@@ -47,6 +47,8 @@ const props = { ...defaultProps, ...shareProps };
 
 {/* his slot is broken */}
 <style is:global slot="astro-social-share-css">
+  @reference "../styles/main.css";
+
   .astro-social-share {
     @apply my-0;
   }

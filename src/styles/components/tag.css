@@ -1,38 +1,54 @@
-@layer components {
-  .tag {
+@utility tag {
+  @layer components {
     @apply text-content;
     @apply inline-block lowercase no-underline rounded-tag;
   }
+}
 
-  .tag-default {
-    /* @apply  */
-  }
+/* 
+@utility tag-default {
+  @apply  
+}
+*/
 
-  .tag-text {
+@utility tag-text {
+  @layer components {
     @apply hover:underline;
   }
+}
 
-  .tag-solid {
+@utility tag-solid {
+  @layer components {
     @apply bg-base-200 hover:bg-base-300;
   }
+}
 
-  .tag-sm {
+@utility tag-sm {
+  @layer components {
     @apply text-sm;
   }
+}
 
-  .tag-solid-sm {
+@utility tag-solid-sm {
+  @layer components {
     @apply px-2 py-0.5;
   }
+}
 
-  .tag-md {
+@utility tag-md {
+  @layer components {
     @apply text-base;
   }
+}
 
-  .tag-solid-md {
+@utility tag-solid-md {
+  @layer components {
     @apply px-3 py-1;
   }
+}
 
-  .tag-solid-primary {
+@utility tag-solid-primary {
+  @layer components {
     @apply bg-primary text-primary-content hover:bg-primary-hover;
   }
 }

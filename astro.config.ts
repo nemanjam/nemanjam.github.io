@@ -1,9 +1,10 @@
 import mdx from '@astrojs/mdx';
 import partytown from '@astrojs/partytown';
 import react from '@astrojs/react';
-import tailwind from '@astrojs/tailwind';
 import icon from 'astro-icon';
 import { defineConfig } from 'astro/config';
+
+import tailwindcss from '@tailwindcss/vite';
 
 // must use relative imports, and their entire import subtrees
 import { remarkReadingTime } from './plugins/remark-reading-time.mjs';
@@ -31,7 +32,7 @@ export default defineConfig({
     react(),
     mdx(),
     // applyBaseStyles: false prevents double loading of tailwind
-    tailwind({ applyBaseStyles: false }),
+    // tailwind({ applyBaseStyles: false }),
     icon({ iconDir: 'src/assets/icons' }),
     partytown({
       config: { forward: ['dataLayer.push'] },
@@ -42,5 +43,6 @@ export default defineConfig({
     build: {
       sourcemap: false,
     },
+    plugins: [tailwindcss()],
   },
 });
