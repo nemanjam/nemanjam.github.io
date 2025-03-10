@@ -46,6 +46,7 @@ export const configClientSchema = processEnvSchema
       SITE_DESCRIPTION: z.string().min(1),
       PAGE_SIZE_POST_CARD: z.number(),
       PAGE_SIZE_POST_CARD_SMALL: z.number(),
+      PAGE_SIZE_PROJECT_CARD: z.number(),
       MORE_POSTS_COUNT: z.number(),
       DEFAULT_MODE: z.enum(modeValues), // check that theme and mode match
       DEFAULT_THEME: z.enum(themeValues),
