@@ -7,6 +7,7 @@ publishDate: 2024-12-09
 ---
 
 import { Image } from 'astro:assets';
+import Link from '../../../../components/Link.astro';
 import { IMAGE_SIZES } from '../../../../constants/image';
 import HackerNewsNewJobsImage from '../../../../content/project/2024/12-09-hackernews-new-jobs/_images/hackernews-new-jobs.png';
 
@@ -26,6 +27,6 @@ Amet tempor ut incididunt in fugiat nisi aute pariatur adipisicing ipsum eiusmod
 
 ## Links
 
-- Demo: https://hackernews-new-jobs.arm1.nemanjamitic.com
-- Repository: https://github.com/nemanjam/hn-new-jobs
+- Demo: <Link href="https://hackernews-new-jobs.arm1.nemanjamitic.com" variant="link-markdown" target="_blank" title="HackerNews new jobs demo" />
+- Repository: <Link href="https://github.com/nemanjam/hn-new-jobs" variant="link-markdown" target="_blank" title="HackerNews new jobs repository" />
 

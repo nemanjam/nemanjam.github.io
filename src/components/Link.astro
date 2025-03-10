@@ -11,6 +11,7 @@ const linkVariants = cva('link-default', {
       'no-underline': 'link-no-underline',
       'link-heading': 'link-heading',
       'link-nav': 'link-nav',
+      'link-markdown': 'link-markdown',
     },
     disabled: { true: 'link-disabled' },
   },
@@ -27,5 +28,7 @@ const Element = disabled ? 'span' : 'a';
 ---
 
 <Element class={linkVariants({ variant, disabled, className })} {...props}>
-  <slot />
+  <slot>
+    {props.href}
+  </slot>
 </Element>

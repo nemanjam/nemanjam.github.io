@@ -51,6 +51,8 @@ semantic release, conventional commits
 
 // tailwind 4
 git checkout feat/tailwind4-v2
+----------
+    astro markdown link in new tab
 ```
 
 

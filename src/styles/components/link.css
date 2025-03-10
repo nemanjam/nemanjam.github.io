@@ -4,6 +4,10 @@
     @apply text-links no-underline;
   }
 
+  .link-markdown {
+    @apply text-headings underline;
+  }
+
   .link {
     @apply hover:text-links-hover hover:underline;
     @apply focus:text-links-hover focus:underline;
