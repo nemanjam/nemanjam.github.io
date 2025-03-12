@@ -17,7 +17,11 @@ import HackerNewsNewJobsImage from '../../../../content/project/2024/12-09-hacke
 
 ## Overview
 
-Amet tempor ut incididunt in fugiat nisi aute pariatur adipisicing ipsum eiusmod laborum id. Cillum est nostrud eu incididunt magna nisi eiusmod eiusmod duis. Sint id ipsum occaecat laborum eiusmod nisi id veniam cillum in ullamco culpa minim ut. Aliqua aliquip ad nostrud incididunt dolore aliqua ullamco laboris excepteur esse veniam. Sunt aliquip enim eiusmod ea exercitation dolor aliqua esse elit ex non. Proident proident sit laborum ipsum.
+Job ads aggregator for the HackerNews "Who’s Hiring" threads with focus on fresh and recurring job opportunities.
+
+## Goals
+
+Evaluate the potential of the idea and the level of interest for a website of this type. Build MVP quickly.
 
 ## Tech stack
 
@@ -25,8 +29,28 @@ Amet tempor ut incididunt in fugiat nisi aute pariatur adipisicing ipsum eiusmod
 - SQLite, better-sqlite3
 - Keyv, Keyv LRU, node-cron, Docker
 
+## Features
+
+- Group companies into 3 categories: 1. First time, 2. New, 3. Old
+- Visualize data with graphs 
+- Link and sort ads chronologically
+- Search company posting history
+- Automate parsing with cron jobs
+- Improve performance with caching and server side rendering
+- Deploy with Docker
+
+## Implementation details
+
+## Lessons learned 
+
+- Idea and project got most attention on HackerNews because the public is already profiled and familiar with "Who’s Hiring" threads.
+- HackerNews is very strict with scraping their pages, best to use alternative data sources.
+- Keyv cache instance is available only within the original Next.js app process, and `cache.clear()` call from the cron script that runs in a separate Node.js process does not have any effect. Solved by detecting database change and clearing cache in the original Next.js app. Cache that runs as a standalone process like Redis would also work.
+- It is not possible to run cron in Docker as non-root user, so it is best to use Node.js or Go package for scheduling tasks inside Docker.
+
 ## Links
 
-- Demo: <Link href="https://hackernews-new-jobs.arm1.nemanjamitic.com" variant="link-markdown" target="_blank" title="HackerNews new jobs demo" />
-- Repository: <Link href="https://github.com/nemanjam/hn-new-jobs" variant="link-markdown" target="_blank" title="HackerNews new jobs repository" />
+**HackerNews ShowHN thread:** <Link href="https://news.ycombinator.com/item?id=42373936" variant="link-markdown" target="_blank" title="HackerNews ShowHN thread" />
+**Demo:** <Link href="https://hackernews-new-jobs.arm1.nemanjamitic.com" variant="link-markdown" target="_blank" title="HackerNews new jobs demo" />
+**Repository:** <Link href="https://github.com/nemanjam/hn-new-jobs" variant="link-markdown" target="_blank" title="HackerNews new jobs repository" />
 

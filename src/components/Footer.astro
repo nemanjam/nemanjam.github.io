@@ -10,7 +10,7 @@ import { limitString, trimHttpProtocol } from '@/utils/strings';
 
 const { SITE_URL, AUTHOR_LINKEDIN, AUTHOR_GITHUB, REPO_URL } = CONFIG_CLIENT;
 const domain = trimHttpProtocol(SITE_URL);
-const messageLength = 20 as const;
+const messageLength = 15 as const;
 
 const { time, fullHash, message } = getLatestCommitInfo();
 
