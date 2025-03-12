@@ -1,0 +1,11 @@
+/* smaller margins for Project */
+
+@layer base {
+  .my-prose-project:not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    /* h2 vertical margin same as default p */
+    @apply prose-h2:my-5 md:prose-h2:my-6;
+
+    /* default line-height: 1.5; is enough */
+    @apply prose-p:my-0 prose-li:my-0;
+  }
+}
