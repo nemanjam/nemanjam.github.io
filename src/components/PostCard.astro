@@ -103,7 +103,7 @@ const getTransitionNameFromElementId = setTransitionSlug({ pageSlug: slug });
         elementId: TRANSITION_ELEMENT_IDS.POST_CARD.TITLE,
       })}
     >
-      <Link href={`${ROUTES.BLOG}${slug}`} variant="link-heading">
+      <Link href={`${ROUTES.BLOG}${slug}`} variant="heading">
         {title}
         {draft && <sup class="text-sm text-red-500 ml-1">{DRAFT_TEXT}</sup>}
       </Link>

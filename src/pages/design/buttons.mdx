@@ -59,8 +59,9 @@ export const links = {
   variant: [
     { variant: 'link' },
     { variant: 'no-underline' },
-    { variant: 'link-heading' },
-    { variant: 'link-nav' },
+    { variant: 'heading' },
+    { variant: 'nav' },
+    { variant: 'markdown' },
   ],
   disabled: [{ disabled: true }, { disabled: false }],
 };
@@ -74,7 +75,7 @@ export const links = {
     {values.map((props) => {
       const text = `${Object.values(props)[0]}`;
 
-      return <Link {...props}>{text}</Link>;
+      return <Link {...props} href="#">{text}</Link>;
     })}
 
   </div>

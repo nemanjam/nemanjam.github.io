@@ -10,6 +10,6 @@ export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
 const { slot, isActive = false, class: className, ...props } = Astro.props as Props;
 ---
 
-<Link {...props} variant="link-nav" class={cn({ 'underline text-links': isActive }, className)}>
+<Link {...props} variant="nav" class={cn({ 'underline text-links': isActive }, className)}>
   <slot />
 </Link>
