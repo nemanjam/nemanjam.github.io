@@ -6,6 +6,6 @@
     @apply prose-h2:my-5 md:prose-h2:my-6;
 
     /* default line-height: 1.5; is enough */
-    @apply prose-p:my-0 prose-li:my-0;
+    @apply prose-li:my-0;
   }
 }
