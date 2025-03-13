@@ -1,0 +1,55 @@
+---
+title: Developer blog
+description: Insights into HackerNews "Who's Hiring" thread. 
+heroImage: '../../../../content/project/2024/09-30-developer-blog/_images/developer-blog.png'
+heroAlt: Homepage Developer blog
+publishDate: 2024-09-30
+---
+
+import { Image } from 'astro:assets';
+import Link from '../../../../components/Link.astro';
+import { IMAGE_SIZES } from '../../../../constants/image';
+import DeveloperBlogImage from '../../../../content/project/2024/09-30-developer-blog/_images/developer-blog.png';
+
+# Developer blog
+
+<Image {...IMAGE_SIZES.FIXED.MDX_LG} src={DeveloperBlogImage} class="shadow-lg shadow-base-300" alt="Homepage Developer blog" />
+
+## Overview
+
+Developer blog website you are currently on.
+
+## Goal
+
+Build a custom blog script for my personal coding blog.
+
+## Tech stack
+
+- Astro, TailwindCSS, React, MDX
+- Zod, Satori, class-variance-authority
+
+## Features
+
+- Static Astro website
+- Post and project markdown content
+- Tags, categories, pagination
+- Optimized images, view transitions
+- SEO friendly - sitemap, metadata, Open Graph image
+- GitHub Pages, Nginx, x86 and arm Docker deployments
+
+## Implementation details
+
+You can find more implementation details in the <Link href="https://github.com/nemanjam/nemanjam.github.io/tree/main#implementation-details" variant="markdown" target="_blank" title="README.md file">README.md</Link> file on Github.
+
+## Lessons learned 
+
+- Currently Astro is the best framework for building static websites.
+- Keeping styles consistent and visually harmonious between markdown and custom components while maintaining clean, well structured, and maintainable code is not a trivial challenge.
+- You need to review many existing examples to come up with a visually appealing, practical, and up-to-date design for a blog.
+
+## Links
+
+- **Demo:** <Link href="https://nemanjamitic.com" variant="markdown" target="_blank" title="Developer blog demo" />
+- **Repository:** <Link href="https://github.com/nemanjam/nemanjam.github.io" variant="markdown" target="_blank" title="Developer blog repository" />
+
+

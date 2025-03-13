@@ -54,6 +54,7 @@ git checkout feat/tailwind4-v2
 ----------
     astro markdown link in new tab
 mdx not formatting, prettierignore, breaks them
+for screenshots use new not private window and select window in screenshot tool, not screen or selection, hide dock for 16/9 // important
 ```
 
 
