@@ -31,15 +31,20 @@ Build a custom blog script for my personal coding blog.
 ## Features
 
 - Static Astro website
-- Post and project markdown content
+- Post and project MDX content
 - Tags, categories, pagination
 - Optimized images, view transitions
 - SEO friendly - sitemap, metadata, Open Graph image
 - GitHub Pages, Nginx, x86 and arm Docker deployments
+- Plausible analytic
 
 ## Implementation details
 
-You can find more implementation details in the <Link href="https://github.com/nemanjam/nemanjam.github.io/tree/main#implementation-details" variant="markdown" target="_blank" title="README.md file">README.md</Link> file on Github.
+While building it, I researched many existing examples and paid close attention to clean, structured code because I intend to use it for years to come.
+
+It is a static website that makes use of all Astro v5 features. It is organized around Post and Project content layer models. Content can be filtered by tags and categories, and has pagination support. There is also full SEO support with metadata, sitemap and dynamic Open Graph images. Tailwind is used for responsive design, dark mode and color themes. React is used for interactive components. Three deployment methods are supported and automated, Nginx, Docker and Github Pages.
+
+There is a lot more to be said, such as embeds for code and YouTube, RSS feeds, image optimization, hierarchical layouts, environment variables, etc. You can read about all of this in more detail in the <Link href="https://github.com/nemanjam/nemanjam.github.io/tree/main#implementation-details" variant="markdown" target="_blank" title="README.md file">README.md</Link> file on Github.
 
 ## Lessons learned 
 
