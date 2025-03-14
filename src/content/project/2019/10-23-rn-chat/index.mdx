@@ -1,0 +1,49 @@
+---
+title: RN chat
+description: React Native chat app.
+heroImage: '../../../../content/project/2019/10-23-rn-chat/_images/rn-chat.png'
+heroAlt: React Native chat screens
+publishDate: 2019-10-23
+---
+
+import { Image } from 'astro:assets';
+import Link from '../../../../components/Link.astro';
+import { IMAGE_SIZES } from '../../../../constants/image';
+import RnChatImage from '../../../../content/project/2019/10-23-rn-chat/_images/rn-chat.png';
+
+# RN chat
+
+<Image {...IMAGE_SIZES.FIXED.MDX_LG} src={RnChatImage} class="shadow-lg shadow-base-300" alt="React Native chat screens" />
+
+## Overview
+
+React Native chat app.
+
+## Goals
+
+Learn React Native by building a basic chat app with users and groups.
+
+## Tech stack
+
+- React Native, Apollo GraphQL, NativeBase
+- Sequelize, PostgreSQL
+
+## Features
+
+- Auth, profile
+- Users with friends relations, public and private groups
+- Real time updates with refetching and subscriptions
+
+## Implementation details
+
+You can find more implementation details in the <Link href="https://github.com/nemanjam/rn-chat" variant="markdown" target="_blank" title="README.md">README.md</Link> file on Github.
+
+## Lessons learned 
+
+- Get practical experience with React Native.
+
+## Links
+
+- **Repository:** <Link href="https://github.com/nemanjam/rn-chat" variant="markdown" target="_blank" title="React Native chat app" />
+
+
