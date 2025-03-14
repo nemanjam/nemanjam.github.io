@@ -1,6 +1,6 @@
 ---
 title: Reddit unread comments
-description: Browser extension for comments on Reddit.
+description: Browser extension for easier tracking of new comments on Reddit. 
 heroImage: '../../../../content/project/2024/05-06-reddit-unread-comments/_images/reddit-unread-comments.png'
 heroAlt: Reddit unread comments browser extension
 publishDate: 2024-05-06
@@ -21,23 +21,37 @@ Chrome/Firefox extension for easier tracking of new comments on Reddit.
 
 ## Goal
 
-Build a custom blog script for my personal coding blog.
+Get practical experience in building browser extensions. Work with low level browser API's.
 
 ## Tech stack
 
-- Browser extension, React, RadixUI, Typescript
+- Browser extension, React, Typescript, IndexedDB
+- RadixUI, React Hook Form, TailwindCSS
 
 ## Features
 
-- Static Astro website
+- Highlight unread comments by visit and by time.
+- State between popup UI and Reddit DOM is synced in realtime.
+- Limit IndexedDB size by deleting oldest entries.
 
 ## Implementation details
 
-You can find more implementation details in the <Link href="https://github.com/nemanjam/reddit-unread-comments#documentation" variant="markdown" target="_blank" title="Documentation">Documentation</Link> section on Github.
+The app heavily relies on proper event handling, first of all debounced `onScroll`, but also `onLoad` and `visibilitychange` events. For all DOM manipulations it uses native `document.querySelectorAll()` without any declarative framework. Reddit uses shadow DOM which is an additional challenge for querying. I used closures to store state to save performance in loops for traversing nodes.
+
+The popup UI is built with RadixUI components and React Hook Form. Tailwind preflight styles are disabled to prevent interfering with Reddit styles. I implemented a messaging system for communication between the popup and the content script. 
+
+All state is persisted in IndexedDB database that is limited to 1MB usage. Firefox build uses manifest v2 and Chrome manifest v3.
+
+You can find more implementation details in the <Link href="https://github.com/nemanjam/reddit-unread-comments/blob/main/docs/developers-note.md" variant="markdown" target="_blank" title="Documentation">docs/developers-note.md</Link> file on Github.
 
 ## Lessons learned 
 
-- Currently Astro is the best framework for building static websites.
+- People often do not have a habit to use browser extensions, it is challenging to get users.
+- A solid and up-to-date extension boilerplate project might not be available and it is crucial for success.
+- It can be challenging to support both v2 and v3 manifests.
+- A proper retry base functionality is required for a reliable DOM traversing.
+- Websites often update DOM, keeping extension up-to-date requires time and energy.
+- IndexedDB has non-ergonomic API, use wrapper library instead.
 
 ## Links
 
