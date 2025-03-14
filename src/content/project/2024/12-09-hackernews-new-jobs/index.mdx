@@ -43,7 +43,7 @@ Evaluate the potential of the idea and the level of interest for a website of th
 
 This is a Next.js server side rendered app with default ShadcnUI components. Algolia API is used as a data source because HackerNews webserver has a very strict scraping policy. Minimal relevant data is stored in SQLite database which is used for fast and precise queuing. The query results are cached with Keyv LRU in memory cache to improve performance. 
 
-The app requires zero maintenance, the only insert query to parse a new month is automated using a `node-cron` scheduled task. The app is packed as a Docker image, either in Github Actions or locally, and is available for both `linux/amd64` and `linux/arm64` platforms. It also has Winston logger and Plausible analytics.
+The app requires zero maintenance, the only insert query to parse a new month is automated using a `node-cron` scheduled task. The app is packed as a Docker image, either in Github Actions or locally, and is available for both x86 and ARM platforms. It also has Winston logger and Plausible analytics.
 
 You can find more implementation details in the <Link href="https://github.com/nemanjam/hn-new-jobs/tree/main#implementation-details" variant="markdown" target="_blank" title="README.md file">README.md</Link> file on Github.
 

@@ -36,11 +36,16 @@ Learn React Native by building a basic chat app with users and groups.
 
 ## Implementation details
 
+At the time React Native and GraphQL were very popular combination for efficient data fetching. The app uses Apollo for CRUD operations and real time subscriptions. React Navigation is used for routing between activity screens. The UI is built using NativeBase components.
+
+The most challenging part is the PostgreSQL database schema that supports relations between User, Group, Chat and Message models. Database is managed via Sequelize ORM.
+
 You can find more implementation details in the <Link href="https://github.com/nemanjam/rn-chat" variant="markdown" target="_blank" title="README.md">README.md</Link> file on Github.
 
 ## Lessons learned 
 
 - Get practical experience with React Native.
+- React Native requires very carefully handpicked package versions for a successful build.
 
 ## Links
 

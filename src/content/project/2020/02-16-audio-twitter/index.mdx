@@ -30,13 +30,17 @@ Get practical experience with Apollo GraphQL. Work with audio.
 
 ## Features
 
-- Record, delete, like, retweet audio messages
+- Record, play, auto-play, delete, like, retweet audio messages
 - Auth, edit profile, real time notifications
 - Responsive design, color themes and dark mode
 
 ## Implementation details
 
-You can find more implementation details in the <Link href="https://github.com/nemanjam/audio-twitter" variant="markdown" target="_blank" title="README.md">README.md</Link> file on Github.
+React Mic is used for recording the audio and Wavesurfer for rendering waveform and playing. The UI is build with default MaterialUI components. It has a number of Apollo CRUD operations, real time subscriptions and client side resolvers for managing state. It has social network functionalities like follow, like, retweet, notifications.
+
+Data is stored in MongoDB using Mongoose and audio files are served via static folder.
+
+For more implementation details check the <Link href="https://github.com/nemanjam/audio-twitter" variant="markdown" target="_blank" title="README.md">README.md</Link> file on Github.
 
 ## Lessons learned 
 
