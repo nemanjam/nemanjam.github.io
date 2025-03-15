@@ -8,7 +8,7 @@ import { Image } from 'astro:assets';
 
 import { CONFIG_CLIENT } from '../config/client';
 import { IMAGE_SIZES, TW_SCREENS } from '../constants/image';
-import Link from '../components/Link.astro';
+import LinkWithLabel from '../components/LinkWithLabel.astro';
 import Electronics1Image from '../assets/images/all-images/electronics1.jpg';
 
 
@@ -30,20 +30,9 @@ My hobbies are fishing, lure building, bicycling, playing guitar, composing in F
 
 If you want to contact me about coding, or if you need a companion for fishing or jamming, use the links below.
 
-<p class="my-2 flex gap-1 flex-col xs:flex-row">
-  <label class="font-bold">GitHub:</label>
-  <Link href={AUTHOR_GITHUB} target="_blank">{AUTHOR_GITHUB}</Link>
-</p>
-<p class="my-2 flex gap-1 flex-col xs:flex-row">
-  <label class="font-bold">LinkedIn:</label>
-  <Link href={AUTHOR_LINKEDIN} target="_blank">{AUTHOR_LINKEDIN}</Link>
-</p>
-<p class="my-2 flex gap-1 flex-col xs:flex-row">
-  <label class="font-bold">Twitter:</label>
-  <Link href={AUTHOR_TWITTER} target="_blank">{AUTHOR_TWITTER}</Link>
-</p>
-<p class="my-2 flex gap-1 flex-col xs:flex-row">
-  <label class="font-bold">YouTube:</label>
-  <Link href={AUTHOR_YOUTUBE} target="_blank">{AUTHOR_YOUTUBE}</Link>
-</p>
+<LinkWithLabel label="GitHub" href={AUTHOR_GITHUB} title="Author GitHub profile" variant="link" />
+<LinkWithLabel label="LinkedIn" href={AUTHOR_LINKEDIN} title="Author LinkedIn profile" variant="link" />
+<LinkWithLabel label="Twitter" href={AUTHOR_TWITTER} title="Author Twitter profile" variant="link" />
+<LinkWithLabel label="YouTube" href={AUTHOR_YOUTUBE} title="Author YouTube profile" variant="link" />
+
 

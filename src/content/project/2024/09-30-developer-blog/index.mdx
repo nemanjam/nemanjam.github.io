@@ -8,6 +8,7 @@ publishDate: 2024-09-30
 
 import { Image } from 'astro:assets';
 import Link from '../../../../components/Link.astro';
+import LinkWithLabel from '../../../../components/LinkWithLabel.astro';
 import { IMAGE_SIZES } from '../../../../constants/image';
 import DeveloperBlogImage from '../../../../content/project/2024/09-30-developer-blog/_images/developer-blog.png';
 
@@ -54,7 +55,8 @@ There is a lot more to be said, such as embeds for code and YouTube, RSS feeds, 
 
 ## Links
 
-- **Demo:** <Link href="https://nemanjamitic.com" variant="markdown" target="_blank" title="Developer blog demo" />
-- **Repository:** <Link href="https://github.com/nemanjam/nemanjam.github.io" variant="markdown" target="_blank" title="Developer blog repository" />
+- <LinkWithLabel label="Demo" href="https://nemanjamitic.com" title="Developer blog demo" />
+- <LinkWithLabel label="Repository" href="https://github.com/nemanjam/nemanjam.github.io" title="Developer blog repository" />
+
 
 

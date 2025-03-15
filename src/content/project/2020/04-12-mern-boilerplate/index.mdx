@@ -8,6 +8,7 @@ publishDate: 2020-04-12
 
 import { Image } from 'astro:assets';
 import Link from '../../../../components/Link.astro';
+import LinkWithLabel from '../../../../components/LinkWithLabel.astro';
 import { IMAGE_SIZES } from '../../../../constants/image';
 import MernBoilerplateImage from '../../../../content/project/2020/04-12-mern-boilerplate/_images/mern-boilerplate.png';
 
@@ -47,7 +48,5 @@ You can find more implementation details in the <Link href="https://github.com/n
 
 ## Links
 
-- **Demo:** <Link href="https://mern-boilerplate.arm1.nemanjamitic.com" variant="markdown" target="_blank" title="MERN boilerplate demo" />
-- **Repository:** <Link href="https://github.com/nemanjam/mern-boilerplate" variant="markdown" target="_blank" title="MERN boilerplate repository" />
-
-
+- <LinkWithLabel label="Demo" href="https://mern-boilerplate.arm1.nemanjamitic.com" title="MERN boilerplate demo" />
+- <LinkWithLabel label="Repository" href="https://github.com/nemanjam/mern-boilerplate" title="MERN boilerplate repository" />

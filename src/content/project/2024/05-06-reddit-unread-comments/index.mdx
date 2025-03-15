@@ -8,6 +8,7 @@ publishDate: 2024-05-06
 
 import { Image } from 'astro:assets';
 import Link from '../../../../components/Link.astro';
+import LinkWithLabel from '../../../../components/LinkWithLabel.astro';
 import { IMAGE_SIZES } from '../../../../constants/image';
 import RedditUnreadCommentsImage from '../../../../content/project/2024/05-06-reddit-unread-comments/_images/reddit-unread-comments.png';
 
@@ -55,7 +56,8 @@ You can find more implementation details in the <Link href="https://github.com/n
 
 ## Links
 
-- **Demo video:** <Link href="https://www.youtube.com/watch?v=dHw0pM3ZzqY" variant="markdown" target="_blank" title="Extension demo video" />
-- **Repository:** <Link href="https://github.com/nemanjam/reddit-unread-comments" variant="markdown" target="_blank" title="Extension repository" />
+
+- <LinkWithLabel label="Demo video" href="https://www.youtube.com/watch?v=dHw0pM3ZzqY" title="Extension demo video" />
+- <LinkWithLabel label="Repository" href="https://github.com/nemanjam/reddit-unread-comments" title="Extension repository" />
 
 
