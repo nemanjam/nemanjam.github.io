@@ -1,26 +1,31 @@
 import { useEffect, useState } from 'react';
 
-import { getRandomImageSrc } from '@/utils/image';
+import { getRandomElementFromArray } from '@/utils/array';
 import { cn } from '@/utils/styles';
 
-import type { FC } from 'react';
+import type { FC, ImgHTMLAttributes } from 'react';
 
-interface Props extends React.ImgHTMLAttributes<HTMLImageElement> {}
+interface Props extends ImgHTMLAttributes<HTMLImageElement> {
+  // Important: must pass all allImagesSrc from the server or they wont be included on client
+  allImagesSrc: string[];
+}
 
-const ImageRandom: FC<Props> = ({ className, ...props }) => {
-  const [imageSrc, setImageSrc] = useState(''); // use loader image
+const ImageRandomReact: FC<Props> = ({ allImagesSrc, className, ...props }) => {
+  const [imageSrc, setImageSrc] = useState(allImagesSrc[0]);
 
   useEffect(() => {
     const run = async () => {
-      setImageSrc(await getRandomImageSrc());
+      setImageSrc(getRandomElementFromArray(allImagesSrc));
     };
 
     run();
   }, [setImageSrc]);
 
   const handleClick = async () => {
-    setImageSrc(await getRandomImageSrc());
+    setImageSrc(getRandomElementFromArray(allImagesSrc));
   };
+
+  // Todo: use <picture srcSet> for responsive images
 
   return (
     <img
@@ -33,4 +38,4 @@ const ImageRandom: FC<Props> = ({ className, ...props }) => {
   );
 };
 
-export default ImageRandom;
+export default ImageRandomReact;

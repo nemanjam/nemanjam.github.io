@@ -4,22 +4,11 @@ title: 'Home'
 description: 'Welcome to my blog'
 ---
 
-import { Image } from 'astro:assets';
-
-import { IMAGE_SIZES } from '../constants/image';
-import { getRandomImageMetadata } from '../utils/image';
-
-{/* 
-import ImageRandom from '../components/react/ImageRandom';
-*/}
+import ImageRandom from '../components/ImageRandom.astro';
 
 # Hello and welcome
 
-<Image {...IMAGE_SIZES.RESPONSIVE.POST_HERO} src={getRandomImageMetadata()} class="sm:max-h-96 object-cover" alt="Fishing spot" />
-
-{/* 
-<ImageRandom className="w-full sm:max-h-96 object-cover" client:load /> 
-*/}
+<ImageRandom class="w-full sm:max-h-96 object-cover" /> 
 
 Welcome to my coding blog. Here, I will share my coding experiments and thoughts on React.js, Next.js, Node.js, Astro, Python, DevOps, and more. Feel free to read, explore, and comment. Or, if you are feeling overwhelmed by coding, you can take a break and enjoy some random landscape photos.
 

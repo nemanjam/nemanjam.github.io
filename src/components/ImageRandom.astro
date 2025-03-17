@@ -1,0 +1,9 @@
+---
+import ImageRandomReact from '@/components/react/ImageRandom';
+import { allImagesSrc } from '@/utils/image';
+
+// forward Astro (MDX) class attr to className React
+const { class: className, ...props } = Astro.props;
+---
+
+<ImageRandomReact {...props} {className} {allImagesSrc} client:load />

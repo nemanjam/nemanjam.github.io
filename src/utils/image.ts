@@ -29,6 +29,8 @@ export const getAllImagesMetadata = (): ImageMetadata[] => {
 // static build, call only once
 export const allImagesMetadata = getAllImagesMetadata();
 
+/*-------------------------------- Gallery page ------------------------------*/
+
 // used in gallery
 export const imageMetadataToReactImageProps = async (
   imagesMetadata: ImageMetadata
@@ -67,7 +69,7 @@ export const imageMetadataToReactImageProps = async (
   return reactImageProps;
 };
 
-/*-------------------------------- Random Hero image ------------------------------*/
+/*-------------------------------- Home page, random image ------------------------------*/
 
 export const getRandomImageMetadata = (): ImageMetadata =>
   getRandomElementFromArray(allImagesMetadata);
@@ -82,7 +84,8 @@ export const imageMetadataToHeroImageSrc = async (
 
   const lightboxAstroImageProps = {
     ...astroImageProps,
-    // cant use responsive sizes here, must pass viewport width from client
+    // must use picture tag with srcSet
+    // ...IMAGE_SIZES.RESPONSIVE.POST_HERO,
     ...IMAGE_SIZES.FIXED.MDX_XL_16_9,
     alt: 'Hero image',
   };
@@ -93,9 +96,7 @@ export const imageMetadataToHeroImageSrc = async (
   return imageSrc;
 };
 
-export const getRandomImageSrc = async (): Promise<string> => {
-  const imageMetadata = getRandomImageMetadata();
-  const imageSrc = await imageMetadataToHeroImageSrc(imageMetadata);
+export const getAllImagesSrc = (): Promise<string[]> =>
+  Promise.all(allImagesMetadata.map(imageMetadataToHeroImageSrc));
 
-  return imageSrc;
-};
+export const allImagesSrc = await getAllImagesSrc();
