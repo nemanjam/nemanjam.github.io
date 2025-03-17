@@ -67,6 +67,35 @@ export const imageMetadataToReactImageProps = async (
   return reactImageProps;
 };
 
-// for Home page
+/*-------------------------------- Random Hero image ------------------------------*/
+
 export const getRandomImageMetadata = (): ImageMetadata =>
   getRandomElementFromArray(allImagesMetadata);
+
+export const imageMetadataToHeroImageSrc = async (
+  imageMetadata: ImageMetadata
+): Promise<string> => {
+  const astroImageProps = {
+    src: imageMetadata,
+    format: 'webp',
+  };
+
+  const lightboxAstroImageProps = {
+    ...astroImageProps,
+    // cant use responsive sizes here, must pass viewport width from client
+    ...IMAGE_SIZES.FIXED.MDX_XL_16_9,
+    alt: 'Hero image',
+  };
+
+  const optimizedImageProps = await getImage(lightboxAstroImageProps);
+  const { src: imageSrc } = optimizedImageProps;
+
+  return imageSrc;
+};
+
+export const getRandomImageSrc = async (): Promise<string> => {
+  const imageMetadata = getRandomImageMetadata();
+  const imageSrc = await imageMetadataToHeroImageSrc(imageMetadata);
+
+  return imageSrc;
+};
