@@ -10,10 +10,10 @@ interface Props extends ImgHTMLAttributes<HTMLImageElement> {
   allImagesSrc: string[];
 }
 
-const initialSrc = '';
+const initialImageSrc = '';
 
 const ImageRandomReact: FC<Props> = ({ allImagesSrc, className, ...props }) => {
-  const [imageSrc, setImageSrc] = useState(initialSrc);
+  const [imageSrc, setImageSrc] = useState(initialImageSrc);
 
   useEffect(() => {
     const run = async () => {
