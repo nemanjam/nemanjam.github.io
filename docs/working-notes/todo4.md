@@ -56,6 +56,7 @@ git checkout feat/tailwind4-v2
 mdx not formatting, prettierignore, breaks them
 for screenshots use new not private window and select window in screenshot tool, not screen or selection, hide dock for 16/9 // important
 breadcrumb navigation, projects
+random image client component for Home page, onClick
 ```
 
 

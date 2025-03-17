@@ -8,9 +8,6 @@ export const getRandomLengthSubstring = (inputString: string, length: number, ma
 export const limitString = (str: string, maxLength: number) =>
   str.length > maxLength ? str.slice(0, maxLength).trim() + '...' : str.trim();
 
-export const getRandomElementFromArray = <T>(arr: T[]): T =>
-  arr[Math.floor(Math.random() * arr.length)];
-
 export const trimHttpProtocol = (url: string) => {
   const trailingSlashRegex = /\/$/;
   const protocolRegex = /^(https?:\/\/)/i;

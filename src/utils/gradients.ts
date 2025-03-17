@@ -1,6 +1,6 @@
 import { default as twColors } from 'tailwindcss/colors';
 
-import { getRandomElementFromArray as rnd } from '@/utils/strings';
+import { getRandomElementFromArray as rnd } from '@/utils/array';
 
 import type { DefaultColors } from 'tailwindcss/types/generated/colors';
 
