@@ -59,6 +59,8 @@ breadcrumb navigation, projects
     random image client component for Home page, onClick
 use picture with srcSet for Home image
 solve loading fallback for async client image
+astro image as react child, wont work because of props
+https://docs.astro.build/en/guides/images/#images-in-ui-framework-components
 ```
 
 
