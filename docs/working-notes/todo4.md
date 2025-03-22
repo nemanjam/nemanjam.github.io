@@ -61,6 +61,17 @@ use picture with srcSet for Home image
 solve loading fallback for async client image
 astro image as react child, wont work because of props
 https://docs.astro.build/en/guides/images/#images-in-ui-framework-components
+------------
+https://github.com/RafidMuhymin/astro-imagetools // not needed actually, placeholder...
+load on scroll?
+------------
+git checkout feat/new-gallery
+
+use api route same as og-image, for gallery and home
+placeholder - blur, bg-color, single // extract line
+img with srcset
+
+rename all-images to gallery-images
 ```
 
 
