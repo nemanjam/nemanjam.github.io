@@ -58,15 +58,17 @@ const ImageRandomReact: FC<Props> = ({ galleryImages, className, ...props }) => 
 
   return (
     <>
-      <img
-        {...props}
-        src={imageSrc}
-        alt={imageAlt}
-        onClick={handleClick}
-        className={cn('cursor-pointer', className)}
-      />
-
-      {!imageSrc && <div className={cn('', className)}>placeholder</div>}
+      {imageSrc ? (
+        <img
+          {...props}
+          src={imageSrc}
+          alt={imageAlt}
+          onClick={handleClick}
+          className={cn('cursor-pointer', className)}
+        />
+      ) : (
+        <div className={cn('aspect-video', className)} />
+      )}
     </>
   );
 };

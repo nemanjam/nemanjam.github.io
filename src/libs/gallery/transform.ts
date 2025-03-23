@@ -28,7 +28,7 @@ export const imageMetadataToImageProps = async (
 
   const blurImageProps = {
     ...astroImageProps,
-    ...IMAGE_SIZES.FIXED.BLUR,
+    ...IMAGE_SIZES.FIXED.BLUR_16_9,
   };
 
   const xsImageProps = {
