@@ -71,6 +71,7 @@ export const imageMetadataToReactImageProps = async (
 
 /*-------------------------------- Home page, random image ------------------------------*/
 
+// unused
 export const getRandomImageMetadata = (): ImageMetadata =>
   getRandomElementFromArray(allImagesMetadata);
 

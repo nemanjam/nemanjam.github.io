@@ -72,6 +72,14 @@ placeholder - blur, bg-color, single // extract line
 img with srcset
 
 rename all-images to gallery-images
+endpoint to create open graph images, because they dont exist in the file system
+
+// only in dev
+http://localhost:3000/_image?href=/@fs/home/username/Desktop/nemanjam.github.io/src/assets/images/all-images/morning1.jpg?origWidth=4608&origHeight=2592&origFormat=jpg&w=1280&h=720&f=webp
+
+// in prod
+http://localhost:3000/_astro/focus1.CEdGhKb3_nVk9T.webp
+
 ```
 
 
