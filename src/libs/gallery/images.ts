@@ -25,20 +25,3 @@ export const getGalleryImagesMetadata = (): ImageMetadata[] => {
 
 export const getImagesProps = async (): Promise<ImageProps[]> =>
   Promise.all(getGalleryImagesMetadata().map(imageMetadataToImageProps));
-
-export const getHeroImagesProps = (): Promise<HeroImageProps[]> =>
-  getImagesProps().then((imagesProps) =>
-    imagesProps.map((imageProps) => ({
-      blur: imageProps.blur,
-      hero: imageProps.hero,
-    }))
-  );
-
-export const getGalleryImagesProps = (): Promise<GalleryImageProps[]> =>
-  getImagesProps().then((imagesProps) =>
-    imagesProps.map((imageProps) => ({
-      blur: imageProps.blur,
-      thumbnail: imageProps.thumbnail,
-      lightbox: imageProps.lightbox,
-    }))
-  );

@@ -3,25 +3,25 @@ import { useEffect, useMemo, useState } from 'react';
 import { getRandomElementFromArray } from '@/utils/array';
 import { cn } from '@/utils/styles';
 
-import type { HeroImageProps } from '@/libs/gallery/transform';
+import type { ImageAttributes, ImageProps } from '@/libs/gallery/transform';
 import type { FC, ImgHTMLAttributes } from 'react';
 
 interface Props extends ImgHTMLAttributes<HTMLImageElement> {
   // Important: must pass all allImagesSrc from the server or they wont be included on client
-  galleryImages: HeroImageProps[];
+  galleryImages: ImageProps[];
 }
 
-const initialImage: HeroImageProps = {
-  blur: {
-    src: '',
-    width: 0,
-    height: 0,
-  },
-  hero: {
-    src: '',
-    width: 0,
-    height: 0,
-  },
+const imageAttributes: ImageAttributes = {
+  src: '',
+  width: 0,
+  height: 0,
+};
+
+const initialImage: ImageProps = {
+  blur: { ...imageAttributes },
+  xs: { ...imageAttributes },
+  md: { ...imageAttributes },
+  xl: { ...imageAttributes },
 };
 
 const ImageRandomReact: FC<Props> = ({ galleryImages, className, ...props }) => {
@@ -54,10 +54,10 @@ const ImageRandomReact: FC<Props> = ({ galleryImages, className, ...props }) => 
         />
       )}
 
-      {image.hero.src && (
+      {image.xl.src && (
         <img
           {...props}
-          src={image.hero.src}
+          src={image.xl.src}
           onClick={handleClick}
           onLoad={() => setIsLoading(false)}
           className={cn(
@@ -69,7 +69,7 @@ const ImageRandomReact: FC<Props> = ({ galleryImages, className, ...props }) => 
         />
       )}
 
-      {!image.blur.src && !image.hero.src && <div className={cn('', className)}>placeholder</div>}
+      {!image.blur.src && !image.xl.src && <div className={cn('', className)}>placeholder</div>}
     </>
   );
 };

@@ -12,15 +12,11 @@ export interface ImageAttributes {
 
 export interface ImageProps {
   blur: ImageAttributes;
-  color?: ImageAttributes;
-  thumbnail: ImageAttributes;
-  lightbox: ImageAttributes; // fullSize, 1280x720
-  hero: ImageAttributes;
+  color?: ImageAttributes; // Todo:
+  xs: ImageAttributes;
+  md: ImageAttributes;
+  xl: ImageAttributes; // fullSize, 1280x720
 }
-
-export type HeroImageProps = Pick<ImageProps, 'blur' | 'hero'>;
-
-export type GalleryImageProps = Pick<ImageProps, 'blur' | 'thumbnail' | 'lightbox'>;
 
 export const imageMetadataToImageProps = async (
   imagesMetadata: ImageMetadata
@@ -30,39 +26,36 @@ export const imageMetadataToImageProps = async (
     format: 'webp',
   };
 
-  const blurAstroImageProps = {
+  const blurImageProps = {
     ...astroImageProps,
     ...IMAGE_SIZES.FIXED.BLUR,
-    alt: 'Blur image',
   };
 
-  const thumbnailAstroImageProps = {
+  const xsImageProps = {
     ...astroImageProps,
     ...IMAGE_SIZES.FIXED.MDX_XS_16_9,
-    alt: 'Thumbnail image',
   };
 
-  const lightboxAstroImageProps = {
+  const mdImageProps = {
+    ...astroImageProps,
+    ...IMAGE_SIZES.FIXED.MDX_MD_16_9,
+  };
+
+  const xlImageProps = {
     ...astroImageProps,
     ...IMAGE_SIZES.FIXED.MDX_XL_16_9,
-    alt: 'Lightbox image',
   };
 
-  const heroAstroImageProps = {
-    ...lightboxAstroImageProps,
-    alt: 'Hero image',
-  };
-
-  const optimizedBlurAstroImageProps = await getImage(blurAstroImageProps);
-  const optimizedThumbnailAstroImageProps = await getImage(thumbnailAstroImageProps);
-  const optimizedLightboxAstroImageProps = await getImage(lightboxAstroImageProps);
-  const optimizedHeroAstroImageProps = await getImage(heroAstroImageProps);
+  const optimizedBlurImageProps = await getImage(blurImageProps);
+  const optimizedXsImageProps = await getImage(xsImageProps);
+  const optimizedMdImageProps = await getImage(mdImageProps);
+  const optimizedXlImageProps = await getImage(xlImageProps);
 
   const imageProps = {
-    blur: getImageAttributes(optimizedBlurAstroImageProps),
-    thumbnail: getImageAttributes(optimizedThumbnailAstroImageProps),
-    lightbox: getImageAttributes(optimizedLightboxAstroImageProps),
-    hero: getImageAttributes(optimizedHeroAstroImageProps),
+    blur: getImageAttributes(optimizedBlurImageProps),
+    xs: getImageAttributes(optimizedXsImageProps),
+    md: getImageAttributes(optimizedMdImageProps),
+    xl: getImageAttributes(optimizedXlImageProps),
   };
 
   return imageProps;
