@@ -80,6 +80,8 @@ http://localhost:3000/_image?href=/@fs/home/username/Desktop/nemanjam.github.io/
 // in prod
 http://localhost:3000/_astro/focus1.CEdGhKb3_nVk9T.webp
 
+image 100% width and height, fills container that controls size
+
 ```
 
 

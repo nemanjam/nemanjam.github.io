@@ -28,48 +28,45 @@ const ImageRandomReact: FC<Props> = ({ galleryImages, className, ...props }) => 
   const randomImage = useMemo(() => getRandomElementFromArray(galleryImages), [galleryImages]);
 
   const [image, setImage] = useState(initialImage);
-  const [isLoading, setIsLoading] = useState(true);
+  const [hasLoaded, setHasLoaded] = useState(false);
 
+  // initial image, on mount
   useEffect(() => {
     setImage(randomImage);
   }, [setImage, randomImage]);
 
+  // handle blur -> xl image switch
+  useEffect(() => {
+    const img = new Image();
+    img.src = image.xl.src;
+
+    img.onload = () => {
+      setHasLoaded(true);
+    };
+  }, [image, setHasLoaded]);
+
   const handleClick = async () => {
     const randomImage = getRandomElementFromArray(galleryImages);
     setImage(randomImage);
-    setIsLoading(true);
+    setHasLoaded(false);
   };
+
+  const imageSrc = hasLoaded ? image.xl.src : image.blur.src;
+  const imageAlt = hasLoaded ? 'Hero image' : 'Blur image';
 
   // Todo: use <picture srcSet> for responsive images
 
   return (
     <>
-      {image.blur.src && (
-        <img
-          {...props}
-          src={image.blur.src}
-          onClick={handleClick}
-          className={cn('cursor-pointer hidden', { block: isLoading }, className)}
-          alt="Blur image"
-        />
-      )}
+      <img
+        {...props}
+        src={imageSrc}
+        alt={imageAlt}
+        onClick={handleClick}
+        className={cn('cursor-pointer', className)}
+      />
 
-      {image.xl.src && (
-        <img
-          {...props}
-          src={image.xl.src}
-          onClick={handleClick}
-          onLoad={() => setIsLoading(false)}
-          className={cn(
-            'cursor-pointer transition-opacity duration-500 ease-in-out opacity-100 block',
-            { 'hidden opacity-0': isLoading },
-            className
-          )}
-          alt="Hero image"
-        />
-      )}
-
-      {!image.blur.src && !image.xl.src && <div className={cn('', className)}>placeholder</div>}
+      {!imageSrc && <div className={cn('', className)}>placeholder</div>}
     </>
   );
 };
