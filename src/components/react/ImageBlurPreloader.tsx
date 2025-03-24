@@ -43,6 +43,7 @@ const ImageBlurPreloader: FC<Props> = ({
       setHasLoaded(true);
       onSrcLoaded?.();
     };
+    // src important dependency
   }, [src, setHasLoaded]);
 
   const imageSrc = hasLoaded ? src : blurSrc;

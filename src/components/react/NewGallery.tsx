@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import PhotoSwipeLightbox from 'photoswipe/lightbox';
 
@@ -8,10 +8,13 @@ import type { FC } from 'react';
 import 'photoswipe/style.css';
 
 import { GALLERY_ID } from '@/constants/gallery';
+import { cn } from '@/utils/styles';
 
 interface Props {
   images: ImageProps[];
 }
+
+type LoadedStates = Record<string, boolean>;
 
 // step
 const PAGE_SIZE = 3 as const; // Todo: make it responsive
@@ -28,6 +31,14 @@ const NewGallery: FC<Props> = ({ images }) => {
   const [page, setPage] = useState<number>(INITIAL_PAGE);
   const observerTarget = useRef(null);
 
+  const [loadedStates, setLoadedStates] = useState<LoadedStates>({});
+  // calculate if new page is loaded on scroll
+  // not for blur transition
+  const isAllImagesLoaded = useMemo(
+    () => Object.values(loadedStates).every(Boolean),
+    [loadedStates, loadedImages.length]
+  );
+
   const isEnd = loadedImages.length === images.length;
 
   // converts page to loaded images
@@ -39,8 +50,8 @@ const NewGallery: FC<Props> = ({ images }) => {
   // sets only page
   useEffect(() => {
     const callback: IntersectionObserverCallback = (entries) => {
-      // Todo: must wait here for images to load
-      if (!isEnd && entries[0].isIntersecting) {
+      // must wait here for images to load
+      if (!isEnd && isAllImagesLoaded && entries[0].isIntersecting) {
         setPage((prevPage) => prevPage + 1);
       }
     };
@@ -72,6 +83,10 @@ const NewGallery: FC<Props> = ({ images }) => {
     };
   }, []);
 
+  const handleLoad = (src: string) => {
+    setLoadedStates((prev) => ({ ...prev, [src]: true }));
+  };
+
   return (
     <>
       <div
@@ -87,7 +102,17 @@ const NewGallery: FC<Props> = ({ images }) => {
             target="_blank"
             rel="noreferrer"
           >
-            <img src={image.xs.src} alt="Gallery image" className="w-full" />
+            <img
+              src={image.xs.src}
+              onLoad={() => handleLoad(image.xs.src)}
+              alt="Gallery image"
+              className={cn(
+                'w-full transition-all duration-[2s] ease-in-out',
+                loadedStates[image.xs.src]
+                  ? 'opacity-100 blur-0 grayscale-0'
+                  : 'opacity-75 blur-sm grayscale'
+              )}
+            />
           </a>
         ))}
       </div>

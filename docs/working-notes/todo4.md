@@ -94,6 +94,8 @@ image 100% width and height, fills container that controls size // must do it li
   src="image-1200w.jpg"
   alt="A responsive image example" />
 
+blur preloader makes no sense for thumbnails, better css blur transition
+ImageBlurPreloader should support srcset or picture tag
 
 ```
 
