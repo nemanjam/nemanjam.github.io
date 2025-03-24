@@ -97,6 +97,14 @@ image 100% width and height, fills container that controls size // must do it li
 blur preloader makes no sense for thumbnails, better css blur transition
 ImageBlurPreloader should support srcset or picture tag
 
+remove old gallery code and upgrade to react 19
+extract types
+
+-----
+scroll to top, has bug in article mdx layout, bottom position and horizontal scroll
+add delay to fetch new page
+phone tap on backdrop doesnt close lightbox
+responsive page size
 ```
 
 
