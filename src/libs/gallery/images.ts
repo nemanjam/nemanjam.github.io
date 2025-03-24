@@ -1,7 +1,7 @@
 import { EXCLUDE_IMAGES } from '@/constants/gallery';
 import { imageMetadataToImageProps } from '@/libs/gallery/transform';
 
-import type { GalleryImageProps, HeroImageProps, ImageProps } from '@/libs/gallery/transform';
+import type { ImageProps } from '@/libs/gallery/transform';
 import type { ImageMetadata } from 'astro';
 
 // no need for API route, image server already exists, it will only rewrite url
