@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 
+import ImageBlurPreloader from '@/components/react/ImageBlurPreloader';
 import { getRandomElementFromArray } from '@/utils/array';
 import { cn } from '@/utils/styles';
 
@@ -35,41 +36,24 @@ const ImageRandomReact: FC<Props> = ({ galleryImages, className, ...props }) => 
     setImage(randomImage);
   }, [setImage, randomImage]);
 
-  // handle blur -> xl image switch
-  useEffect(() => {
-    const img = new Image();
-    img.src = image.xl.src;
-
-    img.onload = () => {
-      setHasLoaded(true);
-    };
-  }, [image, setHasLoaded]);
-
   const handleClick = async () => {
     const randomImage = getRandomElementFromArray(galleryImages);
     setImage(randomImage);
     setHasLoaded(false);
   };
 
-  const imageSrc = hasLoaded ? image.xl.src : image.blur.src;
   const imageAlt = hasLoaded ? 'Hero image' : 'Blur image';
 
-  // Todo: use <picture srcSet> for responsive images
-
   return (
-    <>
-      {imageSrc ? (
-        <img
-          {...props}
-          src={imageSrc}
-          alt={imageAlt}
-          onClick={handleClick}
-          className={cn('cursor-pointer', className)}
-        />
-      ) : (
-        <div className={cn('aspect-video', className)} />
-      )}
-    </>
+    <ImageBlurPreloader
+      {...props}
+      blurSrc={image.blur.src}
+      src={image.xl.src}
+      onSrcLoaded={() => setHasLoaded(true)}
+      alt={imageAlt}
+      onClick={handleClick}
+      className={cn('cursor-pointer', className)}
+    />
   );
 };
 
