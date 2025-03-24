@@ -1,13 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
 
+import PhotoSwipeLightbox from 'photoswipe/lightbox';
+
 import type { ImageProps } from '@/libs/gallery/transform';
 import type { FC } from 'react';
+
+import 'photoswipe/style.css';
+
+import { GALLERY_ID } from '@/constants/gallery';
 
 interface Props {
   images: ImageProps[];
 }
 
-const PAGE_SIZE = 3 as const; // Todo: make it responsive
+// step
+const PAGE_SIZE = 6 as const; // Todo: make it responsive
+// page dependency in useEffect is more important
 const INITIAL_PAGE = 1 as const;
 
 const fetchImagesUpToPage = (images: ImageProps[], nextPage: number): ImageProps[] => {
@@ -46,15 +54,42 @@ const NewGallery: FC<Props> = ({ images }) => {
     // page dependency is important for initial load to work for all resolutions
   }, [observerTarget, page]);
 
+  // lightbox
+  useEffect(() => {
+    let lightbox: PhotoSwipeLightbox | null = new PhotoSwipeLightbox({
+      gallery: '#' + GALLERY_ID,
+      children: 'a',
+      pswpModule: () => import('photoswipe'),
+    });
+    lightbox.init();
+
+    return () => {
+      lightbox?.destroy();
+      lightbox = null;
+    };
+  }, []);
+
   return (
     <>
-      <div className="grid grid-cols-1 gap-1 md:grid-cols-2 lg:grid-cols-3">
+      <div
+        id={GALLERY_ID}
+        className="pswp-gallery grid grid-cols-1 gap-1 sm:grid-cols-2 lg:grid-cols-3"
+      >
         {loadedImages.map((image) => (
-          <img key={image.xs.src} src={image.xs.src} alt="thumbnail image" className="" />
+          <a
+            key={`${GALLERY_ID}--${image.xl.src}`}
+            href={image.xl.src}
+            data-pswp-width={image.xl.width}
+            data-pswp-height={image.xl.height}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img src={image.xs.src} alt="Gallery image" className="w-full" />
+          </a>
         ))}
       </div>
       {/* control threshold with margin-top */}
-      <div ref={observerTarget} className="h-8 border border-red-500 mt-0"></div>
+      <div ref={observerTarget} className="mt-0"></div>
     </>
   );
 };
