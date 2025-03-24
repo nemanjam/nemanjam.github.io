@@ -7,7 +7,7 @@ interface Props {
   images: ImageProps[];
 }
 
-const PAGE_SIZE = 4 as const;
+const PAGE_SIZE = 3 as const; // Todo: make it responsive
 const INITIAL_PAGE = 1 as const;
 
 const fetchImagesUpToPage = (images: ImageProps[], nextPage: number): ImageProps[] => {
@@ -48,7 +48,7 @@ const NewGallery: FC<Props> = ({ images }) => {
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-1 md:grid-cols-2 lg:grid-cols-3">
         {loadedImages.map((image) => (
           <img key={image.xs.src} src={image.xs.src} alt="thumbnail image" className="" />
         ))}
