@@ -14,7 +14,7 @@ interface Props {
 }
 
 // step
-const PAGE_SIZE = 6 as const; // Todo: make it responsive
+const PAGE_SIZE = 3 as const; // Todo: make it responsive
 // page dependency in useEffect is more important
 const INITIAL_PAGE = 1 as const;
 
@@ -28,6 +28,8 @@ const NewGallery: FC<Props> = ({ images }) => {
   const [page, setPage] = useState<number>(INITIAL_PAGE);
   const observerTarget = useRef(null);
 
+  const isEnd = loadedImages.length === images.length;
+
   // converts page to loaded images
   useEffect(() => {
     const upToPageImages = fetchImagesUpToPage(images, page);
@@ -37,7 +39,8 @@ const NewGallery: FC<Props> = ({ images }) => {
   // sets only page
   useEffect(() => {
     const callback: IntersectionObserverCallback = (entries) => {
-      if (entries[0].isIntersecting) {
+      // Todo: must wait here for images to load
+      if (!isEnd && entries[0].isIntersecting) {
         setPage((prevPage) => prevPage + 1);
       }
     };
@@ -52,7 +55,7 @@ const NewGallery: FC<Props> = ({ images }) => {
       if (observerRef) observer.unobserve(observerRef);
     };
     // page dependency is important for initial load to work for all resolutions
-  }, [observerTarget, page]);
+  }, [observerTarget, page, isEnd]);
 
   // lightbox
   useEffect(() => {
