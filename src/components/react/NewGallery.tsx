@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
+import debounce from 'lodash.debounce';
 import PhotoSwipeLightbox from 'photoswipe/lightbox';
 
 import type { ImageProps } from '@/libs/gallery/transform';
@@ -7,7 +8,7 @@ import type { FC } from 'react';
 
 import 'photoswipe/style.css';
 
-import { GALLERY_ID } from '@/constants/gallery';
+import { GALLERY } from '@/constants/gallery';
 import { cn } from '@/utils/styles';
 
 interface Props {
@@ -16,10 +17,7 @@ interface Props {
 
 type LoadedStates = Record<string, boolean>;
 
-// step
-const PAGE_SIZE = 3 as const; // Todo: make it responsive
-// page dependency in useEffect is more important
-const INITIAL_PAGE = 1 as const;
+const { PAGE_SIZE, INITIAL_PAGE, OBSERVER_DEBOUNCE, GALLERY_ID } = GALLERY;
 
 const fetchImagesUpToPage = (images: ImageProps[], nextPage: number): ImageProps[] => {
   const endIndex = nextPage * PAGE_SIZE;
@@ -55,11 +53,12 @@ const NewGallery: FC<Props> = ({ images }) => {
         setPage((prevPage) => prevPage + 1);
       }
     };
+    const debouncedCallback = debounce(callback, OBSERVER_DEBOUNCE);
     const options: IntersectionObserverInit = { threshold: 1 };
-    const observer = new IntersectionObserver(callback, options);
+
+    const observer = new IntersectionObserver(debouncedCallback, options);
 
     const observerRef = observerTarget.current;
-
     if (observerRef) observer.observe(observerRef);
 
     return () => {

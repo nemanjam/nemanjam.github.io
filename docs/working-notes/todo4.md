@@ -102,9 +102,10 @@ extract types
 
 -----
 scroll to top, has bug in article mdx layout, bottom position and horizontal scroll
-add delay to fetch new page
+add delay to fetch new page, debounce
 phone tap on backdrop doesnt close lightbox
 responsive page size
+usehooks, isVisible or observer hook for infinite scroll, thumbnail, scroll to top
 ```
 
 
