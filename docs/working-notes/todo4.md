@@ -121,10 +121,13 @@ fora0: cant pass props from client component to child server component - slot (a
 fora1: margin collapsing disabled in flex, grid, mdx container
 fora2: client component size must be set in server component to prevent layout shift (flex or height and max-height)
 fora3: px suffix for style={{width, height}} in react
+fora4: srcset sizes, sirina koju slika zauzima je vazna (2 kolone collapse npr. i margine), a ne ekran
 --------
 must pass widths i sizes u getImage() za responsivne slike
 eventi ne moze na <img /> ali moze na <div /> okolo, <Image /> ide u slot // no scroll transition, no blur preloader
 bolje props od getImage()
+-----
+must use <img /> tag for srcset and sizes to be in dom instead of const img = new Image();
 ```
 
 
