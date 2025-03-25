@@ -5,7 +5,7 @@
   }
 
   .link-markdown {
-    @apply text-headings underline;
+    @apply text-headings truncate underline;
   }
 
   .link {
