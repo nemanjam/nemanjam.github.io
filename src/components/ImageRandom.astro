@@ -17,6 +17,10 @@ const { width, height } = Object.fromEntries(
 {/* height and width MUST be defined ON SERVER component to prevent layout shift */}
 {/* set height and width to image size but set real size with max-height and max-width */}
 
-<div class={cn('max-w-full max-h-96 my-8', className)} style={{ width, height }} {...props}>
+<div
+  class={cn('max-w-full max-h-64 md:max-h-96 my-8', className)}
+  style={{ width, height }}
+  {...props}
+>
   <ImageRandomReact {galleryImages} client:load />
 </div>

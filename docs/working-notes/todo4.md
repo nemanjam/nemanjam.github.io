@@ -113,6 +113,12 @@ height and width MUST be defined ON SERVER component to prevent layout shift
 ----
 img srcset
 copy hooks for width for page size and observer form react-use or usehooks
+
+--------
+fora0: cant pass props from client component to child server component - slot (astro Image component)
+fora1: margin collapsing disabled in flex, grid, mdx container
+fora2: client component size must be set in server component to prevent layout shift (flex or height and max-height)
+fora3: px suffix for style={{width, height}} in react
 ```
 
 
