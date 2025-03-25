@@ -20,6 +20,8 @@ const ImageBlurPreloader: FC<Props> = ({
   onSrcLoaded,
   className,
   divClassName,
+  width,
+  height,
   ...props
 }) => {
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -51,9 +53,15 @@ const ImageBlurPreloader: FC<Props> = ({
   return (
     <>
       {imageSrc ? (
-        <img {...props} src={imageSrc} className={cn('', className)} />
+        <img
+          {...props}
+          src={imageSrc}
+          width={width}
+          height={height}
+          className={cn('object-cover', className)}
+        />
       ) : (
-        <div className={cn('aspect-video', divClassName)} />
+        <div className={divClassName} />
       )}
     </>
   );

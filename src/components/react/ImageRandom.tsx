@@ -10,6 +10,7 @@ import type { FC, ImgHTMLAttributes } from 'react';
 interface Props extends ImgHTMLAttributes<HTMLImageElement> {
   // Important: must pass all allImagesSrc from the server or they wont be included on client
   galleryImages: ImageProps[];
+  divClassName?: string;
 }
 
 const imageAttributes: ImageAttributes = {
@@ -25,7 +26,7 @@ const initialImage: ImageProps = {
   xl: { ...imageAttributes },
 };
 
-const ImageRandomReact: FC<Props> = ({ galleryImages, className, ...props }) => {
+const ImageRandomReact: FC<Props> = ({ galleryImages, className, divClassName, ...props }) => {
   const randomImage = useMemo(() => getRandomElementFromArray(galleryImages), [galleryImages]);
 
   const [image, setImage] = useState(initialImage);
@@ -49,10 +50,13 @@ const ImageRandomReact: FC<Props> = ({ galleryImages, className, ...props }) => 
       {...props}
       blurSrc={image.blur.src}
       src={image.xl.src}
+      width={image.xl.width}
+      height={image.xl.height}
       onSrcLoaded={() => setHasLoaded(true)}
       alt={imageAlt}
       onClick={handleClick}
-      className={cn('cursor-pointer', className)}
+      className={cn('cursor-pointer w-full h-full my-0', className)}
+      divClassName={cn('w-full h-full', divClassName)}
     />
   );
 };

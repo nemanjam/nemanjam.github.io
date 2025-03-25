@@ -106,6 +106,13 @@ add delay to fetch new page, debounce
 phone tap on backdrop doesnt close lightbox
 responsive page size
 usehooks, isVisible or observer hook for infinite scroll, thumbnail, scroll to top
+
+// important for size of all client components
+height and width MUST be defined ON SERVER component to prevent layout shift 
+
+----
+img srcset
+copy hooks for width for page size and observer form react-use or usehooks
 ```
 
 
