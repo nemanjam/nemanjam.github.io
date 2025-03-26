@@ -26,8 +26,8 @@ export const TW_SCREENS = {
 export const IMAGE_SIZES = {
   FIXED: {
     BLUR_16_9: {
-      width: 16,
-      height: 9,
+      width: 64,
+      height: 36,
     },
     AVATAR: {
       width: 48,
