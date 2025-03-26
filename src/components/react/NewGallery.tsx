@@ -11,21 +11,23 @@ import 'photoswipe/style.css';
 import { GALLERY } from '@/constants/gallery';
 import { cn } from '@/utils/styles';
 
+import type { GalleryImage } from '@/libs/gallery/images';
+
 interface Props {
-  images: ImageProps[];
+  images: GalleryImage[];
 }
 
 type LoadedStates = Record<string, boolean>;
 
 const { PAGE_SIZE, INITIAL_PAGE, OBSERVER_DEBOUNCE, GALLERY_ID } = GALLERY;
 
-const fetchImagesUpToPage = (images: ImageProps[], nextPage: number): ImageProps[] => {
+const fetchImagesUpToPage = (images: GalleryImage[], nextPage: number): GalleryImage[] => {
   const endIndex = nextPage * PAGE_SIZE;
   return images.slice(0, endIndex);
 };
 
 const NewGallery: FC<Props> = ({ images }) => {
-  const [loadedImages, setLoadedImages] = useState<ImageProps[]>([]);
+  const [loadedImages, setLoadedImages] = useState<GalleryImage[]>([]);
   const [page, setPage] = useState<number>(INITIAL_PAGE);
   const observerTarget = useRef(null);
 
@@ -94,20 +96,21 @@ const NewGallery: FC<Props> = ({ images }) => {
       >
         {loadedImages.map((image) => (
           <a
-            key={`${GALLERY_ID}--${image.xl.src}`}
-            href={image.xl.src}
-            data-pswp-width={image.xl.width}
-            data-pswp-height={image.xl.height}
+            key={`${GALLERY_ID}--${image.lightbox.src}`}
+            // lightbox doesn't support responsive image
+            href={image.lightbox.src}
+            data-pswp-width={image.lightbox.width}
+            data-pswp-height={image.lightbox.height}
             target="_blank"
             rel="noreferrer"
           >
             <img
-              src={image.xs.src}
-              onLoad={() => handleLoad(image.xs.src)}
+              {...image.thumbnail}
+              onLoad={() => handleLoad(image.thumbnail.src)}
               alt="Gallery image"
               className={cn(
                 'w-full transition-all duration-[2s] ease-in-out',
-                loadedStates[image.xs.src]
+                loadedStates[image.thumbnail.src]
                   ? 'opacity-100 blur-0 grayscale-0'
                   : 'opacity-75 blur-sm grayscale'
               )}

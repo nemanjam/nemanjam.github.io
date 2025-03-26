@@ -1,7 +1,7 @@
 ---
 import ReactGallery from '@/components/react/Gallery';
 import NewReactGallery from '@/components/react/NewGallery';
-import { getImagesProps } from '@/libs/gallery/images';
+import { getGalleryImages, getImagesProps } from '@/libs/gallery/images';
 import { sliceToMod4 } from '@/utils/array';
 import { allImagesMetadata, imageMetadataToReactImageProps } from '@/utils/image';
 import { randomizeArray } from '@/utils/objects';
@@ -14,7 +14,12 @@ const allImagesMetadataMod4 = sliceToMod4(allImagesMetadata);
 const _reactImages = await Promise.all(
   allImagesMetadataMod4.map((metadata) => imageMetadataToReactImageProps(metadata))
 );
-const reactImages = await getImagesProps();
+
+const reactImages = await getGalleryImages();
+
+console.log('reactImages', JSON.stringify(reactImages[0], null, 2));
+
+// const reactImages = await getImagesProps();
 
 const randomizedReactImages = randomizeArray(reactImages);
 
