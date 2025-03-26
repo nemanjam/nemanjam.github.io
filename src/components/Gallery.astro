@@ -1,5 +1,5 @@
 ---
-import NewReactGallery from '@/components/react/NewGallery';
+import ReactGallery from '@/components/react/Gallery';
 import { getGalleryImages } from '@/libs/gallery/images';
 import { randomizeArray } from '@/utils/objects';
 
@@ -12,5 +12,5 @@ const { class: className } = Astro.props;
 ---
 
 <div class={className}>
-  <NewReactGallery client:only="react" images={randomizedGalleryImages} />
+  <ReactGallery client:only="react" images={randomizedGalleryImages} />
 </div>

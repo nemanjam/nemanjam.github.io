@@ -131,6 +131,13 @@ must use <img /> tag for srcset and sizes to be in dom instead of const img = ne
 
 loading... div bottom indicator
 set min-height blank gallery
+zabluri prvo postojecu, pa onda promeni
+
+check slug to id in feed and og-image
+PostCollection, Post, idToSlug
+replace getAllPosts with getAllPostsWithReadingTime, 
+
+spellcheck yarn script
 ```
 
 

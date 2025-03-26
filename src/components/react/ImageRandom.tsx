@@ -4,7 +4,7 @@ import ImageBlurPreloader from '@/components/react/ImageBlurPreloader';
 import { getRandomElementFromArray } from '@/utils/array';
 import { cn } from '@/utils/styles';
 
-import type { HeroImage, ImgAttributes } from '@/libs/gallery/images';
+import type { HeroImage, ImgTagAttributes } from '@/types/image';
 import type { FC, ImgHTMLAttributes } from 'react';
 
 interface Props extends ImgHTMLAttributes<HTMLImageElement> {
@@ -13,7 +13,7 @@ interface Props extends ImgHTMLAttributes<HTMLImageElement> {
   divClassName?: string;
 }
 
-const imageAttributes: ImgAttributes = {
+const imageAttributes: ImgTagAttributes = {
   src: '',
   width: 0,
   height: 0,
@@ -39,21 +39,11 @@ const ImageRandomReact: FC<Props> = ({ galleryImages, className, divClassName, .
     setImage(randomImage);
   };
 
-  const moreBlurAttributes = {
-    alt: 'Blur image',
-    onClick: handleClick,
-  };
-
-  const moreMainAttributes = {
-    alt: 'Hero image',
-    onClick: handleClick,
-  };
-
   return (
     <ImageBlurPreloader
       {...props}
-      blurAttributes={{ ...image.blur, ...moreBlurAttributes }}
-      mainAttributes={{ ...image.hero, ...moreMainAttributes }}
+      blurAttributes={{ ...image.blur, alt: '' }}
+      mainAttributes={{ ...image.hero, onClick: handleClick, alt: 'Hero image' }}
       className={cn('cursor-pointer my-0', className)}
       divClassName={divClassName}
     />

@@ -3,15 +3,13 @@ import {
   blurImageOptions,
   getCustomImage,
   heroImageOptions,
-  imageMetadataToImageProps,
   lightboxImageOptions,
   thumbnailImageOptions,
 } from '@/libs/gallery/transform';
 import { mergeArrays } from '@/utils/array';
 
-import type { ImageProps } from '@/libs/gallery/transform';
+import type { GalleryImage, HeroImage, ImgTagAttributes } from '@/types/image';
 import type { GetImageResult, ImageMetadata, UnresolvedImageTransform } from 'astro';
-import type { ImgHTMLAttributes } from 'react';
 
 // no need for API route, image server already exists, it will only rewrite url
 
@@ -31,9 +29,6 @@ export const getGalleryImagesMetadata = (): ImageMetadata[] => {
 
   return imagesMetadata;
 };
-
-export const getImagesProps = async (): Promise<ImageProps[]> =>
-  Promise.all(getGalleryImagesMetadata().map(imageMetadataToImageProps));
 
 export const getCustomImages = async (
   options: Omit<UnresolvedImageTransform, 'src'>
@@ -64,20 +59,7 @@ export const getGalleryImages = async (): Promise<GalleryImage[]> => {
   return galleryImages;
 };
 
-export interface HeroImage {
-  blur: ImgAttributes;
-  hero: ImgAttributes;
-}
-export interface GalleryImage {
-  thumbnail: ImgAttributes;
-  lightbox: ImgAttributes;
-}
-
-export interface ImgAttributes extends ImgHTMLAttributes<HTMLImageElement> {
-  src: string;
-}
-
-export const imageResultToImageAttributes = (imageResult: GetImageResult): ImgAttributes => ({
+export const imageResultToImageAttributes = (imageResult: GetImageResult): ImgTagAttributes => ({
   src: imageResult.src,
   srcSet: imageResult.srcSet?.attribute,
   ...imageResult.attributes,

@@ -3,18 +3,18 @@ import { useEffect, useState } from 'react';
 import usePrevious from '@/components/react/hooks/usePrevious';
 import { cn } from '@/utils/styles';
 
-import type { ImgAttributes } from '@/libs/gallery/images';
+import type { ImgTagAttributes } from '@/types/image';
 import type { FC } from 'react';
 
 interface Props {
-  blurAttributes: ImgAttributes;
-  mainAttributes: ImgAttributes;
+  blurAttributes: ImgTagAttributes;
+  mainAttributes: ImgTagAttributes;
   className?: string;
   divClassName?: string;
   onMainLoaded?: () => void;
 }
 
-const initialAttributes: ImgAttributes = { src: '' } as const;
+const initialAttributes: ImgTagAttributes = { src: '' } as const;
 
 const ImageBlurPreloader: FC<Props> = ({
   blurAttributes = initialAttributes,
@@ -28,6 +28,7 @@ const ImageBlurPreloader: FC<Props> = ({
 
   // reset hasLoaded on main image change
   useEffect(() => {
+    // store var in useMemo
     if (prevMainAttributes !== mainAttributes) {
       setHasLoaded(false);
     }
@@ -36,7 +37,7 @@ const ImageBlurPreloader: FC<Props> = ({
   // important: main image must be in DOM for onLoad to work
   // unmount and display: none will fail
   const handleLoad = () => {
-    setHasLoaded(true);
+    setHasLoaded(true); // check if new image
     onMainLoaded?.();
   };
 
