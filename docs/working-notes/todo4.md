@@ -128,6 +128,9 @@ eventi ne moze na <img /> ali moze na <div /> okolo, <Image /> ide u slot // no 
 bolje props od getImage()
 -----
 must use <img /> tag for srcset and sizes to be in dom instead of const img = new Image();
+
+loading... div bottom indicator
+set min-height blank gallery
 ```
 
 

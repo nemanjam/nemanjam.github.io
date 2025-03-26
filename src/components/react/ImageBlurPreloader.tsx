@@ -3,67 +3,78 @@ import { useEffect, useState } from 'react';
 import usePrevious from '@/components/react/hooks/usePrevious';
 import { cn } from '@/utils/styles';
 
-import type { FC, ImgHTMLAttributes } from 'react';
+import type { ImgAttributes } from '@/libs/gallery/images';
+import type { FC } from 'react';
 
-interface Props extends ImgHTMLAttributes<HTMLImageElement> {
-  blurSrc: string;
+interface Props {
+  blurAttributes: ImgAttributes;
+  mainAttributes: ImgAttributes;
   className?: string;
   divClassName?: string;
-  onSrcLoaded?: () => void;
+  onMainLoaded?: () => void;
 }
 
-const initialSrc = '' as const;
+const initialAttributes: ImgAttributes = { src: '' } as const;
 
 const ImageBlurPreloader: FC<Props> = ({
-  blurSrc = initialSrc,
-  src = initialSrc,
-  onSrcLoaded,
+  blurAttributes = initialAttributes,
+  mainAttributes = initialAttributes,
+  onMainLoaded,
   className,
   divClassName,
-  width,
-  height,
-  ...props
 }) => {
   const [hasLoaded, setHasLoaded] = useState(false);
-  const prevSrc = usePrevious(src);
+  const prevMainAttributes = usePrevious(mainAttributes);
 
-  // reset hasLoaded on src change
+  // reset hasLoaded on main image change
   useEffect(() => {
-    if (prevSrc !== src) {
+    if (prevMainAttributes !== mainAttributes) {
       setHasLoaded(false);
     }
-  }, [prevSrc, src, setHasLoaded]);
+  }, [prevMainAttributes, mainAttributes, setHasLoaded]);
 
-  // handle blur -> xl image switch
-  useEffect(() => {
-    if (!src) return;
+  // important: main image must be in DOM for onLoad to work
+  // unmount and display: none will fail
+  const handleLoad = () => {
+    setHasLoaded(true);
+    onMainLoaded?.();
+  };
 
-    const img = new Image();
-    img.src = src;
+  const commonAttributes = {
+    // blur image must use size from main image
+    width: mainAttributes.width,
+    height: mainAttributes.height,
+  };
 
-    img.onload = () => {
-      setHasLoaded(true);
-      onSrcLoaded?.();
-    };
-    // src important dependency
-  }, [src, setHasLoaded]);
-
-  const imageSrc = hasLoaded ? src : blurSrc;
+  const hasImage = hasLoaded
+    ? mainAttributes.src || mainAttributes.srcSet
+    : blurAttributes.src || blurAttributes.srcSet;
 
   return (
-    <>
-      {imageSrc ? (
-        <img
-          {...props}
-          src={imageSrc}
-          width={width}
-          height={height}
-          className={cn('object-cover', className)}
-        />
-      ) : (
-        <div className={divClassName} />
+    <div className={cn('relative size-full', divClassName)}>
+      {hasImage && (
+        <>
+          {/* blur image */}
+          <img
+            {...blurAttributes}
+            {...commonAttributes}
+            className={cn('object-cover absolute top-0 left-0 size-full', className)}
+          />
+
+          {/* main image */}
+          <img
+            {...mainAttributes}
+            {...commonAttributes}
+            onLoad={handleLoad}
+            className={cn(
+              'object-cover absolute top-0 left-0 size-full',
+              hasLoaded ? 'opacity-100' : 'opacity-0',
+              className
+            )}
+          />
+        </>
       )}
-    </>
+    </div>
   );
 };
 

@@ -3,7 +3,6 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import debounce from 'lodash.debounce';
 import PhotoSwipeLightbox from 'photoswipe/lightbox';
 
-import type { ImageProps } from '@/libs/gallery/transform';
 import type { FC } from 'react';
 
 import 'photoswipe/style.css';

@@ -1,12 +1,12 @@
 ---
 import ImageRandomReact from '@/components/react/ImageRandom';
 import { IMAGE_SIZES } from '@/constants/image';
-import { getImagesProps } from '@/libs/gallery/images';
+import { getHeroImages } from '@/libs/gallery/images';
 import { cn } from '@/utils/styles';
 
 const { class: className, ...props } = Astro.props;
 
-const galleryImages = await getImagesProps();
+const galleryImages = await getHeroImages();
 
 // add 'px' suffix or styles will fail
 const { width, height } = Object.fromEntries(

@@ -58,20 +58,24 @@ export const IMAGE_SIZES = {
   },
   RESPONSIVE: {
     POST_CARD: {
-      widths: [TW_SCREENS.XXS, TW_SCREENS.SM],
-      sizes: `(max-width: ${TW_SCREENS.XS}px) ${TW_SCREENS.XXS}px, ${TW_SCREENS.SM}px`,
+      widths: [TW_SCREENS.XXS, TW_SCREENS.XS, TW_SCREENS.SM, TW_SCREENS.MD],
+      sizes: `(max-width: ${TW_SCREENS.XS}px) ${TW_SCREENS.XS}px, (max-width: ${TW_SCREENS.SM}px) ${TW_SCREENS.SM}px, (max-width: ${TW_SCREENS.MD}px) ${TW_SCREENS.MD}px, ${TW_SCREENS.XXS}px`,
+    },
+    POST_CARD_MORE: {
+      widths: [TW_SCREENS.XXS, TW_SCREENS.XS, TW_SCREENS.SM],
+      sizes: `(max-width: ${TW_SCREENS.XS}px) ${TW_SCREENS.XS}px, (max-width: ${TW_SCREENS.SM}px) ${TW_SCREENS.SM}px, ${TW_SCREENS.XXS}px`,
     },
     POST_HERO: {
-      widths: [TW_SCREENS.XXS, TW_SCREENS.SM, TW_SCREENS.MD, TW_SCREENS.LG],
-      sizes: `(max-width: ${TW_SCREENS.XS}px) ${TW_SCREENS.XXS}px, (max-width: ${TW_SCREENS.MD}px) ${TW_SCREENS.SM}px, (max-width: ${TW_SCREENS.XL}px) ${TW_SCREENS.MD}px, ${TW_SCREENS.LG}px`,
+      widths: [TW_SCREENS.XS, TW_SCREENS.SM, TW_SCREENS.MD, TW_SCREENS.LG],
+      sizes: `(max-width: ${TW_SCREENS.XS}px) ${TW_SCREENS.XS}px, (max-width: ${TW_SCREENS.SM}px) ${TW_SCREENS.SM}px, (max-width: ${TW_SCREENS.MD}px) ${TW_SCREENS.MD}px, ${TW_SCREENS.LG}px`,
     },
     PROJECT_CARD: {
-      widths: [TW_SCREENS.XXS, TW_SCREENS.SM],
-      sizes: `(max-width: ${TW_SCREENS.XS}px) ${TW_SCREENS.XXS}px, ${TW_SCREENS.SM}px`,
+      widths: [TW_SCREENS.XXS, TW_SCREENS.XS, TW_SCREENS.SM],
+      sizes: `(max-width: ${TW_SCREENS.SM}px) ${TW_SCREENS.SM}px, (max-width: ${TW_SCREENS.MD}px) ${TW_SCREENS.XS}px, ${TW_SCREENS.XXS}px`,
     },
     MDX_EXPAND_LG: {
-      widths: [TW_SCREENS.XXS, TW_SCREENS.SM, TW_SCREENS.MD, TW_SCREENS.LG, TW_SCREENS.XL],
-      sizes: `(max-width: ${TW_SCREENS.XS}px) ${TW_SCREENS.XXS}px, (max-width: ${TW_SCREENS.MD}px) ${TW_SCREENS.SM}px, (max-width: ${TW_SCREENS.XL}px) ${TW_SCREENS.LG}px, ${TW_SCREENS.XL}px`,
+      widths: [TW_SCREENS.XS, TW_SCREENS.SM, TW_SCREENS.MD, TW_SCREENS.LG, TW_SCREENS.XL],
+      sizes: `(max-width: ${TW_SCREENS.XS}px) ${TW_SCREENS.XS}px, (max-width: ${TW_SCREENS.MD}px) ${TW_SCREENS.MD}px, (max-width: ${TW_SCREENS.LG}px) ${TW_SCREENS.LG}px, ${TW_SCREENS.XL}px`,
       // for debugging
       // class: `border-8 border-blue-500 [@media(max-width:475px)]:!border-yellow-300 [@media(max-width:768px)]:border-orange-500 [@media(max-width:1280px)]:border-red-500`,
     },
