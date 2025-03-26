@@ -42,7 +42,7 @@ const ImageRandomReact: FC<Props> = ({ galleryImages, className, divClassName, .
   return (
     <ImageBlurPreloader
       {...props}
-      blurAttributes={{ ...image.blur, alt: '' }}
+      blurAttributes={{ ...image.blur, alt: 'Blur image' }}
       mainAttributes={{ ...image.hero, onClick: handleClick, alt: 'Hero image' }}
       className={cn('cursor-pointer my-0', className)}
       divClassName={divClassName}

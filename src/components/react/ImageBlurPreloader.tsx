@@ -52,7 +52,6 @@ const ImageBlurPreloader: FC<Props> = ({
     // blur image must use size from main image
     width: mainAttributes.width,
     height: mainAttributes.height,
-    alt: !isLoadingMain ? mainAttributes.alt : '',
   };
 
   const hasImage = Boolean(
@@ -69,6 +68,7 @@ const ImageBlurPreloader: FC<Props> = ({
           <img
             {...blurAttributes}
             {...commonAttributes}
+            alt={!isLoadingBlur ? blurAttributes.alt : ''}
             onLoad={() => setIsLoadingBlur(false)}
             className={cn('object-cover absolute top-0 left-0 size-full', className)}
           />
@@ -77,6 +77,7 @@ const ImageBlurPreloader: FC<Props> = ({
           <img
             {...mainAttributes}
             {...commonAttributes}
+            alt={!isLoadingMain ? mainAttributes.alt : ''}
             onLoad={handleLoadMain}
             className={cn(
               'object-cover absolute top-0 left-0 size-full',
