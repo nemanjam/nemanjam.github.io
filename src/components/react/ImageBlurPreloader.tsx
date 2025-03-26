@@ -28,12 +28,9 @@ const ImageBlurPreloader: FC<Props> = ({
 
   const prevMainAttributes = usePrevious(mainAttributes);
 
-  const { src, srcSet } = mainAttributes;
-  const { src: prevSrc, srcSet: prevSrcSet } = prevMainAttributes ?? {};
-
-  const isNewImage = useMemo(
-    () => !(prevSrc === src && prevSrcSet === srcSet),
-    [src, srcSet, prevSrc, prevSrcSet]
+  const isNewImage = !(
+    prevMainAttributes?.src === mainAttributes.src &&
+    prevMainAttributes.srcSet === mainAttributes.srcSet
   );
 
   // reset isLoading on main image change
@@ -55,11 +52,14 @@ const ImageBlurPreloader: FC<Props> = ({
     // blur image must use size from main image
     width: mainAttributes.width,
     height: mainAttributes.height,
+    alt: !isLoadingMain ? mainAttributes.alt : '',
   };
 
-  const hasImage = isLoadingMain
-    ? mainAttributes.src || mainAttributes.srcSet
-    : blurAttributes.src || blurAttributes.srcSet;
+  const hasImage = Boolean(
+    isLoadingMain
+      ? mainAttributes.src || mainAttributes.srcSet
+      : blurAttributes.src || blurAttributes.srcSet
+  );
 
   return (
     <div className={cn('relative size-full', divClassName)}>
