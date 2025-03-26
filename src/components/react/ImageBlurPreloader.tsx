@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import usePrevious from '@/components/react/hooks/usePrevious';
 import { cn } from '@/utils/styles';
@@ -23,21 +23,31 @@ const ImageBlurPreloader: FC<Props> = ({
   className,
   divClassName,
 }) => {
-  const [hasLoaded, setHasLoaded] = useState(false);
+  const [isLoadingMain, setIsLoadingMain] = useState(true);
+  const [isLoadingBlur, setIsLoadingBlur] = useState(true);
+
   const prevMainAttributes = usePrevious(mainAttributes);
 
-  // reset hasLoaded on main image change
+  const { src, srcSet } = mainAttributes;
+  const { src: prevSrc, srcSet: prevSrcSet } = prevMainAttributes ?? {};
+
+  const isNewImage = useMemo(
+    () => !(prevSrc === src && prevSrcSet === srcSet),
+    [src, srcSet, prevSrc, prevSrcSet]
+  );
+
+  // reset isLoading on main image change
   useEffect(() => {
-    // store var in useMemo
-    if (prevMainAttributes !== mainAttributes) {
-      setHasLoaded(false);
+    if (isNewImage) {
+      setIsLoadingBlur(true);
+      setIsLoadingMain(true);
     }
-  }, [prevMainAttributes, mainAttributes, setHasLoaded]);
+  }, [isNewImage, setIsLoadingMain, setIsLoadingBlur]);
 
   // important: main image must be in DOM for onLoad to work
   // unmount and display: none will fail
-  const handleLoad = () => {
-    setHasLoaded(true); // check if new image
+  const handleLoadMain = () => {
+    setIsLoadingMain(false);
     onMainLoaded?.();
   };
 
@@ -47,7 +57,7 @@ const ImageBlurPreloader: FC<Props> = ({
     height: mainAttributes.height,
   };
 
-  const hasImage = hasLoaded
+  const hasImage = isLoadingMain
     ? mainAttributes.src || mainAttributes.srcSet
     : blurAttributes.src || blurAttributes.srcSet;
 
@@ -59,6 +69,7 @@ const ImageBlurPreloader: FC<Props> = ({
           <img
             {...blurAttributes}
             {...commonAttributes}
+            onLoad={() => setIsLoadingBlur(false)}
             className={cn('object-cover absolute top-0 left-0 size-full', className)}
           />
 
@@ -66,10 +77,11 @@ const ImageBlurPreloader: FC<Props> = ({
           <img
             {...mainAttributes}
             {...commonAttributes}
-            onLoad={handleLoad}
+            onLoad={handleLoadMain}
             className={cn(
               'object-cover absolute top-0 left-0 size-full',
-              hasLoaded ? 'opacity-100' : 'opacity-0',
+              // important: dont hide main image until next blur image is loaded
+              isLoadingMain && !isLoadingBlur ? 'opacity-0' : 'opacity-100',
               className
             )}
           />
