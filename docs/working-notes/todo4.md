@@ -138,6 +138,8 @@ PostCollection, Post, idToSlug
 replace getAllPosts with getAllPostsWithReadingTime, 
 
 spellcheck yarn script
+
+use react-icons for icons in react and not slot with astro-icons
 ```
 
 

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 
 import debounce from 'lodash.debounce';
 import PhotoSwipeLightbox from 'photoswipe/lightbox';
+import { PiSpinnerGapBold } from 'react-icons/pi';
 
 import { GALLERY } from '@/constants/gallery';
 import { cn } from '@/utils/styles';
@@ -30,10 +31,11 @@ const Gallery: FC<Props> = ({ images }) => {
   const observerTarget = useRef(null);
 
   const [loadedStates, setLoadedStates] = useState<LoadedStates>({});
+
   // calculate if new page is loaded on scroll
   // not for blur transition
-  const isAllImagesLoaded = useMemo(
-    () => Object.values(loadedStates).every(Boolean),
+  const isLoadingPageImages = useMemo(
+    () => !Object.values(loadedStates).every(Boolean),
     [loadedStates, loadedImages.length]
   );
 
@@ -49,7 +51,7 @@ const Gallery: FC<Props> = ({ images }) => {
   useEffect(() => {
     const callback: IntersectionObserverCallback = (entries) => {
       // must wait here for images to load
-      if (!isEnd && isAllImagesLoaded && entries[0].isIntersecting) {
+      if (!isEnd && !isLoadingPageImages && entries[0].isIntersecting) {
         setPage((prevPage) => prevPage + 1);
       }
     };
@@ -65,7 +67,7 @@ const Gallery: FC<Props> = ({ images }) => {
       if (observerRef) observer.unobserve(observerRef);
     };
     // page dependency is important for initial load to work for all resolutions
-  }, [observerTarget, page, isEnd]);
+  }, [observerTarget, page, isEnd, isLoadingPageImages]);
 
   // lightbox
   useEffect(() => {
@@ -116,6 +118,16 @@ const Gallery: FC<Props> = ({ images }) => {
           </a>
         ))}
       </div>
+
+      <div
+        className={cn(
+          'flex items-center justify-center transition-all duration-300 ease-in-out',
+          isLoadingPageImages ? 'min-h-32' : 'min-h-0'
+        )}
+      >
+        {isLoadingPageImages && <PiSpinnerGapBold className="size-12 animate-spin mt-4" />}
+      </div>
+
       {/* control threshold with margin-top */}
       <div ref={observerTarget} className="mt-0"></div>
     </>
