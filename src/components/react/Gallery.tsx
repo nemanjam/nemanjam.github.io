@@ -20,6 +20,7 @@ interface Props {
 
 type LoadedStates = Record<string, boolean>;
 
+// INITIAL_PAGE controls first screen
 const { PAGE_SIZE, INITIAL_PAGE, OBSERVER_DEBOUNCE, GALLERY_ID } = GALLERY;
 
 const fetchImagesUpToPage = (images: GalleryImage[], nextPage: number): GalleryImage[] => {
