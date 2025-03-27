@@ -125,6 +125,9 @@ const Gallery: FC<Props> = ({ images }) => {
         ))}
       </div>
 
+      {/* control threshold with margin-top */}
+      <div ref={observerTarget} className="mt-0" />
+
       <div
         className={cn(
           'flex items-center justify-center transition-all duration-500 ease-in-out',
@@ -133,9 +136,6 @@ const Gallery: FC<Props> = ({ images }) => {
       >
         {shouldShowLoader && <PiSpinnerGapBold className="size-10 sm:size-12 animate-spin mt-4" />}
       </div>
-
-      {/* control threshold with margin-top */}
-      <div ref={observerTarget} className="mt-0" />
     </>
   );
 };
