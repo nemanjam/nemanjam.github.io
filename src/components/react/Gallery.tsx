@@ -12,6 +12,8 @@ import type { FC } from 'react';
 
 import 'photoswipe/style.css';
 
+import useScrollDown from './hooks/useScrollDown';
+
 interface Props {
   images: GalleryImage[];
 }
@@ -30,6 +32,8 @@ const Gallery: FC<Props> = ({ images }) => {
   const [page, setPage] = useState<number>(INITIAL_PAGE);
   const observerTarget = useRef(null);
 
+  const isScrollingDown = useScrollDown();
+
   const [loadedStates, setLoadedStates] = useState<LoadedStates>({});
 
   // calculate if new page is loaded on scroll
@@ -40,6 +44,8 @@ const Gallery: FC<Props> = ({ images }) => {
   );
 
   const isEnd = loadedImages.length === images.length;
+
+  const shouldShowLoader = isScrollingDown && !isEnd && !isLoadingPageImages;
 
   // converts page to loaded images
   useEffect(() => {
@@ -121,15 +127,15 @@ const Gallery: FC<Props> = ({ images }) => {
 
       <div
         className={cn(
-          'flex items-center justify-center transition-all duration-300 ease-in-out',
-          isLoadingPageImages ? 'min-h-32' : 'min-h-0'
+          'flex items-center justify-center transition-all duration-500 ease-in-out',
+          shouldShowLoader ? 'min-h-48' : 'min-h-0'
         )}
       >
-        {isLoadingPageImages && <PiSpinnerGapBold className="size-12 animate-spin mt-4" />}
+        {shouldShowLoader && <PiSpinnerGapBold className="size-10 sm:size-12 animate-spin mt-4" />}
       </div>
 
       {/* control threshold with margin-top */}
-      <div ref={observerTarget} className="mt-0"></div>
+      <div ref={observerTarget} className="mt-0" />
     </>
   );
 };
