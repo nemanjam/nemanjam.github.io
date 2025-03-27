@@ -32,6 +32,7 @@ const metadata = { title, description, image };
 ---
 
 <Centered {metadata} class={cn(className)}>
+  {/* must not have flex, it will disable margin collapsing */}
   <article class="my-prose">
     <slot />
   </article>

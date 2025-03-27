@@ -1,41 +1,51 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
+import ImageBlurPreloader from '@/components/react/ImageBlurPreloader';
 import { getRandomElementFromArray } from '@/utils/array';
 import { cn } from '@/utils/styles';
 
+import type { HeroImage, ImgTagAttributes } from '@/types/image';
 import type { FC, ImgHTMLAttributes } from 'react';
 
 interface Props extends ImgHTMLAttributes<HTMLImageElement> {
   // Important: must pass all allImagesSrc from the server or they wont be included on client
-  allImagesSrc: string[];
+  galleryImages: HeroImage[];
+  divClassName?: string;
 }
 
-const initialImageSrc = '';
+const imageAttributes: ImgTagAttributes = {
+  src: '',
+  width: 0,
+  height: 0,
+};
 
-const ImageRandomReact: FC<Props> = ({ allImagesSrc, className, ...props }) => {
-  const [imageSrc, setImageSrc] = useState(initialImageSrc);
+const initialImage: HeroImage = {
+  blur: { ...imageAttributes },
+  hero: { ...imageAttributes },
+};
 
+const ImageRandomReact: FC<Props> = ({ galleryImages, className, divClassName, ...props }) => {
+  const randomImage = useMemo(() => getRandomElementFromArray(galleryImages), [galleryImages]);
+
+  const [image, setImage] = useState(initialImage);
+
+  // initial image, on mount
   useEffect(() => {
-    const run = async () => {
-      setImageSrc(getRandomElementFromArray(allImagesSrc));
-    };
-
-    run();
-  }, [setImageSrc]);
+    setImage(randomImage);
+  }, [setImage, randomImage]);
 
   const handleClick = async () => {
-    setImageSrc(getRandomElementFromArray(allImagesSrc));
+    const randomImage = getRandomElementFromArray(galleryImages);
+    setImage(randomImage);
   };
 
-  // Todo: use <picture srcSet> for responsive images
-
   return (
-    <img
+    <ImageBlurPreloader
       {...props}
-      src={imageSrc}
-      onClick={handleClick}
-      className={cn('cursor-pointer', className)}
-      alt="Hero image"
+      blurAttributes={{ ...image.blur, alt: 'Blur image' }}
+      mainAttributes={{ ...image.hero, onClick: handleClick, alt: 'Hero image' }}
+      className={cn('cursor-pointer my-0', className)}
+      divClassName={divClassName}
     />
   );
 };

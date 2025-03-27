@@ -28,6 +28,7 @@ export const getStaticPaths = async () => {
   return paths;
 };
 
+// endpoint to create open graph images, because they don't exist in the file system
 export const GET: APIRoute = async ({ props }: APIContext) => {
   // limit number of chars
   const { title, heroImage, pageId } = props.page;

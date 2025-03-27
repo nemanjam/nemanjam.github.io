@@ -1,25 +1,16 @@
 ---
 import ReactGallery from '@/components/react/Gallery';
-import { sliceToMod4 } from '@/utils/array';
-import { allImagesMetadata, imageMetadataToReactImageProps } from '@/utils/image';
+import { getGalleryImages } from '@/libs/gallery/images';
 import { randomizeArray } from '@/utils/objects';
-import { cn } from '@/utils/styles';
 
 export interface Props extends astroHTML.JSX.HTMLAttributes {}
 
-const allImagesMetadataMod4 = sliceToMod4(allImagesMetadata);
-
-const reactImages = await Promise.all(
-  allImagesMetadataMod4.map((metadata) => imageMetadataToReactImageProps(metadata))
-);
-
-const randomizedReactImages = randomizeArray(reactImages);
-
-// console.log('reactImages', reactImages);
+const galleryImages = await getGalleryImages();
+const randomizedGalleryImages = randomizeArray(galleryImages);
 
 const { class: className } = Astro.props;
 ---
 
-<div class={cn('', className)}>
-  <ReactGallery client:only="react" images={randomizedReactImages} />
+<div class={className}>
+  <ReactGallery client:only="react" images={randomizedGalleryImages} />
 </div>

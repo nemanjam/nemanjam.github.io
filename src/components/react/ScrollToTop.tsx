@@ -1,32 +1,31 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+import { FaArrowUpLong } from 'react-icons/fa6';
+import { MdOutlineArrowUpward } from 'react-icons/md';
 
 import { SELECTORS } from '@/constants/dom';
 import { cn } from '@/utils/styles';
 
-import type { MouseEvent, ReactNode } from 'react';
-
-interface Props {
-  children: ReactNode;
-}
+import type { FC, MouseEvent, RefObject } from 'react';
 
 const { SCROLL_TO_TOP_SELECTOR } = SELECTORS;
 
 const fixedClasses = ['opacity-1', 'translate-y-0'];
 const hiddenClasses = ['opacity-0', 'translate-y-20'];
 
-const showLink = (linkRef: React.RefObject<HTMLAnchorElement>): void => {
+const showLink = (linkRef: RefObject<HTMLAnchorElement | null>): void => {
   linkRef.current?.classList.add(...fixedClasses);
   linkRef.current?.classList.remove(...hiddenClasses);
 };
 
-const hideLink = (linkRef: React.RefObject<HTMLAnchorElement>): void => {
+const hideLink = (linkRef: RefObject<HTMLAnchorElement | null>): void => {
   linkRef.current?.classList.remove(...fixedClasses);
   linkRef.current?.classList.add(...hiddenClasses);
 };
 
 const getHalfViewportHeight = (window: Window) => Math.floor(window.innerHeight / 2);
 
-const ScrollToTop: React.FC<Props> = ({ children }) => {
+const ScrollToTop: FC = () => {
   const linkRef = useRef<HTMLAnchorElement>(null);
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -109,7 +108,7 @@ const ScrollToTop: React.FC<Props> = ({ children }) => {
         onClick={handleScrollToTop}
         className={cn(
           // default styles
-          'z-10 fixed bottom-6 right-6 rounded bg-base-200 border border-base-300',
+          'z-10 fixed bottom-6 right-6 rounded bg-base-200 border border-base-300 p-1',
           // initial state
           hiddenClasses,
           // transition classes
@@ -117,8 +116,7 @@ const ScrollToTop: React.FC<Props> = ({ children }) => {
         )}
         aria-label="Scroll to top"
       >
-        {/* astro-icon must be passed as slot */}
-        {children}
+        <MdOutlineArrowUpward className="size-8 text-content hover:text-links-hover" />
       </a>
     </>
   );

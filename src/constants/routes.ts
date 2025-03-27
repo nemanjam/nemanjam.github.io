@@ -31,5 +31,6 @@ export const ROUTES = {
     OG_IMAGES: '/api/open-graph/',
     FEED_JSON: '/api/feed.json',
     FEED_RSS: '/api/feed.xml',
+    GALLERY: '/api/gallery/',
   },
 } as const;

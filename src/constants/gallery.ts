@@ -1,0 +1,12 @@
+export const EXCLUDE_IMAGES = ['avatar1.jpg', 'square-night1.jpg'] as const;
+
+export const GALLERY = {
+  GALLERY_ID: 'my-gallery',
+  // Todo: make it responsive
+  /** step. */
+  PAGE_SIZE: 3,
+  /** page dependency in useEffect is more important. To load first screen quickly, set to 3 pages */
+  INITIAL_PAGE: 3,
+  /** fine tuned for scroll */
+  OBSERVER_DEBOUNCE: 300,
+} as const;
