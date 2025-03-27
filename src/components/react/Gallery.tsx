@@ -126,10 +126,12 @@ const Gallery: FC<Props> = ({ images }) => {
       </div>
 
       {/* control threshold with margin-top */}
+      {/* must be on top so loader doesn't affect it */}
       <div ref={observerTarget} className="mt-0" />
 
       <div
         className={cn(
+          // duration-500 is related to OBSERVER_DEBOUNCE: 300
           'flex items-center justify-center transition-all duration-500 ease-in-out',
           shouldShowLoader ? 'min-h-48' : 'min-h-0'
         )}

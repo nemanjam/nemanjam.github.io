@@ -8,5 +8,5 @@ export const GALLERY = {
   /** page dependency in useEffect is more important */
   INITIAL_PAGE: 1,
   /** fine tuned for scroll */
-  OBSERVER_DEBOUNCE: 150,
+  OBSERVER_DEBOUNCE: 300,
 } as const;
