@@ -142,6 +142,7 @@ spellcheck yarn script
 use react-icons for icons in react and not slot with astro-icons
 
 gallery cumulative layout shift, min-height, debounce 0 for first page - just set INITIAL_PAGE // ok
+convert fetchImagesUpToPage to fetchImagesForPage for immutable state
 ```
 
 
