@@ -113,7 +113,7 @@ const Gallery: FC<Props> = ({ images }) => {
             <img
               {...image.thumbnail}
               onLoad={() => handleLoad(image.thumbnail.src)}
-              alt="Gallery image"
+              alt={loadedStates[image.thumbnail.src] ? '' : 'Gallery image'}
               className={cn(
                 'w-full transition-all duration-[2s] ease-in-out',
                 loadedStates[image.thumbnail.src]
