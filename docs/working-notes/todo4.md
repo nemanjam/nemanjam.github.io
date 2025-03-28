@@ -145,6 +145,12 @@ gallery cumulative layout shift, min-height, debounce 0 for first page - just se
 convert fetchImagesUpToPage to fetchImagesForPage for immutable state
 
 add useWidth hook and handle xs, md and lg screens initial page and page size
+
+cache Github Actions nginx deploy and docker deploy
+
+morace prazan div above markdown to save margin collapsing
+single div will solve it not to be flex container
+flex flex-col and flex-grow until (including) client component to prevent layout shift
 ```
 
 
