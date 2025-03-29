@@ -10,7 +10,9 @@ export interface Content {
   file: string;
   url: string;
   /** set max-w-xxx */
-  class: string;
+  class?: string;
+  /** for flex flex-grow min-height to prevent layout shift for client components */
+  articleClass?: string;
 }
 
 export interface Props {
@@ -19,7 +21,7 @@ export interface Props {
 
 // metadata from frontmatter
 const { content } = Astro.props;
-const { title, description, class: className } = content;
+const { title, description, class: className, articleClass } = content;
 
 // available in Layouts
 const { pathname } = Astro.url;
@@ -33,7 +35,7 @@ const metadata = { title, description, image };
 
 <Centered {metadata} class={cn(className)}>
   {/* must not have flex, it will disable margin collapsing */}
-  <article class="my-prose">
+  <article class={cn('my-prose', articleClass)}>
     <slot />
   </article>
 </Centered>

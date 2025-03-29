@@ -12,7 +12,10 @@ import type { FC } from 'react';
 
 import 'photoswipe/style.css';
 
+import { sliceToModN } from '@/utils/array';
+import { getInitialPage, getPageSize } from '@/utils/gallery';
 import useScrollDown from './hooks/useScrollDown';
+import { useActiveBreakpoint } from './hooks/useWidth';
 
 interface Props {
   images: GalleryImage[];
@@ -20,17 +23,32 @@ interface Props {
 
 type LoadedStates = Record<string, boolean>;
 
-// INITIAL_PAGE controls first screen
-const { PAGE_SIZE, INITIAL_PAGE, OBSERVER_DEBOUNCE, GALLERY_ID } = GALLERY;
+const { OBSERVER_DEBOUNCE, GALLERY_ID } = GALLERY;
 
-const fetchImagesUpToPage = (images: GalleryImage[], nextPage: number): GalleryImage[] => {
-  const endIndex = nextPage * PAGE_SIZE;
-  return images.slice(0, endIndex);
+const fetchImagesUpToPage = (
+  images: GalleryImage[],
+  pageSize: number,
+  nextPage: number
+): GalleryImage[] => {
+  const endIndex = nextPage * pageSize;
+  const isLastPage = endIndex >= images.length;
+
+  // for fetchPageImages pagination startIndex must use loadedImages and not all images and page
+  const selectedImages = images.slice(0, endIndex);
+
+  // load all images for last page
+  return !isLastPage ? sliceToModN(selectedImages, pageSize) : selectedImages;
 };
 
 const Gallery: FC<Props> = ({ images }) => {
+  const breakpoint = useActiveBreakpoint();
+
+  const pageSize = getPageSize(breakpoint);
+  // INITIAL_PAGE controls first screen
+  const initialPage = getInitialPage(breakpoint);
+
   const [loadedImages, setLoadedImages] = useState<GalleryImage[]>([]);
-  const [page, setPage] = useState<number>(INITIAL_PAGE);
+  const [page, setPage] = useState<number>(initialPage);
   const observerTarget = useRef(null);
 
   const isScrollingDown = useScrollDown();
@@ -50,9 +68,9 @@ const Gallery: FC<Props> = ({ images }) => {
 
   // converts page to loaded images
   useEffect(() => {
-    const upToPageImages = fetchImagesUpToPage(images, page);
+    const upToPageImages = fetchImagesUpToPage(images, pageSize, page);
     setLoadedImages(upToPageImages);
-  }, [page, images]);
+  }, [page, images, pageSize]);
 
   // sets only page
   useEffect(() => {

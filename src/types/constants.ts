@@ -1,4 +1,5 @@
 import type { CATEGORIES } from '@/constants/collections';
+import type { TW_WIDTHS } from '@/constants/image';
 import type { PAGE_METADATA } from '@/constants/metadata';
 import type { NAVIGATION_ITEMS } from '@/constants/navigation';
 import type { MODES, THEMES } from '@/constants/theme';
@@ -21,3 +22,5 @@ export type ImageSizes = {
 };
 
 export type ChangeThemeCustomEvent = CustomEvent<{ theme: Theme }>;
+
+export type Breakpoint = keyof typeof TW_WIDTHS;

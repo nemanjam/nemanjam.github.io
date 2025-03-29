@@ -2,11 +2,13 @@
 layout: '../layouts/Page.astro'
 title: 'Gallery'
 description: 'Image gallery'
+# classNames for Page layout
 class: 'max-w-5xl'
+articleClass: 'grow flex flex-col'
 ---
 
 import Gallery from '../components/Gallery.astro';
 
 # Gallery
 
-<Gallery class="not-prose" />
+<Gallery class="not-prose grow" />

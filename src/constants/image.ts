@@ -2,7 +2,7 @@ import type { ImageSizes } from '@/types/constants';
 
 /** matches tailwindcss/defaultTheme.screens */
 
-export const TW_SCREENS = {
+export const TW_WIDTHS = {
   /** added, for Image, bellow xs */
   XXS: 320,
   XS: 475,
@@ -11,6 +11,10 @@ export const TW_SCREENS = {
   LG: 1024,
   XL: 1280,
   _2XL: 1536,
+} as const;
+
+export const TW_SCREENS = {
+  ...TW_WIDTHS,
   HEIGHTS: {
     XXS: 180,
     XS: 268,
