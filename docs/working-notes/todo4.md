@@ -52,6 +52,7 @@ semantic release, conventional commits
 // tailwind 4
 git checkout feat/tailwind4-v2
 ----------
+// home page blur preloader carousel
     astro markdown link in new tab
 mdx not formatting, prettierignore, breaks them
 for screenshots use new not private window and select window in screenshot tool, not screen or selection, hide dock for 16/9 // important
@@ -65,6 +66,7 @@ https://docs.astro.build/en/guides/images/#images-in-ui-framework-components
 https://github.com/RafidMuhymin/astro-imagetools // not needed actually, placeholder...
 load on scroll?
 ------------
+// gallery
 git checkout feat/new-gallery
 
 use api route same as og-image, for gallery and home
@@ -151,6 +153,9 @@ cache Github Actions nginx deploy and docker deploy
 morace prazan div above markdown to save margin collapsing
 single div will solve it not to be flex container
 flex flex-col and flex-grow until (including) client component to prevent layout shift
+-----------------
+// try pixelated blur
+style="image-rendering: pixelated;"
 ```
 
 
