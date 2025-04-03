@@ -172,6 +172,7 @@ vite: {
 -------
 open external md links in new tab by default
 https://cosmicthemes.com/blog/astro-mdx-external-link/
+https://github.com/rehypejs/rehype-external-links
 ```
 
 
