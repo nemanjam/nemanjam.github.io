@@ -27,6 +27,7 @@
     "docker:push": "docker push nemanjamitic/nemanjam.github.io",
     "pi": "yarn build:nginx:pi && yarn deploy:nginx:pi",
     "nginx": "yarn build:nginx && yarn deploy:nginx",
+    "tunnel": "ssh -R *:1082:localhost:3000 amd1c",
     "dc:up": "docker compose up --build --force-recreate -d"
   },
   "dependencies": {

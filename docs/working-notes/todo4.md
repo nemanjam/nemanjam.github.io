@@ -156,6 +156,22 @@ flex flex-col and flex-grow until (including) client component to prevent layout
 -----------------
 // try pixelated blur
 style="image-rendering: pixelated;"
+-------
+// tunnel preview
+ssh -R *:1082:localhost:3000 amd1c
+https://preview.amd1.nemanjamitic.com
+
+vite: {
+  build: {
+    sourcemap: false,
+  },
+  server: {
+    allowedHosts: ['preview.amd1.nemanjamitic.com'],
+  },
+},
+-------
+open external md links in new tab by default
+https://cosmicthemes.com/blog/astro-mdx-external-link/
 ```
 
 
