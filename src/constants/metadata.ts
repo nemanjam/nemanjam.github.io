@@ -30,7 +30,8 @@ export const PAGE_METADATA = {
   // must have 'list' prefix to omit type arg
   'lists/blog': {
     title: 'Blog',
-    description: 'Sharing my thoughts and ideas about code.',
+    description:
+      'Here I share my coding experiments and thoughts on React.js, Next.js, Node.js, Astro, Python, DevOps, and more. Feel free to read, explore, and comment.',
   },
   'lists/blog/tags': {
     title: 'Tags',
