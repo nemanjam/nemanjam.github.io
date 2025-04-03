@@ -9,7 +9,7 @@ const configClientData: ConfigClientType = {
   /** all urls without '/' */
   SITE_URL,
   SITE_TITLE: 'Nemanja Mitic',
-  SITE_DESCRIPTION: 'I am Nemanja, full stack developer',
+  SITE_DESCRIPTION: 'I am Nemanja, a full stack developer',
   PLAUSIBLE_SCRIPT_URL,
   PLAUSIBLE_DOMAIN,
   PAGE_SIZE_POST_CARD: 3,

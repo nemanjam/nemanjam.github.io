@@ -42,7 +42,7 @@ const getTransitionNameFromElementId = setTransitionSlug({ pageSlug: slug });
     {...IMAGE_SIZES.FIXED.POST_CARD_SMALL}
     src={heroImage}
     alt={heroAlt}
-    class="object-cover rounded-box hidden xs:block w-[142px] h-[80px] md:size-auto"
+    class="object-cover rounded-box hidden xs:block w-[142px] h-[80px] md:size-auto shadow shadow-base-300"
     transition:name={getTransitionNameFromElementId({
       elementId: TRANSITION_ELEMENT_IDS.POST_CARD.HERO_IMAGE,
     })}
