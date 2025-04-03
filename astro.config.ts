@@ -42,5 +42,9 @@ export default defineConfig({
     build: {
       sourcemap: false,
     },
+    server: {
+      // applies only to Vite dev server
+      allowedHosts: ['localhost', 'preview.amd1.nemanjamitic.com'],
+    },
   },
 });

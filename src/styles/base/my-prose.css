@@ -14,7 +14,12 @@
     @apply prose-h1:font-bold;
 
     /* a */
-    @apply prose-a:link;
+    @apply prose-a:link prose-a:break-words;
+
+    /* break-words in <a /> and <code /> prevents overflow and horizontal scroll on <body /> in mdx */
+
+    /* code */
+    @apply prose-code:break-words;
 
     /* image */
     @apply prose-img:rounded-button;
