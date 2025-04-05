@@ -1905,10 +1905,10 @@ astro-social-share@^2.0.3:
   resolved "https://registry.yarnpkg.com/astro-social-share/-/astro-social-share-2.1.0.tgz#7c0da29b24e8c900d46164cdc306e2509e1b4403"
   integrity sha512-t5DykR+T7gGNLTnrFXASCyufCpXcWhLdXFLSRYRKvMOFSUaaPIWMPu1ncIhxdFD7hm7SWHboAb33nJUUZxJH2Q==
 
-astro@^5.6.0:
-  version "5.6.0"
-  resolved "https://registry.yarnpkg.com/astro/-/astro-5.6.0.tgz#192d80d7460262591eed07f26ea6ef4e048cbcdd"
-  integrity sha512-ZzHqdTQ4qtCnXzN9bVb75p/F0UweZYubmijjo++frn4E4KxLX8E7fizbX5Wbo2flvA6z/tUsoDwnYASxLHiM1Q==
+astro@^5.6.1:
+  version "5.6.1"
+  resolved "https://registry.yarnpkg.com/astro/-/astro-5.6.1.tgz#063719f320d5eafacf895e9842ae4c060bc2e036"
+  integrity sha512-aQ2TV7wIf+q2Oi6gGWMINHWEAZqoP0eH6/mihodfTJYATPWyd03JIGVfjtYUJlkNdNSKxDXwEe/r/Zx4CZ1FPg==
   dependencies:
     "@astrojs/compiler" "^2.11.0"
     "@astrojs/internal-helpers" "0.6.1"
@@ -1955,7 +1955,7 @@ astro@^5.6.0:
     tinyexec "^0.3.2"
     tinyglobby "^0.2.12"
     tsconfck "^3.1.5"
-    ultrahtml "^1.5.3"
+    ultrahtml "^1.6.0"
     unist-util-visit "^5.0.0"
     unstorage "^1.15.0"
     vfile "^6.0.3"
@@ -2887,10 +2887,10 @@ eslint-config-prettier@^10.1.1:
   resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-10.1.1.tgz#cf0ff6e5c4e7e15f129f1f1ce2a5ecba92dec132"
   integrity sha512-4EQQr6wXwS+ZJSzaR5ZCrYgLxqvUjdXctaEtBqHcbkW944B1NQyO4qpdHQbXBONfwxXdkAY81HH4+LUfrg+zPw==
 
-eslint-mdx@^3.2.0, eslint-mdx@^3.3.1:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/eslint-mdx/-/eslint-mdx-3.3.1.tgz#3acf2633e44009b683ced3ae3151c371aae72226"
-  integrity sha512-3koPGGjGOKXxWBIY0ExcMhtEGWRpbM/xrqIp6c4XDxZOMs/nIUEZKnaKZf+sAMRtqdv5Z99Nq5izWyCLoTdcGg==
+eslint-mdx@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/eslint-mdx/-/eslint-mdx-3.3.2.tgz#52f9df9ccabe4b254430a14372845645512305ee"
+  integrity sha512-GFeLoM2S5Jx0iTXYvsp/do/UNTzV+vRNfNxRglelXb9ZNSfUFGHsq60ZcHyUvpxy2crPebCX4gzT/FRu/LJRbA==
   dependencies:
     acorn "^8.14.1"
     acorn-jsx "^5.3.2"
@@ -2899,7 +2899,7 @@ eslint-mdx@^3.2.0, eslint-mdx@^3.3.1:
     remark-mdx "^3.1.0"
     remark-parse "^11.0.0"
     remark-stringify "^11.0.0"
-    synckit "^0.10.3"
+    synckit "^0.11.2"
     tslib "^2.8.1"
     unified "^11.0.5"
     unified-engine "^11.2.2"
@@ -2921,17 +2921,17 @@ eslint-plugin-astro@^1.3.1:
     postcss "^8.4.14"
     postcss-selector-parser "^7.0.0"
 
-eslint-plugin-mdx@^3.2.0:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-mdx/-/eslint-plugin-mdx-3.3.1.tgz#24af2611f651ea77756cf0f32630a3dbb6f34dc1"
-  integrity sha512-YXm2YANiJ3Sl/6AdZUeR53deGG1JI6rG9crHITR2Mtb9k8SFWRspoHetnIvaYTEfgPsvUwAwVgT1JxRoZywpTA==
+eslint-plugin-mdx@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-mdx/-/eslint-plugin-mdx-3.3.2.tgz#25c431952f9cbd321f96c10fa500b80626259cc2"
+  integrity sha512-zBvxCiKzahbTRvWPONDZups1As5clGjv1OLOLnX/p+OwdrZdcwJ3tiBihu6xeZuem9u6iwMkr9kHVurcuzbTCg==
   dependencies:
-    eslint-mdx "^3.3.1"
+    eslint-mdx "^3.3.2"
     mdast-util-from-markdown "^2.0.2"
     remark-mdx "^3.1.0"
     remark-parse "^11.0.0"
     remark-stringify "^11.0.0"
-    synckit "^0.10.3"
+    synckit "^0.11.2"
     tslib "^2.8.1"
     unified "^11.0.5"
     vfile "^6.0.3"
@@ -6389,10 +6389,10 @@ svgo@^3.3.2:
     csso "^5.0.5"
     picocolors "^1.0.0"
 
-synckit@^0.10.3:
-  version "0.10.3"
-  resolved "https://registry.yarnpkg.com/synckit/-/synckit-0.10.3.tgz#940aea2c7b6d141a4f74dbdebc81e0958c331a4b"
-  integrity sha512-R1urvuyiTaWfeCggqEvpDJwAlDVdsT9NM+IP//Tk2x7qHCkSvBk/fwFgw/TLAHzZlrAnnazMcRw0ZD8HlYFTEQ==
+synckit@^0.11.2:
+  version "0.11.2"
+  resolved "https://registry.yarnpkg.com/synckit/-/synckit-0.11.2.tgz#2a8015ce5df8d5eb0cc47ee55924ad8f8756c24b"
+  integrity sha512-1IUffI8zZ8qUMB3NUJIjk0RpLroG/8NkQDAWH1NbB2iJ0/5pn3M8rxfNzMz4GH9OnYaGYn31LEDSXJp/qIlxgA==
   dependencies:
     "@pkgr/core" "^0.2.0"
     tslib "^2.8.1"
@@ -6583,10 +6583,10 @@ typescript-auto-import-cache@^0.3.3:
   dependencies:
     semver "^7.3.8"
 
-typescript@^5.8.2:
-  version "5.8.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.8.2.tgz#8170b3702f74b79db2e5a96207c15e65807999e4"
-  integrity sha512-aJn6wq13/afZp/jT9QZmwEjDqqvSGp1VT5GVg+f/t6/oVyrgXM6BY1h9BRh/O5p3PlUPAe+WuiEZOmb/49RqoQ==
+typescript@^5.8.3:
+  version "5.8.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.8.3.tgz#92f8a3e5e3cf497356f4178c34cd65a7f5e8440e"
+  integrity sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==
 
 ufo@^1.5.4:
   version "1.5.4"
@@ -6609,6 +6609,11 @@ ultrahtml@^1.2.0, ultrahtml@^1.5.3:
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/ultrahtml/-/ultrahtml-1.5.3.tgz#e7a903a4b28a0e49b71b0801b444050bb0a369c7"
   integrity sha512-GykOvZwgDWZlTQMtp5jrD4BVL+gNn2NVlVafjcFUJ7taY20tqYdwdoWBFy6GBJsNTZe1GkGPkSl5knQAjtgceg==
+
+ultrahtml@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/ultrahtml/-/ultrahtml-1.6.0.tgz#0d1aad7bbfeae512438d30e799c11622127a1ac8"
+  integrity sha512-R9fBn90VTJrqqLDwyMph+HGne8eqY1iPfYhPzZrvKpIfwkWZbcYlfpsb8B9dTvBfpy1/hqAD7Wi8EKfP9e8zdw==
 
 uncrypto@^0.1.3:
   version "0.1.3"

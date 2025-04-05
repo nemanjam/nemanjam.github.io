@@ -169,6 +169,8 @@ vite: {
     allowedHosts: ['preview.amd1.nemanjamitic.com'],
   },
 },
+image flicker, sacekaj i da nije prevMainImage
+set canonical url for google for pi, docker, etc.
 -------
 open external md links in new tab by default
 https://cosmicthemes.com/blog/astro-mdx-external-link/
