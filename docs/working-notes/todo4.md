@@ -175,6 +175,9 @@ set canonical url for google for pi, docker, etc.
 open external md links in new tab by default
 https://cosmicthemes.com/blog/astro-mdx-external-link/
 https://github.com/rehypejs/rehype-external-links
+
+og random image from all-images
+fix iphone mdx webm to mp4
 ```
 
 
