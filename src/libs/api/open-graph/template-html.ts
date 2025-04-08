@@ -3,12 +3,7 @@ import { html } from 'satori-html';
 import { getRandomGradient } from '@/utils/gradients';
 import { limitString } from '@/utils/strings';
 
-export interface TemplateProps {
-  title: string;
-  heroImageUrl: string;
-  avatarImageUrl: string;
-  siteUrl: string;
-}
+import type { TemplateProps } from '@/types/open-graph';
 
 const templateHtml = ({ title, heroImageUrl, avatarImageUrl, siteUrl }: TemplateProps) => {
   // 2 rows - max 30 chars

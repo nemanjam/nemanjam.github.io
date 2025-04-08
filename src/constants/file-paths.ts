@@ -1,4 +1,4 @@
-// file system paths
+/** file system relative paths */
 
 export const FILE_PATHS = {
   FONTS_FOLDER: './public/fonts/',
