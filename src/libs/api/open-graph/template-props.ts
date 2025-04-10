@@ -15,55 +15,12 @@ import image404 from '@/assets/images/pages/image404.jpg';
 const { SITE_URL } = CONFIG_CLIENT;
 const { AVATAR, OG_FOLDER, IMAGE_404 } = FILE_PATHS;
 
-// todo: no urls at build time
-// ! must use absolute file paths
-export const getTemplatePropsUrl = (frontmatterProps: FrontmatterProps): TemplateProps => {
-  const { title, heroImage, pageId } = frontmatterProps;
-
-  // avatarImage
-  const avatarImageUrl = avatarImage.src;
-
-  // heroImage
-  let heroImageUrl: string;
-
-  switch (true) {
-    // from mdx frontmatter
-    case Boolean(heroImage.src):
-      heroImageUrl = `${SITE_URL}${heroImage.src}`; // todo: fix this, path from mdx frontmatter
-      break;
-    // hardcoded in 404.mdx frontmatter
-    case pageId === 'page404':
-      heroImageUrl = image404.src;
-      break;
-
-    // fallback to random default image
-    default:
-      heroImageUrl = `${SITE_URL}${getRandomImageUrl()}`;
-      break;
-  }
-
-  // ? all fail
-  // const dummyImageAbsolutePath =
-  //   '/home/username/Desktop/nemanjam.github.io/src/assets/images/default/open-graph/amfi1.jpg';
-  // const dummyImageUrl = 'https://placehold.co/600x400.png';
-  // const dummyImageBase64Url =
-  //   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Y1bN+UAAAAASUVORK5CYII=';
-
-  const templateProps = {
-    title,
-    heroImageUrl: heroImageUrl,
-    avatarImageUrl: avatarImageUrl,
-    siteUrl: trimHttpProtocol(SITE_URL),
-  };
-
-  return templateProps;
-};
-
 // original base64 implementation
 export const getTemplatePropsBase64 = async (
   frontmatterProps: FrontmatterProps
 ): Promise<TemplateProps> => {
   const { title, heroImage, pageId } = frontmatterProps;
+
   // avatarImage
   const avatarImageBase64Url = await getBase64Image(AVATAR);
 
@@ -97,26 +54,8 @@ export const getTemplatePropsBase64 = async (
   return templateProps;
 };
 
-/*-------------------------------- url utils (ImageMetadata) ------------------------------*/
-
-export const getOpenGraphImagesMetadata = (): ImageMetadata[] => {
-  const imageModules = import.meta.glob<{ default: ImageMetadata }>(
-    // cant be even variable
-    '/src/assets/images/default/open-graph/*.jpg',
-    { eager: true }
-  );
-
-  // convert map to array
-  const imagesMetadata = Object.keys(imageModules).map((path) => imageModules[path].default);
-
-  return imagesMetadata;
-};
-
-export const getRandomImageUrl = () => getRandomElementFromArray(getOpenGraphImagesMetadata()).src;
-
 /*-------------------------------- base64 utils ------------------------------*/
 
-// Satori started to fail with base64 url
 export const getBase64Image = async (imagePath: string): Promise<string> => {
   const imageData = await fs.readFile(imagePath);
 
@@ -166,3 +105,59 @@ export const getRandomImagePath = async (folderPath: string): Promise<string> =>
 
   return randomImageWithPath;
 };
+
+/*-------------------------------- unused code bellow ------------------------------*/
+
+// todo: this cant work, no urls at build time
+// ! must use absolute file paths
+export const getTemplatePropsUrl = (frontmatterProps: FrontmatterProps): TemplateProps => {
+  const { title, heroImage, pageId } = frontmatterProps;
+
+  // avatarImage
+  const avatarImageUrl = avatarImage.src;
+
+  // heroImage
+  let heroImageUrl: string;
+
+  switch (true) {
+    // from mdx frontmatter
+    case Boolean(heroImage.src):
+      heroImageUrl = `${SITE_URL}${heroImage.src}`; // todo: fix this, path from mdx frontmatter
+      break;
+    // hardcoded in 404.mdx frontmatter
+    case pageId === 'page404':
+      heroImageUrl = image404.src;
+      break;
+
+    // fallback to random default image
+    default:
+      heroImageUrl = `${SITE_URL}${getRandomImageUrl()}`;
+      break;
+  }
+
+  const templateProps = {
+    title,
+    heroImageUrl: heroImageUrl,
+    avatarImageUrl: avatarImageUrl,
+    siteUrl: trimHttpProtocol(SITE_URL),
+  };
+
+  return templateProps;
+};
+
+/*-------------------------------- url utils (ImageMetadata) ------------------------------*/
+
+export const getOpenGraphImagesMetadata = (): ImageMetadata[] => {
+  const imageModules = import.meta.glob<{ default: ImageMetadata }>(
+    // cant be even variable
+    '/src/assets/images/default/open-graph/*.jpg',
+    { eager: true }
+  );
+
+  // convert map to array
+  const imagesMetadata = Object.keys(imageModules).map((path) => imageModules[path].default);
+
+  return imagesMetadata;
+};
+
+export const getRandomImageUrl = () => getRandomElementFromArray(getOpenGraphImagesMetadata()).src;

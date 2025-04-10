@@ -30,7 +30,6 @@ export const GET: APIRoute = async ({ props }: APIContext) => {
   // resize images in template in CSS only, not in sharp
 
   const templateProps = await getTemplatePropsBase64(props.page);
-  // const templateProps = getTemplatePropsUrl(props.page);
 
   const fontData = await fs.readFile(`${FONTS_FOLDER}inter-regular.woff`);
 
