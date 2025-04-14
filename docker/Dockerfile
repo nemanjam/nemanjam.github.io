@@ -2,7 +2,7 @@
 
 # alpine is fine
 # node:22.1.0-bookworm, node:20.13.1-slim, node:20.13.1-alpine
-ARG NODE_IMAGE=node:22.9.0-alpine
+ARG NODE_IMAGE=node:23.11.0-alpine
 
 FROM ${NODE_IMAGE} AS base
 WORKDIR /app
