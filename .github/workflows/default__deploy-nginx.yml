@@ -2,7 +2,7 @@ name: Deploy Nginx
 
 on:
   push:
-    # this one is enabled
+    # enabled
     branches:
       - 'main'
     tags:
