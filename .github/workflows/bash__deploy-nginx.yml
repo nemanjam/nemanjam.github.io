@@ -2,9 +2,8 @@ name: Deploy Nginx with bash file
 
 on:
   push:
-    # this one is enabled
     branches:
-      - 'main'
+      - 'disabled-main'
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
   pull_request:
