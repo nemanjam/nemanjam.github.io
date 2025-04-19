@@ -44,7 +44,7 @@ export default defineConfig({
     },
     server: {
       // applies only to Vite dev server
-      allowedHosts: ['localhost', 'preview.amd1.nemanjamitic.com'],
+      allowedHosts: ['localhost', 'preview1.amd1.nemanjamitic.com'],
     },
   },
 });

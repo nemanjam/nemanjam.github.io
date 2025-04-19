@@ -1849,10 +1849,10 @@ astro-social-share@^2.0.3:
   resolved "https://registry.yarnpkg.com/astro-social-share/-/astro-social-share-2.2.0.tgz#4e7609e251cd614a414d884cefc07888ff73d4f4"
   integrity sha512-Z5ebhO6Yw4GLggw7wsTahdpS0f4pf/XuVjQlBpWZ0zyt0cKaVrlG/+u6RzrzN9B2t27wxp90XiosZNwvBZqA+Q==
 
-astro@^5.7.3:
-  version "5.7.3"
-  resolved "https://registry.yarnpkg.com/astro/-/astro-5.7.3.tgz#49f1684f10a794e13cb51ad101ae56a77803ae5f"
-  integrity sha512-2b/OOS/A6GO4QP94x6oRzwTfXabFqE2rlUbbi42o6wZm9+zzcOc6VRFAq4lTOEI/iCrEVl3wTdBAC5X3h3Es+Q==
+astro@^5.7.4:
+  version "5.7.4"
+  resolved "https://registry.yarnpkg.com/astro/-/astro-5.7.4.tgz#1888e4643342ae632043d6b2585f06add2f285cb"
+  integrity sha512-h+pndGOyoYbsBd0YvP7bL3gotUSlyltp8OLpcYg062w0n5c96wJ9xt/RmwwXzGbdcUjWFtw0c5z4zCA92NDmlA==
   dependencies:
     "@astrojs/compiler" "^2.11.0"
     "@astrojs/internal-helpers" "0.6.1"
