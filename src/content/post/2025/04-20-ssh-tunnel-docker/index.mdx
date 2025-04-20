@@ -6,8 +6,8 @@ publishDate: 2025-04-20
 heroImage: '../../../../content/post/2025/04-20-ssh-tunnel-docker/_images/ssh-tunnel-architecture-16-9.png'
 heroAlt: SSH tunnel Docker architecture diagram
 tags:
-  - docker
   - devops
+  - docker
 category: tutorials
 toc: true
 draft: true
@@ -365,6 +365,8 @@ networks:
 ```
 
 If you have a really big number of services to tunnel you might want to use a VPN to access all ports by default, but thats rarely the case.
+
+Another point to make is that SSH tunnel technique is most suitable for temporary exposing services for demo purposes. For permanent tunnels you would need to add `autossh` to keep connection alive, but there are a better tools for permanent tunnels, like [rapiz1/rathole](https://github.com/rapiz1/rathole) or [fatedier/frp](https://github.com/fatedier/frp).
 
 ## Open firewall on VPS
 
