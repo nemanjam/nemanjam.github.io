@@ -20,6 +20,8 @@ import { IMAGE_SIZES } from '../../../../constants/image';
 import SshTunnelArchitectureImage from '../../../../content/post/2025/04-20-ssh-tunnel-docker/_images/ssh-tunnel-architecture.png';
 import FirewallImage from '../../../../content/post/2025/04-20-ssh-tunnel-docker/_images/firewall.png';
 
+import TunnelDemoVideo from '../../../../content/post/2025/04-20-ssh-tunnel-docker/_images/tunnel-demo.webm';
+
 ## Introduction
 
 Most of the consumer grade internet connections are hidden behind the CG-NAT and not reachable from the internet. This is done in order to save IP addresses because IPv4 has limited range. If you have a static public IPv4 or (any) IPv6 address you wont need the setup from this tutorial.
@@ -45,6 +47,12 @@ Possible use cases:
 - A VPS server with a public IP and Docker
 - A local machine with a working SSH and dev server that you want to expose 
 - A domain name (optional)
+
+## Demo video
+
+<video {...IMAGE_SIZES.FIXED.MDX_LG} controls>
+ <source src={TunnelDemoVideo} type="video/webm" />
+</video>
 
 ## Architecture overview
 
