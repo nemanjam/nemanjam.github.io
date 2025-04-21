@@ -296,9 +296,9 @@ Above is shown only the relevant Traefik configuration for the SSH tunnel contai
 
 ## Tunneling multiple services
 
-Sometimes your app runs more than a single service, e.g. frontend and backend. If you expose just a frontend from port 3000 note that `localhost` from e.g. `localhost:5000` wont be resolved, so you need to tunnel all services and set tunneled URLs in your `.env` files.
+Sometimes your app runs more than a single service, e.g. frontend and backend. If you expose just the frontend from port 3000, note that `localhost` from, e.g. `localhost:5000` won't be resolved. Therefore, you need to tunnel all services and set the tunneled URLs in your `.env` files.
 
-How to have more than a single tunnel? Maybe your first thought is to run multiple SSH server containers, but fortunately that is not needed, you can tunnel as many services you want through a single SSH connection. You just need to expose multiple ports on SSH container and map them to multiple Traefik hosts with labels, like shown bellow:
+How to have more than one tunnel? Your first thought might be to run multiple SSH server containers, but fortunately, that is not necessary. You can tunnel as many services as you want through a single SSH connection. You just need to expose multiple ports on the SSH container and map them to multiple Traefik hosts with labels, as shown below:
 
 ```yml title="docker-compose.yml" 
 version: '3.8'
@@ -364,19 +364,19 @@ networks:
     external: true
 ```
 
-If you have a really big number of services to tunnel you might want to use a VPN to access all ports by default, but thats rarely the case.
+If you have a large number of services to tunnel, you might want to use a VPN to access all ports by default, but that's rarely the case.
 
-Another point to make is that SSH tunnel technique is most suitable for temporary exposing services for demo purposes. For permanent tunnels you would need to add `autossh` to keep connection alive, but there are a better tools for permanent tunnels, like [rapiz1/rathole](https://github.com/rapiz1/rathole) or [fatedier/frp](https://github.com/fatedier/frp).
+Another point to make is that the SSH tunnel technique is most suitable for temporarily exposing services for demo purposes. For permanent tunnels, you would need to add `autossh` to keep the connection alive, but there are better tools for permanent tunnels, such as [rapiz1/rathole](https://github.com/rapiz1/rathole) or [fatedier/frp](https://github.com/fatedier/frp).
 
-## Open firewall on VPS
+## Open the firewall on the VPS
 
-For the main SSH connection you will need to open a port in your VPS firewall, port `1080` in this example. Additionally, if you want to access tunnels directly via port in the browser without Traefik, you will need to open those ports too. Be mindful not to open to many unneeded ports as every new opened port increases the attack surface.
+For the main SSH connection, you will need to open a port in your VPS firewall, port `1080` in this example. Additionally, if you want to access tunnels directly via a port in the browser without Traefik, you will need to open those ports as well. Be mindful not to open too many unnecessary ports, as every newly opened port increases the attack surface.
 
 <Image {...IMAGE_SIZES.FIXED.MDX_MD} src={FirewallImage} alt="Example opened ports in the firewall" />
 
 ## Running the tunnel
 
-You start the tunnel with a single command like bellow. `-R` option means remote port forwarding, then you have two `IP:port` pairs, the first pair is remote, the second is local. At the end you have the VPS host.
+You start the tunnel with a single command like below. The `-R` option means remote port forwarding, followed by two `IP:port` pairs. The first pair is remote, and the second is local. At the end, you have the VPS host.
 
 ```bash
 # command format
@@ -392,7 +392,8 @@ https://preview1.my-domain.com
 # terminate tunnel, like any ssh connection
 exit
 ```
-You can open the multiple tunnels with a single command, just specify the tunnels one after another before the host. Note that you must have these tunnels defined in your `docker-compose.yml` of SSH server (exposed ports and Traefik host labels).
+
+You can open multiple tunnels with a single command. Just specify the tunnels one after another before the host. Note that you must have these tunnels defined in your `docker-compose.yml` for the SSH server (exposed ports and Traefik host labels).
 
 ```bash
 # tunnel frontend at port 3000 and backend at port 5000
@@ -413,9 +414,9 @@ https://preview2.my-domain.com/api
 
 ## Conclusion
 
-Port forwarding is a basic networking technique very familiar to network engineers, but maybe not often enough utilized by developers. And it can be very useful and practical, especially in a remote work setting. Like described in this tutorial, you just need to run a single container, configure the client and firewall, but once you have it it can save you a lot of time and energy in a long run.
+Port forwarding is a basic networking technique that is very familiar to network engineers, but perhaps not often utilized by developers. It can be very useful and practical, especially in a remote work setting. As described in this tutorial, you just need to run a single container, configure the client and firewall, and once you have it set up, it can save you a lot of time and energy in the long run.
 
-SSH remote port forwarding is just one of the many useful and cool SSH networking tricks, there are many others like dynamic port forwarding, SSH agent forwarding, X11 forwarding, SSH file system, etc., do you use some of them? Please share in the comments bellow.
+SSH remote port forwarding is just one of the many useful and cool SSH networking tricks. There are many others like dynamic port forwarding, SSH agent forwarding, X11 forwarding, SSH file system, etc. Do you use some of them? Please share in the comments bellow.
 
 ## References 
 
@@ -425,4 +426,3 @@ SSH remote port forwarding is just one of the many useful and cool SSH networkin
 - Useful discussion that suggests to use the existing tunnel mod https://github.com/linuxserver/docker-openssh-server/issues/22
 - The list of all available Linuxserver mods https://github.com/linuxserver/docker-mods, https://mods.linuxserver.io
 - The list of all available Linuxserver images https://www.linuxserver.io/our-images
-
