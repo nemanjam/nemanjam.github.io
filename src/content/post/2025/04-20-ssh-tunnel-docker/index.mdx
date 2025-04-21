@@ -1,7 +1,7 @@
 ---
-title: Expose your local dev server with SSH tunnel and Docker
+title: Expose local dev server with SSH tunnel and Docker
 description: |
-  Practical example how to temporarily expose your local service to the internet.
+  A practical example how to temporarily expose your local service to the internet.
 publishDate: 2025-04-20
 heroImage: '../../../../content/post/2025/04-20-ssh-tunnel-docker/_images/ssh-tunnel-architecture-16-9.png'
 heroAlt: SSH tunnel Docker architecture diagram
@@ -24,15 +24,15 @@ import TunnelDemoVideo from '../../../../content/post/2025/04-20-ssh-tunnel-dock
 
 ## Introduction
 
-Most of the consumer grade internet connections are hidden behind the CG-NAT and not reachable from the internet. This is done in order to save IP addresses because IPv4 has limited range. If you have a static public IPv4 or (any) IPv6 address you wont need the setup from this tutorial.
+Most consumer-grade internet connections are hidden behind CG-NAT and are not reachable from the internet. This is done to save IP addresses, as IPv4 has a limited range. If you have a static public IPv4 or any IPv6 address, you won’t need the setup from this tutorial.
 
-There are already services like [localtunnel](https://github.com/localtunnel/localtunnel) or [ngrok](https://github.com/ngrok) for this purpose but when you actually start using them you will often find out that they have some limitations on a free plan. So, we will configure our custom setup once and will have it always available for comfortable and practical usage that will save a lot of time and nerves in the long run.
+There are already services like [localtunnel](https://github.com/localtunnel/localtunnel) or [ngrok](https://github.com/ngrok) for this purpose, but when you actually start using them, you will often find out that they have limitations on their free plans. So, we will configure our own custom setup once and have it always available for convenient and practical usage which will save a lot of time and nerves in the long run.
 
 ## Why is this useful
 
 This is useful whenever you need to share your local project with others or provide a publicly accessible URL for your service so that external systems can reach it. This is often the case if you work remotely.
 
-Yes, you can use test deployments, but having a tunnel setup configured and being able to do it with a single terminal command saves a lot of time and energy.
+Yes, you can use test deployments, but having a tunnel setup configured and being able to run it with a single terminal command saves a lot of time and energy.
 
 Possible use cases:
 
@@ -56,11 +56,11 @@ Possible use cases:
 
 ## Architecture overview
 
-Without going too deep into the theory of computer networks lets explain a port forwarding in simplified terms. Port forwarding is a mapping (binding) between two points (services) on a private network (or on the same machine) that would otherwise be unreachable. You can think of it as a VPN for a single service (port).
+Without going too deep into computer networking theory, let's explain port forwarding in simplified terms. Port forwarding is a mapping (binding) between two points (services) on a private network (or even on the same machine) that would otherwise be unreachable. You can think of it as a VPN for a single service (port).
 
-So it's exactly what we need: we want to bind (redirect traffic from) a public port (1081 in our case) on the VPS that acts as a gateway to port 3000 on our local dev server that is not directly reachable from the internet. That's it for the tunneling part, this setup is sufficient for serving HTTP traffic.
+So it's exactly what we need: we want to bind (redirect traffic from) a public port (1081 in our case) on the VPS, which acts as a gateway, to port 3000 on our local dev server that is not directly reachable from the internet. That’s it for the tunneling part, this setup is sufficient for serving HTTP traffic.
 
-Additionally, to support HTTPS and a user-friendly URL, we will add Traefik, which will handle HTTPS certificates and route traffic from port 443 to port 1081 of the tunnel.
+Additionally, to support HTTPS and provide a user-friendly URL, we will add Traefik, which will handle HTTPS certificates and route traffic from port 443 to port 1081 of the tunnel.
 
 <Image {...IMAGE_SIZES.FIXED.MDX_MD} src={SshTunnelArchitectureImage} alt="SSH tunnel architecture diagram" />
 
@@ -70,7 +70,7 @@ We already use SSH to access our VPS, but we prefer to keep that configuration u
 
 For this, we will use [linuxserver/openssh-server](https://github.com/linuxserver/docker-openssh-server) image. [Linuxserver](https://github.com/linuxserver) is an organization that maintains very stable Dokcer images for all kinds of purposes. 
 
-By default SSH server doesn't allow tunneling so we need to modify config in `/etc/ssh/sshd_config` and enable it.
+By default, the SSH server doesn’t allow tunneling, so we need to modify the config in `/etc/ssh/sshd_config` and enable it.
 
 ```bash title="/etc/ssh/sshd_config"
 AllowTcpForwarding yes
@@ -85,10 +85,9 @@ sudo nano /etc/ssh/sshd_config
 sudo systemctl restart sshd
 ```
 
-But actually, since we are using a Docker container we will do it in a different way.
+But since we are using a Docker container, we will do it differently.
 
-We will use [openssh-server-ssh-tunnel](https://github.com/linuxserver/docker-mods/tree/openssh-server-ssh-tunnel) mod, which enables tunnelling in the `linuxserver/openssh-server` image. You can think of mods as presets (additional layers and configurations) for their images.
-
+We will use [openssh-server-ssh-tunnel](https://github.com/linuxserver/docker-mods/tree/openssh-server-ssh-tunnel) mod, which enables tunnelling in the `linuxserver/openssh-server` image. You can think of mods as presets (additional layers and configurations) for these images.
 
 Here is `docker-compose.yml` for the SSH tunnel container:
 
@@ -149,14 +148,14 @@ services:
       - 1080:2222 # 1080 is the main SSH connection port
 ```
 
-By default `linuxserver/docker-openssh-server` runs SSH service on port `2222`, that is done so it doesn't conflict with the usual port `22` that is used for hosts SSH service and it's hardcoded in [Dockerfile](https://github.com/linuxserver/docker-openssh-server/blob/76dd1c4a0101a694ec848c1e975c9e33a7945d0a/Dockerfile#L39). We will choose **port `1080` to run the main SSH connection**, so we need to map it to port `2222` with SSH in the container. Port `1080` is used for an actual connection over the internet and **it is required to allow that port in VPS firewall.**
+By default, `linuxserver/docker-openssh-server` runs the SSH service on port `2222`, to avoid conflicting with the usual port `22` that is used for host's SSH service and it's hardcoded in the [Dockerfile](https://github.com/linuxserver/docker-openssh-server/blob/76dd1c4a0101a694ec848c1e975c9e33a7945d0a/Dockerfile#L39). We will choose **port `1080` for the main SSH connection**, so we need to map it to port `2222` with SSH in the container. Port `1080` is used for the actual connection over the internet, and **it is required to allow that port in VPS firewall.**
 
-So, let's establish a precise and clear naming from the beginning:
+So, let's establish clear and precise naming from the beginning:
 
-- port `1080` - the main SSH connection port
-- ports `1081, 1082, 1083, ...` - tunneled services remote ports
+- Port `1080` - the main SSH connection port
+- Ports `1081, 1082, 1083, ...` - tunneled services remote ports
 
-Additionally, you need to configure SSH client on your dev machine to use `1080` for SSH to connect to this container as well. In this example I named VPS host `amd1` and SSH container host `amd1c`, you can use your own naming logic.
+Additionally, you need to configure the SSH client on your dev machine to use port `1080` for SSH when connecting to this container. In this example I have named VPS host `amd1` and SSH container host `amd1c`, you can use your own naming logic.
 
 ```bash title="~/.ssh/config"
 
@@ -168,7 +167,7 @@ Host amd1c 123.123.123.123 # VPS IP
     Port 1080
 ```
 
-In the client SSH config above you notice the private key file `amd1_ssh_container__id_ed25519`. The public key is passed to the SSH container as environment variable:
+In the client SSH config above, you will notice the private key file `amd1_ssh_container__id_ed25519`. The public key is passed to the SSH container as an environment variable:
 
 ```yml
 services:
@@ -179,13 +178,13 @@ services:
       - PUBLIC_KEY # important
 ```
 
-You generate SSH key pars as usual, e.g.:
+You generate SSH key pairs as usual, e.g.:
 
 ```bash
 ssh-keygen -t ed25519 -C "myemail@gmail.com" -f ~/.ssh/my-keys/amd1_ssh_container__id_ed25519
 ```
 
-Now we choose on which remote port we will expose our local dev server. If you use Traefik and don't access this port directly via browser you don't need to allow it in VPS's firewall.
+Now, we choose which remote port we will use to expose our local dev server. If you're using Traefik and don’t access this port directly via the browser, you don’t need to allow it in the VPS's firewall.
 
 ```yml
 services:
@@ -210,7 +209,7 @@ services:
       - PGID=1001
 ```
 
-We use `DOCKER_MODS` variable to specify `openssh-server-ssh-tunnel` mod. `PUID` and `PGID` are user and group ids for handling permissions between the host and the container. You get their values by running `id -u && id -g` on the VPS host. It is also a good idea to export them as global environment variables in `~/.bashrc` file to make them available for all containers:
+We use `DOCKER_MODS` variable to specify `openssh-server-ssh-tunnel` mod. `PUID` and `PGID` are user and group IDs used to handle permissions between the host and the container. You get their values by running `id -u && id -g` on the VPS host. It is also a good idea to export them as global environment variables in `~/.bashrc` file to make them available for all containers:
 
 ```bash title="~/.bashrc"
 export MY_UID=$(id -u)
@@ -225,13 +224,13 @@ Then you can pass them like this:
     - PGID=$MY_GID
 ```
 
-SSH tunnel is now configured, now you can access your local dev server by HTTP via the your VPS IP e.g. `http://123.123.123.123:1081` or domain `http://my-domain.com:1081`.
+The SSH tunnel is now configured. Now you can access your local dev server by HTTP via the your VPS IP e.g. `http://123.123.123.123:1081` or domain `http://my-domain.com:1081`.
 
 ## Configuring HTTPS with Traefik
 
-Some browsers disallow insecure HTTP traffic by default and you need to tweak the browser settings to allow it explicitly. This can be inconvenient when you are sending a demo link to non-technical person, also some OAuth providers require HTTPS even for testing (e.g. Facebook). So lets make an additional effort to do things properly and configure a HTTPS with subdomain using Traefik.
+Some browsers disallow insecure HTTP traffic by default, and you need to tweak the browser settings to allow it explicitly. This can be inconvenient when sending a demo link to a non-technical person. Additionally, some OAuth providers require HTTPS even for testing (e.g. Facebook). So let's make an extra effort to do things properly and configure a HTTPS with a subdomain using Traefik.
 
-If you are running a VPS chances are you already use some reverse proxy for handling certificates and subdomain routing. This example shows how to do it with Traefik.
+If you are running a VPS, chances are you already use a reverse proxy for handling certificates and subdomain routing. This example shows how to do it with Traefik.
 
 ```yml title="docker-compose.yml" 
 
