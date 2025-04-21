@@ -260,9 +260,10 @@ networks:
     external: true
 ```
 
-The truth is, there is not much work to do here, all you need to do is to map the remote port of the tunnel `1081` to Traefik. Also define the URL on which you want to expose your local dev server via the environment variable e.g. `SITE_HOSTNAME=preview.my-domain.com`.
+The truth is, there is not much work to do here. All you need to do is to map the remote port of the tunnel `1081` to Traefik and define the URL on which you want to expose your local dev server via the environment variable e.g. `SITE_HOSTNAME=preview.my-domain.com`.
 
-Everything else is just generic Traefik configuration. Also don't forget to add the wildcard A record for your subdomains (e.g. maybe add `*.tunnels` "namespace") in your DNS provider's dashboard and point to your VPS IP. And also to create an external Docker network, e.g. named `proxy` in the example above.
+Everything else is just generic Traefik configuration. Also, don't forget to add the wildcard A record for your subdomains (e.g., you might add a `*.tunnels` "namespace") in your DNS provider's dashboard and point it to your VPS IP. Additionally, create an external Docker network, e.g. named `proxy` as shown in the example above.
+
 
 ```yml 
 services:
@@ -281,7 +282,7 @@ services:
       - 'traefik.http.services.ssh-tunnel.loadbalancer.server.port=1081' # matches the exposed port
 ```
 
-In the end you just need to define a 2 environment variables for your `docker-compose.yml` inside the `.env` file:
+In the end, you just need to define 2 environment variables for your `docker-compose.yml` inside the `.env` file:
 
 ```bash title=".env"
 # full with subdomain, without 'https://'
@@ -291,7 +292,7 @@ SITE_HOSTNAME=my-domain.com # or e.g. preview.my-domain.com
 PUBLIC_KEY=my-public-ssh-key
 ```
 
-Above is shown just the relevant Traefik configuration for SSH tunnel container. A complete Traefik reverse proxy configuration requires additional static and dynamic configuration for the Traefik container, but that is out of the scope of this tutorial. You can search the examples of Traefik configuration or reuse mine that is available in this repository [nemanjam/traefik-proxy](https://github.com/nemanjam/traefik-proxy).
+Above is shown only the relevant Traefik configuration for the SSH tunnel container. A complete Traefik reverse proxy configuration requires additional static and dynamic configurations for the Traefik container, but that is outside the scope of this tutorial. You can search for examples of Traefik configurations or reuse mine, which is available in this repository: [nemanjam/traefik-proxy](https://github.com/nemanjam/traefik-proxy).
 
 ## Tunneling multiple services
 
