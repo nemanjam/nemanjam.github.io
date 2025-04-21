@@ -85,6 +85,7 @@ const metadata: Metadata = { title, description, image };
 <PostLayout {metadata}>
   <Fragment slot="hero-image">
     {/* hero image 1280x720 max, 16:9 */}
+    {/* aspect-[16/8] should stay to prevent too tall image */}
     {
       !noHero && (
         <Image

@@ -22,6 +22,7 @@ export const TAGS = [
   'css',
   'python',
   'devops',
+  'docker',
   'self-hosting',
 ] as const;
 
