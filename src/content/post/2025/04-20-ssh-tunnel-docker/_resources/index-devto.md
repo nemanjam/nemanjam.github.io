@@ -26,7 +26,7 @@ Possible use cases:
 
 ## Demo video
 
-%[https://youtu.be/EPKlTb7annI]
+{% youtube EPKlTb7annI %}
 
 ## Architecture overview
 
@@ -34,9 +34,9 @@ Without going too deep into computer networking theory, let's explain port forwa
 
 So it's exactly what we need: we want to bind (redirect traffic from) a public port (1081 in our case) on the VPS, which acts as a gateway, to port 3000 on our local dev server that is not directly reachable from the internet. That’s it for the tunneling part, this setup is sufficient for serving HTTP traffic.
 
-Additionally, to support HTTPS and provide a user-friendly URL, we will add Traefik, which will handle HTTPS certificates and route traffic from port 443 to port 1081 of the tunnel
+Additionally, to support HTTPS and provide a user-friendly URL, we will add Traefik, which will handle HTTPS certificates and route traffic from port 443 to port 1081 of the tunnel.
 
-![SSH tunnel architecture diagram](https://cdn.hashnode.com/res/hashnode/image/upload/v1745399174123/617c3778-b1c7-47e1-8ba8-a1eeb0aadc89.png align="center")
+![SSH tunnel architecture diagram](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/elolb86z14ce5xoz83ga.png)
 
 ## Running the SSH server in Docker
 
@@ -125,7 +125,7 @@ services:
       - 1080:2222 # 1080 is the main SSH connection port
 ```
 
-By default, `linuxserver/docker-openssh-server` runs the SSH service on port `2222`, to avoid conflicting with the usual port `22` that is used for host's SSH service and it's hardcoded in the [Dockerfile](https://github.com/linuxserver/docker-openssh-server/blob/76dd1c4a0101a694ec848c1e975c9e33a7945d0a/Dockerfile#L39). We will choose **port** `1080` for the main SSH connection, so we need to map it to port `2222` with SSH in the container. Port `1080` is used for the actual connection over the internet, and **it is required to allow that port in VPS firewall.**
+By default, `linuxserver/docker-openssh-server` runs the SSH service on port `2222`, to avoid conflicting with the usual port `22` that is used for host's SSH service and it's hardcoded in the [Dockerfile](https://github.com/linuxserver/docker-openssh-server/blob/76dd1c4a0101a694ec848c1e975c9e33a7945d0a/Dockerfile#L39). We will choose **port `1080` for the main SSH connection**, so we need to map it to port `2222` with SSH in the container. Port `1080` is used for the actual connection over the internet, and **it is required to allow that port in VPS firewall.**
 
 So, let's establish clear and precise naming from the beginning:
 
@@ -359,7 +359,7 @@ Another point to make is that the SSH tunnel technique is most suitable for temp
 
 For the main SSH connection, you will need to open a port in your VPS firewall, port `1080` in this example. Additionally, if you want to access tunnels directly via a port in the browser without Traefik, you will need to open those ports as well. Be mindful not to open too many unnecessary ports, as every newly opened port increases the attack surface.
 
-![Example opened ports in the firewall](https://cdn.hashnode.com/res/hashnode/image/upload/v1745399213773/e50cf24f-2e63-45aa-888f-c140b8f29355.png align="center")
+![Example opened ports in the firewall](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/8rc6a2a97h2swdtlji2l.png)
 
 ## Running the tunnel
 
