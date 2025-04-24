@@ -6,6 +6,7 @@ import icon from 'astro-icon';
 import { defineConfig } from 'astro/config';
 
 // must use relative imports, and their entire import subtrees
+import { rehypeExternalLinks } from './plugins/rehype-external-links';
 import { remarkReadingTime } from './plugins/remark-reading-time.mjs';
 //
 // all relative imports in subtree
@@ -15,7 +16,9 @@ import { expressiveCodeIntegration } from './src/libs/integrations/expressive-co
 import { sitemapIntegration } from './src/libs/integrations/sitemap';
 
 const { SITE_URL } = PROCESS_ENV;
+
 const remarkPlugins = [remarkReadingTime];
+const rehypePlugins = [rehypeExternalLinks];
 
 export default defineConfig({
   site: SITE_URL,
@@ -29,7 +32,7 @@ export default defineConfig({
     expressiveCodeIntegration(),
     sitemapIntegration(),
     react(),
-    mdx(),
+    mdx({ rehypePlugins }),
     // applyBaseStyles: false prevents double loading of tailwind
     tailwind({ applyBaseStyles: false }),
     icon({ iconDir: 'src/assets/icons' }),
@@ -37,7 +40,7 @@ export default defineConfig({
       config: { forward: ['dataLayer.push'] },
     }),
   ],
-  markdown: { remarkPlugins },
+  markdown: { remarkPlugins, rehypePlugins },
   vite: {
     build: {
       sourcemap: false,

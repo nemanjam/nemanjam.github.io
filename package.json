@@ -58,6 +58,7 @@
     "react-dom": "^19.1.0",
     "react-icons": "^5.5.0",
     "reading-time": "^1.5.0",
+    "rehype-external-links": "^3.0.0",
     "sharp": "0.34.1",
     "tailwind-clip-path": "^1.0.0",
     "tailwind-merge": "^2.6.0",
