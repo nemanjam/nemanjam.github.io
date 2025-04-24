@@ -32,7 +32,9 @@ export default defineConfig({
     expressiveCodeIntegration(),
     sitemapIntegration(),
     react(),
-    mdx({ rehypePlugins }),
+    mdx({
+      /* rehypePlugins */
+    }), // todo: breaks expressive-code, disable it
     // applyBaseStyles: false prevents double loading of tailwind
     tailwind({ applyBaseStyles: false }),
     icon({ iconDir: 'src/assets/icons' }),
@@ -40,7 +42,7 @@ export default defineConfig({
       config: { forward: ['dataLayer.push'] },
     }),
   ],
-  markdown: { remarkPlugins, rehypePlugins },
+  markdown: { remarkPlugins /* rehypePlugins */ },
   vite: {
     build: {
       sourcemap: false,
