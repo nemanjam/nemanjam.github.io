@@ -8,6 +8,8 @@ import type { ConfigClientType } from '@/types/config';
 const configClientData: ConfigClientType = {
   /** all urls without '/' */
   SITE_URL,
+  /** same for all environments, defined here, not env var */
+  SITE_URL_CANONICAL: 'https://nemanjamitic.com',
   SITE_TITLE: 'Nemanja Mitic',
   SITE_DESCRIPTION: 'I am Nemanja, a full stack developer',
   PLAUSIBLE_SCRIPT_URL,
@@ -19,7 +21,7 @@ const configClientData: ConfigClientType = {
   DEFAULT_MODE: 'light',
   DEFAULT_THEME: 'default-light',
   AUTHOR_NAME: 'Nemanja Mitic',
-  AUTHOR_EMAIL: 'email@email.com',
+  AUTHOR_EMAIL: 'email@email.com', // todo: use email
   AUTHOR_GITHUB: 'https://github.com/nemanjam',
   AUTHOR_LINKEDIN: 'https://www.linkedin.com/in/nemanja-mitic',
   AUTHOR_TWITTER: 'https://x.com/nemanja_codes',

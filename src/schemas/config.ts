@@ -42,6 +42,7 @@ export const configClientSchema = processEnvSchema
   .pick({ SITE_URL: true, PLAUSIBLE_SCRIPT_URL: true, PLAUSIBLE_DOMAIN: true })
   .merge(
     z.object({
+      SITE_URL_CANONICAL: z.string().min(1),
       SITE_TITLE: z.string().min(1),
       SITE_DESCRIPTION: z.string().min(1),
       PAGE_SIZE_POST_CARD: z.number(),
