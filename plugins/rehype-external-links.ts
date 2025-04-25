@@ -8,8 +8,5 @@ export const rehypeExternalLinks: [Plugin<any[], any>, any] = [
   {
     target: '_blank',
     rel: ['noopener', 'noreferrer'],
-    // filter out expressive-code, important
-    // skip <a> tags inside <pre> or <code>
-    selectors: 'a:not(pre a):not(code a)',
   },
 ];

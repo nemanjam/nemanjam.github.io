@@ -32,9 +32,8 @@ export default defineConfig({
     expressiveCodeIntegration(),
     sitemapIntegration(),
     react(),
-    mdx({
-      /* rehypePlugins */
-    }), // todo: breaks expressive-code, disable it
+    // don't pass any plugins here, it will disable all mdx integrations, e.g. expressive-code above
+    mdx(),
     // applyBaseStyles: false prevents double loading of tailwind
     tailwind({ applyBaseStyles: false }),
     icon({ iconDir: 'src/assets/icons' }),
@@ -42,7 +41,8 @@ export default defineConfig({
       config: { forward: ['dataLayer.push'] },
     }),
   ],
-  markdown: { remarkPlugins /* rehypePlugins */ },
+  // pass rehype plugins only here, mdx will reuse them
+  markdown: { remarkPlugins, rehypePlugins },
   vite: {
     build: {
       sourcemap: false,
