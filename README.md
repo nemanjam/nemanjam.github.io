@@ -281,8 +281,11 @@ Latest git commit info is included in the website footer for easy identification
 
 ## Roadmap
 
-- Component to float text around images
+- Re-architecture CSS for Tailwind v4
 - Add accessibility attributes
+- Improve visual design
+- Add semantic release and Docker tags
+- Component to float text around images - done
 - Fix View transitions flash in Firefox dark theme - done
 - Add analytics - done
 - Add image gallery page - done
@@ -290,9 +293,8 @@ Latest git commit info is included in the website footer for easy identification
 - Validate config with `astro:env` - done
 - Render `.mdx` for RSS using component containers
 - Review and improve ESLint, (strictest) Typescript and Prettier configs
-- Improve visual design
-- Restructure content folders
-- Update to Astro content layer
+- Restructure content folders - done
+- Update to Astro content layer - done
 
 ## Credits
 
