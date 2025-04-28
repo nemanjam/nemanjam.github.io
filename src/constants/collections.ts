@@ -58,6 +58,10 @@ export const CATEGORIES = [
     name: 'resources',
     icon: 'mdi:book-open-variant-outline',
   },
+  {
+    name: 'homelab',
+    icon: 'mdi:flask-empty-outline',
+  },
 ] as const;
 
 // use imported images here
