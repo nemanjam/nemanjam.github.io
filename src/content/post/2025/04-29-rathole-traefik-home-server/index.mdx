@@ -1,9 +1,9 @@
 ---
 title: Expose home server with Rathole tunnel and Traefik
 description: |
-  A practical example how to permanently expose your home server to the internet.
+  Bypass CG-NAT permanently and host websites from home.
 publishDate: 2025-04-29
-heroImage: '../../../../content/post/2025/04-29-rathole-traefik-home-server/_images/rathole-traefik-architecture-16-9.png'
+heroImage: '../../../../content/post/2025/04-29-rathole-traefik-home-server/_images/orange-pi.jpg'
 heroAlt: Rathole Traefik architecture diagram
 tags:
   - devops
@@ -18,9 +18,11 @@ import { Image } from 'astro:assets';
 
 import { IMAGE_SIZES } from '../../../../constants/image';
 
+import OrangePiGifImage from '../../../../content/post/2025/04-29-rathole-traefik-home-server/_images/orange-pi.gif'
+
+import RatholeTraefikArchitectureImage from '../../../../content/post/2025/04-29-rathole-traefik-home-server/_images/rathole-traefik-architecture-16-9.png';
 import FirewallImage from '../../../../content/post/2025/04-29-rathole-traefik-home-server/_images/firewall.png';
 import HomeServerContainersImage from '../../../../content/post/2025/04-29-rathole-traefik-home-server/_images/home-server-containers.png';
-
 
 ## Introduction
 
@@ -47,7 +49,7 @@ Another point is that, with option 2, we avoid the gap of unencrypted traffic on
 
 The downside is that Rathole will exclusively occupy ports `80` and `443` on the VPS, preventing any other process from using them. We won't be able to run other web servers on that VPS, so it's best to use a small one dedicated to this purpose.
 
-image
+<Image {...IMAGE_SIZES.FIXED.MDX_MD} src={RatholeTraefikArchitectureImage} alt="Rathole Traefik architecture diagram" />
 
 ## Rathole server
 
@@ -357,6 +359,8 @@ Most consumer-grade internet connections are behind a CG-NAT. This setup allows 
 It is simple, cheap, and you can set it up in 30 minutes. Like anything, it also has some downsides, one of them is the overhead latency caused by an additional network hop between the VPS and your home network, but it's a reasonable tradeoff.
 
 Did you make something similar yourself? Can you see room for improvement? Did you use a different method? You tried to run the code and need help with troubleshooting? Let me know in the comments.
+
+<img src={OrangePiGifImage.src} alt="Orange Pi hero image" />
 
 ## References
 
