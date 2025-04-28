@@ -2,7 +2,7 @@
 
 export const FILE_PATHS = {
   FONTS_FOLDER: './public/fonts/',
-  OG_FOLDER: './src/assets/images/default/open-graph/',
+  GALLERY_FOLDER: './src/assets/images/all-images/',
   IMAGE_404: './src/assets/images/pages/image404.jpg',
   /** .jpg */
   AVATAR: './src/assets/images/avatar.jpg',

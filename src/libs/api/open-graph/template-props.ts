@@ -13,7 +13,7 @@ import avatarImage from '@/assets/images/avatar.jpg';
 import image404 from '@/assets/images/pages/image404.jpg';
 
 const { SITE_URL } = CONFIG_CLIENT;
-const { AVATAR, OG_FOLDER, IMAGE_404 } = FILE_PATHS;
+const { AVATAR, GALLERY_FOLDER, IMAGE_404 } = FILE_PATHS;
 
 // original base64 implementation
 export const getTemplatePropsBase64 = async (
@@ -38,7 +38,7 @@ export const getTemplatePropsBase64 = async (
 
     // fallback to random default image
     default:
-      heroImagePath = await getRandomImagePath(OG_FOLDER);
+      heroImagePath = await getRandomImagePath(GALLERY_FOLDER);
       break;
   }
 
