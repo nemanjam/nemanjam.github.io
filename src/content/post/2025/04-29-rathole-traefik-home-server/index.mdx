@@ -1,7 +1,7 @@
 ---
 title: Expose home server with Rathole tunnel and Traefik
 description: |
-  Bypass CG-NAT permanently and host websites from home.
+  Bypass CGNAT permanently and host websites from home.
 publishDate: 2025-04-29
 heroImage: '../../../../content/post/2025/04-29-rathole-traefik-home-server/_images/orange-pi.jpg'
 heroAlt: Rathole Traefik architecture diagram
@@ -25,7 +25,7 @@ import OrangePiGifImage from '../../../../content/post/2025/04-29-rathole-traefi
 
 ## Introduction
 
-In the previous article, I wrote about a temporary SSH tunneling technique to bypass CG-NAT. This method is not suitable for exposing permanent services, at least not without `autossh` manager. Proper tools for this are [rapiz1/rathole](https://github.com/rapiz1/rathole) or [fatedier/frp](https://github.com/fatedier/frp). I chose Rathole since it's written in Rust and offers better performance and benchmarks.
+In the previous article, I wrote about a temporary SSH tunneling technique to bypass CGNAT. This method is not suitable for exposing permanent services, at least not without `autossh` manager. Proper tools for this are [rapiz1/rathole](https://github.com/rapiz1/rathole) or [fatedier/frp](https://github.com/fatedier/frp). I chose Rathole since it's written in Rust and offers better performance and benchmarks.
 
 ## Prerequisites
 
@@ -353,7 +353,7 @@ Like for any webserver, on the VPS you will need to open ports `80` and `443` to
 
 ## Conclusion
 
-Most consumer-grade internet connections are behind a CG-NAT. This setup allows you to bypass CG-NAT and host an unlimited number of websites from your home almost for free. You can use it for web servers in virtual machines, LXC containers, SBC computers, etc. - anywhere you can run Docker.
+Most consumer-grade internet connections are behind a CGNAT. This setup allows you to bypass CGNAT and host an unlimited number of websites from your home almost for free. You can use it for web servers in virtual machines, LXC containers, SBC computers, etc. - anywhere you can run Docker.
 
 It is simple, cheap, and you can set it up in 30 minutes. Like anything, it also has some downsides, one of them is the overhead latency caused by an additional network hop between the VPS and your home network, but it's a reasonable tradeoff.
 
