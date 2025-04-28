@@ -340,7 +340,7 @@ local_addr = "traefik:443"
 
 Like for any webserver, on the VPS you will need to open ports `80` and `443` to listen for HTTP/HTTPS traffic. Additionally you will need to open the port `2333` for the Rathole control channel - tunnel.
 
-<Image {...IMAGE_SIZES.FIXED.MDX_MD} src={FirewallImage} alt="Opened port for Rathole tunnel in the firewall" />
+<Image {...IMAGE_SIZES.FIXED.MDX_XL} src={FirewallImage} alt="Opened port for Rathole tunnel in the firewall" />
 
 ## Completed code
 
@@ -348,6 +348,12 @@ Like for any webserver, on the VPS you will need to open ports `80` and `443` to
 - **Rathole client and local Traefik:** https://github.com/nemanjam/traefik-proxy/tree/main/core
 
 ## Conclusion
+
+Most consumer-grade internet connections are behind a CG-NAT. This setup allows you to bypass CG-NAT and host an unlimited number of websites from your home almost for free. You can use it for web servers in virtual machines, LXC containers, SBC computers, etc. - anywhere you can run Docker.
+
+It is simple, cheap, and you can set it up in 30 minutes. Like anything, it also has some downsides, one of them is the overhead latency caused by an additional network hop between the VPS and your home network, but it's a reasonable tradeoff.
+
+Did you make something similar yourself? Can you see room for improvement? Did you use a different method? You tried to run the code and need help with troubleshooting? Let me know in the comments.
 
 ## References
 
