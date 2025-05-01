@@ -21,7 +21,7 @@ const configClientData: ConfigClientType = {
   DEFAULT_MODE: 'light',
   DEFAULT_THEME: 'default-light',
   AUTHOR_NAME: 'Nemanja Mitic',
-  AUTHOR_EMAIL: 'email@email.com', // todo: use email
+  AUTHOR_EMAIL: 'nemanja.mitic.elfak@hotmail.com',
   AUTHOR_GITHUB: 'https://github.com/nemanjam',
   AUTHOR_LINKEDIN: 'https://www.linkedin.com/in/nemanja-mitic',
   AUTHOR_TWITTER: 'https://x.com/nemanja_codes',

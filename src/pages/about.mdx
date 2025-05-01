@@ -12,7 +12,9 @@ import LinkWithLabel from '../components/LinkWithLabel.astro';
 import Electronics1Image from '../assets/images/all-images/electronics1.jpg';
 
 
-export const { AUTHOR_GITHUB, AUTHOR_LINKEDIN, AUTHOR_TWITTER, AUTHOR_YOUTUBE } = CONFIG_CLIENT;
+export const { AUTHOR_EMAIL, AUTHOR_GITHUB, AUTHOR_LINKEDIN, AUTHOR_TWITTER, AUTHOR_YOUTUBE } = CONFIG_CLIENT;
+
+export const authorEmailHref = `mailto:${AUTHOR_EMAIL}`;
 
 {/* bellow SM image is full width of content so higher resolution image */}
 export const imageSizes = {
@@ -30,6 +32,7 @@ My hobbies are fishing, lure building, bicycling, playing guitar, composing in F
 
 If you want to contact me about coding, or if you need a companion for fishing or jamming, use the links below.
 
+<LinkWithLabel label="Email" href={authorEmailHref} title="Author's email" variant="link" >{AUTHOR_EMAIL}</LinkWithLabel>
 <LinkWithLabel label="GitHub" href={AUTHOR_GITHUB} title="Author GitHub profile" variant="link" />
 <LinkWithLabel label="LinkedIn" href={AUTHOR_LINKEDIN} title="Author LinkedIn profile" variant="link" />
 <LinkWithLabel label="Twitter" href={AUTHOR_TWITTER} title="Author Twitter profile" variant="link" />

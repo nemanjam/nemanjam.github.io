@@ -8,7 +8,7 @@ import { getLatestCommitInfo } from '@/libs/git';
 import { shortDate } from '@/utils/datetime';
 import { limitString, trimHttpProtocol } from '@/utils/strings';
 
-const { SITE_URL, AUTHOR_LINKEDIN, AUTHOR_GITHUB, REPO_URL } = CONFIG_CLIENT;
+const { SITE_URL, AUTHOR_EMAIL, AUTHOR_GITHUB, AUTHOR_LINKEDIN, REPO_URL } = CONFIG_CLIENT;
 const domain = trimHttpProtocol(SITE_URL);
 const messageLength = 15 as const;
 
@@ -41,6 +41,17 @@ const trimmedMessage = limitString(message, messageLength);
 
       <!-- right column -->
       <ul class="flex gap-2 flex-wrap xs:flex-nowrap lg:items-center">
+        <li>
+          <Link
+            href={`mailto:${AUTHOR_EMAIL}`}
+            title="Nemanja's email"
+            class="flex items-center gap-2 text-base xs:text-lg"
+            variant="nav"
+          >
+            <Icon name="mdi:email-outline" class="h-6 w-6 fill-current" />
+            <span>Email</span>
+          </Link>
+        </li>
         <li>
           <Link
             href={AUTHOR_GITHUB}
