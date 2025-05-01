@@ -342,7 +342,7 @@ It is simple, cheap, and you can set it up in 30 minutes. Like anything, it also
 
 Did you make something similar yourself? Can you see room for improvement? Did you use a different method? You tried to run the code and need help with troubleshooting? Let me know in the comments.
 
-![Orange Pi hero image](https://cdn.hashnode.com/res/hashnode/image/upload/v1746081824598/e5ff5d29-af1d-4973-81d4-c75abc162fa1.gif align="center")
+![Orange Pi hero image](https://cdn.hashnode.com/res/hashnode/image/upload/v1746083876612/e2f6bde0-0945-4230-bdb3-18eab7e56500.webp align="center")
 
 ## References
 
