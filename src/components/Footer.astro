@@ -27,7 +27,7 @@ const firstName = AUTHOR_NAME.split(' ')[0];
 
 <footer class="border-t border-base-300 py-8 px-4">
   <div class="max-w-6xl md:mx-auto flex justify-center md:justify-start">
-    <div class="flex justify-between gap-4 flex-col-reverse md:flex-row md:w-full">
+    <div class="flex justify-between gap-4 flex-col-reverse md:flex-row md:w-full min-w-0">
       <!-- left column -->
       <div class="flex items-center gap-2 flex-wrap text-sm text-content whitespace-nowrap">
         <div class="flex items-center gap-2">
@@ -44,7 +44,7 @@ const firstName = AUTHOR_NAME.split(' ')[0];
 
       <!-- right column -->
       <ul
-        class="flex gap-2 flex-wrap xs:flex-nowrap lg:items-center [&_span]:hidden [&_span]:xs:block"
+        class="flex gap-2 flex-nowrap lg:items-center [&_li]:shrink [&_li]:min-w-0 [&_a]:min-w-0 [&_span]:truncate [&_span]:shrink [&_span]:min-w-0"
       >
         <li>
           <Link
