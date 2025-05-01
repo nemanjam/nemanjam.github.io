@@ -40,7 +40,9 @@ const trimmedMessage = limitString(message, messageLength);
       </div>
 
       <!-- right column -->
-      <ul class="flex gap-2 flex-wrap xs:flex-nowrap lg:items-center">
+      <ul
+        class="flex gap-2 flex-wrap xs:flex-nowrap lg:items-center [&_span]:hidden [&_span]:xs:block"
+      >
         <li>
           <Link
             href={`mailto:${AUTHOR_EMAIL}`}
