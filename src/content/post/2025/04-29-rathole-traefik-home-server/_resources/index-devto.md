@@ -1,0 +1,354 @@
+## Introduction
+
+In the previous article, I wrote about a temporary SSH tunneling technique to bypass CGNAT. This method is not suitable for exposing permanent services, at least not without `autossh` manager. Proper tools for this are [rapiz1/rathole](https://github.com/rapiz1/rathole) or [fatedier/frp](https://github.com/fatedier/frp). I chose Rathole since it's written in Rust and offers better performance and benchmarks.
+
+## Prerequisites
+
+- A VPS server with a public IP and Docker, ideally small, you can't use ports `80` and `443` for any other services aside from Rathole
+- A home server
+- A domain name
+
+## Architecture overview
+
+We will use Rathole for an encrypted tunnel between the VPS and the local network. We will also use Traefik since we want to host multiple websites on our home server, just like you would on any server.
+
+The main question is where to run Traefik:
+
+1. On the VPS
+2. On the home server
+
+I highly prefer option 2 because, that way, the entire configuration is stored on our home server. The home server is almost tunnel-agnostic, and you can reuse it on any tunneled or non-tunneled server. Otherwise, we would need to maintain state between the VPS and the home server, debug both together, etc.
+
+Another point is that, with option 2, we avoid the gap of unencrypted traffic on the VPS between Traefik (TLS) and Rathole (Noise Protocol). You can read more about the comparison of these two options in this article: https://blog.mni.li/posts/caddy-rathole-zero-knowledge/.
+
+The downside is that Rathole will exclusively occupy ports `80` and `443` on the VPS, preventing any other process from using them. We won't be able to run other web servers on that VPS, so it's best to use a small one dedicated to this purpose.
+
+![Rathole Traefik architecture diagram](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/9s3u4wfhv5f2c6q8vs9m.png)
+
+## Rathole server
+
+We will run the Rathole server inside a Docker container on our VPS. Rathole uses the same binary for both the server and client, you just pass the right option (`--server` or `--client`) and the `.toml` configuration file.
+
+Here is the Rathole server configuration [rathole.server.toml](https://github.com/nemanjam/rathole-server/blob/5226ff53992abe930302098677a570151ebff927/rathole.server.toml):
+
+```toml
+# rathole.server.toml
+
+[server]
+bind_addr = "0.0.0.0:2333"
+
+[server.transport]
+type = "noise"
+
+[server.transport.noise]
+local_private_key = "private_key"
+
+[server.services.traefik-http]
+token = "secret_token_1"
+bind_addr = "0.0.0.0:5080"
+
+[server.services.traefik-https]
+token = "secret_token_1"
+bind_addr = "0.0.0.0:5443"
+```
+
+Let's explain it: we choose port `2333` for the control channel and bind it to all interfaces inside the Docker container with the `0.0.0.0` IP. We choose the `noise` encryption protocol and specify a private key. The public key will be used on the Rathole client. The public and private key pair is generated with:
+
+```bash
+docker run -it --rm rapiz1/rathole --genkey
+```
+
+Then we define two tunnels: one for HTTP and another for HTTPS. For the HTTP tunnel, we define the name `server.services.traefik-http`, set the value for `token`, and choose port `5080`, and again we bind it to all container interfaces with `0.0.0.0`. Similarly, for HTTPS, we set the name to `server.services.traefik-https`, provide a `token` value, and choose port `5443`.
+
+An important note is that, aside from a different name, a different token value is sufficient to create another tunnel (Rathole service). This practically means we can use a single Rathole server container to expose multiple home servers (Rathole clients) on the same ports `5080` and `5443`, which is pretty convenient.
+
+Token is just a random base64 string, we generate it by running this:
+
+```bash
+openssl rand -base64 32
+```
+
+After configuration file we define a Rathole server container with [docker-compose.yml](https://github.com/nemanjam/rathole-server/blob/5226ff53992abe930302098677a570151ebff927/docker-compose.yml):
+
+```yml
+# docker-compose.yml
+
+services:
+  rathole:
+    image: rapiz1/rathole:v0.5.0
+    container_name: rathole
+    command: --server /config/rathole.server.toml
+    restart: unless-stopped
+    ports:
+      # host:container
+      - 2333:2333
+      - 80:5080
+      - 443:5443
+    volumes:
+      - ./rathole.server.toml:/config/rathole.server.toml:ro
+```
+
+In the command, we set the `--server` option, pass the `.toml` configuration file, and mount it as a read-only bind-mount volume.
+
+The important part is the port mappings. Here, you can see that the Rathole server container will occupy ports `2333`, `80`, and `443` exclusively on the host VPS. This practically means we won't be able to run any other web servers on ports `80` and `443`. We will also need to open ports `80`, `443`, and `2333` in the VPS firewall. You don't need to open ports `5080` and `5443`, those are used only by Rathole internally.
+
+## Rathole client and connecting with Traefik
+
+We run the Rathole client and Traefik inside Docker containers on the home server. Configuring the Rathole client and connecting it to Traefik is a bit more complex and tricky.
+
+Here is the Rathole client configuration [core/rathole.client.toml.example](https://github.com/nemanjam/traefik-proxy/blob/e8fece09e31ec99ddd21559f343d0ddea9fb55bf/core/rathole.client.toml.example):
+
+```toml
+# core/rathole.client.toml.example
+
+[client]
+remote_addr = "123.123.123.123:2333"
+
+[client.transport]
+type = "noise"
+
+[client.transport.noise]
+remote_public_key = "public_key"
+
+# this is the important part
+# Rathole knows traffic comes from 5080 and 5443, control channel told him
+# DON'T do ANY mapping in docker-compose.yml
+# just pass traffic from Rathole on ports which Traefik expects (80 and 443)
+
+[client.services.traefik-http]
+token = "secret_token_1"
+local_addr = "traefik:80"
+
+[client.services.traefik-https]
+token = "secret_token_1"
+local_addr = "traefik:443"
+```
+
+Let's go through it. First, we define the VPS server IP `remote_addr`, the control channel port `2333`, set the `noise` encryption protocol, and this time specify a public key `remote_public_key`.
+
+Now comes the important and tricky part: defining tunnels and services. We repeat the service name and token that we used in the Rathole server config.
+
+**And now the most important part:** `local_addr`, for this we target the Traefik hostname - service name from `core/docker-compose.local.yml` and the Traefik listening ports `80` and `443`. That's it. It might look simple and obvious, this is the correct setup. I must emphasize: don't fall into temptation of setting any additional port mappings in `core/docker-compose.local.yml`, functionality will break, all should be done in `core/rathole.client.toml`.
+
+Another note: You might wonder why ports `5080` and `5443` aren't repeated anywhere in the client config `core/rathole.client.toml`. The answer is "no need for it", we already specified port `2333` for the control channel, which will communicate all additional required information between the Rathole server and client.
+
+Now that we have configured the Rathole client, we need to define Rathole client and Traefik containers.
+
+Here is the Rathole client container and the important part of the Traefik container [core/docker-compose.local.yml](https://github.com/nemanjam/traefik-proxy/blob/e8fece09e31ec99ddd21559f343d0ddea9fb55bf/core/docker-compose.local.yml):
+
+```yml
+# core/docker-compose.local.yml
+
+services:
+  rathole:
+    # 1. default official x86 image
+    image: rapiz1/rathole:v0.5.0
+
+    # 2. custom built ARM image (for Raspberry pi)
+    # image: nemanjamitic/my-rathole-arm64:v1.0
+
+    # 3. build for arm - AVOID, use prebuilt ARM image above
+    # build: https://github.com/rapiz1/rathole.git#main
+    # platform: linux/arm64
+
+    container_name: rathole
+    command: --client /config/rathole.client.toml
+    restart: unless-stopped
+    volumes:
+      - ./rathole.client.toml:/config/rathole.client.toml:ro
+    networks:
+      - proxy
+
+  traefik:
+    image: 'traefik:v2.9.8'
+    container_name: traefik
+    restart: unless-stopped
+
+    # for this to work both services must be defined in the same docker-compose.yml file
+    depends_on:
+      - rathole
+
+    # other config...
+
+    networks:
+      - proxy
+
+    # leave this commented out, just for explanation
+    # Rathole will pass Traffic through proxy network directly on 80 and 443
+    # defined in rathole.client.toml
+    # ports:
+    #   - '80:80'
+    #   - '443:443'
+
+    # other config...
+```
+
+Let's start with the Rathole service. Similarly to the server command, we run the Rathole binary, this time in client mode with `--client` and we pass the client config file `/config/rathole.client.toml` which we also bind mount as volume. An important part is that we set both the Rathole and Traefik containers on the same **external** network `proxy` so they can communicate with each other and with the host.
+
+Additional notes about the Rathole image:
+
+- Always make sure to use the same Rathole image version for both the server and client for compatibility.
+- `x86` - By default, Rathole provides only the `x86` image. If your home server uses that architecture, you are good to go.
+- `ARM` - If you have an ARM home server (e.g., Raspberry Pi), you will have to build the image yourself or use a prebuilt, unofficial one. **Avoid** building images on low-power ARM single-board computers, as it will take a long time and require a lot of RAM and CPU power. Instead, either pre-build one yourself and push it to Docker Hub, or you can reuse my `nemanjamitic/my-rathole-arm64:v1.0` image (which uses Rathole `v0.5.0`).
+
+Now, the Traefik container. It must be on the same `proxy` external network as Rathole. Another important part: It must **wait** for the Rathole container to boot up `depends_on: rathole`, because the traffic will come from the Rathole tunnel. **Do not** expose ports `80` and `443`, Rathole has already bound those Traefik container ports, as we defined in the Rathole client config `core/rathole.client.toml`.
+
+The rest of the Traefik container definition is left out here because it's the usual configuration, unrelated to the Rathole tunnel. Below is a quick reminder about the general Traefik configuration.
+
+**Traefik reminder**
+
+1. Provide the `.env` file with variables needed for Traefik:
+
+```bash
+cp .env.example .env
+```
+
+```bash
+# .env"
+
+SITE_HOSTNAME=homeserver.my-domain.com
+
+# important: must put value in quotes "..." and escape $ with \$
+TRAEFIK_AUTH=
+
+# will receive expiration notifications
+TRAEFIK_LETSENCRYPT_EMAIL=myname@example.com
+```
+
+2. On your home server host OS you must create an external Docker network:
+
+```bash
+docker network create proxy
+```
+
+3. Create `acme.json` file with permission `600`:
+
+```bash
+touch ~/homelab/traefik-proxy/core/traefik-data/acme.json
+
+sudo chmod 600 ~/homelab/traefik-proxy/core/traefik-data/acme.json
+```
+
+4. Always start with the staging Acme server for testing and swap to production once satisfied:
+
+```yml
+# core/traefik-data/traefik.yml
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      # always start with staging certificate
+      caServer: 'https://acme-staging-v02.api.letsencrypt.org/directory'
+      # caServer: 'https://acme-v02.api.letsencrypt.org/directory'
+```
+
+5. To clear the temporary staging certificates, clear the contents of `acme.json`
+
+```bash
+truncate -s 0 acme.json
+```
+
+That's it. Once done, we can run Rathole client and Traefik containers on our home server with:
+
+```bash
+docker compose -f docker-compose.local.yml up -d
+```
+
+![Running containers on the home server](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ggjzla3rvfcfaxefqk0f.png)
+
+## Exposing multiple servers
+
+Fortunately, Rathole makes it trivial to run multiple tunnels using a single Rathole server. We don't need to open any additional ports or run multiple container instances. We just use a different tunnel name, e.g., `server.services.traefik-http`, and the value for the `token` for each tunnel/service. That's it.
+
+**Rathole server:**
+
+Rathole server configuration file example [rathole.server.toml](https://github.com/nemanjam/rathole-server/blob/5226ff53992abe930302098677a570151ebff927/rathole.server.toml):
+
+```toml
+[server]
+bind_addr = "0.0.0.0:2333"
+
+[server.transport]
+type = "noise"
+
+[server.transport.noise]
+local_private_key = "private_key"
+
+# separated based on token, use the same ports
+
+# home server 1 - local
+[server.services.traefik-http]
+token = "secret_token_1"
+bind_addr = "0.0.0.0:5080"
+
+[server.services.traefik-https]
+token = "secret_token_1"
+bind_addr = "0.0.0.0:5443"
+
+# home server 2 - pi
+[server.services.pi-traefik-http]
+token = "secret_token_2"
+bind_addr = "0.0.0.0:5080"
+
+[server.services.pi-traefik-https]
+token = "secret_token_2"
+bind_addr = "0.0.0.0:5443"
+```
+
+In the code above I use this Rathole server to connect a two Rathole client home servers `traefik-http` and `pi-traefik-http` for HTTP tunnels, and `traefik-https` and `pi-traefik-https` for HTTPS tunnels.
+
+**Rathole client:**
+
+On the each Rathole client you just specify which tunnels you are using. For example, on the "pi" home server you will use just its HTTP/HTTPS par and omit the other ones, [core/rathole.client.toml.example](https://github.com/nemanjam/traefik-proxy/blob/e8fece09e31ec99ddd21559f343d0ddea9fb55bf/core/rathole.client.toml.example):
+
+```toml
+# core/rathole.client.toml.example
+
+[client]
+remote_addr = "123.123.123.123:2333"
+
+[client.transport]
+type = "noise"
+
+[client.transport.noise]
+remote_public_key = "public_key"
+
+# pi
+[client.services.pi-traefik-http]
+token = "secret_token_2"
+local_addr = "traefik:80"
+
+[client.services.pi-traefik-https]
+token = "secret_token_2"
+local_addr = "traefik:443"
+```
+
+## Open the firewall on the VPS
+
+Like for any webserver, on the VPS you will need to open ports `80` and `443` to listen for HTTP/HTTPS traffic. Additionally you will need to open the port `2333` for the Rathole control channel - tunnel.
+
+![Opened port for Rathole tunnel in the firewall](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/xbi42j6rbl343zix6mxp.png)
+
+## Completed code
+
+- **Rathole server:** https://github.com/nemanjam/rathole-server
+- **Rathole client and local Traefik:** https://github.com/nemanjam/traefik-proxy/tree/main/core
+
+## Conclusion
+
+Most consumer-grade internet connections are behind a CGNAT. This setup allows you to bypass CGNAT and host an unlimited number of websites from your home almost for free. You can use it for web servers in virtual machines, LXC containers, SBC computers, etc. - anywhere you can run Docker.
+
+It is simple, cheap, and you can set it up in 30 minutes. Like anything, it also has some downsides, one of them is the overhead latency caused by an additional network hop between the VPS and your home network, but it's a reasonable tradeoff.
+
+Did you make something similar yourself? Can you see room for improvement? Did you use a different method? You tried to run the code and need help with troubleshooting? Let me know in the comments.
+
+![Orange Pi hero image](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/jenj0e5wzt25wpnyvc4w.gif)
+
+## References
+
+- Rathole repository https://github.com/rapiz1/rathole
+- Local or remote Traefik discussion https://github.com/rapiz1/rathole/issues/169
+- Local and remote Traefik comparison, Tailscale benchmarks https://blog.mni.li/posts/caddy-rathole-zero-knowledge/
+- Rathole Docker example configuration https://nitinja.in/tech/
+- Rathole `.toml` environment variables discussion https://github.com/rapiz1/rathole/issues/218
+- frp repository https://github.com/fatedier/frp
