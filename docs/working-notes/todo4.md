@@ -176,7 +176,7 @@ image flicker, sacekaj i da nije prevMainImage
 https://cosmicthemes.com/blog/astro-mdx-external-link/
 https://github.com/rehypejs/rehype-external-links
 
-og random image from all-images
+    og random image from all-images
 fix iphone mdx webm to mp4
 add tag negation support !tag
 ```
