@@ -2,8 +2,13 @@ import expressiveCode from 'astro-expressive-code';
 
 import { pluginCollapsibleSections } from '@expressive-code/plugin-collapsible-sections';
 
-export const expressiveCodeIntegration = () =>
-  expressiveCode({
+// prevent multiple shiki instances in dev mode
+let cachedIntegration: ReturnType<typeof expressiveCode> | undefined;
+
+export const expressiveCodeIntegration = () => {
+  if (cachedIntegration) return cachedIntegration;
+
+  return (cachedIntegration = expressiveCode({
     themes: ['light-plus', 'dark-plus'],
     useDarkModeMediaQuery: true,
     themeCssRoot: ':root',
@@ -35,4 +40,5 @@ export const expressiveCodeIntegration = () =>
       },
     },
     plugins: [pluginCollapsibleSections()],
-  });
+  }));
+};

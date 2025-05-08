@@ -1877,10 +1877,10 @@ astro-social-share@^2.0.3:
   resolved "https://registry.yarnpkg.com/astro-social-share/-/astro-social-share-2.2.0.tgz#4e7609e251cd614a414d884cefc07888ff73d4f4"
   integrity sha512-Z5ebhO6Yw4GLggw7wsTahdpS0f4pf/XuVjQlBpWZ0zyt0cKaVrlG/+u6RzrzN9B2t27wxp90XiosZNwvBZqA+Q==
 
-astro@^5.7.10:
-  version "5.7.10"
-  resolved "https://registry.yarnpkg.com/astro/-/astro-5.7.10.tgz#c144d3401dc1377272a5b98832e8ea5a63c6e906"
-  integrity sha512-9TQcFZqP2w6//JXXUHfw8/5PX7KUx9EkG5O3m+hISuyeUztvjY1q5+p7+C5HiXyg24Zs3KkpieoL5BGRXGCAGA==
+astro@^5.7.11:
+  version "5.7.11"
+  resolved "https://registry.yarnpkg.com/astro/-/astro-5.7.11.tgz#50c6ede88de76f8dfce63dd0c8fca6bf5dff9ff2"
+  integrity sha512-9qRVwp8pue3isddLBnTexJsmKFpmms9Fo7Ss+3yrC0aINvbHKpD7q6qf52BtfQEk2xJgyx3SQy3dUsuD90sEqQ==
   dependencies:
     "@astrojs/compiler" "^2.11.0"
     "@astrojs/internal-helpers" "0.6.1"
@@ -1929,7 +1929,7 @@ astro@^5.7.10:
     tinyglobby "^0.2.12"
     tsconfck "^3.1.5"
     ultrahtml "^1.6.0"
-    unifont "~0.4.1"
+    unifont "~0.5.0"
     unist-util-visit "^5.0.0"
     unstorage "^1.15.0"
     vfile "^6.0.3"
@@ -2898,10 +2898,10 @@ eslint-compat-utils@^0.6.0:
   dependencies:
     semver "^7.5.4"
 
-eslint-config-prettier@^10.1.2:
-  version "10.1.2"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-10.1.2.tgz#31a4b393c40c4180202c27e829af43323bf85276"
-  integrity sha512-Epgp/EofAUeEpIdZkW60MHKvPyru1ruQJxPL+WIycnaPApuseK0Zpkrh/FwL9oIpQvIhJwV7ptOy0DWUjTlCiA==
+eslint-config-prettier@^10.1.3:
+  version "10.1.3"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-10.1.3.tgz#b53b626e5fae39aa2a442a929488c35acec53c96"
+  integrity sha512-vDo4d9yQE+cS2tdIT4J02H/16veRvkHgiLDRpej+WL67oCfbOb97itZXn8wMPJ/GsiEBVjrjs//AVNw2Cp1EcA==
 
 eslint-mdx@^3.4.1:
   version "3.4.1"
@@ -3239,10 +3239,10 @@ fdir@^6.4.4:
   resolved "https://registry.yarnpkg.com/fdir/-/fdir-6.4.4.tgz#1cfcf86f875a883e19a8fab53622cfe992e8d2f9"
   integrity sha512-1NZP+GK4GfuAv3PqKvxQRDMjdSRZjnkq7KfhlNrCNNlZ0ygQFpebfrnfnq/W7fpUnAv9aGWmY1zKx7FYL3gwhg==
 
-feed@^4.2.2:
-  version "4.2.2"
-  resolved "https://registry.yarnpkg.com/feed/-/feed-4.2.2.tgz#865783ef6ed12579e2c44bbef3c9113bc4956a7e"
-  integrity sha512-u5/sxGfiMfZNtJ3OvQpXcvotFpYkL0n9u9mM2vkui2nGo8b4wvDkJ8gAkYqbA8QpGyFCv3RK0Z+Iv+9veCS9bQ==
+feed@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/feed/-/feed-5.0.0.tgz#091d8ac104efbccbeab66955c68e9c744d0fdd9b"
+  integrity sha512-b+xl8kQ/bxInBKTe3GLCGDFU45kFiDSIEEdDUAUGGThN1Jqpx+7uFb95NEPjI1JAjXy2iEFPzxHsK2rIEyJibw==
   dependencies:
     xml-js "^1.6.11"
 
@@ -6731,10 +6731,10 @@ unified@^11.0.0, unified@^11.0.4, unified@^11.0.5:
     trough "^2.0.0"
     vfile "^6.0.0"
 
-unifont@~0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/unifont/-/unifont-0.4.1.tgz#b434984e11c8490929daa6a70c84c95d5459a004"
-  integrity sha512-zKSY9qO8svWYns+FGKjyVdLvpGPwqmsCjeJLN1xndMiqxHWBAhoWDMYMG960MxeV48clBmG+fDP59dHY1VoZvg==
+unifont@~0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/unifont/-/unifont-0.5.0.tgz#1c995b64cf6748468a5fa8431183f6bf10f23204"
+  integrity sha512-4DueXMP5Hy4n607sh+vJ+rajoLu778aU3GzqeTCqsD/EaUcvqZT9wPC8kgK6Vjh22ZskrxyRCR71FwNOaYn6jA==
   dependencies:
     css-tree "^3.0.0"
     ohash "^2.0.0"
