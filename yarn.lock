@@ -2904,10 +2904,10 @@ eslint-config-prettier@^10.1.5:
   resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-10.1.5.tgz#00c18d7225043b6fbce6a665697377998d453782"
   integrity sha512-zc1UmCpNltmVY34vuLRV61r1K27sWuX39E+uyUnY8xS2Bex88VV9cugG+UZbRSRGtGyFboj+D8JODyme1plMpw==
 
-eslint-mdx@^3.4.1:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/eslint-mdx/-/eslint-mdx-3.4.1.tgz#edcd5f7fdf442b4c3d99c51f1cda2a3b9d38bc9e"
-  integrity sha512-/Pt9D5TIAZwAUnCJA24i+uE9NuqulmLI58a1oU1eRb5jeUNOR23FpIt4xuBE9CFR50nd4FkLnuyox7dSNSZ5Tg==
+eslint-mdx@^3.4.2:
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/eslint-mdx/-/eslint-mdx-3.4.2.tgz#5b8f04da2e0854f6f980d002e97538b82244281c"
+  integrity sha512-NYNGuBClNzYzTJWbPzeYSh/eCl5m4BrX1MayNuGuvxn+cItTdNirE+ykos9q1CkYhHj+ZgQz6W+6EIaHMp7/jQ==
   dependencies:
     acorn "^8.14.1"
     acorn-jsx "^5.3.2"
@@ -2938,12 +2938,12 @@ eslint-plugin-astro@^1.3.1:
     postcss "^8.4.14"
     postcss-selector-parser "^7.0.0"
 
-eslint-plugin-mdx@^3.4.1:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-mdx/-/eslint-plugin-mdx-3.4.1.tgz#4981e0d345e321f95c1dee36f09c6ad051b74600"
-  integrity sha512-dfQ7LthK/Kmfw2d5XrR4CS1ScmFOa1S9vPjBUxtKgCEl6mNnYVfA/yg50xLyab0pI/GEfGEmvlajs2biDHJBsA==
+eslint-plugin-mdx@^3.4.2:
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-mdx/-/eslint-plugin-mdx-3.4.2.tgz#130da53d3b7d9ca1a4832cebf0a794dfdc5eeb29"
+  integrity sha512-deXcJ4hTLkQ7F2JLto74UXeDkZYXu1Xtgvy0ZHlJ4CNwCYAZier3qNvTMBwE9VEnowxN+TgB18OhMLYyaR9hXA==
   dependencies:
-    eslint-mdx "^3.4.1"
+    eslint-mdx "^3.4.2"
     mdast-util-from-markdown "^2.0.2"
     mdast-util-mdx "^3.0.0"
     micromark-extension-mdxjs "^3.0.0"
