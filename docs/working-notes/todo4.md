@@ -179,6 +179,11 @@ https://github.com/rehypejs/rehype-external-links
     og random image from all-images
 fix iphone mdx webm to mp4
 add tag negation support !tag
+
+clean comments for astro jsx
+<!-- Mobile Web App -->
+https://github.com/benavlabs/landstro
+
 ```
 
 
