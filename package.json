@@ -37,7 +37,7 @@
     "@astrojs/sitemap": "^3.4.0",
     "@astrojs/tailwind": "^5.1.5",
     "@fontsource-variable/inter": "^5.2.5",
-    "astro": "^5.7.13",
+    "astro": "^5.7.14",
     "astro-embed": "^0.9.0",
     "astro-expressive-code": "^0.41.2",
     "astro-icon": "^1.1.5",
@@ -62,10 +62,10 @@
     "sharp": "0.34.2",
     "tailwind-clip-path": "^1.0.0",
     "tailwind-merge": "^2.6.0",
-    "zod": "^3.25.16"
+    "zod": "^3.25.20"
   },
   "resolutions": {
-    "**/sharp": "0.34.1"
+    "**/sharp": "0.34.2"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
