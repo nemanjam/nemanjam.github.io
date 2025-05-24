@@ -31,13 +31,13 @@
     "dc:up": "docker compose up --build --force-recreate -d"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.2.6",
+    "@astrojs/mdx": "^4.3.0",
     "@astrojs/partytown": "^2.1.4",
-    "@astrojs/react": "^4.2.7",
+    "@astrojs/react": "^4.3.0",
     "@astrojs/sitemap": "^3.4.0",
     "@astrojs/tailwind": "^5.1.5",
     "@fontsource-variable/inter": "^5.2.5",
-    "astro": "^5.7.14",
+    "astro": "^5.8.0",
     "astro-embed": "^0.9.0",
     "astro-expressive-code": "^0.41.2",
     "astro-icon": "^1.1.5",
@@ -62,7 +62,7 @@
     "sharp": "0.34.2",
     "tailwind-clip-path": "^1.0.0",
     "tailwind-merge": "^2.6.0",
-    "zod": "^3.25.20"
+    "zod": "^3.25.28"
   },
   "resolutions": {
     "**/sharp": "0.34.2"
