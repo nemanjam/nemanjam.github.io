@@ -47,7 +47,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "dotenv": "^16.5.0",
-    "feed": "^5.0.1",
+    "feed": "^5.1.0",
     "giscus": "^1.6.0",
     "github-slugger": "^2.0.0",
     "lodash.debounce": "^4.0.8",
@@ -62,7 +62,7 @@
     "sharp": "0.34.2",
     "tailwind-clip-path": "^1.0.0",
     "tailwind-merge": "^2.6.0",
-    "zod": "^3.25.28"
+    "zod": "^3.25.32"
   },
   "resolutions": {
     "**/sharp": "0.34.2"
@@ -75,10 +75,10 @@
     "@tailwindcss/typography": "^0.5.16",
     "@types/lodash.debounce": "^4.0.9",
     "@types/mdast": "^4.0.3",
-    "@types/react": "^19.1.5",
+    "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.5",
-    "@typescript-eslint/eslint-plugin": "^8.32.1",
-    "@typescript-eslint/parser": "^8.32.1",
+    "@typescript-eslint/eslint-plugin": "^8.33.0",
+    "@typescript-eslint/parser": "^8.33.0",
     "eslint": "8.57.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-mdx": "^3.4.2",
