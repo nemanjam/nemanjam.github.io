@@ -26,6 +26,7 @@
     "docker:build:push:x86": "docker buildx build -f ./docker/Dockerfile -t nemanjamitic/nemanjam.github.io --build-arg ARG_SITE_URL_AMD64='https://nmc-docker.local.nemanjamitic.com' --build-arg ARG_PLAUSIBLE_SCRIPT_URL='https://plausible.arm1.nemanjamitic.com/js/script.js' --build-arg ARG_PLAUSIBLE_DOMAIN='nemanjamitic.com' --platform linux/amd64 --push --progress=plain .",
     "docker:push": "docker push nemanjamitic/nemanjam.github.io",
     "pi": "yarn build:nginx:pi && yarn deploy:nginx:pi",
+    "local": "yarn build:nginx:local && yarn deploy:nginx:local",
     "nginx": "yarn build:nginx && yarn deploy:nginx",
     "tunnel": "ssh -R *:1081:localhost:3000 amd1c",
     "dc:up": "docker compose up --build --force-recreate -d"
