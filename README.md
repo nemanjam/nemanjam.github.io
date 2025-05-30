@@ -10,6 +10,17 @@ This is the repository for my coding blog [nemanjamitic.com](https://nemanjamiti
 | Github Pages | https://nemanjam.github.io               |
 | Docker       | https://nmc-docker.arm1.nemanjamitic.com |
 
+#### Self hosted mirrors
+
+These mirrors are hosted at my home, in my homelab and are not always online.
+
+| Method             | Url                                       |
+| :----------------- | :---------------------------------------- |
+| OrangePi Nginx     | https://pi.nemanjamitic.com               |
+| OrangePi Docker    | https://nmc-docker.pi.nemanjamitic.com    |
+| ThinkCentre Nginx  | https://local.nemanjamitic.com            |
+| ThinkCentre Docker | https://nmc-docker.local.nemanjamitic.com |
+
 #### Plausible analytics
 
 https://plausible.arm1.nemanjamitic.com/nemanjamitic.com
