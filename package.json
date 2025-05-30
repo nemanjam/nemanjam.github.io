@@ -8,8 +8,8 @@
     "preview": "astro preview",
     "build": "astro build",
     "build:nginx": "SITE_URL='https://nemanjamitic.com' PLAUSIBLE_SCRIPT_URL='https://plausible.arm1.nemanjamitic.com/js/script.js' PLAUSIBLE_DOMAIN='nemanjamitic.com' astro build",
-    "build:nginx:local": "SITE_URL='https://blog.local.nemanjamitic.com' PLAUSIBLE_SCRIPT_URL='https://plausible.arm1.nemanjamitic.com/js/script.js' PLAUSIBLE_DOMAIN='nemanjamitic.com' astro build",
-    "build:nginx:pi": "SITE_URL='https://blog.pi.nemanjamitic.com' PLAUSIBLE_SCRIPT_URL='https://plausible.arm1.nemanjamitic.com/js/script.js' PLAUSIBLE_DOMAIN='nemanjamitic.com' astro build",
+    "build:nginx:local": "SITE_URL='https://local.nemanjamitic.com' PLAUSIBLE_SCRIPT_URL='https://plausible.arm1.nemanjamitic.com/js/script.js' PLAUSIBLE_DOMAIN='nemanjamitic.com' astro build",
+    "build:nginx:pi": "SITE_URL='https://pi.nemanjamitic.com' PLAUSIBLE_SCRIPT_URL='https://plausible.arm1.nemanjamitic.com/js/script.js' PLAUSIBLE_DOMAIN='nemanjamitic.com' astro build",
     "astro": "astro",
     "sync": "astro sync",
     "lint": "eslint --ext .astro,.tsx,.ts,.js,.mdx src",
@@ -38,7 +38,7 @@
     "@astrojs/sitemap": "^3.4.0",
     "@astrojs/tailwind": "^5.1.5",
     "@fontsource-variable/inter": "^5.2.5",
-    "astro": "^5.8.0",
+    "astro": "^5.8.1",
     "astro-embed": "^0.9.0",
     "astro-expressive-code": "^0.41.2",
     "astro-icon": "^1.1.5",
@@ -63,7 +63,7 @@
     "sharp": "0.34.2",
     "tailwind-clip-path": "^1.0.0",
     "tailwind-merge": "^2.6.0",
-    "zod": "^3.25.32"
+    "zod": "^3.25.42"
   },
   "resolutions": {
     "**/sharp": "0.34.2"
@@ -71,7 +71,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
     "@expressive-code/plugin-collapsible-sections": "^0.41.2",
-    "@ianvs/prettier-plugin-sort-imports": "^4.4.1",
+    "@ianvs/prettier-plugin-sort-imports": "^4.4.2",
     "@iconify-json/mdi": "^1.2.3",
     "@tailwindcss/typography": "^0.5.16",
     "@types/lodash.debounce": "^4.0.9",
