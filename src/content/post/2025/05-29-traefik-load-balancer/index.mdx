@@ -78,19 +78,19 @@ I already wrote about the advantage of resolving SSL certificates locally on the
 2. The home server is tunnel-agnostic and reusable  
 3. No coupling between the tunnel server and client, no need to maintain state or version  
 4. Decoupled debugging  
-5. Improved security—an additional encryption layer further down the tunnel
+5. Improved security, an additional encryption layer further down the tunnel
 
 ## Traefik load balancer and Rathole server
 
-Since we passthrough encrypted HTTPS traffic, Traefik can't read subdomain from a HTTP request as usual. Instead, we will run Traefik router in TCP mode, using the [HostSNIRegexp](https://doc.traefik.io/traefik/routing/routers/#hostsni-and-hostsniregexp) matcher. This will run the router on layer 4 (TCP) instead of usual layer 7 (HTTP). 
+Since we passthrough encrypted HTTPS traffic, Traefik can't read the subdomain from an HTTP request as usual. Instead, we will run the Traefik router in TCP mode, using the [HostSNIRegexp](https://doc.traefik.io/traefik/routing/routers/#hostsni-and-hostsniregexp) matcher. This will run the router on layer 4 (TCP) instead of the usual layer 7 (HTTP).
 
-For more in depth info how this works you can read here: [Server Name Indication (SNI)](https://en.wikipedia.org/wiki/Server_Name_Indication).
+For more in-depth info on how this works, you can read here: [Server Name Indication (SNI)](https://en.wikipedia.org/wiki/Server_Name_Indication).
 
-Now that we understand the principle we can get to the practical implementation. 
+Now that we understand the principle, we can get to the practical implementation.
 
 ### Traefik HTTP and TCP routers
 
-Bellow is the complete `docker-compose.yml` that defines Traefik TCP router and the Rathole server with 2 HTTP, HTTPS tunnel pairs for 2 home servers, `pi` - OrangePi and `local` - MiniPC in my case.
+Below is the complete `docker-compose.yml` that defines the Traefik TCP router and the Rathole server with 2 HTTP/HTTPS tunnel pairs for 2 home servers: `pi` (OrangePi) and `local` (MiniPC), in my case.
 
 ```yml title="docker-compose.yml"
 version: '3.8'
@@ -177,19 +177,21 @@ networks:
     external: true
 ```
 
-Let's start with the most important part, `labels` on the `rathole` container that define load balancing on the two tunnels. First we define two HTTP routers using `HostRegexp()` matcher. It takes HTTP traffic from entrypoint on port `80` and load balances it between two tunnels on ports `5080` and `5081`.
+Let's start with the most important part: the `labels` on the `rathole` container that define load balancing on the two tunnels. 
 
-Second pair of labels define TCP router that takes traffic from HTTPS entrypoint on port `443` and passes it through without decrypting and load balances it between tunnels on ports `5443` and `5444`. Note  that with `HostSNIRegexp()` matcher you can't include escaped dot '`.`' in the regex but you must repeat the entire domain sequence to handle `www` variant of the domain.
+First, we define two HTTP routers using the `HostRegexp()` matcher. It takes HTTP traffic from the entrypoint on port `80` and load balances it between two tunnels on ports `5080` and `5081`.
 
-Also note that we use a separate regex variants to match the root subdomain explicitly, e.g. `pi.nemanjamitic.com` and `www.pi.nemanjamitic.com` for both HTTP and TCP routers.
+The second pair of labels defines a TCP router that takes traffic from the HTTPS entrypoint on port `443`, passes it through without decrypting, and load balances it between tunnels on ports `5443` and `5444`. Note that with the `HostSNIRegexp()` matcher, you can't include escaped dots (`.`) in the regex, you must repeat the entire domain sequence to handle the `www` variant of the domain.
+
+Also note that we use separate regex variants to match the root subdomain explicitly, e.g. `pi.nemanjamitic.com` and `www.pi.nemanjamitic.com` for both HTTP and TCP routers.
 
 That's it, this is the main load balancing logic definition.
 
-**Note:** Because we use `HostRegexp()` and `HostSNIRegexp()` on the server you will need to use `Host()` and `HostSNI()` matchers **for the Traefik running on the client side of the tunnel**, or you will get `404` errors without additional configuration. Regex matchers on both server and client seems to be too loose. 
+**Note:** Because we use `HostRegexp()` and `HostSNIRegexp()` on the server, you will need to use `Host()` and `HostSNI()` matchers **for the Traefik running on the client side of the tunnel**, or you will get `404` errors without additional configuration. Regex matchers on both the server and client sides seem to be too loose.
 
 ### Rathole server config
 
-Now it's just left to write config for Rathole server that defines 2x2 tunnels. Just make sure to use **a different token and port** for each tunnel.
+Now it's just left to write the config for the Rathole server that defines 2×2 tunnels. Just make sure to use **a different token and port** for each tunnel.
 
 ```toml title="rathole.server.toml"
 [server]
@@ -222,13 +224,13 @@ token = "secret_token_2"
 bind_addr = "0.0.0.0:5444"
 ```
 
-**Reminder:** You just need to open port `2333` in the VPS firewall for the Rathole control channel and not for the ports `5080, 5081, 5443, 5444` because they are used by Rathole internally.
+**Reminder:** You just need to open port `2333` in the VPS firewall for the Rathole control channel and not for the ports `5080`, `5081`, `5443`, or `5444`, because they are used by Rathole internally.
 
 ### Traefik dashboard
 
-Additionally, for the sake of debugging we expose Traefik dashboard using `labels` on `traefik` container. To simplify the configuration and avoid handling `acme.json` file we expose it using HTTP.
+Additionally, for the sake of debugging, we expose the Traefik dashboard using `labels` on the `traefik` container. To simplify the configuration and avoid handling the `acme.json` file, we expose it using HTTP.
 
-**Warning:** When setting dashboard hashed password via the `TRAEFIK_AUTH` environment variable make sure to escape the `$` characters properly or auth will break. For that you will need to use both double quotes `"..."` and escape slash '`\`', see the example bellow:
+**Warning:** When setting the dashboard hashed password via the `TRAEFIK_AUTH` environment variable, make sure to escape the `$` characters properly or authentication will break. To do that, you need to use both double quotes `"..."` and the escape slash '`\`', as shown in the example below:
 
 ```bash
 # install apache2-utils
@@ -253,9 +255,9 @@ TRAEFIK_AUTH=admin:\$asd1\$E3lsdAo\$3Mertp57JJ4LVU.HRR0
 
 ## Rathole client
 
-The client part of the tunnel is almost same like for a single home server. The only thing to keep in mind is to to bind the specific client just to tunnels that are meant for him, and not to all tunnels. Kind of obvious and self-explanatory, but just in case let's be very clear and explicit.
+The client part of the tunnel is almost the same as for a single home server. The only thing to keep in mind is to bind the specific client only to the tunnels that are meant for it, and not to all tunnels. Kind of obvious and self-explanatory, but just in case, let's be very clear and explicit.
 
-Here we define the `rathole.client.toml` Rathole client config to bind the `pi` home server to it's HTTP `pi-traefik-http` and HTTPS `pi-traefik-https` tunnels.
+Here, we define the `rathole.client.toml` Rathole client config to bind the `pi` home server to its HTTP (`pi-traefik-http`) and HTTPS (`pi-traefik-https`) tunnels.
 
 ```toml title="rathole.client.toml"
 [client]
@@ -304,7 +306,7 @@ token = "secret_token_2"
 local_addr = "traefik:443"
 ```
 
-`docker-compose.yml` for the Rathole client and Traefik are exactly the same as they were for a single home server, I am repeating it here just for the sake of completeness.
+`docker-compose.yml` for the Rathole client and Traefik is exactly the same as it was for a single home server. I am repeating it here just for the sake of completeness.
 
 ```yml title="docker-compose.yml"
 version: '3.8'
@@ -364,7 +366,7 @@ networks:
 
 ## Conclusion
 
-You can use this setup to expose as many home servers you want, in a cost effective and practical way, as long as your VPS has enough network bandwidth to support their traffic. It can bring your homelab on another level.
+You can use this setup to expose as many home servers as you want, in a cost-effective and practical way, as long as your VPS has enough network bandwidth to support their traffic. It can bring your homelab to another level.
 
 What tool and method did you use to expose your home servers to the internet? Do you like this approach, are you willing to give it a try? Let me know in the comments.
 
