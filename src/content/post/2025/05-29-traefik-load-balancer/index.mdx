@@ -22,7 +22,7 @@ import TraefikLoadBalancerArchitectureImage from '../../../../content/post/2025/
 
 ## Introduction
 
-This article is a continuation of [Expose home server with Rathole tunnel and Traefik](/blog/2025-04-29-rathole-traefik-home-server#exposing-multiple-servers), which explains how to permanently host websites from home by bypassing CGNAT. That setup works well for exposing a single home server (like a Raspberry Pi, server PC, or virtual machine), but it has a limitation: it requires one VPS (or at least one public network interface) per home server. This is because the Rathole server exclusively uses ports `80` and `443`.
+This article is a continuation of [Expose home server with Rathole tunnel and Traefik](/blog/2025-04-29-rathole-traefik-home-server), which explains how to permanently host websites from home by bypassing CGNAT. That setup works well for exposing a single home server (like a Raspberry Pi, server PC, or virtual machine), but it has a limitation: it requires one VPS (or at least one public network interface) per home server. This is because the Rathole server exclusively uses ports `80` and `443`.
 
 But it doesn't have to be like this. We can reuse a single Rathole server for many tunnels and home servers, we just need a tool to load balance their traffic, as long as our VPS's network interface provides enough bandwidth for our websites and services.
 
@@ -82,7 +82,7 @@ I already wrote about the advantage of resolving SSL certificates locally on the
 
 ## Traefik load balancer and Rathole server
 
-Since we passthrough encrypted HTTPS traffic, Traefik can't read the subdomain from an HTTP request as usual. Instead, we will run the Traefik router in TCP mode, using the [HostSNIRegexp](https://doc.traefik.io/traefik/routing/routers/#hostsni-and-hostsniregexp) matcher. This will run the router on layer 4 (TCP) instead of the usual layer 7 (HTTP).
+Since we passthrough encrypted HTTPS traffic, Traefik can't read the subdomain from an HTTP request as usual. Instead, we will run the Traefik router in TCP mode, using the [HostSNIRegexp](https://doc.traefik.io/traefik/v2.9/routing/routers/#rule) matcher. This will run the router on layer 4 (TCP) instead of the usual layer 7 (HTTP).
 
 For more in-depth info on how this works, you can read here: [Server Name Indication (SNI)](https://en.wikipedia.org/wiki/Server_Name_Indication).
 
@@ -257,7 +257,7 @@ TRAEFIK_AUTH=admin:\$asd1\$E3lsdAo\$3Mertp57JJ4LVU.HRR0
 
 The client part of the tunnel is almost the same as for a single home server. The only thing to keep in mind is to bind the specific client only to the tunnels that are meant for it, and not to all tunnels. Kind of obvious and self-explanatory, but just in case, let's be very clear and explicit.
 
-Here, we define the `rathole.client.toml` Rathole client config to bind the `pi` home server to its HTTP (`pi-traefik-http`) and HTTPS (`pi-traefik-https`) tunnels.
+Here, we define the `rathole.client.toml` Rathole client config to bind the `pi` home server to its HTTP `pi-traefik-http` and HTTPS `pi-traefik-https` tunnels.
 
 ```toml title="rathole.client.toml"
 [client]
