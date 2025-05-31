@@ -23,6 +23,8 @@ Another point is that, with option 2, we avoid the gap of unencrypted traffic on
 
 The downside is that Rathole will exclusively occupy ports `80` and `443` on the VPS, preventing any other process from using them. We won't be able to run other web servers on that VPS, so it's best to use a small one dedicated to this purpose.
 
+Unless we use a load balancer [Load balancing multiple Rathole tunnels with Traefik HTTP and TCP routers](https://nemanjamitic.com/blog/2025-05-29-traefik-load-balancer).
+
 ![Rathole Traefik architecture diagram](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/9s3u4wfhv5f2c6q8vs9m.png)
 
 ## Rathole server
@@ -60,7 +62,7 @@ docker run -it --rm rapiz1/rathole --genkey
 
 Then we define two tunnels: one for HTTP and another for HTTPS. For the HTTP tunnel, we define the name `server.services.traefik-http`, set the value for `token`, and choose port `5080`, and again we bind it to all container interfaces with `0.0.0.0`. Similarly, for HTTPS, we set the name to `server.services.traefik-https`, provide a `token` value, and choose port `5443`.
 
-An important note is that, aside from a different name, a different token value is sufficient to create another tunnel (Rathole service). This practically means we can use a single Rathole server container to expose multiple home servers (Rathole clients) on the same ports `5080` and `5443`, which is pretty convenient.
+Every tunnel has to have a unique name, token value, and port. With that fulfilled, a single Rathole server instance can have as many Rathole clients as needed, which is pretty convenient. For example, besides the existing home server on ports `5080` and `5443`, we can expose another one using ports `5081` and `5444`.
 
 Token is just a random base64 string, we generate it by running this:
 
@@ -258,70 +260,9 @@ docker compose -f docker-compose.local.yml up -d
 
 ## Exposing multiple servers
 
-Fortunately, Rathole makes it trivial to run multiple tunnels using a single Rathole server. We don't need to open any additional ports or run multiple container instances. We just use a different tunnel name, e.g., `server.services.traefik-http`, and the value for the `token` for each tunnel/service. That's it.
+Fortunately, Rathole makes it trivial to run multiple tunnels using a single Rathole server. We don't need to open any additional ports in the firewall or run multiple container instances. What we do need are different tunnel names, token values, and ports. Those must be unique for each tunnel/service. Also, you will need a load balancer to bind ports `80` and `443` to more than one destination port, respectively.
 
-**Rathole server:**
-
-Rathole server configuration file example [rathole.server.toml](https://github.com/nemanjam/rathole-server/blob/5226ff53992abe930302098677a570151ebff927/rathole.server.toml):
-
-```toml
-[server]
-bind_addr = "0.0.0.0:2333"
-
-[server.transport]
-type = "noise"
-
-[server.transport.noise]
-local_private_key = "private_key"
-
-# separated based on token, use the same ports
-
-# home server 1 - local
-[server.services.traefik-http]
-token = "secret_token_1"
-bind_addr = "0.0.0.0:5080"
-
-[server.services.traefik-https]
-token = "secret_token_1"
-bind_addr = "0.0.0.0:5443"
-
-# home server 2 - pi
-[server.services.pi-traefik-http]
-token = "secret_token_2"
-bind_addr = "0.0.0.0:5080"
-
-[server.services.pi-traefik-https]
-token = "secret_token_2"
-bind_addr = "0.0.0.0:5443"
-```
-
-In the code above I use this Rathole server to connect a two Rathole client home servers `traefik-http` and `pi-traefik-http` for HTTP tunnels, and `traefik-https` and `pi-traefik-https` for HTTPS tunnels.
-
-**Rathole client:**
-
-On the each Rathole client you just specify which tunnels you are using. For example, on the "pi" home server you will use just its HTTP/HTTPS par and omit the other ones, [core/rathole.client.toml.example](https://github.com/nemanjam/traefik-proxy/blob/e8fece09e31ec99ddd21559f343d0ddea9fb55bf/core/rathole.client.toml.example):
-
-```toml
-# core/rathole.client.toml.example
-
-[client]
-remote_addr = "123.123.123.123:2333"
-
-[client.transport]
-type = "noise"
-
-[client.transport.noise]
-remote_public_key = "public_key"
-
-# pi
-[client.services.pi-traefik-http]
-token = "secret_token_2"
-local_addr = "traefik:80"
-
-[client.services.pi-traefik-https]
-token = "secret_token_2"
-local_addr = "traefik:443"
-```
+I wrote a detailed tutorial on how to expose multiple home servers using a single Rathole server. You can read it here: [Load balancing multiple Rathole tunnels with Traefik HTTP and TCP routers](/blog/2025-05-29-traefik-load-balancer).
 
 ## Open the firewall on the VPS
 
@@ -336,7 +277,7 @@ Like for any webserver, on the VPS you will need to open ports `80` and `443` to
 
 ## Conclusion
 
-Most consumer-grade internet connections are behind a CGNAT. This setup allows you to bypass CGNAT and host an unlimited number of websites from your home almost for free. You can use it for web servers in virtual machines, LXC containers, SBC computers, etc. - anywhere you can run Docker.
+Most consumer-grade internet connections are behind a CGNAT. This setup allows you to bypass CGNAT and host an unlimited number of websites on your home server almost for free. You can use it for web servers in virtual machines, LXC containers, SBC computers, etc. - anywhere you can run Docker.
 
 It is simple, cheap, and you can set it up in 30 minutes. Like anything, it also has some downsides, one of them is the overhead latency caused by an additional network hop between the VPS and your home network, but it's a reasonable tradeoff.
 
