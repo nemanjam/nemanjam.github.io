@@ -14,6 +14,11 @@ toc: true
 draft: true
 ---
 
+import { Image } from 'astro:assets';
+
+import { IMAGE_SIZES } from '../../../../constants/image';
+
+import TraefikLoadBalancerArchitectureImage from '../../../../content/post/2025/05-29-traefik-load-balancer/_images/traefik-load-balancer-architecture.png';
 
 ## Introduction
 
@@ -61,6 +66,8 @@ For each home server we need 2 tunnels, one for HTTP and another for HTTPS traff
 
 1. Tunnel for HTTP traffic will use Traefik HTTP router as usual. 
 2. Tunnel for HTTPS traffic is a bit more interesting and challenging. For it, we will use Traefik TCP router running in the passthrough mode since we don't want to terminate HTTPS traffic on the VPS but to delegate resolving certificates to the existing Traefik running on the client side to keep the existing setup and architecture.
+
+<Image {...IMAGE_SIZES.FIXED.MDX_MD} src={TraefikLoadBalancerArchitectureImage} alt="Traefik load balancer architecture diagram" />
 
 **Reminder:**
 
