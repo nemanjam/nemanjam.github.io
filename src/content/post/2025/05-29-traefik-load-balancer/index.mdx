@@ -22,22 +22,23 @@ import TraefikLoadBalancerArchitectureImage from '../../../../content/post/2025/
 
 ## Introduction
 
-This article is a continuation of [Expose home server with Rathole tunnel and Traefik](https://nemanjamitic.com/blog/2025-04-29-rathole-traefik-home-server#exposing-multiple-servers), which explains how to permanently host websites from hom by bypassing CGNAT. That setup works well for exposing a single home server (like a Raspberry Pi, server PC, or virtual machine), but it has a limitation: it requires one VPS (or at least one public network interface) per home server. This is because the Rathole server exclusively uses ports `80` and `443`.
+This article is a continuation of [Expose home server with Rathole tunnel and Traefik](/blog/2025-04-29-rathole-traefik-home-server#exposing-multiple-servers), which explains how to permanently host websites from home by bypassing CGNAT. That setup works well for exposing a single home server (like a Raspberry Pi, server PC, or virtual machine), but it has a limitation: it requires one VPS (or at least one public network interface) per home server. This is because the Rathole server exclusively uses ports `80` and `443`.
 
-But it doesn't have to be like this. We can reuse a single Rathole server for many tunnels and home servers, we just need a tool to load balance their traffic. As long as our VPS's network interface provides enough bandwidth for our websites and services. 
+But it doesn't have to be like this. We can reuse a single Rathole server for many tunnels and home servers, we just need a tool to load balance their traffic, as long as our VPS's network interface provides enough bandwidth for our websites and services.
 
 This article explains how to achieve that using Traefik HTTP and TCP routers.
 
+
 ## Prerequisites
 
-- A working Rathole tunnel setup from the previous article (including a VPS and domain name)
-- More than one home server (Raspberry Pi, server PC, virtual machine, LXC container)
+- A working Rathole tunnel setup from the previous article (including a VPS and a domain name)  
+- More than one home server (Raspberry Pi, server PC, virtual machine, or LXC container)
 
 ## Architecture overview
 
 ### The problem
 
-The main problem here is that we can't bind more than one port to ports `80` and `443` respectively. Only one service can listen at one port at same time. So something like this doesn't exist:
+The main problem here is that we can't bind more than one port to ports `80` and `443`, respectively. Only one service can listen on a given port at the same time. So something like this doesn't exist:
 
 ```yml title="docker-compose.yml"
 services:
@@ -56,28 +57,28 @@ services:
       - ./rathole.server.toml:/config/rathole.server.toml:ro
 ```
 
-Neither operating system nor Docker provide load balancing functionality out of the box, we need to handle it ourselves.
+Neither the operating system nor Docker provides load balancing functionality out of the box, we need to handle it ourselves.
 
 ### The solution
 
-We need to introduce a tool for load balancing traffic between tunnels, we will use Traefik since we already use it with Rathole client. 
+We need to introduce a tool for load balancing traffic between tunnels. We will use Traefik, since we already use it with the Rathole client.
 
-For each home server we need 2 tunnels, one for HTTP and another for HTTPS traffic:
+For each home server, we need 2 tunnels: one for HTTP and another for HTTPS traffic:
 
-1. Tunnel for HTTP traffic will use Traefik HTTP router as usual. 
-2. Tunnel for HTTPS traffic is a bit more interesting and challenging. For it, we will use Traefik TCP router running in the passthrough mode since we don't want to terminate HTTPS traffic on the VPS but to delegate resolving certificates to the existing Traefik running on the client side to keep the existing setup and architecture.
+1. The tunnel for HTTP traffic will use the Traefik HTTP router as usual.  
+2. The tunnel for HTTPS traffic is a bit more interesting and challenging. For it, we will use the Traefik TCP router running in passthrough mode, since we don't want to terminate HTTPS traffic on the VPS. Instead, we want to delegate certificate resolution to the existing Traefik instance running on the client side to preserve the current setup and architecture.
 
 <Image {...IMAGE_SIZES.FIXED.MDX_MD} src={TraefikLoadBalancerArchitectureImage} alt="Traefik load balancer architecture diagram" />
 
 **Reminder:**
 
-I already wrote about the advantage of resolving SSL certificates locally on home server in the [Architecture overview](https://nmc-docker.pi.nemanjamitic.com/blog/2025-04-29-rathole-traefik-home-server#architecture-overview) section of the previous article but here is a quick recap again:
+I already wrote about the advantage of resolving SSL certificates locally on the home server in the [Architecture overview](/blog/2025-04-29-rathole-traefik-home-server#architecture-overview) section of the previous article, but here is a quick recap:
 
-1. Home server contains its entire configuration
-2. Home server is tunnel agnostic and reusable
-3. No coupling between tunnel server and client, no need to maintain state/version
-4. Decoupled debugging
-5. Improved security, additional encryption layer further down the tunnel
+1. The home server contains its entire configuration  
+2. The home server is tunnel-agnostic and reusable  
+3. No coupling between the tunnel server and client, no need to maintain state or version  
+4. Decoupled debugging  
+5. Improved security—an additional encryption layer further down the tunnel
 
 ## Traefik load balancer and Rathole server
 
