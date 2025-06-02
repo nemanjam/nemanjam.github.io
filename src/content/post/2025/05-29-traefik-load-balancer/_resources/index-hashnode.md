@@ -1,0 +1,367 @@
+## Introduction
+
+This article is a continuation of [Expose home server with Rathole tunnel and Traefik](https://nemanjamitic.com/blog/2025-04-29-rathole-traefik-home-server) article, which explains how to permanently host websites from home by bypassing CGNAT. That setup works well for exposing a single home server (like a Raspberry Pi, server PC, or virtual machine), but it has a limitation: it requires one VPS (or at least one public network interface) per home server. This is because the Rathole server exclusively uses ports `80` and `443`.
+
+But it doesn't have to be like this. We can reuse a single Rathole server for many tunnels and home servers, we just need a tool to load balance their traffic, as long as our VPS's network interface provides enough bandwidth for our websites and services.
+
+This article explains how to achieve that using Traefik HTTP and TCP routers.
+
+## Prerequisites
+
+- A working Rathole tunnel setup from the previous article (including a VPS and a domain name)
+- More than one home server (Raspberry Pi, server PC, virtual machine, or LXC container)
+
+## Architecture overview
+
+### The problem
+
+The main problem here is that we can't bind more than one port to ports `80` and `443`, respectively. Only one service can listen on a given port at the same time. So something like this doesn't exist:
+
+```yml
+# docker-compose.yml
+
+services:
+  rathole:
+    image: rapiz1/rathole:v0.5.0
+    container_name: rathole
+    command: --server /config/rathole.server.toml
+    restart: unless-stopped
+    ports:
+      # host:container
+      - 2333:2333
+      - 80:5080,5081 # non existent syntax, can't bind two ports to a single port
+      - 443:5443,5444 # same
+    volumes:
+      - ./rathole.server.toml:/config/rathole.server.toml:ro
+```
+
+Neither the operating system nor Docker provides load balancing functionality out of the box, we need to handle it ourselves.
+
+### The solution
+
+We need to introduce a tool for load balancing traffic between tunnels. We will use Traefik, since we already use it with the Rathole client.
+
+For each home server, we need 2 tunnels: one for HTTP and another for HTTPS traffic:
+
+1. The tunnel for HTTP traffic will use the Traefik HTTP router as usual.
+2. The tunnel for HTTPS traffic is a bit more interesting and challenging. For it, we will use the Traefik TCP router running in passthrough mode, since we don't want to terminate HTTPS traffic on the VPS. Instead, we want to delegate certificate resolution to the existing Traefik instance running on the client side to preserve the current setup and architecture.
+
+![Traefik load balancer architecture diagram](https://cdn.hashnode.com/res/hashnode/image/upload/v1748851880327/41954779-ef67-4e03-8fb5-f6bfc99301be.png align="center")
+
+**Reminder:**
+
+I already wrote about the advantage of resolving SSL certificates locally on the home server in the [Architecture overview](https://nemanjamitic.com/blog/2025-04-29-rathole-traefik-home-server#architecture-overview) section of the previous article, but here is a quick recap:
+
+1. The home server contains its entire configuration
+2. The home server is tunnel-agnostic and reusable
+3. No coupling between the tunnel server and client, no need to maintain state or version
+4. Decoupled debugging
+5. Improved security, an additional encryption layer further down the tunnel
+
+## Traefik load balancer and Rathole server
+
+Since we passthrough encrypted HTTPS traffic, Traefik can't read the subdomain from an HTTP request as usual. Instead, we will run the Traefik router in TCP mode, using the [HostSNIRegexp](https://doc.traefik.io/traefik/v2.9/routing/routers/#rule_1) matcher. This will run the router on layer 4 (TCP) instead of the usual layer 7 (HTTP).
+
+For more in-depth info on how this works, you can read here: [Server Name Indication (SNI)](https://en.wikipedia.org/wiki/Server_Name_Indication).
+
+Now that we understand the principle, we can get to the practical implementation.
+
+### Traefik HTTP and TCP routers
+
+Below is the complete `docker-compose.yml` that defines the Traefik TCP router and the Rathole server with 2 HTTP/HTTPS tunnel pairs for 2 home servers: `pi` (OrangePi) and `local` (MiniPC), in my case.
+
+```yml
+# docker-compose.yml
+
+version: '3.8'
+
+services:
+  traefik:
+    image: traefik:v2.9.8
+    container_name: traefik
+    restart: unless-stopped
+    command:
+      - --providers.docker=true
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      - --entrypoints.traefik.address=:8080
+      - --api.dashboard=true
+      - --api.insecure=false
+      - --log.level=DEBUG
+      - --accesslog=true
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - proxy
+    labels:
+      # Enable the dashboard at http://traefik.amd2.nemanjamitic.com
+      # http for simplicity, no acme.json file
+      - traefik.enable=true
+      - 'traefik.http.routers.traefik.rule=Host(`traefik.amd2.${SITE_HOSTNAME}`)'
+      - traefik.http.routers.traefik.entrypoints=web
+      - traefik.http.routers.traefik.service=api@internal
+      - traefik.http.routers.traefik.middlewares=auth
+      - 'traefik.http.middlewares.auth.basicauth.users=${TRAEFIK_AUTH}'
+
+  rathole:
+    image: rapiz1/rathole:v0.5.0
+    container_name: rathole
+    command: --server /config/rathole.server.toml
+    restart: unless-stopped
+    ports:
+      - 2333:2333
+    volumes:
+      - ./rathole.server.toml:/config/rathole.server.toml:ro
+    networks:
+      - proxy
+
+    labels:
+      ### HTTP port 80 - HTTP routers ###
+
+      # pi.nemanjamitic.com, www.pi.nemanjamitic.com, *.pi.nemanjamitic.com, www.*.pi.nemanjamitic.com
+
+      # Route *.pi.nemanjamitic.com -> 5080
+      - 'traefik.http.routers.rathole-pi.rule=HostRegexp(`pi.${SITE_HOSTNAME}`, `www.pi.${SITE_HOSTNAME}`, `{subdomain:[a-z0-9-]+}.pi.${SITE_HOSTNAME}`, `www.{subdomain:[a-z0-9-]+}.pi.${SITE_HOSTNAME}`)'
+      - traefik.http.routers.rathole-pi.entrypoints=web
+      - traefik.http.routers.rathole-pi.service=rathole-pi
+      - traefik.http.services.rathole-pi.loadbalancer.server.port=5080
+
+      # Route *.local.nemanjamitic.com -> 5081
+      - 'traefik.http.routers.rathole-local.rule=HostRegexp(`local.${SITE_HOSTNAME}`, `www.local.${SITE_HOSTNAME}`, `{subdomain:[a-z0-9-]+}.local.${SITE_HOSTNAME}`, `www.{subdomain:[a-z0-9-]+}.local.${SITE_HOSTNAME}`)'
+      - traefik.http.routers.rathole-local.entrypoints=web
+      - traefik.http.routers.rathole-local.service=rathole-local
+      - traefik.http.services.rathole-local.loadbalancer.server.port=5081
+
+      ### HTTPS port 443 with TLS passthrough - TCP routers ###
+
+      # Route *.pi.nemanjamitic.com -> 5443
+      - 'traefik.tcp.routers.rathole-pi-secure.rule=HostSNIRegexp(`pi.${SITE_HOSTNAME}`, `www.pi.${SITE_HOSTNAME}`, `{subdomain:[a-z0-9-]+}.pi.${SITE_HOSTNAME}`, `www.{subdomain:[a-z0-9-]+}.pi.${SITE_HOSTNAME}`)'
+      - traefik.tcp.routers.rathole-pi-secure.entrypoints=websecure
+      - traefik.tcp.routers.rathole-pi-secure.tls.passthrough=true
+      - traefik.tcp.routers.rathole-pi-secure.service=rathole-pi-secure
+      - traefik.tcp.services.rathole-pi-secure.loadbalancer.server.port=5443
+
+      # Route *.local.nemanjamitic.com -> 5444
+      - 'traefik.tcp.routers.rathole-local-secure.rule=HostSNIRegexp(`local.${SITE_HOSTNAME}`, `www.local.${SITE_HOSTNAME}`, `{subdomain:[a-z0-9-]+}.local.${SITE_HOSTNAME}`, `www.{subdomain:[a-z0-9-]+}.local.${SITE_HOSTNAME}`)'
+      - traefik.tcp.routers.rathole-local-secure.entrypoints=websecure
+      - traefik.tcp.routers.rathole-local-secure.tls.passthrough=true
+      - traefik.tcp.routers.rathole-local-secure.service=rathole-local-secure
+      - traefik.tcp.services.rathole-local-secure.loadbalancer.server.port=5444
+
+networks:
+  proxy:
+    external: true
+```
+
+Let's start with the most important part: the `labels` on the `rathole` container that define load balancing on the two tunnels.
+
+First, we define two HTTP routers using the `HostRegexp()` matcher. It takes HTTP traffic from the entrypoint on port `80` and load balances it between two tunnels on ports `5080` and `5081`.
+
+The second pair of labels defines a TCP router that takes traffic from the HTTPS entrypoint on port `443`, passes it through without decrypting, and load balances it between tunnels on ports `5443` and `5444`. Note that with the `HostSNIRegexp()` matcher, you can't include escaped dots (`.`) in the regex, you must repeat the entire domain sequence to handle the `www` variant of the domain.
+
+Also note that we use separate regex variants to match the root subdomain explicitly, e.g. `pi.nemanjamitic.com` and `www.pi.nemanjamitic.com` for both HTTP and TCP routers.
+
+That's it, this is the main load balancing logic definition.
+
+**Note:** Because we use `HostRegexp()` and `HostSNIRegexp()` on the server, you will need to use `Host()` and `HostSNI()` matchers **for the Traefik running on the client side of the tunnel**, or you will get `404` errors without additional configuration. Regex matchers on both the server and client sides seem to be too loose.
+
+### Rathole server config
+
+Now it's just left to write the config for the Rathole server that defines 2×2 tunnels. Just make sure to use **a different token and port** for each tunnel.
+
+```toml
+# rathole.server.toml
+
+[server]
+bind_addr = "0.0.0.0:2333"
+
+[server.transport]
+type = "noise"
+
+[server.transport.noise]
+local_private_key = "private_key"
+
+# separated based on token, also can NOT use same ports
+
+# pi
+[server.services.pi-traefik-http]
+token = "secret_token_1"
+bind_addr = "0.0.0.0:5080"
+
+[server.services.pi-traefik-https]
+token = "secret_token_1"
+bind_addr = "0.0.0.0:5443"
+
+# local
+[server.services.local-traefik-http]
+token = "secret_token_2"
+bind_addr = "0.0.0.0:5081"
+
+[server.services.local-traefik-https]
+token = "secret_token_2"
+bind_addr = "0.0.0.0:5444"
+```
+
+**Reminder:** You just need to open port `2333` in the VPS firewall for the Rathole control channel and not for the ports `5080`, `5081`, `5443`, or `5444`, because they are used by Rathole internally.
+
+### Traefik dashboard
+
+Additionally, for the sake of debugging, we expose the Traefik dashboard using `labels` on the `traefik` container. To simplify the configuration and avoid handling the `acme.json` file, we expose it using HTTP.
+
+**Warning:** When setting the dashboard hashed password via the `TRAEFIK_AUTH` environment variable, make sure to escape the `$` characters properly or authentication will break. To do that, you need to use both double quotes `"..."` and the escape slash '`\`', as shown in the example below:
+
+```bash
+# install apache2-utils
+sudo apt install apache2-utils
+
+# hash the password
+htpasswd -nb admin yourpassword
+```
+
+```bash
+# .env"
+
+# use BOTH "..." and \$ to escape $ properly
+
+# this will work correctly
+TRAEFIK_AUTH="admin:\$asd1\$E3lsdAo\$3Mertp57JJ4LVU.HRR0"
+
+# this will break
+TRAEFIK_AUTH="admin:$asd1$E3lsdAo$3Mertp57JJ4LVU.HRR0"
+
+# this will also break
+TRAEFIK_AUTH=admin:\$asd1\$E3lsdAo\$3Mertp57JJ4LVU.HRR0
+```
+
+## Rathole client
+
+The client part of the tunnel is almost the same as for a single home server. The only thing to keep in mind is to bind the specific client only to the tunnels that are meant for it, and not to all tunnels. Kind of obvious and self-explanatory, but just in case, let's be very clear and explicit.
+
+Here, we define the `rathole.client.toml` Rathole client config to bind the `pi` home server to its HTTP `pi-traefik-http` and HTTPS `pi-traefik-https` tunnels.
+
+```toml
+# rathole.client.toml
+
+[client]
+remote_addr = "123.123.123.123:2333"
+
+[client.transport]
+type = "noise"
+
+[client.transport.noise]
+remote_public_key = "public_key"
+
+# single client per tunnels pair
+
+# pi
+[client.services.pi-traefik-http]
+token = "secret_token_1"
+local_addr = "traefik:80"
+
+[client.services.pi-traefik-https]
+token = "secret_token_1"
+local_addr = "traefik:443"
+```
+
+Similarly, here we define the `rathole.client.toml` config to bind the `local` home server to it's HTTP `local-traefik-http` and HTTPS `local-traefik-https` tunnels.
+
+```toml
+# rathole.client.toml
+
+[client]
+remote_addr = "123.123.123.123:2333"
+
+[client.transport]
+type = "noise"
+
+[client.transport.noise]
+remote_public_key = "public_key"
+
+# single client per tunnels pair
+
+# local
+[client.services.local-traefik-http]
+token = "secret_token_2"
+local_addr = "traefik:80"
+
+[client.services.local-traefik-https]
+token = "secret_token_2"
+local_addr = "traefik:443"
+```
+
+`docker-compose.yml` for the Rathole client and Traefik is exactly the same as it was for a single home server. I am repeating it here just for the sake of completeness.
+
+```yml
+# docker-compose.yml
+
+version: '3.8'
+
+services:
+  rathole:
+    image: rapiz1/rathole:v0.5.0
+    container_name: rathole
+    command: --client /config/rathole.client.toml
+    restart: unless-stopped
+    volumes:
+      - ./rathole.client.toml:/config/rathole.client.toml:ro
+    networks:
+      - proxy
+
+  traefik:
+    image: 'traefik:v2.9.8'
+    container_name: traefik
+    restart: unless-stopped
+    depends_on:
+      - rathole
+    command:
+      # moved from static conf to pass email as env var
+      - '--certificatesresolvers.letsencrypt.acme.email=${TRAEFIK_LETSENCRYPT_EMAIL}'
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - proxy
+    # rathole will pass traffic through proxy network directly on 80 and 443
+    # defined in rathole.client.toml
+    environment:
+      - TRAEFIK_AUTH=${TRAEFIK_AUTH}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik-data/traefik.yml:/traefik.yml:ro
+      - ./traefik-data/acme.json:/acme.json
+      - ./traefik-data/configurations:/configurations
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=proxy'
+      - 'traefik.http.routers.traefik-secure.entrypoints=websecure'
+      - 'traefik.http.routers.traefik-secure.rule=Host(`traefik.${SITE_HOSTNAME}`)'
+      - 'traefik.http.routers.traefik-secure.middlewares=user-auth@file'
+      - 'traefik.http.routers.traefik-secure.service=api@internal'
+
+networks:
+  proxy:
+    external: true
+```
+
+## Completed code
+
+- **Traefik load balancer and Rathole server:** https://github.com/nemanjam/rathole-server
+- **Rathole client and local Traefik:** https://github.com/nemanjam/traefik-proxy/tree/main/core
+
+## Conclusion
+
+You can use this setup to expose as many home servers as you want, in a cost-effective and practical way, as long as your VPS has enough network bandwidth to support their traffic. It can bring your homelab to another level.
+
+What tool and method did you use to expose your home servers to the internet? Do you like this approach, are you willing to give it a try? Let me know in the comments.
+
+Happy self-hosting.
+
+## References
+
+- Traefik `v2.9` `HostRegexp` reference: https://doc.traefik.io/traefik/v2.9/routing/routers/#rule
+- Traefik `v2.9` `HostSNIRegexp` reference: https://doc.traefik.io/traefik/v2.9/routing/routers/#rule\_1
+- TLS Server Name Indication (SNI), Wikipedia https://en.wikipedia.org/wiki/Server\_Name\_Indication
