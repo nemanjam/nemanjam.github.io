@@ -206,7 +206,7 @@ cp .env.example .env
 ```
 
 ```bash
-# .env"
+# .env
 
 SITE_HOSTNAME=homeserver.my-domain.com
 
@@ -262,7 +262,7 @@ docker compose -f docker-compose.local.yml up -d
 
 Fortunately, Rathole makes it trivial to run multiple tunnels using a single Rathole server. We don't need to open any additional ports in the firewall or run multiple container instances. What we do need are different tunnel names, token values, and ports. Those must be unique for each tunnel/service. Also, you will need a load balancer to bind ports `80` and `443` to more than one destination port, respectively.
 
-I wrote a detailed tutorial on how to expose multiple home servers using a single Rathole server. You can read it here: [Load balancing multiple Rathole tunnels with Traefik HTTP and TCP routers](/blog/2025-05-29-traefik-load-balancer).
+I wrote a detailed tutorial on how to expose multiple home servers using a single Rathole server. You can read it here: [Load balancing multiple Rathole tunnels with Traefik HTTP and TCP routers](https://nemanjamitic.com/blog/2025-05-29-traefik-load-balancer).
 
 ## Open the firewall on the VPS
 
