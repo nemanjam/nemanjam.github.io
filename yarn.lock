@@ -6081,10 +6081,10 @@ satori-html@^0.3.2:
   dependencies:
     ultrahtml "^1.2.0"
 
-satori@^0.13.1:
-  version "0.13.1"
-  resolved "https://registry.yarnpkg.com/satori/-/satori-0.13.1.tgz#998b2b0260d0c3fc26af3d99290dfb055b4cdcf7"
-  integrity sha512-FlXblaCRDOONmz4JSIG9lUxSIklBZsMVwfLkvXv0MaHa3H6GWZDZccpcCeLqdQ6RjBkYMSh6zZDxkkBFJ4M61A==
+satori@^0.15.2:
+  version "0.15.2"
+  resolved "https://registry.yarnpkg.com/satori/-/satori-0.15.2.tgz#99b497d35e7e3093645a5a08a1935573b7120420"
+  integrity sha512-vu/49vdc8MzV5jUchs3TIRDCOkOvMc1iJ11MrZvhg9tE4ziKIEIBjBZvies6a9sfM2vQ2gc3dXeu6rCK7AztHA==
   dependencies:
     "@shuding/opentype.js" "1.4.0-beta.0"
     css-background-parser "^0.1.0"
