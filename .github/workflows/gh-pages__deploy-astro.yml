@@ -40,7 +40,7 @@ jobs:
         uses: withastro/action@v2
         with:
           path: ./
-          node-version: 24.0.1
+          node-version: 24.3.0
           # package-manager: yarn@1.22.22
 
   deploy:
