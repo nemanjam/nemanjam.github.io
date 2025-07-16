@@ -63,7 +63,7 @@
     "sharp": "0.34.3",
     "tailwind-clip-path": "^1.0.0",
     "tailwind-merge": "^2.6.0",
-    "zod": "^3.25.76"
+    "zod": "^4.0.5"
   },
   "resolutions": {
     "**/sharp": "0.34.3"
