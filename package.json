@@ -47,7 +47,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
-    "dotenv": "^17.2.0",
+    "dotenv": "^17.2.1",
     "feed": "^5.1.0",
     "giscus": "^1.6.0",
     "github-slugger": "^2.0.0",
@@ -63,7 +63,7 @@
     "sharp": "0.34.3",
     "tailwind-clip-path": "^1.0.0",
     "tailwind-merge": "^2.6.0",
-    "zod": "^4.0.8"
+    "zod": "^4.0.10"
   },
   "resolutions": {
     "**/sharp": "0.34.3"
