@@ -55,15 +55,15 @@
     "mdast-util-to-string": "^4.0.0",
     "object-treeify": "^5.0.1",
     "photoswipe": "^5.4.4",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
     "react-icons": "^5.5.0",
     "reading-time": "^1.5.0",
     "rehype-external-links": "^3.0.0",
     "sharp": "0.34.3",
     "tailwind-clip-path": "^1.0.0",
     "tailwind-merge": "^2.6.0",
-    "zod": "^4.0.10"
+    "zod": "^4.0.13"
   },
   "resolutions": {
     "**/sharp": "0.34.3"
@@ -76,8 +76,8 @@
     "@tailwindcss/typography": "^0.5.16",
     "@types/lodash.debounce": "^4.0.9",
     "@types/mdast": "^4.0.3",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
+    "@types/react": "^19.1.9",
+    "@types/react-dom": "^19.1.7",
     "@typescript-eslint/eslint-plugin": "^8.38.0",
     "@typescript-eslint/parser": "^8.38.0",
     "eslint": "8.57.0",
