@@ -1923,10 +1923,10 @@ astro-social-share@^2.0.3:
   resolved "https://registry.yarnpkg.com/astro-social-share/-/astro-social-share-2.2.0.tgz#4e7609e251cd614a414d884cefc07888ff73d4f4"
   integrity sha512-Z5ebhO6Yw4GLggw7wsTahdpS0f4pf/XuVjQlBpWZ0zyt0cKaVrlG/+u6RzrzN9B2t27wxp90XiosZNwvBZqA+Q==
 
-astro@^5.12.4:
-  version "5.12.4"
-  resolved "https://registry.yarnpkg.com/astro/-/astro-5.12.4.tgz#4d57d79e009f02aa4b564b7b2d944dd517b926a6"
-  integrity sha512-ns+/KpfWToKvVf2DJTj4EIa4U59/XVBXeeq6VZUr5DXe6OZJFs8NfJi+W20nRm5nduIeBZGRzaoxPFq9lm4WEg==
+astro@^5.12.5:
+  version "5.12.5"
+  resolved "https://registry.yarnpkg.com/astro/-/astro-5.12.5.tgz#fdc9bcfece08a366261ed3f75215b2c6837c0063"
+  integrity sha512-cq+2h13F/aznM91bxXxKgqYj36gbXe6jC5kiUAXgWlh2nTyNtiCNMdDFpL2wIWSzac5+KzvRjKmxsYWbcmD4EQ==
   dependencies:
     "@astrojs/compiler" "^2.12.2"
     "@astrojs/internal-helpers" "0.6.1"
@@ -2515,10 +2515,10 @@ css-color-keywords@^1.0.0:
   resolved "https://registry.yarnpkg.com/css-color-keywords/-/css-color-keywords-1.0.0.tgz#fea2616dc676b2962686b3af8dbdbe180b244e05"
   integrity sha512-FyyrDHZKEjXDpNJYvVsV960FiqQyXc/LlYmsxl2BcdMb2WPx0OGRVgTg55rPSyLSNMqP52R9r8geSp7apN3Ofg==
 
-css-gradient-parser@^0.0.16:
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/css-gradient-parser/-/css-gradient-parser-0.0.16.tgz#5735da0822aef39da9b1960b314792ab542d9bb5"
-  integrity sha512-3O5QdqgFRUbXvK1x5INf1YkBz1UKSWqrd63vWsum8MNHDBYD5urm3QtxZbKU259OrEXNM26lP/MPY3d1IGkBgA==
+css-gradient-parser@^0.0.17:
+  version "0.0.17"
+  resolved "https://registry.yarnpkg.com/css-gradient-parser/-/css-gradient-parser-0.0.17.tgz#9a523419f328ad2777ae790c296a6932d470aa9a"
+  integrity sha512-w2Xy9UMMwlKtou0vlRnXvWglPAceXCTtcmVSo8ZBUvqCV5aXEFP/PC6d+I464810I9FT++UACwTD5511bmGPUg==
 
 css-select@^5.1.0:
   version "5.2.2"
@@ -6102,15 +6102,15 @@ satori-html@^0.3.2:
   dependencies:
     ultrahtml "^1.2.0"
 
-satori@^0.16.1:
-  version "0.16.1"
-  resolved "https://registry.yarnpkg.com/satori/-/satori-0.16.1.tgz#481c38501b87bd19166d5a67450661d2c2c748dd"
-  integrity sha512-JM4bFaca8HMA11Xyfgrclv9qIPnd9uhUDr2oYrVlzqTrV7EA/VEeq/7hwe8r0eQP4JwNVW70JBtLRk0v48BTXg==
+satori@^0.16.2:
+  version "0.16.2"
+  resolved "https://registry.yarnpkg.com/satori/-/satori-0.16.2.tgz#30278eeecbc43baf54113dd8d9ad415d32ea037f"
+  integrity sha512-tORnR2UZ1cB9N81WDjx5ZC4ToPmkybnJWyR8N1OC/z+5kWZcG1mcLssJ5WLNBj1lNr2igIFW0bIiugCxRKL/jQ==
   dependencies:
     "@shuding/opentype.js" "1.4.0-beta.0"
     css-background-parser "^0.1.0"
     css-box-shadow "1.0.0-3"
-    css-gradient-parser "^0.0.16"
+    css-gradient-parser "^0.0.17"
     css-to-react-native "^3.0.0"
     emoji-regex-xs "^2.0.1"
     escape-html "^1.0.3"
@@ -7423,10 +7423,10 @@ zod@^3.23.8, zod@^3.24.4:
   resolved "https://registry.yarnpkg.com/zod/-/zod-3.25.76.tgz#26841c3f6fd22a6a2760e7ccb719179768471e34"
   integrity sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==
 
-zod@^4.0.13:
-  version "4.0.13"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-4.0.13.tgz#bfa659ba2cb0a4b03fed263942120b0e4533d3c3"
-  integrity sha512-jv+zRxuZQxTrFHzxZ46ezL2FtnE+M4HIJHJEwLsZ7UjrXHltdG6HrxvqM0twoVCWxJiYf8WqKjAcjztegpkB+Q==
+zod@^4.0.14:
+  version "4.0.14"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-4.0.14.tgz#cc3a0a21981e63e0f99c0f4f1decd92ec3be7e9f"
+  integrity sha512-nGFJTnJN6cM2v9kXL+SOBq3AtjQby3Mv5ySGFof5UGRHrRioSJ5iG680cYNjE/yWk671nROcpPj4hAS8nyLhSw==
 
 zwitch@^2.0.0, zwitch@^2.0.4:
   version "2.0.4"
