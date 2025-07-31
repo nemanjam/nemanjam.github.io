@@ -29,9 +29,7 @@ const templateHtml = ({ title, heroImageUrl, avatarImageUrl, siteUrl }: Template
           <div class="flex items-center ${isLongSiteUrl ? 'flex-col justify-end items-start' : ''}">
             <img
               src="${avatarImageUrl}"
-              width="120"
-              height="120"
-              class="rounded-full mr-8 border-2 border-gray-300"
+              class="w-[120px] h-[120px] rounded-full mr-8 border-2 border-gray-300"
             />
             <div class="flex items-center ${isLongSiteUrl ? 'mt-4 text-3xl' : 'text-4xl'}">
               <div>${siteUrl}</div>

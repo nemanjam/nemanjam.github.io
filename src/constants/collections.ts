@@ -24,6 +24,7 @@ export const TAGS = [
   'devops',
   'docker',
   'self-hosting',
+  'algorithms',
 ] as const;
 
 /** adjust this later */
@@ -33,6 +34,14 @@ export const CATEGORIES = [
   {
     name: 'tutorials',
     icon: 'mdi:teach',
+  },
+  {
+    name: 'computer-science',
+    icon: 'mdi:chip',
+  },
+  {
+    name: 'homelab',
+    icon: 'mdi:flask-empty-outline',
   },
   {
     name: 'tips-and-tricks',
@@ -57,10 +66,6 @@ export const CATEGORIES = [
   {
     name: 'resources',
     icon: 'mdi:book-open-variant-outline',
-  },
-  {
-    name: 'homelab',
-    icon: 'mdi:flask-empty-outline',
   },
 ] as const;
 
