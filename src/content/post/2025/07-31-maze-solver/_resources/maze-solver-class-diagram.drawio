@@ -1,0 +1,137 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:131.0) Gecko/20100101 Firefox/131.0" version="24.7.17">
+  <diagram name="Page-1" id="c4acf3e9-155e-7222-9cf6-157b1a14988f">
+    <mxGraphModel dx="1497" dy="786" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="17acba5748e5396b-1" value="Maze solver" style="shape=umlFrame;whiteSpace=wrap;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=10;align=center;width=120;height=30;direction=west;flipV=1;flipH=1;" parent="1" vertex="1">
+          <mxGeometry width="1080" height="630" as="geometry" />
+        </mxCell>
+        <mxCell id="5d2195bd80daf111-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;labelBackgroundColor=none;startFill=0;endArrow=open;endFill=0;endSize=10;fontFamily=Verdana;fontSize=10;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="730" y="978" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5d2195bd80daf111-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;labelBackgroundColor=none;startFill=0;endArrow=open;endFill=0;endSize=10;fontFamily=Verdana;fontSize=10;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="545" y="970" />
+              <mxPoint x="545" y="970" />
+            </Array>
+            <mxPoint x="544.9999999999995" y="963" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5d2195bd80daf111-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;labelBackgroundColor=none;startFill=0;endArrow=open;endFill=0;endSize=10;fontFamily=Verdana;fontSize=10;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="410" y="1029" />
+              <mxPoint x="410" y="1029" />
+            </Array>
+            <mxPoint x="380" y="1029.090909090909" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5d2195bd80daf111-18" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;IMaze&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ getStart(): Coordinate &lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ getCost(coord: Coordinate): number&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ formatPath(path: ReadonlyArray&amp;lt;Coordinate&amp;gt;): string&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1" parent="1" vertex="1">
+          <mxGeometry x="42" y="80" width="310" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="5d2195bd80daf111-19" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;IMazeSolver&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&amp;nbsp;+ solve(): string &lt;br&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ solveAndFormat(): FormattedResult&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1" parent="1" vertex="1">
+          <mxGeometry x="561" y="80" width="220" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="gK6vRJrWsyUHmA_Xx5b--3" value="Maze" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="40" y="241" width="420" height="170" as="geometry">
+            <mxRectangle x="60" y="270" width="100" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gK6vRJrWsyUHmA_Xx5b--4" value="&lt;div&gt;- board: number[][] &lt;br&gt;&lt;/div&gt;&lt;div&gt;- start: Coordinate&lt;/div&gt;&lt;div&gt;- end: Coordinate &lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="gK6vRJrWsyUHmA_Xx5b--3" vertex="1">
+          <mxGeometry y="30" width="420" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="gK6vRJrWsyUHmA_Xx5b--5" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="gK6vRJrWsyUHmA_Xx5b--3" vertex="1">
+          <mxGeometry y="90" width="420" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="gK6vRJrWsyUHmA_Xx5b--6" value="&lt;div&gt;+ static create(board: number[][], start: Coordinate, end: Coordinate): Maze&lt;/div&gt;&lt;div&gt;+ getStart(): Coordinate &lt;/div&gt;&lt;div&gt;+ getCost(coord: Coordinate): number &lt;br&gt;&lt;/div&gt;&lt;div&gt;+ formatPath(path: ReadonlyArray&amp;lt;Coordinate&amp;gt;): string&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="gK6vRJrWsyUHmA_Xx5b--3" vertex="1">
+          <mxGeometry y="100" width="420" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="gK6vRJrWsyUHmA_Xx5b--13" value="MazeSolver" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="561" y="241" width="479" height="136" as="geometry" />
+        </mxCell>
+        <mxCell id="gK6vRJrWsyUHmA_Xx5b--14" value="&lt;div&gt;- maze: IMaze&lt;/div&gt;- enableLogging: boolean" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="gK6vRJrWsyUHmA_Xx5b--13" vertex="1">
+          <mxGeometry y="26" width="479" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="gK6vRJrWsyUHmA_Xx5b--15" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="gK6vRJrWsyUHmA_Xx5b--13" vertex="1">
+          <mxGeometry y="66" width="479" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="gK6vRJrWsyUHmA_Xx5b--16" value="&lt;div&gt;# abstract findPath(): Coordinate[] | null&lt;/div&gt;&lt;div&gt;+ solve(): string &lt;/div&gt;&lt;div&gt;+ printBoard(current: Coordinate, visited: Set&amp;lt;string&amp;gt;, currentPath: Coordinate[]): void&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="gK6vRJrWsyUHmA_Xx5b--13" vertex="1">
+          <mxGeometry y="76" width="479" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="gK6vRJrWsyUHmA_Xx5b--19" value="MazeSolverBFS" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="440" y="470" width="190" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="gK6vRJrWsyUHmA_Xx5b--22" value="# findPath(): Coordinate[] | null " style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="gK6vRJrWsyUHmA_Xx5b--19" vertex="1">
+          <mxGeometry y="26" width="190" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="gK6vRJrWsyUHmA_Xx5b--26" value="MazeSolverDFS" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="600" y="540" width="190" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="gK6vRJrWsyUHmA_Xx5b--27" value="# findPath(): Coordinate[] | null " style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="gK6vRJrWsyUHmA_Xx5b--26" vertex="1">
+          <mxGeometry y="26" width="190" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="gK6vRJrWsyUHmA_Xx5b--12" value="" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.369;exitY=0.004;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="199.9799999999999" y="241.68000000000006" as="sourcePoint" />
+            <mxPoint x="200" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gK6vRJrWsyUHmA_Xx5b--18" value="" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;entryX=0.539;entryY=1.008;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.248;exitY=-0.001;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="gK6vRJrWsyUHmA_Xx5b--13" target="5d2195bd80daf111-19" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="621.96" y="230" as="sourcePoint" />
+            <mxPoint x="618.9999999999999" y="177.18" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gK6vRJrWsyUHmA_Xx5b--32" value="MazeSolverDijkstra" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="730" y="470" width="190" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="gK6vRJrWsyUHmA_Xx5b--34" value="# findPath(): Coordinate[] | null " style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="gK6vRJrWsyUHmA_Xx5b--32" vertex="1">
+          <mxGeometry y="26" width="190" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="gK6vRJrWsyUHmA_Xx5b--35" value="&lt;div&gt;MazeSolverAStar&lt;/div&gt;" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="850" y="540" width="190" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="gK6vRJrWsyUHmA_Xx5b--36" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;entryX=0.832;entryY=1.005;entryDx=0;entryDy=0;entryPerimeter=0;" parent="gK6vRJrWsyUHmA_Xx5b--35" target="gK6vRJrWsyUHmA_Xx5b--16" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="110" as="sourcePoint" />
+            <mxPoint x="110" y="-172" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gK6vRJrWsyUHmA_Xx5b--37" value="# findPath(): Coordinate[] | null " style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="gK6vRJrWsyUHmA_Xx5b--35" vertex="1">
+          <mxGeometry y="26" width="190" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="gK6vRJrWsyUHmA_Xx5b--38" value="Use" style="endArrow=open;endSize=12;dashed=1;html=1;rounded=0;entryX=-0.001;entryY=0.367;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.998;exitY=0.201;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="gK6vRJrWsyUHmA_Xx5b--4" target="gK6vRJrWsyUHmA_Xx5b--14" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="459" y="278" as="sourcePoint" />
+            <mxPoint x="509" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gK6vRJrWsyUHmA_Xx5b--40" value="" style="group" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="821" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="gK6vRJrWsyUHmA_Xx5b--24" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;entryX=0.028;entryY=1.001;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.704;exitY=0.009;exitDx=0;exitDy=0;exitPerimeter=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="gK6vRJrWsyUHmA_Xx5b--40" source="gK6vRJrWsyUHmA_Xx5b--19" target="gK6vRJrWsyUHmA_Xx5b--16" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="-225.01999999999998" y="-10.79200000000003" as="sourcePoint" />
+            <mxPoint x="-219.36000000000013" y="-101.05399999999997" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gK6vRJrWsyUHmA_Xx5b--29" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;entryX=0.196;entryY=1.003;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.291;exitY=0.001;exitDx=0;exitDy=0;exitPerimeter=0;" parent="gK6vRJrWsyUHmA_Xx5b--40" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="-140.7099999999998" y="70.05600000000004" as="sourcePoint" />
+            <mxPoint x="-141.11599999999999" y="-92.82000000000005" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gK6vRJrWsyUHmA_Xx5b--33" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;entryX=0.544;entryY=1.006;entryDx=0;entryDy=0;entryPerimeter=0;" parent="gK6vRJrWsyUHmA_Xx5b--40" target="gK6vRJrWsyUHmA_Xx5b--16" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint as="sourcePoint" />
+            <mxPoint x="12.040000000000077" y="-100.74399999999997" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,159 @@
+---
+title: Comparing BFS, DFS, Dijkstra, and A* algorithms on a practical maze solver example
+description: |
+  Understanding the strengths and trade-offs of core pathfinding algorithms through a practical maze example. Demo app included.
+publishDate: 2025-07-31
+heroImage: '../../../../content/post/2025/07-31-maze-solver/_images/terminal-hero-16-9.png'
+heroAlt: Maze solver terminal
+tags:
+  - algorithms
+category: computer-science
+toc: true
+draft: false
+---
+
+import { Image } from 'astro:assets';
+
+import { IMAGE_SIZES } from '../../../../constants/image';
+
+import MazeSolverClassDiagramImage from '../../../../content/post/2025/07-31-maze-solver/_images/maze-solver-class-diagram.png';
+
+
+## Introduction
+
+Pathfinding is a fundamental topic in computer science, with applications in fields like navigation, AI/ML, network routing and many other. In this article, we compare four core pathfinding algorithms: breadth-first search (BFS), depth-first search (DFS), Dijkstra’s algorithm, and A* (A star) through a practical maze solving example. We don’t just explain them in theory, we built a demo app where you can tweak maze inputs or edit the algorithm code and instantly see how it affects the output and efficiency.
+
+One of the key takeaways is how a tiny change, just a single line in the code can drastically alter an algorithm’s behavior. This highlights how critical implementation details are, even when the overall structure looks the same.
+
+## Problem overview
+
+Paths in a maze form a tree structure or a graph if a maze has cycles. Thats why tree and graph traversal algorithms can be used for finding paths and the shortest path in a maze.
+
+All 4 algorithms differ in just a few lines of code, but they behavior differs dramatically.
+
+## App architecture
+
+We create a pragmatic, simplified OOP model of the maze and its behavior as a tradeoff, favoring clarity and concise instantiation of maze objects in tests.
+
+### Maze representation
+
+A maze is represented as a binary matrix where `0` stands for a free space, `1` for a boundary, and `*` for a path. It also has start and end points. In the sense of a weighted graph `0` cell has zero weight and cell `1` has infinite weight.
+
+```ts title="src/maze.ts"
+export class Maze implements IMaze {
+  private board: number[][];
+  private start: Coordinate;
+  private end: Coordinate;
+
+  // ...
+}
+
+export interface Coordinate {
+  readonly x: number;
+  readonly y: number;
+}
+
+// example maze
+const testMaze: number[][] = [
+  [0, 1, 0, 0, 0],
+  [0, 1, 0, 1, 0],
+  [0, 0, 0, 1, 0],
+  [0, 1, 1, 1, 0],
+  [0, 0, 0, 0, 0],
+];
+
+const start: Coordinate = { x: 0, y: 0 };
+const end: Coordinate = { x: 4, y: 4 };
+```
+
+### Class structure
+
+We use polymorphism and simplified Factory pattern. `MazeSolver` is an abstract class that declares `findPath()` method that is implemented in each derived concrete solver class.
+
+```ts title="src/solvers/maze-solver.ts"
+/**
+ * Abstract base class for maze solving algorithms.
+ * Implements common functionality for maze solvers.
+ */
+
+export abstract class MazeSolver implements IMazeSolver {
+  protected maze: IMaze;
+
+  protected abstract findPath(): Coordinate[] | null;
+
+  // ...
+}
+```
+
+We use encapsulation and coding towards interface, separating interfaces from implementations by exposing only the public class methods through the interfaces.
+
+Maze interface:
+
+```ts title="src/types/maze.ts"
+export interface IMaze {
+  getBoard(): number[][];
+
+  getStart: () => Coordinate;
+
+  formatPath: (path: ReadonlyArray<Coordinate>) => string;
+
+  // ...
+}
+```
+
+Maze implementation:
+
+```ts title="src/maze.ts"
+export class Maze implements IMaze {
+  public getBoard(): number[][] { ... }
+
+  public getStart(): Coordinate { ... }
+
+  public formatPath(path: ReadonlyArray<Coordinate>): string { ... }
+
+  // ...
+}
+```
+
+Maze usage:
+
+```ts title="src/main.ts"
+const _maze2: IMaze = Maze.create(testMaze, start, end);
+
+// ...
+```
+
+**Class diagram:**
+
+<Image {...IMAGE_SIZES.FIXED.MDX_MD} src={MazeSolverClassDiagramImage} alt="Maze solver class diagram" />
+
+### Running the app
+
+## Algorithms analysis and discussion
+
+### Unweighted graphs
+
+#### BFS
+
+#### DFS
+
+### Weighted graphs
+
+#### Dijkstra
+
+#### A*
+
+## Completed code
+
+- **Maze solver:** https://github.com/nemanjam/maze-solver
+
+## Conclusion
+
+## References
+
+- Some visualized algorithms behavior https://www.youtube.com/watch?v=GC-nBgi9r0U
+- BFS vs DFS, basic overview and implementation https://www.geeksforgeeks.org/difference-between-bfs-and-dfs/
+- BFS vs Dijkstra for unweighted and weighted graphs https://www.baeldung.com/cs/graph-algorithms-bfs-dijkstra
+- BFS vs Dijkstra similarities https://stackoverflow.com/a/52676408/4383275
+- Visual playgrounds https://visualmazesolver.vercel.app/, http://qiao.github.io/PathFinding.js/visual/
+- Starter project, Typescript, Jest https://github.com/julianmateu/hello-ts
