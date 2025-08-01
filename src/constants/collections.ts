@@ -37,7 +37,7 @@ export const CATEGORIES = [
   },
   {
     name: 'computer-science',
-    icon: 'mdi:chip',
+    icon: 'mdi:cpu-64-bit',
   },
   {
     name: 'homelab',
