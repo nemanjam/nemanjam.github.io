@@ -191,7 +191,7 @@ const { coord, path } = stack.pop()!;
 
 This is the array of coordinates that represents possible directions for a movement. This array is iterated over in the algorithms inner loop.
 
-```ts
+```ts title="src/utils/constants.ts"
 export const directions: Direction[] = [
   { x: 0, y: 1 }, // up
   { x: 1, y: 0 }, // right
@@ -200,7 +200,7 @@ export const directions: Direction[] = [
 ];
 ```
 
-Here is the complete BFS implementation so we can have a better idea what we are working with:
+Here is the complete BFS implementation (since all of the 4 algorithms share the most of the same base) so we can have a better idea what we are working with:
 
 ```ts title="src/solvers/maze-solver-bfs.ts"
 export class MazeSolverBFS extends MazeSolver {
@@ -277,7 +277,7 @@ Not all graphs have edges with uniform weights. In such cases we must use algori
 
 Dijkstra is aware of the cost between two nodes (edge weight) and it will take it into account when selecting the next node. It uses a priority queue to keep the cost history.
 
-```ts
+```ts title="src/solvers/maze-solver-dijkstra.ts"
 // Take the first element from the priority queue.
 // Choose the node that ads minimal cost.
 queue.sort((a, b) => a.cost - b.cost);
@@ -297,7 +297,7 @@ Dijkstra keeps a history of the cost of the current path and when selecting the 
 
 A\* is same as Dijkstra but beside the keeping the history it uses the heuristics function to predict the future - the direction in which the end node could be.
 
-```ts
+```ts title="src/solvers/maze-solver-a-star.ts"
 protected heuristic(a: Coordinate, b: Coordinate): number {
     // Manhattan distance as the heuristic.
     // Can only move horizontally or vertically, not diagonally. In "rectangles".
@@ -323,6 +323,12 @@ If the heuristic function is well chosen it will make A\* more efficient than th
 - **Maze solver:** https://github.com/nemanjam/maze-solver
 
 ## Conclusion
+
+On this example we could see how algorithm analysis and design is a very sensitive and subtle discipline, that leaves no room for a low focus or lack of understanding of the domain. Although BFS, DFS, Dijkstra, and A* share a majority of the implementation, just a subtle change in the code can cause a dramatic change in the behavior.
+
+In the demo app you can tweak the predefined mazes in the `tests/fixtures/*.txt` files and try to make your own observations. You can also check the resources and the interactive playground listed in the [References](#references) section.
+
+Did you experiment with maze solving and pathfinding algorithms yourself before? Let me now in the comments.
 
 ## References
 
