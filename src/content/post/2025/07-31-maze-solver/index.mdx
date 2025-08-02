@@ -173,11 +173,101 @@ And calculate the code coverage:
 
 ## Algorithms analysis and discussion
 
+Now the most important and interesting part. Let's analyze the algorithms code and explain how it affects their behavior and efficiency.
+
 ### Unweighted graphs
+
+BFS and DFS are basic traversal algorithms that ignore the weights of the edges so they are applicable only on unweighted graphs and not on weighted graphs (edges don't have uniform weights) where Dijkstra should be used.
+
+The actual code for BFS and DFS has only a single line difference, but they have a completely opposite behavior. BFS uses a queue (FIFO), and DFS uses a stack (LIFO) and this has a fundamental impact on the way the next node candidate for the path is selected.
+
+```ts
+// BFS
+const { coord, path } = queue.shift()!;
+
+// DFS
+const { coord, path } = stack.pop()!;
+```
+
+This is the array of coordinates that represents possible directions for a movement. This array is iterated over in the algorithms inner loop.
+
+```ts
+export const directions: Direction[] = [
+  { x: 0, y: 1 }, // up
+  { x: 1, y: 0 }, // right
+  { x: 0, y: -1 }, // down
+  { x: -1, y: 0 }, // left
+];
+```
+
+Here is the complete BFS implementation so we can have a better idea what we are working with:
+
+```ts title="src/solvers/maze-solver-bfs.ts"
+export class MazeSolverBFS extends MazeSolver {
+  /**
+   * Implements the Breadth-First Search (BFS) algorithm to find a path from the start to the end of the maze.
+   */
+  protected findPath(): Coordinate[] | null {
+    const start = this.maze.getStart();
+
+    // Initialize the BFS queue with the start position.
+    const queue: BFSQueueElement[] = [{ coord: start, path: [start] }];
+
+    // Keep track of visited coordinates (as strings).
+    const visited = new Set<string>();
+    visited.add(`${start.x},${start.y}`);
+
+    while (queue.length > 0) {
+      // Count iterations.
+      this.incrementStep();
+
+      // The most important line. 
+      // FIFO - Takes the oldest element in the queue.
+      const { coord, path } = queue.shift()!;
+
+      // Check if end and exit.
+      if (this.maze.isEnd(coord)) {
+        return path;
+      }
+
+      // Print the current state of the maze.
+      this.printBoard(coord, visited, path);
+
+      // Always loops 4 times.
+      for (const direction of directions) {
+        // Calculate the next coordinate by applying the direction.
+        const nextCoord: Coordinate = {
+          x: coord.x + direction.x,
+          y: coord.y + direction.y,
+        };
+        // Create a key for nextCoord (to check for uniqueness in the visited set).
+        const coordKey = `${nextCoord.x},${nextCoord.y}`;
+
+        // If nextCoord is not visited, is within bounds, and is walkable, add it to the potential path.
+        if (
+          !visited.has(coordKey) &&
+          this.maze.isWithinBounds(nextCoord) &&
+          this.maze.isWalkable(nextCoord)
+        ) {
+          visited.add(coordKey);
+          queue.push({ coord: nextCoord, path: [...path, nextCoord] });
+        }
+      }
+    }
+
+    // Return null if no path to the end is found.
+    return null;
+  }
+}
+```
 
 #### BFS
 
+Since BFS uses a queue, it will respect this structure and attempt to change direction in every iteration of the outer loop. Without obstacles and boundaries, this will cause the algorithm to thoroughly inspect nodes closer to the starting node before moving further away. Thats why BFS can be inefficient for the large trees and graphs where the end node is very distant from the starting node.
+
 #### DFS
+
+In contrast, DFS will also respect initial order in the directions array but prioritizes the upper elements, so in the example above it will always attempt to apply up direction first before exploring other directions. Without obstacles and boundaries this will cause the algorithm to inspect the distant nodes in a straight line. DFS can be efficient to find distant end node efficiently but also can be very inefficient to find close node if it happens to be in the different direction.
 
 ### Weighted graphs
 
