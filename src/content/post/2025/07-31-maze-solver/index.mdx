@@ -17,6 +17,9 @@ import { Image } from 'astro:assets';
 import { IMAGE_SIZES } from '../../../../constants/image';
 
 import MazeSolverClassDiagramImage from '../../../../content/post/2025/07-31-maze-solver/_images/maze-solver-class-diagram.png';
+import YarnDevImage from '../../../../content/post/2025/07-31-maze-solver/_images/yarn-dev.png';
+import YarnTestVerboseImage from '../../../../content/post/2025/07-31-maze-solver/_images/yarn-test-verbose.png';
+import YarnCoverageImage from '../../../../content/post/2025/07-31-maze-solver/_images/yarn-coverage.png';
 
 
 ## Introduction
@@ -127,7 +130,46 @@ const _maze2: IMaze = Maze.create(testMaze, start, end);
 
 <Image {...IMAGE_SIZES.FIXED.MDX_MD} src={MazeSolverClassDiagramImage} alt="Maze solver class diagram" />
 
-### Running the app
+## Running the app
+
+We install dependencies, run the app and run the tests as usual, like any other Typescript app.
+
+```bash
+# install dependencies
+yarn install
+
+# enable or disable logging in src/config.ts
+
+# run the app in dev mode
+yarn dev
+
+# logging is disabled for tests by default
+
+# run tests
+yarn test
+
+# run tests in verbose mode
+yarn test-verbose
+
+# generate coverage report
+yarn coverage
+```
+
+We can see that different algorithms require different number of steps for the same input maze.  Example output for a given maze input:
+
+<Image {...IMAGE_SIZES.FIXED.MDX_XS} src={YarnDevImage} alt="App dev mode terminal output" />
+
+We can run tests that ensure for each algorithm:
+
+1. finds existing path
+2. doesn't find a false non existent path
+3. finds the shortest path.
+
+<Image {...IMAGE_SIZES.FIXED.MDX_XS} src={YarnTestVerboseImage} alt="Run tests in verbose mode" />
+
+And calculate the code coverage:
+
+<Image {...IMAGE_SIZES.FIXED.MDX_SM} src={YarnCoverageImage} alt="Tests coverage table" />
 
 ## Algorithms analysis and discussion
 
