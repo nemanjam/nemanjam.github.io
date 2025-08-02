@@ -177,7 +177,7 @@ Now the most important and interesting part. Let's analyze the algorithms code a
 
 ### Unweighted graphs
 
-BFS and DFS are basic traversal algorithms that ignore the weights of the edges so they are applicable only on unweighted graphs and not on weighted graphs (edges don't have uniform weights) where Dijkstra should be used.
+BFS and DFS are basic traversal algorithms that ignore the weights of the edges so they are applicable only on unweighted graphs.
 
 The actual code for BFS and DFS has only a single line difference, but they have a completely opposite behavior. BFS uses a queue (FIFO), and DFS uses a stack (LIFO) and this has a fundamental impact on the way the next node candidate for the path is selected.
 
@@ -271,9 +271,52 @@ In contrast, DFS will also respect initial order in the directions array but pri
 
 ### Weighted graphs
 
+Not all graphs have edges with uniform weights. In such cases we must use algorithms that are aware of weights (cost between two nodes), Dijkstra and A* in this case.
+
 #### Dijkstra
 
-#### A*
+Dijkstra is aware of the cost between two nodes (edge weight) and it will take it into account when selecting the next node. It uses a priority queue to keep the cost history.
+
+```ts
+// Take the first element from the priority queue.
+// Choose the node that ads minimal cost.
+queue.sort((a, b) => a.cost - b.cost);
+const { coord, path, cost } = queue.shift()!;
+
+// ...
+
+// Test how much cost every new node ads to the path before adding it to the queue.
+const nextCost = cost + this.maze.getCost(nextCoord);
+// ...
+if( ... && !costMap.has(coordKey) || nextCost < costMap.get(coordKey)!)
+```
+
+Dijkstra keeps a history of the cost of the current path and when selecting the next node it will choose the node that does minimal addition to the cost. If there are cycles it will access the same node from multiple paths and will choose the one with minimal weight (shortest path). In graphs with constant edge weights it reduces to BFS. That can be observed in the screenshot above where both BFS and Dijkstra take an equal number of steps, because the maze has uniform weight of 1 and Infinity.
+
+#### A\*
+
+A\* is same as Dijkstra but beside the keeping the history it uses the heuristics function to predict the future - the direction in which the end node could be.
+
+```ts
+protected heuristic(a: Coordinate, b: Coordinate): number {
+    // Manhattan distance as the heuristic.
+    // Can only move horizontally or vertically, not diagonally. In "rectangles".
+    return Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
+}
+
+// ...
+
+openSet.sort(
+  (a, b) =>
+    // The most important line. The only difference from Dijkstra.
+    // Cost = history + Manhattan distance from the end node.
+    // prettier-ignore
+    (a.cost + this.heuristic(a.coord, end)) -
+    (b.cost + this.heuristic(b.coord, end))
+);
+```
+
+If the heuristic function is well chosen it will make A\* more efficient than the before mentioned algorithms. Consequently, if the heuristic function is poorly chosen it will degrade the algorithm efficiency.
 
 ## Completed code
 
