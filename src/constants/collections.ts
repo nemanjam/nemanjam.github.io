@@ -25,6 +25,7 @@ export const TAGS = [
   'docker',
   'self-hosting',
   'algorithms',
+  'computer-science',
 ] as const;
 
 /** adjust this later */
@@ -34,10 +35,6 @@ export const CATEGORIES = [
   {
     name: 'tutorials',
     icon: 'mdi:teach',
-  },
-  {
-    name: 'computer-science',
-    icon: 'mdi:cpu-64-bit',
   },
   {
     name: 'homelab',

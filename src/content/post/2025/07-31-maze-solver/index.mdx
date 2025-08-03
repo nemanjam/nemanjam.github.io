@@ -7,7 +7,8 @@ heroImage: '../../../../content/post/2025/07-31-maze-solver/_images/terminal-her
 heroAlt: Maze solver terminal
 tags:
   - algorithms
-category: computer-science
+  - computer-science
+category: showcases
 toc: true
 draft: false
 ---
@@ -261,11 +262,11 @@ export class MazeSolverBFS extends MazeSolver {
 }
 ```
 
-#### BFS
+### BFS
 
 Since BFS uses a queue, it respects this structure and attempts to change direction in every iteration of the outer loop. Without obstacles and boundaries, this causes the algorithm to thoroughly inspect nodes closer to the starting node before moving further away. That's why BFS can be inefficient for large trees and graphs where the end node is very distant from the starting node.
 
-#### DFS
+### DFS
 
 In contrast, DFS also respects the initial order in the directions array but prioritizes the earlier elements. So, in the example above, it will always attempt to apply the `up` direction first before exploring other directions. Without obstacles and boundaries, this causes the algorithm to inspect distant nodes in a straight line. DFS can be efficient for finding a distant end node but can also be very inefficient for finding a nearby node if it happens to be in a different direction.
 
@@ -273,7 +274,7 @@ In contrast, DFS also respects the initial order in the directions array but pri
 
 Not all graphs have edges with uniform weights. In such cases, we must use algorithms that are aware of weights (the cost between two nodes), such as Dijkstra and A*.
 
-#### Dijkstra
+### Dijkstra
 
 Dijkstra's algorithm is aware of the cost between two nodes (edge weight) and takes it into account when selecting the next node. It uses a priority queue to keep track of the cost history.
 
@@ -293,7 +294,7 @@ if( ... && !costMap.has(coordKey) || nextCost < costMap.get(coordKey)!)
 
 Dijkstra keeps a history of the cost of the current path and when selecting the next node chooses the node that adds the minimal cost. If there are cycles it may access the same node from multiple paths and will choose the one with the minimal weight (shortest path). In graphs with constant edge weights it reduces to BFS. This can be observed in the screenshot above, where both BFS and Dijkstra take an equal number of steps because the maze has uniform weights of 1 and Infinity.
 
-#### A\*
+### A\*
 
 A\* is the same as Dijkstra but besides keeping the history, it uses a heuristic function to predict the future - the direction in which the end node could be.
 
