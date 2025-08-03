@@ -13,6 +13,7 @@ export const COLLECTIONS = {
   PROJECT: 'project',
 } as const;
 
+/** technologies */
 export const TAGS = [
   'next.js',
   'react',
@@ -25,19 +26,17 @@ export const TAGS = [
   'docker',
   'self-hosting',
   'algorithms',
+  'computer-science',
 ] as const;
 
 /** adjust this later */
+/** form of an article, no technologies */
 export const CATEGORIES = [
   // add color here
   // extract find function
   {
     name: 'tutorials',
     icon: 'mdi:teach',
-  },
-  {
-    name: 'computer-science',
-    icon: 'mdi:chip',
   },
   {
     name: 'homelab',
