@@ -13,6 +13,7 @@ export const COLLECTIONS = {
   PROJECT: 'project',
 } as const;
 
+/** technologies */
 export const TAGS = [
   'next.js',
   'react',
@@ -29,6 +30,7 @@ export const TAGS = [
 ] as const;
 
 /** adjust this later */
+/** form of an article, no technologies */
 export const CATEGORIES = [
   // add color here
   // extract find function
