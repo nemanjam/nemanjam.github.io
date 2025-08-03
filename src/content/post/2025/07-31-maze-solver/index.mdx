@@ -24,15 +24,15 @@ import YarnCoverageImage from '../../../../content/post/2025/07-31-maze-solver/_
 
 ## Introduction
 
-Pathfinding is a fundamental topic in computer science, with applications in fields like navigation, AI/ML, network routing and many other. In this article, we compare four core pathfinding algorithms: breadth-first search (BFS), depth-first search (DFS), Dijkstra’s algorithm, and A* (A star) through a practical maze solving example. We don’t just explain them in theory, we built a demo app where you can tweak maze inputs or edit the algorithm code and instantly see how it affects the output and efficiency.
+Pathfinding is a fundamental topic in computer science, with applications in fields like navigation, AI/ML, network routing, and many others. In this article, we compare four core pathfinding algorithms: breadth-first search (BFS), depth-first search (DFS), Dijkstra’s algorithm, and A* (A star) through a practical maze-solving example. We don’t just explain them in theory, we built a demo app where you can tweak maze inputs or edit the algorithm code and instantly see how it affects the output and efficiency.
 
 One of the key takeaways is how a tiny change, just a single line in the code can drastically alter an algorithm’s behavior. This highlights how critical implementation details are, even when the overall structure looks the same.
 
 ## Problem overview
 
-Paths in a maze form a tree structure or a graph if a maze has cycles. Thats why tree and graph traversal algorithms can be used for finding paths and the shortest path in a maze.
+Paths in a maze form a tree structure or a graph if the maze contains cycles. That's why tree and graph traversal algorithms can be used for finding paths and the shortest path in a maze.
 
-All 4 algorithms differ in just a few lines of code, but they behavior differs dramatically.
+All 4 algorithms differ in just a few lines of code, but their behavior differs dramatically.
 
 ## App architecture
 
@@ -71,7 +71,7 @@ const end: Coordinate = { x: 4, y: 4 };
 
 ### Class structure
 
-We use polymorphism and simplified Factory pattern. `MazeSolver` is an abstract class that declares `findPath()` method that is implemented in each derived concrete solver class.
+We use polymorphism and a simplified Factory pattern. `MazeSolver` is an abstract class that declares the `findPath()` method, which is implemented in each derived concrete solver class.
 
 ```ts title="src/solvers/maze-solver.ts"
 /**
@@ -132,7 +132,7 @@ const _maze2: IMaze = Maze.create(testMaze, start, end);
 
 ## Running the app
 
-We install dependencies, run the app and run the tests as usual, like any other Typescript app.
+We install dependencies, run the app, and run the tests as usual, like any other TypeScript app.
 
 ```bash
 # install dependencies
@@ -155,7 +155,7 @@ yarn test-verbose
 yarn coverage
 ```
 
-We can see that different algorithms require different number of steps for the same input maze.  Example output for a given maze input:
+We can see that different algorithms require a different number of steps for the same input maze. Example output for a given maze input:
 
 <Image {...IMAGE_SIZES.FIXED.MDX_XS} src={YarnDevImage} alt="App dev mode terminal output" />
 
@@ -173,13 +173,13 @@ And calculate the code coverage:
 
 ## Algorithms analysis and discussion
 
-Now the most important and interesting part. Let's analyze the algorithms code and explain how it affects their behavior and efficiency.
+Now for the most important and interesting part: let's analyze the algorithm's code and explain how it affects their behavior and efficiency.
 
 ### Unweighted graphs
 
-BFS and DFS are basic traversal algorithms that ignore the weights of the edges so they are applicable only on unweighted graphs.
+BFS and DFS are basic traversal algorithms that ignore the weights of the edges, so they are applicable only to unweighted graphs.
 
-The actual code for BFS and DFS has only a single line difference, but they have a completely opposite behavior. BFS uses a queue (FIFO), and DFS uses a stack (LIFO) and this has a fundamental impact on the way the next node candidate for the path is selected.
+The actual code for BFS and DFS differs by only a single line, but they exhibit completely opposite behavior. BFS uses a queue (FIFO), while DFS uses a stack (LIFO), and this has a fundamental impact on how the next node candidate for the path is selected.
 
 ```ts
 // BFS
@@ -189,7 +189,7 @@ const { coord, path } = queue.shift()!;
 const { coord, path } = stack.pop()!;
 ```
 
-This is the array of coordinates that represents possible directions for a movement. This array is iterated over in the algorithms inner loop.
+This is the array of coordinates that represents possible directions for movement. This array is iterated over in the algorithm's inner loop.
 
 ```ts title="src/utils/constants.ts"
 export const directions: Direction[] = [
@@ -200,7 +200,7 @@ export const directions: Direction[] = [
 ];
 ```
 
-Here is the complete BFS implementation (since all of the 4 algorithms share the most of the same base) so we can have a better idea what we are working with:
+Here is the complete BFS implementation (since all 4 algorithms share most of the same base) so we can have a better idea of what we are working with:
 
 ```ts title="src/solvers/maze-solver-bfs.ts"
 export class MazeSolverBFS extends MazeSolver {
@@ -263,19 +263,19 @@ export class MazeSolverBFS extends MazeSolver {
 
 #### BFS
 
-Since BFS uses a queue, it will respect this structure and attempt to change direction in every iteration of the outer loop. Without obstacles and boundaries, this will cause the algorithm to thoroughly inspect nodes closer to the starting node before moving further away. Thats why BFS can be inefficient for the large trees and graphs where the end node is very distant from the starting node.
+Since BFS uses a queue, it respects this structure and attempts to change direction in every iteration of the outer loop. Without obstacles and boundaries, this causes the algorithm to thoroughly inspect nodes closer to the starting node before moving further away. That's why BFS can be inefficient for large trees and graphs where the end node is very distant from the starting node.
 
 #### DFS
 
-In contrast, DFS will also respect initial order in the directions array but prioritizes the upper elements, so in the example above it will always attempt to apply up direction first before exploring other directions. Without obstacles and boundaries this will cause the algorithm to inspect the distant nodes in a straight line. DFS can be efficient to find distant end node efficiently but also can be very inefficient to find close node if it happens to be in the different direction.
+In contrast, DFS also respects the initial order in the directions array but prioritizes the earlier elements. So, in the example above, it will always attempt to apply the `up` direction first before exploring other directions. Without obstacles and boundaries, this causes the algorithm to inspect distant nodes in a straight line. DFS can be efficient for finding a distant end node but can also be very inefficient for finding a nearby node if it happens to be in a different direction.
 
 ### Weighted graphs
 
-Not all graphs have edges with uniform weights. In such cases we must use algorithms that are aware of weights (cost between two nodes), Dijkstra and A* in this case.
+Not all graphs have edges with uniform weights. In such cases, we must use algorithms that are aware of weights (the cost between two nodes), such as Dijkstra and A*.
 
 #### Dijkstra
 
-Dijkstra is aware of the cost between two nodes (edge weight) and it will take it into account when selecting the next node. It uses a priority queue to keep the cost history.
+Dijkstra's algorithm is aware of the cost between two nodes (edge weight) and takes it into account when selecting the next node. It uses a priority queue to keep track of the cost history.
 
 ```ts title="src/solvers/maze-solver-dijkstra.ts"
 // Take the first element from the priority queue.
@@ -291,11 +291,11 @@ const nextCost = cost + this.maze.getCost(nextCoord);
 if( ... && !costMap.has(coordKey) || nextCost < costMap.get(coordKey)!)
 ```
 
-Dijkstra keeps a history of the cost of the current path and when selecting the next node it will choose the node that does minimal addition to the cost. If there are cycles it will access the same node from multiple paths and will choose the one with minimal weight (shortest path). In graphs with constant edge weights it reduces to BFS. That can be observed in the screenshot above where both BFS and Dijkstra take an equal number of steps, because the maze has uniform weight of 1 and Infinity.
+Dijkstra keeps a history of the cost of the current path and when selecting the next node chooses the node that adds the minimal cost. If there are cycles it may access the same node from multiple paths and will choose the one with the minimal weight (shortest path). In graphs with constant edge weights it reduces to BFS. This can be observed in the screenshot above, where both BFS and Dijkstra take an equal number of steps because the maze has uniform weights of 1 and Infinity.
 
 #### A\*
 
-A\* is same as Dijkstra but beside the keeping the history it uses the heuristics function to predict the future - the direction in which the end node could be.
+A\* is the same as Dijkstra but besides keeping the history, it uses a heuristic function to predict the future - the direction in which the end node could be.
 
 ```ts title="src/solvers/maze-solver-a-star.ts"
 protected heuristic(a: Coordinate, b: Coordinate): number {
@@ -324,11 +324,11 @@ If the heuristic function is well chosen it will make A\* more efficient than th
 
 ## Conclusion
 
-On this example we could see how algorithm analysis and design is a very sensitive and subtle discipline, that leaves no room for a low focus or lack of understanding of the domain. Although BFS, DFS, Dijkstra, and A* share the majority of the implementation, just a subtle change in the code can cause a dramatic change in the behavior.
+In this example, we can see how algorithm analysis and design is a very sensitive and subtle discipline that leaves no room for low focus or a lack of understanding of the domain. Although BFS, DFS, Dijkstra, and A* share most of their implementation, even a subtle change in the code can lead to a dramatic change in behavior.
 
-In the demo app you can tweak the predefined mazes in the `tests/fixtures/*.txt` files and try to make your own observations. You can also check the resources and the interactive playground listed in the [References](#references) section.
+In the demo app, you can tweak the predefined mazes in the `tests/fixtures/*.txt` files and make your own observations. You can also check the resources and interactive playground listed in the [References](#references) section.
 
-Did you experiment with maze solving and pathfinding algorithms yourself before? Let me know in the comments.
+Have you experimented with maze-solving and pathfinding algorithms before? Let me know in the comments.
 
 ## References
 
