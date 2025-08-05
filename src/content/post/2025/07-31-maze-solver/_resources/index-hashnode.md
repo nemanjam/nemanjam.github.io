@@ -19,7 +19,7 @@ We create a pragmatic, simplified OOP model of the maze and its behavior as a tr
 A maze is represented as a binary matrix where `0` stands for a free space, `1` for a boundary, and `*` for a path. It also has start and end points. In the sense of a weighted graph `0` cell has zero weight and cell `1` has infinite weight.
 
 ```ts
-// src/maze.ts"
+// src/maze.ts
 
 export class Maze implements IMaze {
   private board: number[][];
