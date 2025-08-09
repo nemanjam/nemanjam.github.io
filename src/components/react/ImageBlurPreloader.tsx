@@ -63,6 +63,10 @@ const ImageBlurPreloader: FC<Props> = ({
       : blurAttributes.src || blurAttributes.srcSet
   );
 
+  // Todo: cant use opacity for control, must use 2 <img /> tags
+  // incomingMain, currentMain states, and assign key for unmount
+  // https://chatgpt.com/s/t_689754f4fbf8819181ad44b5f3a0bbd7
+
   return (
     <div className={cn('relative size-full', divClassName)}>
       {hasImage && (
