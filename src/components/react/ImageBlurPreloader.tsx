@@ -38,7 +38,7 @@ const ImageBlurPreloader: FC<Props> = ({
     prevMainAttributes.srcSet === mainAttributes.srcSet
   );
 
-  const isDelayedBlur = useDelayed(isMainImageChanged, BLUR_IMAGE_DELAY);
+  const _isDelayedBlur = useDelayed(isMainImageChanged, BLUR_IMAGE_DELAY);
 
   // reset isLoading on main image change
   useEffect(() => {
@@ -95,9 +95,7 @@ const ImageBlurPreloader: FC<Props> = ({
               // _!isLoadingBlur - don't hide main image until next blur image is loaded
               // isMainImageChanged - don't show main image while it's transitioning - solves flickering
               // isDelayedBlur - fixed blur delay
-              !isLoadingBlur && (isLoadingMain || isMainImageChanged || isDelayedBlur)
-                ? 'opacity-0'
-                : 'opacity-100',
+              !isLoadingBlur && (isLoadingMain || isMainImageChanged) ? 'opacity-0' : 'opacity-100',
               className
             )}
           />
