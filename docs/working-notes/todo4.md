@@ -184,6 +184,9 @@ clean comments for astro jsx
 <!-- Mobile Web App -->
 https://github.com/benavlabs/landstro
 
+------------
+update Zod code
+astro zod v3, main zod v4
 ```
 
 

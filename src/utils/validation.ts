@@ -1,12 +1,14 @@
 import { z } from 'zod';
 
-import type { ZodSchema } from 'zod';
+import type { ZodError, ZodType } from 'zod';
 
-export const zodErrorToString = (error: z.ZodError): string => {
-  return error.errors.map((err: z.ZodIssue) => `${err.path.join('.')}: ${err.message}`).join(', ');
+export const zodErrorToString = (error: ZodError): string => {
+  return error.issues
+    .map((err: z.core.$ZodIssue) => `${err.path.join('.')}: ${err.message}`)
+    .join(', ');
 };
 
-export const validateData = <T extends ZodSchema>(config: z.infer<T>, schema: T): z.infer<T> => {
+export const validateData = <T extends ZodType>(config: z.infer<T>, schema: T): z.infer<T> => {
   const parsedConfig = schema.safeParse(config);
 
   if (!parsedConfig.success) {

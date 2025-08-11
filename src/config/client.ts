@@ -18,6 +18,7 @@ const configClientData: ConfigClientType = {
   PAGE_SIZE_POST_CARD_SMALL: 6,
   PAGE_SIZE_PROJECT_CARD: 6,
   MORE_POSTS_COUNT: 3,
+  BLUR_IMAGE_DELAY: 200,
   DEFAULT_MODE: 'light',
   DEFAULT_THEME: 'default-light',
   AUTHOR_NAME: 'Nemanja Mitic',

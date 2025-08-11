@@ -15,10 +15,10 @@ export const processEnvSchema = z.object({
   PREVIEW_MODE: z
     .enum(booleanValues)
     .transform((value) => value === 'true')
-    .default('false'),
+    .default(false),
   // ensure no trailing slash
-  SITE_URL: z.string().url().regex(/[^/]$/, 'SITE_URL should not end with a slash "/"'),
-  PLAUSIBLE_SCRIPT_URL: z.string().url().or(z.literal('')).optional(),
+  SITE_URL: z.url().regex(/[^/]$/, 'SITE_URL should not end with a slash "/"'),
+  PLAUSIBLE_SCRIPT_URL: z.url().or(z.literal('')).optional(),
   PLAUSIBLE_DOMAIN: z
     .string()
     .or(z.enum(['', 'localhost'])) // for types
@@ -30,7 +30,7 @@ export const processEnvSchema = z.object({
         value === '' ||
         value === 'localhost' || // astro:env default
         domainSubdomainRegex.test(value),
-      (value) => ({ message: `Invalid hostname for PLAUSIBLE_DOMAIN 1: ${value}` })
+      { message: 'Invalid hostname for PLAUSIBLE_DOMAIN 1' }
     ),
 });
 
@@ -40,23 +40,22 @@ export const configServerSchema = processEnvSchema
 
 export const configClientSchema = processEnvSchema
   .pick({ SITE_URL: true, PLAUSIBLE_SCRIPT_URL: true, PLAUSIBLE_DOMAIN: true })
-  .merge(
-    z.object({
-      SITE_URL_CANONICAL: z.string().min(1),
-      SITE_TITLE: z.string().min(1),
-      SITE_DESCRIPTION: z.string().min(1),
-      PAGE_SIZE_POST_CARD: z.number(),
-      PAGE_SIZE_POST_CARD_SMALL: z.number(),
-      PAGE_SIZE_PROJECT_CARD: z.number(),
-      MORE_POSTS_COUNT: z.number(),
-      DEFAULT_MODE: z.enum(modeValues), // check that theme and mode match
-      DEFAULT_THEME: z.enum(themeValues),
-      AUTHOR_NAME: z.string().min(1),
-      AUTHOR_EMAIL: z.string().email(),
-      AUTHOR_GITHUB: z.string().url(),
-      AUTHOR_LINKEDIN: z.string().url(),
-      AUTHOR_TWITTER: z.string().url(),
-      AUTHOR_YOUTUBE: z.string().url(),
-      REPO_URL: z.string().url(),
-    })
-  );
+  .extend({
+    SITE_URL_CANONICAL: z.string().min(1),
+    SITE_TITLE: z.string().min(1),
+    SITE_DESCRIPTION: z.string().min(1),
+    PAGE_SIZE_POST_CARD: z.number(),
+    PAGE_SIZE_POST_CARD_SMALL: z.number(),
+    PAGE_SIZE_PROJECT_CARD: z.number(),
+    MORE_POSTS_COUNT: z.number(),
+    BLUR_IMAGE_DELAY: z.number(),
+    DEFAULT_MODE: z.enum(modeValues), // check that theme and mode match
+    DEFAULT_THEME: z.enum(themeValues),
+    AUTHOR_NAME: z.string().min(1),
+    AUTHOR_EMAIL: z.email(),
+    AUTHOR_GITHUB: z.url(),
+    AUTHOR_LINKEDIN: z.url(),
+    AUTHOR_TWITTER: z.url(),
+    AUTHOR_YOUTUBE: z.url(),
+    REPO_URL: z.url(),
+  });

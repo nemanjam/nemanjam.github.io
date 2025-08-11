@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
 
+import useDelayed from '@/components/react/hooks/useDelayed';
 import usePrevious from '@/components/react/hooks/usePrevious';
+import { CONFIG_CLIENT } from '@/config/client';
 import { cn } from '@/utils/styles';
 
 import type { ImgTagAttributes } from '@/types/image';
 import type { FC } from 'react';
+
+const { BLUR_IMAGE_DELAY } = CONFIG_CLIENT;
 
 interface Props {
   blurAttributes: ImgTagAttributes;
@@ -28,18 +32,21 @@ const ImageBlurPreloader: FC<Props> = ({
 
   const prevMainAttributes = usePrevious(mainAttributes);
 
-  const isNewImage = !(
+  // track transition to new image
+  const isMainImageChanged = !(
     prevMainAttributes?.src === mainAttributes.src &&
     prevMainAttributes.srcSet === mainAttributes.srcSet
   );
 
+  const isDelayedBlur = useDelayed(isMainImageChanged, BLUR_IMAGE_DELAY);
+
   // reset isLoading on main image change
   useEffect(() => {
-    if (isNewImage) {
+    if (isMainImageChanged) {
       setIsLoadingBlur(true);
       setIsLoadingMain(true);
     }
-  }, [isNewImage, setIsLoadingMain, setIsLoadingBlur]);
+  }, [isMainImageChanged, setIsLoadingMain, setIsLoadingBlur]);
 
   // important: main image must be in DOM for onLoad to work
   // unmount and display: none will fail
@@ -63,10 +70,6 @@ const ImageBlurPreloader: FC<Props> = ({
       : blurAttributes.src || blurAttributes.srcSet
   );
 
-  // Todo: cant use opacity for control, must use 2 <img /> tags
-  // incomingMain, currentMain states, and assign key for unmount
-  // https://chatgpt.com/s/t_689754f4fbf8819181ad44b5f3a0bbd7
-
   return (
     <div className={cn('relative size-full', divClassName)}>
       {hasImage && (
@@ -88,8 +91,13 @@ const ImageBlurPreloader: FC<Props> = ({
             onLoad={handleLoadMain}
             className={cn(
               'object-cover absolute top-0 left-0 size-full',
-              // important: dont hide main image until next blur image is loaded
-              isLoadingMain && !isLoadingBlur ? 'opacity-0' : 'opacity-100',
+              // important:
+              // _!isLoadingBlur - don't hide main image until next blur image is loaded
+              // isMainImageChanged - don't show main image while it's transitioning - solves flickering
+              // isDelayedBlur - fixed blur delay
+              !isLoadingBlur && (isLoadingMain || isMainImageChanged || isDelayedBlur)
+                ? 'opacity-0'
+                : 'opacity-100',
               className
             )}
           />
