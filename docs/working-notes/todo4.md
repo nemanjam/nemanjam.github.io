@@ -187,6 +187,11 @@ https://github.com/benavlabs/landstro
 ------------
 update Zod code
 astro zod v3, main zod v4
+
+// image flicker summary
+keep old main image until new blur image is ready
+show blur image, optional delay
+when main image is ready show ne main image
 ```
 
 
