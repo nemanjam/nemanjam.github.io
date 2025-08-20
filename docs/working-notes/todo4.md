@@ -192,6 +192,8 @@ astro zod v3, main zod v4
 keep old main image until new blur image is ready
 show blur image, optional delay
 when main image is ready show ne main image
+----
+or keep old main image until both blur and main images arent ready
 ```
 
 
