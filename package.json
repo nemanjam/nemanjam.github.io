@@ -35,10 +35,10 @@
     "@astrojs/mdx": "^4.3.4",
     "@astrojs/partytown": "^2.1.4",
     "@astrojs/react": "^4.3.0",
-    "@astrojs/sitemap": "^3.5.0",
+    "@astrojs/sitemap": "^3.5.1",
     "@astrojs/tailwind": "^5.1.5",
     "@fontsource-variable/inter": "^5.2.6",
-    "astro": "^5.13.2",
+    "astro": "^5.13.3",
     "astro-embed": "^0.9.0",
     "astro-expressive-code": "^0.41.3",
     "astro-icon": "^1.1.5",
@@ -63,7 +63,7 @@
     "sharp": "0.34.3",
     "tailwind-clip-path": "^1.0.0",
     "tailwind-merge": "^2.6.0",
-    "zod": "^4.0.17"
+    "zod": "^4.1.0"
   },
   "resolutions": {
     "**/sharp": "0.34.3"
@@ -76,7 +76,7 @@
     "@tailwindcss/typography": "^0.5.16",
     "@types/lodash.debounce": "^4.0.9",
     "@types/mdast": "^4.0.3",
-    "@types/react": "^19.1.10",
+    "@types/react": "^19.1.11",
     "@types/react-dom": "^19.1.7",
     "@typescript-eslint/eslint-plugin": "^8.40.0",
     "@typescript-eslint/parser": "^8.40.0",
