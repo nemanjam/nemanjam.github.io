@@ -63,7 +63,7 @@
     "sharp": "0.34.3",
     "tailwind-clip-path": "^1.0.0",
     "tailwind-merge": "^2.6.0",
-    "zod": "^4.1.4"
+    "zod": "^4.1.5"
   },
   "resolutions": {
     "**/sharp": "0.34.3"
@@ -71,13 +71,13 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
     "@expressive-code/plugin-collapsible-sections": "^0.41.3",
-    "@ianvs/prettier-plugin-sort-imports": "^4.6.3",
+    "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
     "@iconify-json/mdi": "^1.2.3",
     "@tailwindcss/typography": "^0.5.16",
     "@types/lodash.debounce": "^4.0.9",
     "@types/mdast": "^4.0.3",
     "@types/react": "^19.1.12",
-    "@types/react-dom": "^19.1.8",
+    "@types/react-dom": "^19.1.9",
     "@typescript-eslint/eslint-plugin": "^8.41.0",
     "@typescript-eslint/parser": "^8.41.0",
     "eslint": "8.57.0",
@@ -88,7 +88,7 @@
     "eslint-plugin-tailwindcss": "^3.18.2",
     "prettier": "^3.6.1",
     "prettier-plugin-astro": "^0.14.1",
-    "satori": "^0.16.2",
+    "satori": "^0.18.0",
     "satori-html": "^0.3.2",
     "serve": "^14.2.4",
     "tailwindcss": "^3.4.15",
