@@ -1923,10 +1923,10 @@ astro-social-share@^2.0.3:
   resolved "https://registry.yarnpkg.com/astro-social-share/-/astro-social-share-2.2.0.tgz#4e7609e251cd614a414d884cefc07888ff73d4f4"
   integrity sha512-Z5ebhO6Yw4GLggw7wsTahdpS0f4pf/XuVjQlBpWZ0zyt0cKaVrlG/+u6RzrzN9B2t27wxp90XiosZNwvBZqA+Q==
 
-astro@^5.13.4:
-  version "5.13.4"
-  resolved "https://registry.yarnpkg.com/astro/-/astro-5.13.4.tgz#3a90a6a5fde74c2de445f86a13b13d10a42c364a"
-  integrity sha512-Mgq5GYy3EHtastGXqdnh1UPuN++8NmJSluAspA5hu33O7YRs/em/L03cUfRXtc60l5yx5BfYJsjF2MFMlcWlzw==
+astro@^5.13.5:
+  version "5.13.5"
+  resolved "https://registry.yarnpkg.com/astro/-/astro-5.13.5.tgz#e895e5688528b1d8dcd7062c04ed932422362b4b"
+  integrity sha512-XmBzkl13XU97+n/QiOM5uXQdAVe0yKt5gO+Wlgc8dHRwHR499qhMQ5sMFckLJweUINLzcNGjP3F5nG4wV8a2XA==
   dependencies:
     "@astrojs/compiler" "^2.12.2"
     "@astrojs/internal-helpers" "0.7.2"
@@ -6102,10 +6102,10 @@ satori-html@^0.3.2:
   dependencies:
     ultrahtml "^1.2.0"
 
-satori@^0.18.0:
-  version "0.18.0"
-  resolved "https://registry.yarnpkg.com/satori/-/satori-0.18.0.tgz#fcf77dc9458698843961780379abbc259f628f27"
-  integrity sha512-EZvcxnJJIxiUWfnGeGwVcz+OO9c+zxJDgjb4AHmOhCwpRn1dH088EzcPu1K/yjDAAmpOqFbpvnPVGarGfGp8zg==
+satori@^0.18.1:
+  version "0.18.1"
+  resolved "https://registry.yarnpkg.com/satori/-/satori-0.18.1.tgz#827133a254c0296164772064c43c2d7b7bb8a55f"
+  integrity sha512-TQvguO82qSvLlknlAT1D661+KFsiiiYUHgbRxMjAlHNjUyqAcY9LcDqUpt/yM9LEjlxwuvlru616JVcv8YYTUA==
   dependencies:
     "@shuding/opentype.js" "1.4.0-beta.0"
     css-background-parser "^0.1.0"
