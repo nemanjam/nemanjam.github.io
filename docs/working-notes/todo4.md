@@ -194,6 +194,13 @@ show blur image, optional delay
 when main image is ready show ne main image
 ----
 or keep old main image until both blur and main images arent ready
+
+read runtime env vars from env file with dotenv and remove from github actions yaml
+https://github.com/withastro/astro/issues/7195
+SITE_URL_ARM64: 'https://nmc-docker.arm1.nemanjamitic.com'
+SITE_URL_AMD64: 'https://nmc-docker.local.nemanjamitic.com'
+PLAUSIBLE_SCRIPT_URL: 'https://plausible.arm1.nemanjamitic.com/js/script.js'
+PLAUSIBLE_DOMAIN: 'nemanjamitic.com'
 ```
 
 
