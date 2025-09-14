@@ -757,10 +757,10 @@
   dependencies:
     "@expressive-code/core" "^0.41.3"
 
-"@fontsource-variable/inter@^5.2.6":
-  version "5.2.6"
-  resolved "https://registry.yarnpkg.com/@fontsource-variable/inter/-/inter-5.2.6.tgz#014f41f5eec8d177cc296721ebbd91dad241cd0b"
-  integrity sha512-jks/bficUPQ9nn7GvXvHtlQIPudW7Wx8CrlZoY8bhxgeobNxlQan8DclUJuYF2loYRrGpfrhCIZZspXYysiVGg==
+"@fontsource-variable/inter@^5.2.7":
+  version "5.2.7"
+  resolved "https://registry.yarnpkg.com/@fontsource-variable/inter/-/inter-5.2.7.tgz#d194e33fb49e448c1d5f06fe7d8eed07891bf83d"
+  integrity sha512-1Ej2Y2l+l1VHAu0cNBmOqPdnO7MKhMvaZ4ilL/qcF5lOQw8ieLhp1APcksXIsqO3eAB0+7/nIc/3cSxfEIdj4Q==
 
 "@humanwhocodes/config-array@^0.11.14":
   version "0.11.14"
