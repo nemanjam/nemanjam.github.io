@@ -89,16 +89,16 @@ PREVIEW_MODE=
 
 ```bash
 # install packages
-yarn install
+pnpm install
 
 # copy and set environment variables
 cp .env.development.example .env.development
 
 # run development server and visit http://localhost:3000
-yarn dev
+pnpm dev
 
-# delete node_modules and yarn.lock
-yarn clean
+# delete node_modules and pnpm-lock.yaml
+pnpm clean
 ```
 
 #### Production
@@ -108,10 +108,10 @@ yarn clean
 cp .env.production.example .env.production
 
 # build website
-yarn build
+pnpm build
 
 # run website and visit http://localhost:3000
-yarn start
+pnpm start
 ```
 
 ## Deployment
@@ -157,7 +157,7 @@ All Nginx deployments come down to building the website and copying the compiled
 "build:nginx": "SITE_URL='https://nemanjamitic.com' astro build",
 
 # build the app
-yarn build:nginx
+pnpm build:nginx
 
 # configure ssh for your own "arm1" remote server in /home/username/.ssh/config
 
@@ -165,7 +165,7 @@ yarn build:nginx
 "deploy:nginx": "bash scripts/deploy-nginx.sh '~/traefik-proxy/apps/nmc-nginx-with-volume/website' arm1",
 
 # run deploy
-yarn deploy:nginx
+pnpm deploy:nginx
 ```
 
 #### Github Actions
@@ -223,14 +223,14 @@ docker login my-user my-pass
 "docker:build:push:arm": "docker buildx build -f ./docker/Dockerfile -t nemanjamitic/nemanjam.github.io --build-arg ARG_SITE_URL_ARM64='https://nmc-docker.arm1.nemanjamitic.com' --platform linux/arm64 --progress=plain --push .",
 
 # build and push Docker image, replace "arm" with your architecture
-yarn docker:build:push:arm
+pnpm docker:build:push:arm
 
 # replace "~/traefik-proxy/apps/nmc-docker" with your path to docker-compose.yml
 # replace "nemanjamitic/nemanjam.github.io" with your image name
 "deploy:docker": "bash scripts/deploy-docker.sh arm1 '~/traefik-proxy/apps/nmc-docker' nemanjamitic/nemanjam.github.io",
 
 # pull and run latest image on your production server
-yarn deploy:docker
+pnpm deploy:docker
 ```
 
 #### Github Actions
