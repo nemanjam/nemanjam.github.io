@@ -33,17 +33,22 @@ jobs:
           git show -s --format='%h %s'
           echo "github.ref -> {{ github.ref }}"
 
-      - name: Set up Node.js and Yarn
+      - name: Set up Node.js and pnpm
         uses: actions/setup-node@v4
         with:
-          node-version: '24.3.0'
-          registry-url: 'https://registry.yarnpkg.com'
+          node-version: 24.7.0
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.17.0
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Build app
-        run: yarn build
+        run: pnpm build
 
       - name: Set up SSH config
         run: |
@@ -63,5 +68,5 @@ jobs:
           # Add SSH server key to known_hosts
           ssh-keyscan -H ${{ secrets.REMOTE_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Run bash file with yarn
-        run: yarn deploy:nginx
+      - name: Run bash file with pnpm
+        run: pnpm deploy:nginx

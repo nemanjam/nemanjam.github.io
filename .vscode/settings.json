@@ -9,6 +9,7 @@
   },
   "search.exclude": {
     "package-lock.json": true,
+    "pnpm-lock.yaml": true,
     "yarn.lock": true
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",

@@ -32,18 +32,23 @@ jobs:
           git show -s --format='%h %s'
           echo "github.ref -> {{ github.ref }}"
 
-      - name: Set up Node.js and Yarn
+      - name: Set up Node.js and pnpm
         uses: actions/setup-node@v4
         with:
-          node-version: '24.3.0'
-          registry-url: 'https://registry.yarnpkg.com'
+          node-version: 24.7.0
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.17.0
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       # fix this for turbo
       - name: Build nemanjamiticcom
-        run: yarn build
+        run: pnpm build
 
       - name: Clean up website dir
         uses: appleboy/ssh-action@master

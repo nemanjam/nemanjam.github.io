@@ -25,11 +25,16 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Set up Node.js and Yarn for yarn command
+      - name: Set up Node.js and pnpm
         uses: actions/setup-node@v4
         with:
-          node-version: '24.3.0'
-          registry-url: 'https://registry.yarnpkg.com'
+          node-version: 24.7.0
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.17.0
 
       - name: Set up SSH config
         run: |
@@ -49,5 +54,5 @@ jobs:
           # Add SSH server key to known_hosts
           ssh-keyscan -H ${{ secrets.REMOTE_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Run bash file with yarn
-        run: yarn deploy:docker
+      - name: Run bash file with pnpm
+        run: pnpm deploy:docker
