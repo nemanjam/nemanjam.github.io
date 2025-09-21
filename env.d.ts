@@ -1,5 +1,5 @@
 declare namespace NodeJS {
-  /** for astro.config.mjs */
+  /** process.env for astro.config.mjs */
   interface ProcessEnv {
     readonly NODE_ENV: 'development' | 'production' | 'test';
     readonly SITE_URL: string;
@@ -10,11 +10,20 @@ declare namespace NodeJS {
 
 // same type repeated
 
-/** for import.meta.env for the rest of the code */
+/** import.meta.env for the rest of the code */
 interface ImportMetaEnv {
   // NODE_ENV, SITE_URL... included by default
 
   readonly PREVIEW_MODE: boolean;
+}
+
+/** Runtime env vars */
+interface Window {
+  __ENV__: {
+    SITE_URL: string;
+    PLAUSIBLE_SCRIPT_URL?: string;
+    PLAUSIBLE_DOMAIN?: string;
+  };
 }
 
 interface ImportMeta {

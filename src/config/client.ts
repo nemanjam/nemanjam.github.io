@@ -7,13 +7,16 @@ import type { ConfigClientType } from '@/types/config';
 
 const configClientData: ConfigClientType = {
   /** all urls without '/' */
+
+  // runtime env vars
   SITE_URL,
+  PLAUSIBLE_DOMAIN,
+  PLAUSIBLE_SCRIPT_URL,
+
   /** same for all environments, defined here, not env var */
   SITE_URL_CANONICAL: 'https://nemanjamitic.com',
   SITE_TITLE: 'Nemanja Mitic',
   SITE_DESCRIPTION: 'I am Nemanja, a full stack developer',
-  PLAUSIBLE_SCRIPT_URL,
-  PLAUSIBLE_DOMAIN,
   PAGE_SIZE_POST_CARD: 3,
   PAGE_SIZE_POST_CARD_SMALL: 6,
   PAGE_SIZE_PROJECT_CARD: 6,

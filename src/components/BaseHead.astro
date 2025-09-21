@@ -8,6 +8,7 @@ import ThemeScript from '@/components/ThemeScript.astro';
 import { DEFAULT_METADATA } from '@/constants/metadata';
 import { ROUTES } from '@/constants/routes';
 import { CONFIG_CLIENT } from '@/config/client';
+import { isProd } from '@/utils/environment';
 import { handleTitle } from '@/utils/metadata';
 import { filterUndefined } from '@/utils/objects';
 
@@ -104,6 +105,10 @@ const ogImageUrl = new URL(image, url);
   <meta property="twitter:title" content={title} />
   <meta property="twitter:description" content={description} />
   <meta property="twitter:image" content={ogImageUrl} />
+
+  {/* Runtime env vars */}
+  {/* only in prod, blocking script (no attrs), must use string literal path  */}
+  {isProd && <script src="/env.js" />}
 
   {/* Analytics */}
   {

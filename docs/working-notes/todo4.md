@@ -204,3 +204,8 @@ PLAUSIBLE_DOMAIN: 'nemanjamitic.com'
 ```
 
 git checkout refactor/migrate-to-pnpm
+
+git checkout -b feature/runtime-env-vars
+
+problem:
+SITE_URL is used in static pages at build time

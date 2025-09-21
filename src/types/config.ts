@@ -9,3 +9,8 @@ export type ConfigClientType = z.infer<ConfigClientSchemaType>;
 
 export type ProcessEnvSchemaType = typeof processEnvSchema;
 export type ProcessEnvType = z.infer<ProcessEnvSchemaType>;
+
+export type RuntimeEnvType = Pick<
+  ProcessEnvType,
+  'SITE_URL' | 'PLAUSIBLE_SCRIPT_URL' | 'PLAUSIBLE_DOMAIN'
+>;

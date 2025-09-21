@@ -7,6 +7,7 @@ import { nodeEnvValues, processEnvSchema } from '../schemas/config';
 import { prettyPrintObject } from '../utils/log';
 import { getHostnameFromUrl } from '../utils/urls';
 import { validateData } from '../utils/validation';
+import { defaultProcessEnvData } from './default';
 
 import type { ProcessEnvType } from '../types/config';
 
@@ -43,35 +44,37 @@ export const PROCESS_ENV = validateData(processEnvData, processEnvSchema);
 
 /*------------------ experimental.env.schema -----------------*/
 
+// runs only once, on server, at built time
 export const envSchema = {
   schema: {
     // server
     NODE_ENV: envField.string({
       context: 'server',
       access: 'public',
-      default: 'development',
+      default: defaultProcessEnvData.NODE_ENV,
     }),
     PREVIEW_MODE: envField.boolean({
       context: 'server',
       access: 'public',
-      default: false,
+      default: defaultProcessEnvData.PREVIEW_MODE,
     }),
     // client
     SITE_URL: envField.string({
       context: 'client',
       access: 'public',
-      // default: omit to have explicit validation
+      default: defaultProcessEnvData.SITE_URL,
     }),
     PLAUSIBLE_SCRIPT_URL: envField.string({
       context: 'client',
       access: 'public',
       optional: true,
+      default: defaultProcessEnvData.PLAUSIBLE_SCRIPT_URL,
     }),
     PLAUSIBLE_DOMAIN: envField.string({
       context: 'client',
       access: 'public',
       optional: true,
-      default: getHostnameFromUrl(PROCESS_ENV.SITE_URL),
+      default: getHostnameFromUrl(defaultProcessEnvData.SITE_URL),
     }),
   },
 };
