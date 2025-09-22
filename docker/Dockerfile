@@ -53,7 +53,7 @@ RUN echo "PLAUSIBLE_DOMAIN=$PLAUSIBLE_DOMAIN"
 
 RUN pnpm build
 
-FROM nginx:stable-alpine3.22-slim AS runtime
+FROM nginx:1.29.1-alpine3.22-slim AS runtime
 COPY ./docker/nginx.conf /etc/nginx/nginx.conf
 
 # sufficient for SSG
