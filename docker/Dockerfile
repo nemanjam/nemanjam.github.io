@@ -2,7 +2,7 @@
 
 # alpine is fine
 # node:22.1.0-bookworm, node:20.13.1-slim, node:20.13.1-alpine
-ARG NODE_IMAGE=node:24.7.0-alpine
+ARG NODE_IMAGE=node:24.7.0-alpine3.22
 
 FROM --platform=$BUILDPLATFORM ${NODE_IMAGE} AS base
 WORKDIR /app
@@ -53,7 +53,7 @@ RUN echo "PLAUSIBLE_DOMAIN=$PLAUSIBLE_DOMAIN"
 
 RUN pnpm build
 
-FROM nginx:stable-alpine3.17-slim AS runtime
+FROM nginx:stable-alpine3.22-slim AS runtime
 COPY ./docker/nginx.conf /etc/nginx/nginx.conf
 
 # sufficient for SSG
