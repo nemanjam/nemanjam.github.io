@@ -211,4 +211,5 @@ problem:
 SITE_URL is used in static pages at build time
 feed, sitemap, static pages, must be generated at build time.
 only possible for content generated with js <script />
-
+--------------
+tailwind 4, eslint 9
