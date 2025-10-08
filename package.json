@@ -65,7 +65,7 @@
     "sharp": "0.34.4",
     "tailwind-clip-path": "^1.0.0",
     "tailwind-merge": "^2.6.0",
-    "zod": "^4.1.9"
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
@@ -75,10 +75,10 @@
     "@tailwindcss/typography": "^0.5.19",
     "@types/lodash.debounce": "^4.0.9",
     "@types/mdast": "^4.0.4",
-    "@types/react": "^19.2.0",
-    "@types/react-dom": "^19.2.0",
-    "@typescript-eslint/eslint-plugin": "^8.45.0",
-    "@typescript-eslint/parser": "^8.45.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.1",
+    "@typescript-eslint/eslint-plugin": "^8.46.0",
+    "@typescript-eslint/parser": "^8.46.0",
     "eslint": "8.57.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-mdx": "^3.6.2",
