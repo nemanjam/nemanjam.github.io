@@ -14,12 +14,12 @@ This is the repository for my coding blog [nemanjamitic.com](https://nemanjamiti
 
 These mirrors are hosted at my home, in my homelab and are not always online.
 
-| Method             | Url                                       |
-| :----------------- | :---------------------------------------- |
-| OrangePi Nginx     | https://pi.nemanjamitic.com               |
-| OrangePi Docker    | https://nmc-docker.pi.nemanjamitic.com    |
-| ThinkCentre Nginx  | https://local.nemanjamitic.com            |
-| ThinkCentre Docker | https://nmc-docker.local.nemanjamitic.com |
+| Method             | Url                                     |
+| :----------------- | :-------------------------------------- |
+| OrangePi Nginx     | https://opi.nemanjamitic.com            |
+| OrangePi Docker    | https://nmc-docker.opi.nemanjamitic.com |
+| ThinkCentre Nginx  | https://mpc.nemanjamitic.com            |
+| ThinkCentre Docker | https://nmc-docker.mpc.nemanjamitic.com |
 
 #### Plausible analytics
 
