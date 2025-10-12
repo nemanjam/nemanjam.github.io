@@ -213,3 +213,4 @@ feed, sitemap, static pages, must be generated at build time.
 only possible for content generated with js <script />
 --------------
 tailwind 4, eslint 9
+reuse and clean up mpc, opi, rpi scripts
