@@ -214,3 +214,5 @@ only possible for content generated with js <script />
 --------------
 tailwind 4, eslint 9
 reuse and clean up mpc, opi, rpi scripts // impossible
+--------
+decent Astro, ShadCN example https://github.com/shadcnblocks/mainline-astro-template
