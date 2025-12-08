@@ -4,6 +4,8 @@
 
 [build.environment]
   NODE_VERSION = "24.7.0"
+  # 修改为你自己的域名
+  SITE_URL = "https://your-domain.com"
 
 [[redirects]]
   from = "/*"

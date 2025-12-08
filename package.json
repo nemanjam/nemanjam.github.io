@@ -76,6 +76,8 @@
     "@expressive-code/plugin-collapsible-sections": "^0.41.3",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
     "@iconify-json/mdi": "^1.2.3",
+    "@stackbit/cms-git": "^1.0.35",
+    "@stackbit/types": "^2.1.14",
     "@tailwindcss/typography": "^0.5.19",
     "@types/lodash.debounce": "^4.0.9",
     "@types/mdast": "^4.0.4",
