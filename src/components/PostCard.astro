@@ -45,7 +45,6 @@ const getTransitionNameFromElementId = setTransitionSlug({ pageSlug: slug });
 ---
 
 <article
-  data-sb-object-id={filePath}
   class={cn(
     'flex flex-col md:flex-row gap-4 lg:gap-6',
     'not-first:pt-4 not-last:pb-4 md:not-first:pt-6 md:not-last:pb-6',
@@ -62,7 +61,6 @@ const getTransitionNameFromElementId = setTransitionSlug({ pageSlug: slug });
           src={heroImage}
           alt={heroAlt}
           itemprop="image"
-          data-sb-field-path="heroImage"
           class="h-[168px] xs:h-[250px] md:h-[168px] md:max-w-[298px] object-cover rounded-box shadow shadow-base-300"
           transition:name={getTransitionNameFromElementId({
             elementId: TRANSITION_ELEMENT_IDS.POST_CARD.HERO_IMAGE,
@@ -102,7 +100,6 @@ const getTransitionNameFromElementId = setTransitionSlug({ pageSlug: slug });
     {/* title */}
     <h2
       class="text-2xl font-bold break-words md:line-clamp-2 mt-0 mb-2"
-      data-sb-field-path="title"
       transition:name={getTransitionNameFromElementId({
         elementId: TRANSITION_ELEMENT_IDS.POST_CARD.TITLE,
       })}
@@ -117,7 +114,6 @@ const getTransitionNameFromElementId = setTransitionSlug({ pageSlug: slug });
       description && (
         <p
           class="text-base mb-4 line-clamp-2"
-          data-sb-field-path="description"
           transition:name={getTransitionNameFromElementId({
             elementId: TRANSITION_ELEMENT_IDS.POST_CARD.DESCRIPTION,
           })}

@@ -28,12 +28,12 @@ export async function getStaticPaths() {
   const posts: Post[] = await getAllPostsWithReadingTime();
 
   const paths = posts.map((post) => {
-    const { slug, filePath } = post;
+    const { slug } = post;
     const randomPosts = getRandomPosts({ posts, excludeSlug: slug });
 
     return {
       params: { slug },
-      props: { ...post, filePath, randomPosts },
+      props: { ...post, randomPosts },
     };
   });
 
@@ -96,7 +96,6 @@ const metadata: Metadata = { title, description, image };
           loading="eager"
           itemprop="image"
           class="block max-w-full h-auto aspect-[16/8] object-cover border border-base-300"
-          data-sb-field-path="heroImage"
           transition:name={getTransitionNameFromElementId({
             elementId: TRANSITION_ELEMENT_IDS.POST_CARD.HERO_IMAGE,
           })}
@@ -106,48 +105,41 @@ const metadata: Metadata = { title, description, image };
   </Fragment>
 
   <Fragment slot="hero-text">
-    <div data-sb-object-id={filePath}>
-      <h1
-        class="b-h1"
-        data-sb-field-path="title"
-        transition:name={getTransitionNameFromElementId({
-          elementId: TRANSITION_ELEMENT_IDS.POST_CARD.TITLE,
-        })}
-      >
-        {title}
-        {draft && <sup class="text-red-500 ml-1">{DRAFT_TEXT}</sup>}
-      </h1>
+    <h1
+      class="b-h1"
+      transition:name={getTransitionNameFromElementId({
+        elementId: TRANSITION_ELEMENT_IDS.POST_CARD.TITLE,
+      })}
+    >
+      {title}
+      {draft && <sup class="text-red-500 ml-1">{DRAFT_TEXT}</sup>}
+    </h1>
 
-      {
-        description && (
-          <p
-            class="font-normal text-content text-xl md:text-2xl mb-6 md:mb-8"
-            data-sb-field-path="description"
-            transition:name={getTransitionNameFromElementId({
-              elementId: TRANSITION_ELEMENT_IDS.POST_CARD.DESCRIPTION,
-            })}
-          >
-            {description}
-          </p>
-        )
-      }
+    {
+      description && (
+        <p
+          class="font-normal text-content text-xl md:text-2xl mb-6 md:mb-8"
+          transition:name={getTransitionNameFromElementId({
+            elementId: TRANSITION_ELEMENT_IDS.POST_CARD.DESCRIPTION,
+          })}
+        >
+          {description}
+        </p>
+      )
+    }
 
-      <PostMeta
-        {...postMetaProps}
-        data-sb-field-path="publishDate"
-        transition:name={getTransitionNameFromElementId({
-          elementId: TRANSITION_ELEMENT_IDS.POST_CARD.META,
-        })}
-      />
-    </div>
+    <PostMeta
+      {...postMetaProps}
+      transition:name={getTransitionNameFromElementId({
+        elementId: TRANSITION_ELEMENT_IDS.POST_CARD.META,
+      })}
+    />
   </Fragment>
 
   <Fragment slot="content">
     {toc && <TableOfContents headings={headings} />}
 
-    <div data-sb-field-path="markdown_content">
-      <Content />
-    </div>
+    <Content />
   </Fragment>
 
   <Fragment slot="after-content">
