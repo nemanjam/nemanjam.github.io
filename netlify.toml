@@ -1,0 +1,11 @@
+[build]
+  command = "pnpm build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "24.7.0"
+
+[[redirects]]
+  from = "/*"
+  to = "/404"
+  status = 404
