@@ -17,7 +17,7 @@ const displayPosts = posts.slice(0, 5); // 显示5篇，第6个位置是"更多�
   <div class="max-w-6xl px-4 md:mx-auto">
     <!-- 标题栏 -->
     <div class="flex justify-between items-center mb-8">
-      <h2 class="text-3xl md:text-4xl font-bold text-heading">最新文章</h2>
+      <h2 class="text-3xl md:text-4xl font-bold text-headings">最新文章</h2>
       <a
         href="/blog"
         class="px-6 py-2 rounded-full border-2 border-content/20 text-content hover:border-primary hover:text-primary transition-colors"
@@ -31,7 +31,7 @@ const displayPosts = posts.slice(0, 5); // 显示5篇，第6个位置是"更多�
       {displayPosts.map((post) => (
         <a
           href={`${ROUTES.BLOG}${post.slug}`}
-          class="group flex gap-4 rounded-xl overflow-hidden bg-base-200 dark:bg-[#293e61] p-4 transition-colors hover:bg-[var(--th-base-200-hover)] dark:hover:bg-[#263753]"
+          class="group flex gap-4 rounded-xl overflow-hidden bg-[#E6E4E3] dark:bg-[#293e61] p-4 transition-colors hover:bg-[#E0E0E0] dark:hover:bg-[#263753]"
         >
           <!-- 左侧图片 -->
           <div class="flex-shrink-0">
@@ -49,11 +49,11 @@ const displayPosts = posts.slice(0, 5); // 显示5篇，第6个位置是"更多�
           <!-- 右侧内容 -->
           <div class="flex-1 flex flex-col justify-between min-w-0">
             <div>
-              <h3 class="text-lg font-bold text-heading mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+              <h3 class="text-lg font-bold text-headings mb-2 line-clamp-2 group-hover:text-primary transition-colors">
                 {post.data.title}
               </h3>
 
-              <p class="text-sm text-content/70 mb-3 line-clamp-2">
+              <p class="text-sm text-captions dark:text-content/70 mb-3 line-clamp-2">
                 {post.data.description}
               </p>
             </div>

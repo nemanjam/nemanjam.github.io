@@ -9,7 +9,7 @@ import { trimHttpProtocol } from '@/utils/strings';
 
 import type { FrontmatterProps, TemplateProps } from '@/types/open-graph';
 
-import avatarImage from '@/assets/images/avatar.jpg';
+import avatarImage from '@/assets/images/avatar.png';
 import image404 from '@/assets/images/pages/image404.jpg';
 
 const { SITE_URL } = CONFIG_CLIENT;
