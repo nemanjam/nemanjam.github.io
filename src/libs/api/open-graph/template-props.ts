@@ -25,11 +25,12 @@ export const getTemplatePropsBase64 = async (
   const avatarImageBase64Url = await getBase64Image(AVATAR);
 
   // heroImage
-  let heroImagePath: string;
+  let heroImagePath: string | undefined;
 
   switch (true) {
-    case Boolean(heroImage?.fsPath):
-      heroImagePath = heroImage?.fsPath;
+    // Check for valid fsPath (non-empty string)
+    case Boolean(heroImage?.fsPath && typeof heroImage.fsPath === 'string' && heroImage.fsPath.trim() !== ''):
+      heroImagePath = heroImage.fsPath;
       break;
     // hardcoded in 404.mdx frontmatter
     case pageId === 'page404':
@@ -42,6 +43,7 @@ export const getTemplatePropsBase64 = async (
       break;
   }
 
+  // getBase64Image handles undefined/empty paths with fallback
   const heroImageBase64Url = await getBase64Image(heroImagePath);
 
   const templateProps = {
@@ -56,14 +58,29 @@ export const getTemplatePropsBase64 = async (
 
 /*-------------------------------- base64 utils ------------------------------*/
 
-export const getBase64Image = async (imagePath: string): Promise<string> => {
-  const imageData = await fs.readFile(imagePath);
+export const getBase64Image = async (imagePath: string | undefined): Promise<string> => {
+  // Validate that we have a non-empty path
+  if (!imagePath || imagePath.trim() === '') {
+    console.warn('getBase64Image: Empty or undefined image path provided, using fallback');
+    // Use the gallery folder fallback
+    const fallbackPath = await getRandomImagePath(GALLERY_FOLDER);
+    return getBase64Image(fallbackPath);
+  }
 
-  const imageType = getImageType(imagePath);
-  const imageBase64 = Buffer.from(imageData).toString('base64');
-  const imageBase64Url = `data:image/${imageType};base64,${imageBase64}`;
+  try {
+    const imageData = await fs.readFile(imagePath);
 
-  return imageBase64Url;
+    const imageType = getImageType(imagePath);
+    const imageBase64 = Buffer.from(imageData).toString('base64');
+    const imageBase64Url = `data:image/${imageType};base64,${imageBase64}`;
+
+    return imageBase64Url;
+  } catch (err) {
+    console.warn(`getBase64Image: Failed to read image at "${imagePath}", using fallback:`, err);
+    // Use the gallery folder fallback
+    const fallbackPath = await getRandomImagePath(GALLERY_FOLDER);
+    return getBase64Image(fallbackPath);
+  }
 };
 
 const getImageType = (imagePath: string) => {
