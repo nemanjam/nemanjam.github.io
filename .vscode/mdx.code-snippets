@@ -1,0 +1,34 @@
+{
+  "Astro Image Import": {
+    "prefix": "img-import",
+    "body": [
+      "import ${1:ImageName} from './_images/${2:image-name}.${3:png}';",
+      "import { Image } from 'astro:assets';"
+    ],
+    "description": "Import image for Astro"
+  },
+  "Astro Image Component": {
+    "prefix": "img-astro",
+    "body": [
+      "<Image",
+      "  {...IMAGE_SIZES.FIXED.MDX_MD}",
+      "  src={${1:ImageName}}",
+      "  alt=\"${2:描述}\"",
+      "/>"
+    ],
+    "description": "Astro Image component"
+  },
+  "Astro Image Full": {
+    "prefix": "img-full",
+    "body": [
+      "import ${1:ImageName} from './_images/${2:image-name}.${3:png}';",
+      "",
+      "<Image",
+      "  {...IMAGE_SIZES.FIXED.MDX_MD}",
+      "  src={${1:ImageName}}",
+      "  alt=\"${4:描述}\"",
+      "/>"
+    ],
+    "description": "Complete Astro Image setup"
+  }
+}

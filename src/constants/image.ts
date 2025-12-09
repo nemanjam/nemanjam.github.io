@@ -36,6 +36,8 @@ export const IMAGE_SIZES = {
     AVATAR: {
       width: 48,
       height: 48,
+      densities: [1, 2],  // 支持高清屏幕，但保持显示尺寸
+      quality: 100,
     },
     POST_CARD_SMALL: {
       width: 215,

@@ -1,0 +1,100 @@
+---
+import { Icon } from 'astro-icon/components';
+import { ROUTES } from '@/constants/routes';
+---
+
+<footer class="bg-slate-900 text-white py-16">
+  <div class="max-w-6xl px-4 md:mx-auto">
+    <div class="grid grid-cols-2 md:grid-cols-12 gap-y-12 md:gap-8 mb-8">
+      <!-- 第一列：链接 -->
+      <div class="flex flex-col gap-6 md:col-span-3">
+        <a href="/standalone" class="text-3xl md:text-4xl font-bold hover:text-primary transition-colors">独立站</a>
+        <a href="/website" class="text-3xl md:text-4xl font-bold hover:text-primary transition-colors">建站</a>
+        <a href="/overseas" class="text-3xl md:text-4xl font-bold hover:text-primary transition-colors">出海</a>
+      </div>
+
+      <!-- 第二列：链接 + 时间 -->
+      <div class="flex flex-col gap-6 md:col-span-3">
+        <div class="text-3xl md:text-4xl font-bold relative w-fit" id="current-time">
+          <span>杭州</span>
+          <span class="text-white/50 ml-2 font-mono tracking-tighter">
+            <span id="time-hours">00</span><span class="animate-breathing-dot inline-block relative -top-0.5 mx-0.5">:</span><span id="time-minutes">00</span>
+          </span>
+          <span class="absolute top-2 -right-3 w-3 h-3 bg-green-500 rounded-full"></span>
+        </div>
+        <a href="/contact" class="text-3xl md:text-4xl font-bold hover:text-primary transition-colors border-b-2 border-white/50 hover:border-primary inline-block w-fit">联系</a>
+        <a href="/about" class="text-3xl md:text-4xl font-bold hover:text-primary transition-colors inline-block w-fit">关于</a>
+      </div>
+
+      <!-- 第三列：订阅表单 -->
+      <div class="bg-sky-500 rounded-2xl p-8 col-span-2 md:col-span-6">
+        <div class="flex items-center gap-3 mb-6">
+          <Icon name="mdi:newspaper-variant-outline" class="w-8 h-8" />
+          <h3 class="text-2xl font-bold">订阅电子报</h3>
+        </div>
+        <form class="flex gap-2">
+          <input
+            type="email"
+            placeholder="输入电子邮箱"
+            class="flex-1 px-4 py-3 rounded-full bg-white/90 text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-white"
+            required
+          />
+          <button
+            type="submit"
+            class="px-6 py-3 rounded-full bg-white text-sky-500 font-bold hover:bg-white/90 transition-colors"
+          >
+            确认
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- 底部小菜单 -->
+    <div class="pt-8 border-t border-white/10">
+      <div class="flex justify-between items-center text-sm text-white/60">
+        <div class="flex flex-wrap gap-6">
+          <span>使用 Astro 建设</span>
+          <a href="/privacy" class="hover:text-white transition-colors">隐私政策</a>
+          <span>2025 脸哥出海</span>
+        </div>
+
+        <a href={ROUTES.API.FEED_RSS} class="flex items-center gap-1 hover:text-white transition-colors group" target="_blank" rel="noopener noreferrer">
+          <Icon name="mdi:rss" class="w-4 h-4" />
+          <span class="underline decoration-white/30 group-hover:decoration-white transition-colors">RSS</span>
+        </a>
+      </div>
+    </div>
+  </div>
+<style>
+  @keyframes breathing {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+  .animate-breathing-dot {
+    animation: breathing 2s ease-in-out infinite;
+  }
+</style>
+
+<script>
+  function updateTime() {
+    const now = new Date();
+
+    // 转换为中国时间（UTC+8）
+    const chinaTime = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Shanghai' }));
+
+    const hours = chinaTime.getHours().toString().padStart(2, '0');
+    const minutes = chinaTime.getMinutes().toString().padStart(2, '0');
+
+    const hoursEl = document.getElementById('time-hours');
+    const minutesEl = document.getElementById('time-minutes');
+    
+    if (hoursEl) hoursEl.textContent = hours;
+    if (minutesEl) minutesEl.textContent = minutes;
+  }
+
+  // 初始化
+  updateTime();
+
+  // 每秒更新一次，以保持与冒号闪烁的某种同步感（尽管冒号是CSS动画）
+  setInterval(updateTime, 1000);
+</script>

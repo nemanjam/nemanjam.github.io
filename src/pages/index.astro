@@ -1,0 +1,81 @@
+---
+import { getAllPostsWithReadingTime } from '@/modules/post/common';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import FeaturedCarousel from '../components/home/FeaturedCarousel.astro';
+import FeatureCards from '../components/home/FeatureCards.astro';
+import LatestPosts from '../components/home/LatestPosts.astro';
+import HomeFooter from '../components/home/HomeFooter.astro';
+
+// 获取所有已发布的文章（包含 readingTime 和 slug）
+const allPosts = await getAllPostsWithReadingTime();
+
+// 过滤掉草稿并按发布日期排序
+const sortedPosts = allPosts
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+
+// 精选文章（取前3篇完整的 post 对象）
+const featuredPosts = sortedPosts.slice(0, 3);
+
+// 特点卡片数据
+const featureCards = [
+  {
+    title: 'Shopify 中文教程',
+    description: '最新 Shopify 从 0-1 中文教程：后台操作、广告营销、以及技术开发指南，帮你全面认识独立站电商系统',
+    icon: 'mdi:shopify',
+    link: '/blog',
+    bgColor: '#266C34',
+    lightBgColor: '#44b549',
+  },
+  {
+    title: '出海必备',
+    description: '出海必备海外互联网教程：科学上网、海外收款、AI 和实用工具，谷歌账号等',
+    icon: 'chuhai',
+    link: '/blog',
+    bgColor: '#0C4DB4',
+    lightBgColor: '#0FA5E9',
+  },
+  {
+    title: '网站搭建',
+    description: '0成本搭建博客和官网：使用Vercel等平台 5 分钟上线网站，无限带宽 0成本。Wordpress 和 Astro 教程',
+    icon: 'mdi:wordpress',
+    link: '/blog',
+    bgColor: '#3C5F99',
+    lightBgColor: '#3082d5',
+  },
+];
+
+// 最新文章（第4-8篇完整的 post 对象）
+const latestPosts = sortedPosts.slice(3, 8);
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <BaseHead
+      metadata={{
+        title: "脸哥出海 - Shopify中文教程",
+        description: "最新 Shopify 中文教程，出海必备指南，网站搭建教程"
+      }}
+    />
+  </head>
+  <body class="bg-base-100">
+    <Header />
+
+    <main>
+      
+       <!-- 特点卡片 -->
+      <FeatureCards cards={featureCards} />
+
+      <!-- Banner 轮播精选文章 -->
+      <FeaturedCarousel posts={featuredPosts} lightModeBg="bg-[#f0f0f0]"/>
+
+      <!-- 最新文章 -->
+      <LatestPosts posts={latestPosts} />
+    </main>
+
+    <!-- 页脚 -->
+    <HomeFooter />
+  </body>
+</html>

@@ -4,12 +4,13 @@ import { cn } from '@/utils/styles';
 
 export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
   isActive?: boolean;
+  noUnderline?: boolean;
 }
 
 // eslint-disable-next-line no-unused-vars
-const { slot, isActive = false, class: className, ...props } = Astro.props as Props;
+const { slot, isActive = false, noUnderline = false, class: className, ...props } = Astro.props as Props;
 ---
 
-<Link {...props} variant="nav" class={cn({ 'underline text-links': isActive }, className)}>
+<Link {...props} variant="nav" class={cn("inline-flex items-center", { 'underline text-links': isActive && !noUnderline }, { 'no-underline': noUnderline }, className)} style={noUnderline ? 'text-decoration: none;' : ''}>
   <slot />
 </Link>

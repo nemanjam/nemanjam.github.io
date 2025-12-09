@@ -1,0 +1,13 @@
+---
+layout: '../layouts/Page.astro'
+title: 'Home'
+description: 'Welcome to my blog'
+---
+
+import ImageRandom from '../components/ImageRandom.astro';
+
+# 你好，欢迎访问我的网站
+
+<ImageRandom />
+
+Welcome to my website. Feel free to look around, read my blog, check out my projects and find my contacts. Or, if you are feeling overwhelmed by coding, you can take a break and enjoy some random landscape photos in the gallery.

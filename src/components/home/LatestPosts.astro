@@ -1,0 +1,86 @@
+---
+import { Image } from 'astro:assets';
+import { ROUTES } from '@/constants/routes';
+
+import type { Post } from '@/types/post';
+
+interface Props {
+  posts: Post[];
+  moreLink?: string;
+}
+
+const { posts, moreLink = '/blog' } = Astro.props;
+const displayPosts = posts.slice(0, 5); // 显示5篇，第6个位置是"更多文章"
+---
+
+<section class="py-12 md:py-16">
+  <div class="max-w-6xl px-4 md:mx-auto">
+    <!-- 标题栏 -->
+    <div class="flex justify-between items-center mb-8">
+      <h2 class="text-3xl md:text-4xl font-bold text-heading">最新文章</h2>
+      <a
+        href="/blog"
+        class="px-6 py-2 rounded-full border-2 border-content/20 text-content hover:border-primary hover:text-primary transition-colors"
+      >
+        所有文章
+      </a>
+    </div>
+
+    <!-- 文章网格 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {displayPosts.map((post) => (
+        <a
+          href={`${ROUTES.BLOG}${post.slug}`}
+          class="group flex gap-4 rounded-xl overflow-hidden bg-base-200 dark:bg-[#293e61] p-4 transition-colors hover:bg-[var(--th-base-200-hover)] dark:hover:bg-[#263753]"
+        >
+          <!-- 左侧图片 -->
+          <div class="flex-shrink-0">
+            {!post.data.noHero && (
+              <Image
+                src={post.data.heroImage}
+                alt={post.data.heroAlt}
+                width={256}
+                height={256}
+                class="w-32 h-32 object-cover rounded-lg"
+              />
+            )}
+          </div>
+
+          <!-- 右侧内容 -->
+          <div class="flex-1 flex flex-col justify-between min-w-0">
+            <div>
+              <h3 class="text-lg font-bold text-heading mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                {post.data.title}
+              </h3>
+
+              <p class="text-sm text-content/70 mb-3 line-clamp-2">
+                {post.data.description}
+              </p>
+            </div>
+
+            <!-- Tags -->
+            <div class="flex flex-wrap gap-2">
+              {post.data.tags.slice(0, 3).map((tag) => (
+                <span class="px-2 py-0.5 text-xs rounded bg-base-300 dark:bg-[#415980] text-content/60">
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+
+          </div>
+        </a>
+      ))}
+
+      <!-- 更多文章卡片 -->
+      <a
+        href={moreLink}
+        class="flex items-center justify-center rounded-xl bg-base-200 transition-colors min-h-[160px]"
+      >
+        <h3 class="text-2xl font-bold border-b-4 border-current pb-1 text-content hover:text-primary transition-colors">
+          更多文章
+        </h3>
+      </a>
+    </div>
+  </div>
+</section>

@@ -12,7 +12,7 @@ import { CONFIG_CLIENT } from '@/config/client';
 import { getActiveNavItemPath } from '@/utils/navigation';
 import { cn } from '@/utils/styles';
 
-import Avatar from '@/assets/images/avatar.jpg';
+import Avatar from '@/assets/images/avatar.png';
 
 const { SCROLL_TO_TOP_ID } = SELECTORS;
 
@@ -37,7 +37,7 @@ const activeNavItemPath = getActiveNavItemPath(routePathname);
         <Image
           {...IMAGE_SIZES.FIXED.AVATAR}
           loading="eager"
-          class="shrink-0 select-none rounded-md border border-base-300"
+          class="shrink-0 select-none rounded-md"
           src={Avatar}
           alt="Profile picture"
         />
@@ -64,15 +64,17 @@ const activeNavItemPath = getActiveNavItemPath(routePathname);
       class="select-none hidden md:block group-[.menu-open]:block mt-0 group-[.menu-open]:mt-2"
       aria-label="Site navigation"
     >
-      <ul class="flex gap-4 group-[.menu-open]:flex-col md:!flex-row md:items-center">
+      <ul class="flex gap-6 group-[.menu-open]:flex-col md:!flex-row md:items-center">
         {
-          NAVIGATION_ITEMS.map(({ title, path }) => (
+          NAVIGATION_ITEMS.map(({ title, path, icon, noUnderline }) => (
             <li>
               <HeaderLink
                 href={path}
                 isActive={path === activeNavItemPath}
+                noUnderline={noUnderline}
                 {...(path === ROUTES.LINKS ? { 'data-astro-reload': true } : {})}
               >
+                {icon && <Icon name={icon} class="w-5 h-5 mr-1" />}
                 {title}
               </HeaderLink>
             </li>

@@ -9,9 +9,9 @@ const configClientData: ConfigClientType = {
   /** all urls without '/' */
   SITE_URL,
   /** same for all environments, defined here, not env var */
-  SITE_URL_CANONICAL: 'https://nemanjamitic.com',
-  SITE_TITLE: 'Nemanja Mitic',
-  SITE_DESCRIPTION: 'I am Nemanja, a full stack developer',
+  SITE_URL_CANONICAL: 'https://facechuhai.com',
+  SITE_TITLE: '脸哥-Shopify独立站和出海教程',
+  SITE_DESCRIPTION: 'Shopify 独立站运营与出海教程。提供从建站基础、选品策略、流量获取到数据分析的全流程学习路径',
   PLAUSIBLE_SCRIPT_URL,
   PLAUSIBLE_DOMAIN,
   PAGE_SIZE_POST_CARD: 3,
@@ -21,8 +21,8 @@ const configClientData: ConfigClientType = {
   BLUR_IMAGE_DELAY: 200,
   DEFAULT_MODE: 'light',
   DEFAULT_THEME: 'default-light',
-  AUTHOR_NAME: 'Nemanja Mitic',
-  AUTHOR_EMAIL: 'nemanja.mitic.elfak@hotmail.com',
+  AUTHOR_NAME: '脸哥出海',
+  AUTHOR_EMAIL: 'wyhshines@gmail.com',
   AUTHOR_GITHUB: 'https://github.com/nemanjam',
   AUTHOR_LINKEDIN: 'https://www.linkedin.com/in/nemanja-mitic',
   AUTHOR_TWITTER: 'https://x.com/nemanja_codes',

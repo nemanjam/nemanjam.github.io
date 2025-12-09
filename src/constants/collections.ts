@@ -66,6 +66,10 @@ export const CATEGORIES = [
     name: 'resources',
     icon: 'mdi:book-open-variant-outline',
   },
+   {
+    name: 'Shopify',
+    icon: 'mdi:shopify',
+  },
 ] as const;
 
 // use imported images here

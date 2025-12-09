@@ -23,10 +23,28 @@
   "files.associations": {
     "*.mdx": "markdown"
   },
+  "[markdown]": {
+    "editor.wordWrap": "on"
+  },
+  "[mdx]": {
+    "editor.wordWrap": "on",
+    "pasteImage.path": "${currentFileDir}/_images",
+    "pasteImage.insertPattern": "![${imageFileName}](./_images/${imageFileName})"
+  },
   "tailwindCSS.experimental.classRegex": [
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
     ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
   ],
   // "gitlens.currentLine.enabled": false,
-  "cSpell.words": ["astro", "giscus"]
+  "cSpell.words": ["astro", "giscus"],
+
+  // Paste Image 插件配置
+  "pasteImage.path": "${currentFileDir}/_images",
+  "pasteImage.basePath": "${currentFileDir}",
+  "pasteImage.prefix": "./",
+  "pasteImage.namePrefix": "",
+  "pasteImage.defaultName": "image",
+  "pasteImage.insertPattern": "![${imageFileName}](${imageFilePath})",
+  "pasteImage.showFilePathConfirmInputBox": true,  // 显示文件名输入框
+  "pasteImage.filePathConfirmInputBoxMode": "onlyName"  // 只输入文件名
 }

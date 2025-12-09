@@ -1,0 +1,60 @@
+---
+import { Icon } from 'astro-icon/components';
+import { cn } from '@/utils/styles';
+
+interface FeatureCard {
+  title: string;
+  description: string;
+  icon: string;
+  link: string;
+  bgColor: string;
+  /** Optional background color for light mode. Defaults to base-200 if not specified. */
+  lightBgColor?: string;
+}
+
+interface Props {
+  cards: FeatureCard[];
+}
+
+const { cards } = Astro.props;
+---
+
+<section class="py-12 md:py-16">
+  <div class="max-w-6xl px-4 md:mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {cards.map((card) => (
+        <a
+          href={card.link}
+          class={cn(
+            "feature-card group block rounded-2xl p-8 transition-colors duration-300",
+            "bg-[var(--card-bg-light)] dark:bg-[var(--card-bg-dark)]"
+          )}
+          style={{
+            '--card-bg-light': card.lightBgColor || 'var(--th-base-200)',
+            '--card-bg-dark': card.bgColor,
+          }}
+        >
+          <!-- 图标 -->
+          <div class="mb-6">
+            <Icon name={card.icon} class="w-16 h-16 text-white" />
+          </div>
+
+          <!-- 标题 -->
+          <h3 class="text-2xl font-bold text-white mb-4">
+            {card.title}
+          </h3>
+
+          <!-- 描述 -->
+          <p class="text-white/90 mb-6 leading-relaxed">
+            {card.description}
+          </p>
+
+          <!-- 链接 -->
+          <div class="inline-block text-white border-b-2 border-white/50 group-hover:border-white transition-colors">
+            阅读教程
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

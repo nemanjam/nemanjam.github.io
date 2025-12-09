@@ -1,0 +1,83 @@
+---
+type: post
+title: MDX 图片使用示例
+description: 演示如何在 MDX 文件中正确使用图片
+publishDate: 2025-12-08
+heroImage: '../../../../assets/images/default/default-post-hero-image.jpg'
+heroAlt: MDX 示例
+noHero: false
+tags:
+  - astro
+  - javascript
+category: tutorials
+toc: true
+draft: false
+---
+
+import { Image } from 'astro:assets';
+import { IMAGE_SIZES } from '../../../../constants/image';
+
+## Introduction
+
+这是一篇测试文章，用于演示如何在 MDX 中使用图片。
+
+## 如何添加图片
+
+### 步骤 1: 将图片放入 `_images` 目录
+
+首先，将你的图片文件（如 `2025-12-08-18-49-08.png`）复制到当前文章目录下的 `_images` 文件夹中。
+
+### 步骤 2: 在文件顶部导入图片
+
+在 frontmatter 之后、正文之前，添加 import 语句：
+
+```js
+import MyImage from '../../../../content/post/2025/12-08-first-mdx/_images/2025-12-08-18-49-08.png';
+```
+
+### 步骤 3: 在正文中使用 Image 组件
+
+```jsx
+<Image src={MyImage} width={1024} alt="图片描述" />
+```
+
+## 完整示例
+
+假设你有一张图片 `example.png`：
+
+1. 把图片放到 `_images/example.png`
+2. 在顶部导入：
+
+```js
+import ExampleImage from '../../../../content/post/2025/12-08-first-mdx/_images/example.png';
+```
+
+3. 在正文中使用：
+
+```jsx
+<Image src={ExampleImage} width={1024} alt="示例图片" />
+```
+
+## 常用容器样式
+
+```jsx
+<!-- 默认 -->
+<Image src={ExampleImage} width={1024} alt="图片" />
+
+<!-- 小屏展开 -->
+<div class="expand-sm">
+  <Image src={ExampleImage} width={1024} alt="图片" />
+</div>
+
+<!-- 固定宽度 -->
+<div class="no-expand">
+  <Image src={ExampleImage} width={600} alt="图片" />
+</div>
+```
+
+## 注意事项
+
+- 路径必须正确：`../../../../content/post/2025/12-08-first-mdx/_images/`
+- 文件名大小写要匹配
+- 图片必须实际存在于 `_images` 目录中
+- 不能使用 Markdown 的 `![](path)` 语法

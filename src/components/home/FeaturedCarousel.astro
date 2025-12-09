@@ -1,0 +1,232 @@
+---
+import { Image } from 'astro:assets';
+import { ROUTES } from '@/constants/routes';
+import { cn } from '@/utils/styles';
+
+import type { Post } from '@/types/post';
+
+interface Props {
+  posts: Post[];
+  /**
+   * Custom background class for light mode.
+   * @default 'bg-base-200'
+   */
+  lightModeBg?: string;
+}
+
+const { posts, lightModeBg = 'bg-base-200' } = Astro.props;
+const maxPosts = posts.slice(0, 3); // 最多3篇
+---
+
+<section class="py-4 md:py-8">
+  <div class="max-w-6xl px-4 md:mx-auto">
+    <!-- 标题栏 -->
+    <div class="mb-6 md:mb-8">
+      <h2 class="text-3xl md:text-4xl font-bold text-headings dark:text-white">精选文章</h2>
+    </div>
+
+    <div
+      class={cn(
+        "featured-carousel relative overflow-hidden rounded-2xl transition-colors duration-300",
+        lightModeBg,
+        "dark:bg-[#293e61]"
+      )}
+    >
+      <div class="carousel-container relative w-full grid grid-cols-1 h-auto md:h-[500px]">
+        {
+          maxPosts.map((post, index) => (
+            <div
+              class={cn(
+                "carousel-slide col-start-1 row-start-1 w-full transition-opacity duration-500",
+                index === 0 ? "opacity-100 z-10" : "opacity-0 z-0"
+              )}
+              data-index={index}
+            >
+              {/* 
+                  Mobile: flex-col-reverse (Content Top, Image Bottom)
+                  Desktop: flex-row (Content Left, Image Right)
+              */}
+              <div class="flex flex-col-reverse md:flex-row h-full">
+                
+                {/* 内容区域 */}
+                <div class="flex-1 flex flex-col justify-between p-4 xs:p-6 md:p-8 lg:p-10 gap-2 md:gap-0 min-w-0">
+                  {/* 上部：Tags 和标题 */}
+                  <div class="flex flex-col gap-2 md:gap-6">
+                    {/* Tags */}
+                    <div class="flex flex-wrap gap-1 md:gap-2">
+                      {post.data.tags.slice(0, 3).map((tag) => (
+                        <span class="px-2 py-0.5 md:px-3 md:py-1 text-[10px] md:text-sm rounded-full bg-base-300 dark:bg-[#415980] text-content dark:text-white backdrop-blur-sm">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* 标题 */}
+                    <a href={`${ROUTES.BLOG}${post.slug}`} class="group block">
+                      <h2 class="text-lg xs:text-xl md:text-3xl lg:text-4xl font-bold text-headings dark:text-white leading-tight group-hover:text-primary dark:group-hover:text-white/90 transition-colors line-clamp-3 md:line-clamp-none">
+                        {post.data.title}
+                      </h2>
+                    </a>
+
+                    {/* 摘要 */}
+                    <p class="mt-2 text-sm md:text-base text-captions dark:text-white/80 line-clamp-2">
+                      {post.data.description}
+                    </p>
+                    
+                    {/* 立即阅读文本 */}
+                    <a href={`${ROUTES.BLOG}${post.slug}`} class="block mt-2 text-sm md:text-base text-captions dark:text-white/70 font-light underline">
+                      立即阅读
+                    </a>
+                  </div>
+
+                  {/* 下部：指示器 */}
+                  <div class="flex items-center mt-auto pt-2 md:pt-0">
+                    {/* 轮播指示器 */}
+                    {maxPosts.length > 1 && (
+                      <div class="flex gap-1 shrink-0">
+                        {maxPosts.map((_, i) => (
+                          <button
+                            class="indicator-button py-2 px-0.5 cursor-pointer group"
+                            data-index={i}
+                            aria-label={`跳转到第${i + 1}张`}
+                          >
+                            <div
+                              class={cn(
+                                "w-4 md:w-8 h-1 transition-all duration-300",
+                                i === index 
+                                  ? "bg-primary dark:bg-white" 
+                                  : "bg-base-300 dark:bg-white/30 group-hover:bg-base-content/20 dark:group-hover:bg-white/50"
+                              )}
+                            />
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* 图片区域 */}
+                {/* Mobile: w-full, height controlled by parent, Desktop: md:w-1/2 md:h-full */}
+                <div class="w-full md:w-1/2 h-[220px] xs:h-[280px] md:h-full p-4 md:p-6 lg:p-8 flex items-center justify-center shrink-0">
+                  {!post.data.noHero && (
+                    <a
+                      href={`${ROUTES.BLOG}${post.slug}`}
+                      class="block w-full h-full rounded-lg md:rounded-xl overflow-hidden relative group"
+                    >
+                      <Image
+                        src={post.data.heroImage}
+                        alt={post.data.heroAlt}
+                        width={600}
+                        height={600}
+                        class="w-full h-full object-cover"
+                      />
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  class FeaturedCarousel {
+    private container: HTMLElement;
+    private slides: NodeListOf<HTMLElement>;
+    private currentIndex = 0;
+    private autoPlayInterval: number | null = null;
+    private isAnimating = false;
+
+    constructor(container: HTMLElement) {
+      this.container = container;
+      this.slides = container.querySelectorAll('.carousel-slide');
+
+      if (this.slides.length <= 1) return;
+
+      this.init();
+    }
+
+    init() {
+      // 绑定所有指示器按钮事件
+      const allIndicatorButtons =
+        this.container.querySelectorAll('.indicator-button');
+      allIndicatorButtons.forEach((button) => {
+        button.addEventListener('click', (e) => {
+          e.preventDefault();
+          const target = e.currentTarget as HTMLElement;
+          const index = parseInt(target.getAttribute('data-index') || '0');
+          if (index !== this.currentIndex) {
+            this.showSlide(index);
+          }
+        });
+      });
+
+      // 自动播放
+      this.startAutoPlay();
+
+      // 鼠标悬停时暂停
+      this.container.addEventListener('mouseenter', () => this.stopAutoPlay());
+      this.container.addEventListener('mouseleave', () => this.startAutoPlay());
+    }
+
+    showSlide(index: number) {
+      if (this.isAnimating) return;
+      this.isAnimating = true;
+
+      const currentSlide = this.slides[this.currentIndex];
+      const nextSlide = this.slides[index];
+
+      // 简单的淡入淡出
+      currentSlide.classList.remove('z-10', 'opacity-100');
+      currentSlide.classList.add('z-0', 'opacity-0');
+
+      requestAnimationFrame(() => {
+          nextSlide.classList.remove('z-0', 'opacity-0'); 
+          nextSlide.classList.add('z-10', 'opacity-100'); 
+          
+          this.currentIndex = index;
+          
+          setTimeout(() => {
+              this.isAnimating = false;
+          }, 500); 
+      });
+    }
+
+    next() {
+      const nextIndex = (this.currentIndex + 1) % this.slides.length;
+      this.showSlide(nextIndex);
+    }
+
+    startAutoPlay() {
+      if (this.autoPlayInterval) clearInterval(this.autoPlayInterval);
+      this.autoPlayInterval = window.setInterval(() => this.next(), 5000);
+    }
+
+    stopAutoPlay() {
+      if (this.autoPlayInterval) {
+        clearInterval(this.autoPlayInterval);
+        this.autoPlayInterval = null;
+      }
+    }
+  }
+
+  document.addEventListener('astro:page-load', () => {
+      const carousel = document.querySelector('.featured-carousel');
+      if (carousel) {
+        new FeaturedCarousel(carousel as HTMLElement);
+      }
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const carousel = document.querySelector('.featured-carousel');
+    if (carousel) {
+       if (!(carousel as any)._carouselInitialized) {
+           new FeaturedCarousel(carousel as HTMLElement);
+           (carousel as any)._carouselInitialized = true;
+       }
+    }
+  });
+</script>

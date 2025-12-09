@@ -18,12 +18,12 @@ const generateId: GenerateIdFn = ({ entry }: { entry: string }) =>
   entry.split('/').slice(0, 2).join('-');
 
 export const postCollection = defineCollection({
-  loader: glob({ pattern: '**/*.mdx', base: POST, generateId }),
+  loader: glob({ pattern: '**/index.{md,mdx}', base: POST, generateId }),
   schema: postSchema,
 });
 
 export const projectCollection = defineCollection({
-  loader: glob({ pattern: '**/*.mdx', base: PROJECT, generateId }),
+  loader: glob({ pattern: '**/index.{md,mdx}', base: PROJECT, generateId }),
   schema: projectSchema,
 });
 
