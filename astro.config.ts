@@ -5,6 +5,7 @@ import partytown from '@astrojs/partytown';
 import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 import icon from 'astro-icon';
+import vercel from '@astrojs/vercel';
 import { defineConfig } from 'astro/config';
 
 // must use relative imports, and their entire import subtrees
@@ -30,6 +31,7 @@ export default defineConfig({
   compressHTML: true,
   server: { port: 3000 },
   devToolbar: { enabled: false },
+  adapter: vercel(),
   integrations: [
     expressiveCodeIntegration(),
     sitemapIntegration(),
