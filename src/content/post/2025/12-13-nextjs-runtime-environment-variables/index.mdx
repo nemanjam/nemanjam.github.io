@@ -3,7 +3,7 @@ title: Runtime environment variables in Next.js, build reusable Docker images
 description: |
   Learn how to configure Next.js with runtime environment variables and build Docker images you can reuse across multiple environments.
 publishDate: 2025-12-13
-heroImage: '../../../../content/post/2025/12-13-runtime-environment-variables-nextjs/_images/env-vars-hero.png'
+heroImage: '../../../../content/post/2025/12-13-nextjs-runtime-environment-variables/_images/env-vars-hero.png'
 heroAlt: Runtime environment variables example
 tags:
   - next.js
@@ -13,11 +13,6 @@ toc: true
 draft: false
 ---
 
-import { Image } from 'astro:assets';
-
-import { IMAGE_SIZES } from '../../../../constants/image';
-
-import NextjsAppLogImage from '../../../../content/post/2025/12-13-runtime-environment-variables-nextjs/_images/nextjs-app-log.png';
 
 ## Classification of environment variables by dimension
 
@@ -515,8 +510,6 @@ git checkout f3c087184e851db20e65409a6dd145767dd9bc2b
 apps/full-stack-fastapi-template-nextjs/docker-compose.yml
 apps/full-stack-fastapi-template-nextjs/.env.example
 ```
-
-<Image {...IMAGE_SIZES.FIXED.MDX_MD} src={NextjsAppLogImage} alt="Next.js app log" />
 
 ## References
 
