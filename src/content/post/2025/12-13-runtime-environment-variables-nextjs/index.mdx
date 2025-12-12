@@ -1,0 +1,527 @@
+---
+title: Runtime environment variables in Next.js, build reusable Docker images
+description: |
+  Learn how to configure Next.js with runtime environment variables and build Docker images you can reuse across multiple environments.
+publishDate: 2025-12-13
+heroImage: '../../../../content/post/2025/12-13-runtime-environment-variables-nextjs/_images/env-vars-hero.png'
+heroAlt: Runtime environment variables example
+tags:
+  - next.js
+  - docker
+category: tips-and-tricks
+toc: true
+draft: false
+---
+
+import { Image } from 'astro:assets';
+
+import { IMAGE_SIZES } from '../../../../constants/image';
+
+import NextjsAppLogImage from '../../../../content/post/2025/12-13-runtime-environment-variables-nextjs/_images/nextjs-app-log.png';
+
+## Classification of environment variables by dimension
+
+At first glance, you might think of environment variables as just a few values needed when the app starts, but as you dig deeper, you realize it's far more complex than that. If you don’t clearly understand the nature of the value you're dealing with, you'll have a hard time running the app and managing its configuration across multiple environments.
+
+Let's identify a few dimensions that any environment variable can have:
+
+1. **When:** build-time, start-time, runtime
+2. **Where:** server (static, SSR (request), ISR), client
+3. **Visibility:** public, private
+4. **Requirement:** optional, required
+5. **Scope:** common for all environments (constant, config), unique
+6. **Mutability:** constant, mutable
+7. **Git tracking:** versioned, ignored
+
+There are probably more, but this is enough to understand why it can be challenging to manage. We could go very wide, write a long article and elaborate each of these and their combinations, but since the goal of this article is very specific and practical - handling Next.js environment variables in Docker, we'll focus just on the top three items from the list. Still, it was worth mentioning the others for context.
+
+## Next.js environment variables
+
+If you search Next.js docs you will find a [guide](https://nextjs.org/docs/app/guides/environment-variables#runtime-environment-variables) for environment variables, e.g. `.env*` filenames that are loaded by default, their load order and priority, expanding, also exposing and inlining variables with prefix `NEXT_PUBLIC_` into the client. In the self-hosting [guide](https://nextjs.org/docs/app/guides/self-hosting#environment-variables) you will even find a paragraph about opting out into dynamic rendering so variable value is read on each server component render, not just once at build time and how this is useful for reusable Docker images.
+
+## The problem with build-time environment variables
+
+The common scenario after reading the docs is to just be aware of `NEXT_PUBLIC_` and server variables and scatter them around the codebase. If you use Docker and Github Actions you will typically end up with something like the this:
+
+**Dockerfile**
+
+```bash title="frontend/Dockerfile"
+# frontend/Dockerfile
+
+# Next.js app installer stage
+FROM base AS installer
+RUN apk update
+RUN apk add --no-cache libc6-compat
+
+# Enable pnpm
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+RUN corepack prepare pnpm@10.12.4 --activate
+
+WORKDIR /app
+
+# Copy monorepo package.json and lock files
+COPY --from=builder /app/out/json/ .
+# Install the dependencies
+RUN pnpm install --frozen-lockfile
+
+# Copy pruned source
+COPY --from=builder /app/out/full/ .
+
+# THIS: set build time env vars
+ARG ARG_NEXT_PUBLIC_SITE_URL
+ENV NEXT_PUBLIC_SITE_URL=$ARG_NEXT_PUBLIC_SITE_URL
+RUN echo "NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL"
+
+ARG ARG_NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_API_URL=$ARG_NEXT_PUBLIC_API_URL
+RUN echo "NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL"
+
+# Build the project
+RUN pnpm turbo build
+
+# ...
+```
+
+**.github/workflows/build-push-docker-image.yml**
+
+```yml title=".github/workflows/build-push-docker-image.yml"
+# .github/workflows/build-push-docker-image.yml
+
+name: Build and push Docker frontend
+
+on:
+  push:
+    branches:
+      - 'main'
+  workflow_dispatch:
+
+env:
+  IMAGE_NAME: ${{ github.event.repository.name }}-frontend
+  # THIS: set build time env vars
+  NEXT_PUBLIC_SITE_URL: 'https://full-stack-fastapi-template-nextjs.arm1.nemanjamitic.com'
+  NEXT_PUBLIC_API_URL: 'https://api.full-stack-fastapi-template-nextjs.arm1.nemanjamitic.com'
+
+jobs:
+  build:
+    name: Build and push docker image
+    runs-on: ubuntu-latest
+    steps:
+
+    # ...
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          file: ./frontend/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          progress: plain
+          # THIS: set build time args
+          build-args: |
+            "ARG_NEXT_PUBLIC_SITE_URL=${{ env.NEXT_PUBLIC_SITE_URL }}"
+            "ARG_NEXT_PUBLIC_API_URL=${{ env.NEXT_PUBLIC_API_URL }}"
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+      
+```
+
+**package.json**
+
+```json title="frontend/package.json"
+// frontend/package.json
+
+{
+  "name": "full-stack-fastapi-template-nextjs",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "standalone": "turbo run standalone --filter web",
+    // THIS: set build time args
+    "docker:build:x86": "docker buildx build -f ./Dockerfile -t nemanjamitic/full-stack-fastapi-template-nextjs-frontend --build-arg ARG_NEXT_PUBLIC_SITE_URL='full-stack-fastapi-template-nextjs.local.nemanjamitic.com' --build-arg ARG_NEXT_PUBLIC_API_URL='api.full-stack-fastapi-template-nextjs.local.nemanjamitic.com' --platform linux/amd64 ."
+
+  // ...
+
+  },
+
+  // ...
+
+}
+```
+
+In the code above we can see that our Next.js app requires `NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_API_URL` environment variables at build time. Those values will be inlined in the bundle at build time and can't be changed later. Meaning `Dockerfile` must pass them as corresponding `ARG_NEXT_PUBLIC_SITE_URL` and `ARG_NEXT_PUBLIC_API_URL` build args while building the image. 
+
+Leaving them undefined would break the build because they are validated with Zod inside the Next.js app and validation will run at both build and run time. Stripping the `NEXT_PUBLIC_` prefix would break the build even without Zod if they are used in client code.
+
+Consequently we need to pass those build args whenever we build Docker image, e.g. Github Actions and `package.json` local build script.
+
+Using this method we would get a functional Docker image, but with one major drawback: **it can be used only in a single environment** since the values `NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_API_URL`  are baked into the image at build time and immutable.
+
+To expand more on this to be crystal clear, whatever we set for `NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_API_URL` environment variables at runtime will be ignored because they don't even exist in the Next.js app anymore. After the build they are replaced with string literals in the JavaScript bundle.
+
+If beside the production you also have staging, preview and testing environments or other production mirrors you would need to maintain a separate image with its own configuration code, build process and registry storage for each of them. Meaning - a lot of overhead.
+
+A lot of people finds this unpractical, you can witness this by popularity of such issues on Next.js repository:
+
+[Better support for runtime environment variables. #44628](https://github.com/vercel/next.js/discussions/44628)
+
+[docker image with NEXT_PUBLIC_ env variables #17641](https://github.com/vercel/next.js/discussions/17641)
+
+## The solution - run-time environment variables
+
+The solution is obvious - we should prevent any use of build-time (stale, immutable) variables and read everything from the target environment at runtime. It also means no `NEXT_PUBLIC_*` client variables.
+
+To implement this we must be well aware where and when a given component runs:
+
+1. Server component - runs on server, generated at build-time or at request-time
+2. Static page - runs on server, generated once at build-time
+3. Client component - runs in browser, generated at build-time or at request-time
+
+### Server component
+
+These components (or entire pages) are dynamically rendered on each request. They have access to any server data, including public and private environment variables. No action is needed. In Next.js we identify such components by usage of request resources such as cookies, headers, connection:
+
+```ts
+import { cookies, headers } from 'next/headers';
+import { connection } from 'next/server';
+
+export default async function Page() {
+  const headersList = await headers();
+  const cookiesList = await cookies();
+
+  await connection(); // void
+}
+```
+
+### Static page
+
+Such page is pre-rendered once at build-time in build environment. It has access to server data but it's converted to static asset at build-time and it's immutable at runtime. We have 2 options: 
+
+1. Convert it to dynamic page that is rendered on server on each request.
+
+```ts
+import { connection } from 'next/server';
+
+export default async function Page() {
+
+  // opt into dynamic rendering
+  await connection();
+
+  // ...
+}
+```
+
+2. Set __placeholder values__ for variables at build-time and perform string replace directly on generated static HTML with `sed` and shell script included in `ENTRYPOINT ["scripts/entrypoint.sh"]` in Dockerfile. 
+
+Note, these will be **start-time** variables, not true __run-time__ variables, but most of the time that is sufficient because they are unique per each environment. Although they can't change during the app run-time at any arbitrary point once initialized.
+
+We won't get into much detail about this method, maybe it's a good subject for some future article since it's quite useful for static, presentational websites. If you want to read more, here is the one interesting, practical tutorial https://phase.dev/blog/nextjs-public-runtime-variables/.
+
+### Client component
+
+Next.js prevents exposing any variables to client without prefix `NEXT_PUBLIC_` but as those are inlined at build-time we simply won't use them. For exposing environment variables to client components we have a few options:
+
+1. Pass variables as props from the parent server component like any other value. Simple and convenient.
+2. Inside the dynamically generated root layout render `<script />` tag that injects `window.__RUNTIME_ENV__` prop into the global `window` DOM object using `dangerouslySetInnerHTML` attribute. We will actually use this method. Then on the client we can access variables on the `window` object, e.g. `window.__RUNTIME_ENV__.API_URL`
+
+Also this is a good moment to validate runtime vars with Zod. 
+
+Here is the illustration code bellow:
+
+```tsx title="app/layout.tsx"
+// app/layout.tsx
+
+import { connection } from 'next/server';
+
+export const runtimeEnvSchema = z.object({
+  SITE_URL: z.url().regex(/[^/]$/, 'SITE_URL should not end with a slash "/"'),
+  API_URL: z.url().regex(/[^/]$/, 'API_URL should not end with a slash "/"'),
+});
+
+const RootLayout: FC<Props> = async ({ children }) => {
+  await connection();
+  
+  const runtimeEnvData = {
+    SITE_URL: process.env.SITE_URL,
+    API_URL: process.env.API_URL,
+  };
+
+  // validate vars with Zod before injecting
+  const parsedRuntimeEnv = runtimeEnvSchema.safeParse(runtimeEnvData);
+
+  // if invalid vars abort
+  if (!parsedRuntimeEnv.success) throw new Error('Invalid runtime environment variable found...');
+
+  const runtimeEnv = parsedRuntimeEnv.data;
+
+  return (
+    <html lang="en">
+      <body>
+        {/* Inline JSON injection */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.__RUNTIME_ENV__ = ${JSON.stringify(runtimeEnv)};`,
+          }}
+        />
+
+        {children}
+      </body>
+    </html>
+  );
+}
+```
+3. Same like for static pages set __placeholder values__ and `sed` replace them with shell script inside the JavaScript bundle on container start.
+4. Expose variables through dynamic API endpoint and perform HTTP fetch in client components. Legitimate method, note that it will make variables async values. 
+
+We can see from this that first 2 methods are the simplest and most convenient so we will use those.
+
+**Note:** Whenever an environment variable is available on the client it is public by default. Make sure that you don't expose any secrets to the client.
+
+### `alizeait/next-public-env` package
+
+We could do this manually as in the snippet above but there is already [alizeait/next-public-env](https://github.com/alizeait/next-public-env) package that does all this but also does some more advanced handling.
+
+Check these 2 files for example:
+
+- [src/server/FlushConfig.tsx](https://github.com/alizeait/next-public-env/blob/master/packages/next-public-env/src/server/FlushConfig.tsx)
+- [src/server/index.tsx#L130](https://github.com/alizeait/next-public-env/blob/master/packages/next-public-env/src/server/index.tsx#L130)
+
+Usage is obvious and straight forward, just define Zod schema, mount `<PublicEnv />` in the root layout and use `getPublicEnv()` to access variables wherever you want.
+
+You can see bellow how I did it:
+
+```bash
+# install package
+
+pnpm add next-public-env
+```
+
+[frontend/apps/web/src/config/process-env.ts](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/config/process-env.ts)
+
+```ts title="frontend/apps/web/src/config/process-env.ts"
+// frontend/apps/web/src/config/process-env.ts
+
+/** Exports RUNTIME env. Must NOT call getPublicEnv() in global scope. */
+export const { getPublicEnv, PublicEnv } = createPublicEnv(
+  {
+    NODE_ENV: process.env.NODE_ENV,
+    SITE_URL: process.env.SITE_URL,
+    API_URL: process.env.API_URL,
+  },
+  { schema: (z) => getProcessEnvSchemaProps(z) }
+);
+```
+
+[frontend/apps/web/src/schemas/config.ts](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/schemas/config.ts)
+
+```ts title="frontend/apps/web/src/schemas/config.ts"
+// frontend/apps/web/src/schemas/config.ts
+
+import { z } from 'zod';
+
+export const nodeEnvValues = ['development', 'test', 'production'] as const;
+
+type ZodType = typeof z;
+
+/** For runtime env. */
+export const getProcessEnvSchemaProps = (z: ZodType) => ({
+  NODE_ENV: z.enum(nodeEnvValues),
+  SITE_URL: z.url().regex(/[^/]$/, 'SITE_URL should not end with a slash "/"'),
+  API_URL: z.url().regex(/[^/]$/, 'API_URL should not end with a slash "/"'),
+});
+
+/** For schema type. */
+export const processEnvSchema = z.object(getProcessEnvSchemaProps(z));
+```
+
+[frontend/apps/web/src/app/layout.tsx](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/app/layout.tsx)
+
+```tsx title="frontend/apps/web/src/app/layout.tsx"
+// frontend/apps/web/src/app/layout.tsx
+
+import { PublicEnv } from '@/config/process-env';
+
+interface Props {
+  children: ReactNode;
+}
+
+const RootLayout: FC<Props> = ({ children }) => (
+  <html lang="en" suppressHydrationWarning>
+    <body className={fontInter.className}>
+      <PublicEnv />
+      <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+        {/* Slot with server components */}
+        {children}
+        <Toaster />
+      </ThemeProvider>
+    </body>
+  </html>
+);
+
+export default RootLayout;
+```
+
+And example usage, e.g. in `instrumentation.ts` to log runtime values of all environment variables for debugging purposes:
+
+[frontend/apps/web/src/instrumentation.ts](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/instrumentation.ts)
+
+```ts title="frontend/apps/web/src/instrumentation.ts"
+// frontend/apps/web/src/instrumentation.ts
+
+/** Runs only once on server start. */
+
+/** Log loaded env vars. */
+export const register = async () => {
+  if (process.env.NEXT_RUNTIME === 'nodejs') {
+    const { prettyPrintObject } = await import('@/utils/log');
+    const { getPublicEnv } = await import('@/config/process-env');
+
+    prettyPrintObject(getPublicEnv(), 'Runtime process.env');
+  }
+};
+```
+
+#### Usage for `baseUrl` for OpenAPI client
+
+This is another typical and very important spot for usage of the `API_URL` environment variable. What makes it tricky is that it's included and runs on both server and in browser but it's defined in a single place. 
+
+But `alizeait/next-public-env` resolves this complexity very well on its own and you can simply use `getPublicEnv()` to get the `API_URL` value and let the package handle the rest.
+
+[frontend/apps/web/src/lib/hey-api.ts](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/lib/hey-api.ts)
+
+```ts title="frontend/apps/web/src/lib/hey-api.ts"
+// frontend/apps/web/src/lib/hey-api.ts
+
+import { getPublicEnv } from '@/config/process-env';
+
+/** Runtime config. Runs and imported both on server and in browser. */
+export const createClientConfig: CreateClientConfig = (config) => {
+  const { API_URL } = getPublicEnv();
+
+  return {
+    ...config,
+    baseUrl: API_URL,
+    credentials: 'include',
+    ...(isServer() ? { fetch: serverFetch } : {}),
+  };
+};
+```
+
+## Build and deploy reusable Docker image
+
+### Building
+
+Now that we eliminated all build-time variables by converting them to run-time environment variables we can simply remove all build args and env vars from `Dockerfile`, Github Actions build workflow, `package.json` build scripts. etc.
+
+**Note:** During the build phase of Next.js app, global scope is also invoked, so if you have any reads of environment variables, e.g. `process.env.MY_VAR_XXX` your code must be capable to handle default `undefined` value without throwing exceptions, since it will break the build.
+
+**Tip:** To access env vars always use `getPublicEnv()` inside the components and functions. Never call `getPublicEnv()` or read `process.env` in the global scope, this you won't need to handle `undefined` env vars explicitly for build to pass.
+
+Simply remove all build args and build time enviroment variables from `Dockerfile`:
+
+```bash title="frontend/Dockerfile"
+# frontend/Dockerfile
+
+# Not needed anymore, remove all build args
+ARG ARG_NEXT_PUBLIC_SITE_URL
+ENV NEXT_PUBLIC_SITE_URL=$ARG_NEXT_PUBLIC_SITE_URL
+RUN echo "NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL"
+
+ARG ARG_NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_API_URL=$ARG_NEXT_PUBLIC_API_URL
+RUN echo "NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL"
+```
+
+This is the cleaned up `Dockerfile` that I am using to build Next.js app inside the monorepo: [frontend/Dockerfile](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/Dockerfile).
+
+Also, don't forget to clean up unused build args from Github Actions workflow and `package.json` scripts for building Docker image, you can see mines: [.github/workflows/build-push-frontend.yml](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/.github/workflows/build-push-frontend.yml), [frontend/package.json](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/package.json).
+
+```json title="frontend/package.json"
+// frontend/package.json
+
+  "scripts": {
+    "docker:build:x86": "docker buildx build -f ./Dockerfile -t nemanjamitic/full-stack-fastapi-template-nextjs-frontend --platform linux/amd64 ."
+  },
+```
+
+### Deployment
+
+Once built, you can use that image to deploy to any environment. Naturally, you need to define and pass all runtime environment variables into Docker container. In your `docker-compose.yml` use `env-files:` or `environment:` keys.
+
+```yml title="apps/full-stack-fastapi-template-nextjs/docker-compose.yml"
+# apps/full-stack-fastapi-template-nextjs/docker-compose.yml
+
+services:
+  frontend:
+    image: nemanjamitic/full-stack-fastapi-template-nextjs-frontend:latest
+    container_name: full-stack-fastapi-template-nextjs-frontend
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - PORT=3000
+    
+    # ...
+```
+
+```bash title="apps/full-stack-fastapi-template-nextjs/.env"
+# apps/full-stack-fastapi-template-nextjs/.env
+
+SITE_URL=https://full-stack-fastapi-template-nextjs.arm1.nemanjamitic.com
+API_URL=https://api-full-stack-fastapi-template-nextjs.arm1.nemanjamitic.com
+NODE_ENV=production
+
+# ...
+```
+
+You can see `docker-compose.yml` and `.env` I am using here: [apps/full-stack-fastapi-template-nextjs/docker-compose.yml](https://github.com/nemanjam/traefik-proxy/blob/main/apps/full-stack-fastapi-template-nextjs/docker-compose.yml), [apps/full-stack-fastapi-template-nextjs/.env.example](https://github.com/nemanjam/traefik-proxy/blob/main/apps/full-stack-fastapi-template-nextjs/.env.example)
+
+## Alternative approaches
+// static site and shell sed or ssr
+// deployment static Nginx or Node.js runtime
+
+## Completed code
+
+- **Next.js app repository:** https://github.com/nemanjam/full-stack-fastapi-template-nextjs/tree/main/frontend/apps/web
+- **Deployment repository:** https://github.com/nemanjam/traefik-proxy/tree/main/apps/full-stack-fastapi-template-nextjs
+
+The relevant files:
+
+```bash
+# 1. Next.js app repo
+
+# https://github.com/nemanjam/full-stack-fastapi-template-nextjs/tree/e990a3e29b7af60831851ff6f909c34df6a7f800
+
+git checkout e990a3e29b7af60831851ff6f909c34df6a7f800
+
+# run-time vars configuration
+frontend/apps/web/src/config/process-env.ts
+frontend/apps/web/src/schemas/config.ts
+frontend/apps/web/src/app/layout.tsx
+
+# usages
+frontend/apps/web/src/instrumentation.ts
+frontend/apps/web/src/lib/hey-api.ts
+
+# 2. Deployment repo
+
+# https://github.com/nemanjam/traefik-prox/tree/f3c087184e851db20e65409a6dd145767dd9bc2b
+
+git checkout f3c087184e851db20e65409a6dd145767dd9bc2b
+
+apps/full-stack-fastapi-template-nextjs/docker-compose.yml
+apps/full-stack-fastapi-template-nextjs/.env.example
+```
+
+<Image {...IMAGE_SIZES.FIXED.MDX_MD} src={NextjsAppLogImage} alt="Next.js app log" />
+
+## References
+
+
+// todo:
+env vars same for all envs can remain NEXT_PUBLIC_
+add urls with git hash **Dockerfile**
+
