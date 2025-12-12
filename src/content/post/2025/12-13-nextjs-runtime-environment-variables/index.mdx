@@ -20,7 +20,7 @@ At first glance, you might think of environment variables as just a few values n
 
 Let's identify a few dimensions that any environment variable can have:
 
-1. **When:** build-time, start-time, runtime
+1. **When:** build-time, start-time, run-time
 2. **Where:** server (static, SSR (request), ISR), client
 3. **Visibility:** public, private
 4. **Requirement:** optional, required
@@ -165,7 +165,7 @@ A lot of people finds this unpractical, you can witness this by popularity of su
 
 [docker image with NEXT_PUBLIC_ env variables #17641](https://github.com/vercel/next.js/discussions/17641)
 
-## The solution - run-time environment variables
+## The solution: run-time environment variables
 
 The solution is obvious - we should prevent any use of build-time (stale, immutable) variables and read everything from the target environment at runtime. It also means no `NEXT_PUBLIC_*` client variables.
 
