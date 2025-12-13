@@ -163,17 +163,17 @@ Many people find this impractical, which you can see from the popularity of such
 
 ## The solution: run-time environment variables
 
-The solution is obvious - we should prevent any use of build-time (stale, immutable) variables and read everything from the target environment at runtime. It also means no `NEXT_PUBLIC_*` client variables.
+The solution is obvious: we should prevent any use of build-time (stale, immutable) variables and read everything from the target environment at runtime. This also means avoiding any `NEXT_PUBLIC_*` client variables.
 
-To implement this we must be well aware where and when a given component runs:
+To implement this, we must be well aware of where and when a given component runs:
 
-1. Server component - runs on server, generated at build-time or at request-time
-2. Static page - runs on server, generated once at build-time
-3. Client component - runs in browser, generated at build-time or at request-time
+1. Server component - runs on the server, generated at build time or at request time
+2. Static page - runs on the server, generated once at build time
+3. Client component - runs in the browser, generated at build time or at request time
 
 ### Server component
 
-These components (or entire pages) are dynamically rendered on each request. They have access to any server data, including public and private environment variables. No action is needed. In Next.js we identify such components by usage of request resources such as cookies, headers, connection:
+These components (or entire pages) are dynamically rendered on each request. They have access to any server data, including both public and private environment variables. No additional action is needed. In Next.js, we identify such components by their use of request resources such as cookies, headers, and connection:
 
 ```ts
 import { cookies, headers } from 'next/headers';
@@ -189,9 +189,9 @@ export default async function Page() {
 
 ### Static page
 
-Such page is pre-rendered once at build-time in build environment. It has access to server data but it's converted to static asset at build-time and it's immutable at runtime. We have 2 options: 
+Such a page is pre-rendered once at build time in the build environment. It has access to server data, but it is converted to a static asset at build time and is immutable at runtime. We have two options:
 
-1. Convert it to dynamic page that is rendered on server on each request.
+1. Convert it to a dynamic page that is rendered on the server on each request.
 
 ```ts
 import { connection } from 'next/server';
@@ -205,18 +205,18 @@ export default async function Page() {
 }
 ```
 
-2. Set __placeholder values__ for variables at build-time and perform string replace directly on generated static HTML with `sed` and shell script included in `ENTRYPOINT ["scripts/entrypoint.sh"]` in Dockerfile. 
+2. Set __placeholder values__ for variables at build time and perform string replacement directly on the generated static HTML using `sed` or `envsubst` and a shell script included in `ENTRYPOINT ["scripts/entrypoint.sh"]` in the Dockerfile.
 
-    Note, these will be **start-time** variables, not true __run-time__ variables, but most of the time that is sufficient because they are unique per each environment. Although they can't change during the app run-time at any arbitrary point once initialized.
+    Note that these will be **start-time** variables, not true __run-time__ variables, but most of the time that is sufficient because they are unique to each environment. However, they cannot change during the app's run time once initialized.
 
-    We won't get into much detail about this method, maybe it's a good subject for some future article since it's quite useful for static, presentational websites. If you want to read more, here is the one interesting, practical tutorial https://phase.dev/blog/nextjs-public-runtime-variables/.
+    We won't go into much detail about this method, it could be a good topic for a future article since it is quite useful for static, presentational websites. If you want to read more, here is an interesting and practical tutorial: https://phase.dev/blog/nextjs-public-runtime-variables/.
 
 ### Client component
 
-Next.js prevents exposing any variables to client without prefix `NEXT_PUBLIC_` but as those are inlined at build-time we simply won't use them. For exposing environment variables to client components we have a few options:
+Next.js prevents exposing any variables to the client without the `NEXT_PUBLIC_` prefix, but since those are inlined at build time, we simply won't use them. For exposing environment variables to client components, we have a few options:
 
-1. Pass variables as props from the parent server component like any other value. Simple and convenient.
-2. Inside the dynamically generated root layout render `<script />` tag that injects `window.__RUNTIME_ENV__` prop into the global `window` DOM object using `dangerouslySetInnerHTML` attribute. We will actually use this method. Then on the client we can access variables on the `window` object, e.g. `window.__RUNTIME_ENV__.API_URL`
+1. Pass variables as props from the parent server component like any other value. This is simple and convenient.
+2. Inside the dynamically generated root layout, render a `<script />` tag that injects a `window.__RUNTIME_ENV__` property into the global `window` object using the `dangerouslySetInnerHTML` attribute. We will actually use this method. Then, on the client, we can access the variables on the `window` object, for example `window.__RUNTIME_ENV__.API_URL`.
 
     Also this is a good moment to validate runtime vars with Zod. 
 
@@ -262,12 +262,12 @@ const RootLayout: FC<Props> = async ({ children }) => {
   );
 }
 ```
-3. Same like for static pages set __placeholder values__ and `sed` replace them with shell script inside the JavaScript bundle on container start.
-4. Expose variables through dynamic API endpoint and perform HTTP fetch in client components. Legitimate method, note that it will make variables async values. 
+3. Same as for static pages: set __placeholder values__ and use `sed` to replace them with a shell script inside the JavaScript bundle when the container starts.  
+4. Expose variables through a dynamic API endpoint and perform an HTTP fetch in client components. This is a legitimate method, but note that it will make the variables asynchronous.
 
-We can see from this that first 2 methods are the simplest and most convenient so we will use those.
+We can see from this that the first two methods are the simplest and most convenient, so we will use them.
 
-**Note:** Whenever an environment variable is available on the client it is public by default. Make sure that you don't expose any secrets to the client.
+**Note:** Whenever an environment variable is available on the client, it is public by default. Make sure not to expose any secrets to the client.
 
 ### `alizeait/next-public-env` package
 
