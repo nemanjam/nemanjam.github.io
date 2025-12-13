@@ -481,8 +481,85 @@ NODE_ENV=production
 You can see `docker-compose.yml` and `.env` I am using here: [apps/full-stack-fastapi-template-nextjs/docker-compose.yml](https://github.com/nemanjam/traefik-proxy/blob/main/apps/full-stack-fastapi-template-nextjs/docker-compose.yml), [apps/full-stack-fastapi-template-nextjs/.env.example](https://github.com/nemanjam/traefik-proxy/blob/main/apps/full-stack-fastapi-template-nextjs/.env.example)
 
 ## Alternative approaches
-// static site and shell sed or ssr
-// deployment static Nginx or Node.js runtime
+
+In [Static page](#static-page) section I already said few notes about runtime variables and static websites. Indeed, you have 2 options for runtime variables: 
+
+1. Convert the website from static to dynamically rendered SSR (render at request time). Note, that this is significant change, from that point your website will require Node.js runtime and this will greatly impact your deployment options, since you can no longer use static hosting.
+
+This is overkill just for the purpose of having runtime environment variables, use it only if your website has additional reasons to use SSR.
+
+2. String replace directly on bundle assets with `sed`, `envsubst`, etc. This is the right direction to go. There are more options, like Nginx `subs_filter` config option, but be careful with it, it runs on each request and will waste CPU.
+
+Another option to think of is to use `./env.js` file instead of usual `.env`, then you can host it with Nginx and load it as a `<script src="./env.js" />` into the app. Then you can reference variables with `window.__RUNTIME_ENV__.MY_VAR`. 
+
+Note, this won't work well for usages in pure HTML pages. For example Astro omits any client JavaScript by default and you would need to use additional inline `<script />` tag to update the HTML with e.g. `getElementById("my-id")?.textContent = window.__RUNTIME_ENV__.MY_VAR` which is less optimal than string replace method.
+
+Here is a quick, approximate code for illustration:
+
+```ts title="env.js"
+// define variables
+
+window.__RUNTIME_ENV__ = {
+  SITE_URL: "https://my-static-website.com",
+  PLAUSIBLE_DOMAIN: 'my-static-website.com',
+  PLAUSIBLE_SCRIPT_URL: 'https://plausible.my-server.com/js/script.js',
+};
+```
+
+```yml title="docker-compose.yml"
+# mount and host env.js file
+
+my-static-website:
+  image: nginx:1.29.1-alpine3.22-slim
+  container_name: my-static-website
+  restart: unless-stopped
+  volumes:
+    - ./website:/usr/share/nginx/html
+    - ./env.js:/usr/share/nginx/html/env.js # this
+    - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+
+  # ...
+```
+
+```html title="src/components/BaseHead.astro"
+<!-- Load env.js file -->
+
+<head>
+  <meta charset="UTF-8" />
+  <title>My static website</title>
+
+  <script src="./env.js"></script>
+
+  <!-- ... -->
+</head>
+```
+
+```html title="src/components/MyComponent.astro"
+<!-- example usage -->
+
+<!-- example 1: assign var to text content -->
+<span id="my-element"></span>
+
+<script>
+  const mySpan = document.getElementById('my-element');
+  mySpan.textContent = window.__RUNTIME_ENV__.MY_VAR;
+</script>
+
+<!-- example 2: assign var to script attribute -->
+<script>
+  const script = document.createElement("script");
+  script.defer = true;
+  script.type = "text/partytown";
+
+  // dynamically set attributes from runtime env
+  script.dataset.domain = window.__RUNTIME_ENV__.PLAUSIBLE_DOMAIN;
+  script.src = window.__RUNTIME_ENV__.PLAUSIBLE_SCRIPT_URL;
+
+  document.head.appendChild(script);
+</script>
+```
+
+So, to conclude, the best way is to use shell script `sed` or `envsubst` and add it to the Nginx `Dockerfile` `ENTRYPOINT` or `docker-compose.yml` `command:`. Here is the link to the already mentioned practical tutorial again https://phase.dev/blog/nextjs-public-runtime-variables/.
 
 ## Completed code
 
@@ -526,7 +603,5 @@ apps/full-stack-fastapi-template-nextjs/.env.example
 - Runtime variables for static website, tutorial https://phase.dev/blog/nextjs-public-runtime-variables/
 - Runtime Environment Variables in Next.js, concise overview https://dt.in.th/NextRuntimeEnv
 
-// todo:
-        env vars same for all envs can remain NEXT_PUBLIC_
-        add urls with git hash **Dockerfile**
+
 
