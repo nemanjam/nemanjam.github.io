@@ -38,11 +38,9 @@ If you search Next.js docs you will find a [guide](https://nextjs.org/docs/app/g
 
 The common scenario after reading the docs is to just be aware of `NEXT_PUBLIC_` and server variables and scatter them around the codebase. If you use Docker and Github Actions you will typically end up with something like the this:
 
-[full-stack-fastapi-template-nextjs/blob/11c8a512f57e937aa623776418fa4cfb1e9b4dc4/frontend/Dockerfile](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/11c8a512f57e937aa623776418fa4cfb1e9b4dc4/frontend/Dockerfile)
+[11c8a512.../frontend/Dockerfile](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/11c8a512f57e937aa623776418fa4cfb1e9b4dc4/frontend/Dockerfile)
 
 ```bash title="frontend/Dockerfile"
-# frontend/Dockerfile
-
 # Next.js app installer stage
 FROM base AS installer
 RUN apk update
@@ -79,11 +77,9 @@ RUN pnpm turbo build
 # ...
 ```
 
-[full-stack-fastapi-template-nextjs/blob/11c8a512f57e937aa623776418fa4cfb1e9b4dc4/.github/workflows/build-push-frontend.yml](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/11c8a512f57e937aa623776418fa4cfb1e9b4dc4/.github/workflows/build-push-frontend.yml)
+[11c8a512.../.github/workflows/build-push-frontend.yml](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/11c8a512f57e937aa623776418fa4cfb1e9b4dc4/.github/workflows/build-push-frontend.yml)
 
 ```yml title=".github/workflows/build-push-docker-image.yml"
-# .github/workflows/build-push-docker-image.yml
-
 name: Build and push Docker frontend
 
 on:
@@ -122,11 +118,9 @@ jobs:
       
 ```
 
-[full-stack-fastapi-template-nextjs/blob/11c8a512f57e937aa623776418fa4cfb1e9b4dc4/frontend/package.json](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/11c8a512f57e937aa623776418fa4cfb1e9b4dc4/frontend/package.json)
+[11c8a512.../frontend/package.json](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/11c8a512f57e937aa623776418fa4cfb1e9b4dc4/frontend/package.json)
 
 ```json title="frontend/package.json"
-// frontend/package.json
-
 {
   "name": "full-stack-fastapi-template-nextjs",
   "version": "0.0.1",
@@ -229,8 +223,6 @@ Also this is a good moment to validate runtime vars with Zod.
 Here is the illustration code bellow:
 
 ```tsx title="app/layout.tsx"
-// app/layout.tsx
-
 import { connection } from 'next/server';
 
 export const runtimeEnvSchema = z.object({
@@ -299,8 +291,6 @@ pnpm add next-public-env
 [frontend/apps/web/src/config/process-env.ts](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/config/process-env.ts)
 
 ```ts title="frontend/apps/web/src/config/process-env.ts"
-// frontend/apps/web/src/config/process-env.ts
-
 /** Exports RUNTIME env. Must NOT call getPublicEnv() in global scope. */
 export const { getPublicEnv, PublicEnv } = createPublicEnv(
   {
@@ -315,8 +305,6 @@ export const { getPublicEnv, PublicEnv } = createPublicEnv(
 [frontend/apps/web/src/schemas/config.ts](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/schemas/config.ts)
 
 ```ts title="frontend/apps/web/src/schemas/config.ts"
-// frontend/apps/web/src/schemas/config.ts
-
 import { z } from 'zod';
 
 export const nodeEnvValues = ['development', 'test', 'production'] as const;
@@ -337,8 +325,6 @@ export const processEnvSchema = z.object(getProcessEnvSchemaProps(z));
 [frontend/apps/web/src/app/layout.tsx](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/app/layout.tsx)
 
 ```tsx title="frontend/apps/web/src/app/layout.tsx"
-// frontend/apps/web/src/app/layout.tsx
-
 import { PublicEnv } from '@/config/process-env';
 
 interface Props {
@@ -366,8 +352,6 @@ And example usage, e.g. in `instrumentation.ts` to log runtime values of all env
 [frontend/apps/web/src/instrumentation.ts](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/instrumentation.ts)
 
 ```ts title="frontend/apps/web/src/instrumentation.ts"
-// frontend/apps/web/src/instrumentation.ts
-
 /** Runs only once on server start. */
 
 /** Log loaded env vars. */
@@ -390,8 +374,6 @@ But `alizeait/next-public-env` resolves this complexity very well on its own and
 [frontend/apps/web/src/lib/hey-api.ts](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/lib/hey-api.ts)
 
 ```ts title="frontend/apps/web/src/lib/hey-api.ts"
-// frontend/apps/web/src/lib/hey-api.ts
-
 import { getPublicEnv } from '@/config/process-env';
 
 /** Runtime config. Runs and imported both on server and in browser. */
@@ -426,8 +408,6 @@ Now that we eliminated all build-time variables by converting them to run-time e
 Simply remove all build args and build time enviroment variables from `Dockerfile`:
 
 ```bash title="frontend/Dockerfile"
-# frontend/Dockerfile
-
 # Not needed anymore, remove all build args
 ARG ARG_NEXT_PUBLIC_SITE_URL
 ENV NEXT_PUBLIC_SITE_URL=$ARG_NEXT_PUBLIC_SITE_URL
@@ -443,11 +423,9 @@ This is the cleaned up `Dockerfile` that I am using to build Next.js app inside 
 Also, don't forget to clean up unused build args from Github Actions workflow and `package.json` scripts for building Docker image, you can see mines: [.github/workflows/build-push-frontend.yml](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/.github/workflows/build-push-frontend.yml), [frontend/package.json](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/package.json).
 
 ```json title="frontend/package.json"
-// frontend/package.json
-
-  "scripts": {
-    "docker:build:x86": "docker buildx build -f ./Dockerfile -t nemanjamitic/full-stack-fastapi-template-nextjs-frontend --platform linux/amd64 ."
-  },
+"scripts": {
+  "docker:build:x86": "docker buildx build -f ./Dockerfile -t nemanjamitic/full-stack-fastapi-template-nextjs-frontend --platform linux/amd64 ."
+},
 ```
 
 ### Deployment
@@ -455,8 +433,6 @@ Also, don't forget to clean up unused build args from Github Actions workflow an
 Once built, you can use that image to deploy to any environment. Naturally, you need to define and pass all runtime environment variables into Docker container. In your `docker-compose.yml` use `env-files:` or `environment:` keys.
 
 ```yml title="apps/full-stack-fastapi-template-nextjs/docker-compose.yml"
-# apps/full-stack-fastapi-template-nextjs/docker-compose.yml
-
 services:
   frontend:
     image: nemanjamitic/full-stack-fastapi-template-nextjs-frontend:latest
@@ -471,8 +447,6 @@ services:
 ```
 
 ```bash title="apps/full-stack-fastapi-template-nextjs/.env"
-# apps/full-stack-fastapi-template-nextjs/.env
-
 SITE_URL=https://full-stack-fastapi-template-nextjs.arm1.nemanjamitic.com
 API_URL=https://api-full-stack-fastapi-template-nextjs.arm1.nemanjamitic.com
 NODE_ENV=production
@@ -606,9 +580,14 @@ apps/full-stack-fastapi-template-nextjs/.env.example
 - Runtime Environment Variables in Next.js, concise overview https://dt.in.th/NextRuntimeEnv
 
 
+{/*
+
 // todo:
-remove comment file path
+        remove comment file path
+        remove git hash from link text 
 fix list paragraphs indentation
-remove git hash from link text
+check grammar
+
+*/}
 
 
