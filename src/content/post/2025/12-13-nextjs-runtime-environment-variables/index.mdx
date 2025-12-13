@@ -32,7 +32,7 @@ There are probably more, but this is enough to understand why it can be challeng
 
 ## Next.js environment variables
 
-If you search the Next.js docs, you will find a [guide](https://nextjs.org/docs/app/guides/environment-variables#runtime-environment-variables) on environment variables, such as `.env*` filenames that are loaded by default, their load order and priority, variable expansion, and exposing and inlining variables with the `NEXT_PUBLIC_` prefix into the client. In the self-hosting [guide](https://nextjs.org/docs/app/guides/self-hosting#environment-variables), you will also find a paragraph about opting into dynamic rendering so that variable values are read on each server component render, not just once at build time, and how this is useful for reusable Docker images.
+If you search the Next.js docs, you will find a [guide on environment variables](https://nextjs.org/docs/app/guides/environment-variables#runtime-environment-variables), such as `.env*` filenames that are loaded by default, their load order and priority, variable expansion, and exposing and inlining variables with the `NEXT_PUBLIC_` prefix into the client. In the [self-hosting guide](https://nextjs.org/docs/app/guides/self-hosting#environment-variables), you will also find a paragraph about opting into dynamic rendering so that variable values are read on each server component render, not just once at build time, and how this is useful for reusable Docker images.
 
 ## The problem with build-time environment variables
 
