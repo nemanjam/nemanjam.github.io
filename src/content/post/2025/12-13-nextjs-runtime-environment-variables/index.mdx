@@ -207,9 +207,9 @@ export default async function Page() {
 
 2. Set __placeholder values__ for variables at build-time and perform string replace directly on generated static HTML with `sed` and shell script included in `ENTRYPOINT ["scripts/entrypoint.sh"]` in Dockerfile. 
 
-Note, these will be **start-time** variables, not true __run-time__ variables, but most of the time that is sufficient because they are unique per each environment. Although they can't change during the app run-time at any arbitrary point once initialized.
+    Note, these will be **start-time** variables, not true __run-time__ variables, but most of the time that is sufficient because they are unique per each environment. Although they can't change during the app run-time at any arbitrary point once initialized.
 
-We won't get into much detail about this method, maybe it's a good subject for some future article since it's quite useful for static, presentational websites. If you want to read more, here is the one interesting, practical tutorial https://phase.dev/blog/nextjs-public-runtime-variables/.
+    We won't get into much detail about this method, maybe it's a good subject for some future article since it's quite useful for static, presentational websites. If you want to read more, here is the one interesting, practical tutorial https://phase.dev/blog/nextjs-public-runtime-variables/.
 
 ### Client component
 
@@ -218,9 +218,9 @@ Next.js prevents exposing any variables to client without prefix `NEXT_PUBLIC_` 
 1. Pass variables as props from the parent server component like any other value. Simple and convenient.
 2. Inside the dynamically generated root layout render `<script />` tag that injects `window.__RUNTIME_ENV__` prop into the global `window` DOM object using `dangerouslySetInnerHTML` attribute. We will actually use this method. Then on the client we can access variables on the `window` object, e.g. `window.__RUNTIME_ENV__.API_URL`
 
-Also this is a good moment to validate runtime vars with Zod. 
+    Also this is a good moment to validate runtime vars with Zod. 
 
-Here is the illustration code bellow:
+    Here is the illustration code bellow:
 
 ```tsx title="app/layout.tsx"
 import { connection } from 'next/server';
@@ -462,7 +462,7 @@ In [Static page](#static-page) section I already said few notes about runtime va
 
 1. Convert the website from static to dynamically rendered SSR (render at request time). Note, that this is significant change, from that point your website will require Node.js runtime and this will greatly impact your deployment options, since you can no longer use static hosting.
 
-This is overkill just for the purpose of having runtime environment variables, use it only if your website has additional reasons to use SSR.
+    This is overkill just for the purpose of having runtime environment variables, use it only if your website has additional reasons to use SSR.
 
 2. String replace directly on bundle assets with `sed`, `envsubst`, etc. This is the right direction to go. There are more options, like Nginx `subs_filter` config option, but be careful with it, it runs on each request and will waste CPU.
 
@@ -585,7 +585,7 @@ apps/full-stack-fastapi-template-nextjs/.env.example
 // todo:
         remove comment file path
         remove git hash from link text 
-fix list paragraphs indentation
+        fix list paragraphs indentation
 check grammar
 
 */}
