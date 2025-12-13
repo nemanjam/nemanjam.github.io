@@ -271,14 +271,14 @@ We can see from this that the first two methods are the simplest and most conven
 
 ### `alizeait/next-public-env` package
 
-We could do this manually as in the snippet above but there is already [alizeait/next-public-env](https://github.com/alizeait/next-public-env) package that does all this but also does some more advanced handling.
+We could do this manually as shown in the snippet above, but there is already the [alizeait/next-public-env](https://github.com/alizeait/next-public-env) package that handles all of this and also provides some more advanced handling.
 
 Check these 2 files for example:
 
 - [src/server/FlushConfig.tsx](https://github.com/alizeait/next-public-env/blob/master/packages/next-public-env/src/server/FlushConfig.tsx)
 - [src/server/index.tsx#L130](https://github.com/alizeait/next-public-env/blob/master/packages/next-public-env/src/server/index.tsx#L130)
 
-Usage is obvious and straight forward, just define Zod schema, mount `<PublicEnv />` in the root layout and use `getPublicEnv()` to access variables wherever you want.
+Usage is obvious and straightforward: just define a Zod schema, mount `<PublicEnv />` in the root layout, and use `getPublicEnv()` to access the variables wherever you need them.
 
 You can see bellow how I did it:
 
@@ -347,7 +347,7 @@ const RootLayout: FC<Props> = ({ children }) => (
 export default RootLayout;
 ```
 
-And example usage, e.g. in `instrumentation.ts` to log runtime values of all environment variables for debugging purposes:
+An example usage, for instance in `instrumentation.ts`, to log the runtime values of all environment variables for debugging purposes:
 
 [frontend/apps/web/src/instrumentation.ts](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/instrumentation.ts)
 
@@ -367,9 +367,9 @@ export const register = async () => {
 
 #### Usage for `baseUrl` for OpenAPI client
 
-This is another typical and very important spot for usage of the `API_URL` environment variable. What makes it tricky is that it's included and runs on both server and in browser but it's defined in a single place. 
+This is another typical and very important spot for using the `API_URL` environment variable. What makes it tricky is that it is included and runs on both the server and in the browser, but it is defined in a single place.
 
-But `alizeait/next-public-env` resolves this complexity very well on its own and you can simply use `getPublicEnv()` to get the `API_URL` value and let the package handle the rest.
+However, `alizeait/next-public-env` resolves this complexity very well on its own, and you can simply use `getPublicEnv()` to get the `API_URL` value while letting the package handle the rest.
 
 [frontend/apps/web/src/lib/hey-api.ts](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/lib/hey-api.ts)
 
@@ -391,21 +391,21 @@ export const createClientConfig: CreateClientConfig = (config) => {
 
 ### Legitimate build-time environment variables
 
-Variables that are same for every environment are ok to be left as `NEXT_PUBLIC_` and let to be inlined in the bundle. Also, they should be versioned in Git (their `.env.*` files). Since it's that way, the best way is to simply store them as TypeScript constants directly in the source anyway, because that's what they truly are - the shared constants.
+Variables that are the same for every environment can be left as `NEXT_PUBLIC_` and inlined into the bundle. They should also be versioned in Git (their `.env.*` files). Since this is the case, the best approach is to store them as TypeScript constants directly in the source, because that is what they truly are - shared constants.
 
 ## Build and deploy reusable Docker image
 
-Build once - deploy everywhere. Single image and `.env` file, no redundancy.
+Build once - deploy everywhere. Use a single image and `.env` file with no redundancy.
 
 ### Building
 
-Now that we eliminated all build-time variables by converting them to run-time environment variables we can simply remove all build args and env vars from `Dockerfile`, Github Actions build workflow, `package.json` build scripts. etc.
+Now that we have eliminated all build-time variables by converting them to run-time environment variables, we can simply remove all build arguments and environment variables from the `Dockerfile`, Github Actions build workflow, `package.json` build scripts, etc.
 
-**Note:** During the build phase of Next.js app, global scope is also invoked, so if you have any reads of environment variables, e.g. `process.env.MY_VAR_XXX` your code must be capable to handle default `undefined` value without throwing exceptions, since it will break the build.
+**Note:** During the build phase of a Next.js app, the global scope is also executed. Therefore, if you read any environment variables, such as `process.env.MY_VAR_XXX`, your code must be able to handle a default `undefined` value without throwing exceptions, as this would break the build.
 
-**Tip:** To access env vars always use `getPublicEnv()` inside the components and functions. Never call `getPublicEnv()` or read `process.env` in the global scope, this you won't need to handle `undefined` env vars explicitly for build to pass.
+**Tip:** To access environment variables, always use `getPublicEnv()` inside components and functions. Never call `getPublicEnv()` or read `process.env` in the global scope, this way, you won't need to handle `undefined` environment variables explicitly for the build to pass.
 
-Simply remove all build args and build time enviroment variables from `Dockerfile`:
+Simply remove all build arguments and build-time environment variables from the `Dockerfile`:
 
 ```bash title="frontend/Dockerfile"
 # Not needed anymore, remove all build args
@@ -420,7 +420,7 @@ RUN echo "NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL"
 
 This is the cleaned up `Dockerfile` that I am using to build Next.js app inside the monorepo: [frontend/Dockerfile](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/Dockerfile).
 
-Also, don't forget to clean up unused build args from Github Actions workflow and `package.json` scripts for building Docker image, you can see mines: [.github/workflows/build-push-frontend.yml](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/.github/workflows/build-push-frontend.yml), [frontend/package.json](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/package.json).
+Also, don't forget to clean up unused build arguments from the Github Actions workflow and `package.json` scripts for building the Docker image. You can see mine here: [.github/workflows/build-push-frontend.yml](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/.github/workflows/build-push-frontend.yml), [frontend/package.json](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/package.json).
 
 ```json title="frontend/package.json"
 "scripts": {
@@ -430,7 +430,7 @@ Also, don't forget to clean up unused build args from Github Actions workflow an
 
 ### Deployment
 
-Once built, you can use that image to deploy to any environment. Naturally, you need to define and pass all runtime environment variables into Docker container. In your `docker-compose.yml` use `env-files:` or `environment:` keys.
+Once built, you can use that image to deploy to any environment. Naturally, you need to define and pass all runtime environment variables into the Docker container. In your `docker-compose.yml`, use the `env_file:` or `environment:` keys.
 
 ```yml title="apps/full-stack-fastapi-template-nextjs/docker-compose.yml"
 services:
@@ -458,17 +458,17 @@ You can see `docker-compose.yml` and `.env` I am using here: [apps/full-stack-fa
 
 ## Alternative approaches
 
-In [Static page](#static-page) section I already said few notes about runtime variables and static websites. Indeed, you have 2 options for runtime variables: 
+In the [Static page](#static-page) section, I already mentioned a few notes about runtime variables and static websites. Indeed, you have two options for runtime variables:
 
-1. Convert the website from static to dynamically rendered SSR (render at request time). Note, that this is significant change, from that point your website will require Node.js runtime and this will greatly impact your deployment options, since you can no longer use static hosting.
+1. Convert the website from static to dynamically rendered SSR (rendered at request time). Note that this is a significant change: from this point, your website will require a Node.js runtime, which will greatly impact your deployment options, as you can no longer use static hosting.
 
-    This is overkill just for the purpose of having runtime environment variables, use it only if your website has additional reasons to use SSR.
+    This is overkill just for the purpose of having runtime environment variables. Use it only if your website has additional reasons to use SSR.
 
-2. String replace directly on bundle assets with `sed`, `envsubst`, etc. This is the right direction to go. There are more options, like Nginx `subs_filter` config option, but be careful with it, it runs on each request and will waste CPU.
+2. Perform string replacement directly on bundle assets using `sed`, `envsubst`, etc. This is the right approach. There are other options, such as the Nginx `subs_filter` config option, but be careful with it, as it runs on each request and can waste CPU.
 
-Another option to think of is to use `./env.js` file instead of usual `.env`, then you can host it with Nginx and load it as a `<script src="./env.js" />` into the app. Then you can reference variables with `window.__RUNTIME_ENV__.MY_VAR`. 
+Another option to consider is using an `./env.js` file instead of the usual `.env`. You can then host it with Nginx and load it into the app using `<script src="./env.js" />`. After that, you can reference the variables with `window.__RUNTIME_ENV__.MY_VAR`.
 
-Note, this won't work well for usages in pure HTML pages. For example Astro omits any client JavaScript by default and you would need to use additional inline `<script />` tag to update the HTML with e.g. `getElementById("my-id")?.textContent = window.__RUNTIME_ENV__.MY_VAR` which is less optimal than string replace method.
+Note that this won't work well for usage in pure HTML pages. For example, Astro omits any client-side JavaScript by default, so you would need to use an additional inline `<script />` tag to update the HTML, e.g., `getElementById("my-id")?.textContent = window.__RUNTIME_ENV__.MY_VAR`, which is less optimal than the string replacement method.
 
 Here is a quick, approximate code for illustration:
 
@@ -535,7 +535,7 @@ my-static-website:
 </script>
 ```
 
-So, to conclude, the best way is to use shell script `sed` or `envsubst` and add it to the Nginx `Dockerfile` `ENTRYPOINT` or `docker-compose.yml` `command:`. Here is the link to the already mentioned practical tutorial again https://phase.dev/blog/nextjs-public-runtime-variables/.
+So, to conclude, the best approach is to use a shell script with `sed` or `envsubst` and add it to the Nginx `Dockerfile` `ENTRYPOINT` or the `docker-compose.yml` `command:`. Here is the link to the already mentioned practical tutorial again: https://phase.dev/blog/nextjs-public-runtime-variables/.
 
 ## Completed code
 
