@@ -38,7 +38,7 @@ If you search Next.js docs you will find a [guide](https://nextjs.org/docs/app/g
 
 The common scenario after reading the docs is to just be aware of `NEXT_PUBLIC_` and server variables and scatter them around the codebase. If you use Docker and Github Actions you will typically end up with something like the this:
 
-**Dockerfile**
+[full-stack-fastapi-template-nextjs/blob/11c8a512f57e937aa623776418fa4cfb1e9b4dc4/frontend/Dockerfile](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/11c8a512f57e937aa623776418fa4cfb1e9b4dc4/frontend/Dockerfile)
 
 ```bash title="frontend/Dockerfile"
 # frontend/Dockerfile
@@ -79,7 +79,7 @@ RUN pnpm turbo build
 # ...
 ```
 
-**.github/workflows/build-push-docker-image.yml**
+[full-stack-fastapi-template-nextjs/blob/11c8a512f57e937aa623776418fa4cfb1e9b4dc4/.github/workflows/build-push-frontend.yml](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/11c8a512f57e937aa623776418fa4cfb1e9b4dc4/.github/workflows/build-push-frontend.yml)
 
 ```yml title=".github/workflows/build-push-docker-image.yml"
 # .github/workflows/build-push-docker-image.yml
@@ -122,7 +122,7 @@ jobs:
       
 ```
 
-**package.json**
+[full-stack-fastapi-template-nextjs/blob/11c8a512f57e937aa623776418fa4cfb1e9b4dc4/frontend/package.json](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/11c8a512f57e937aa623776418fa4cfb1e9b4dc4/frontend/package.json)
 
 ```json title="frontend/package.json"
 // frontend/package.json
@@ -161,9 +161,11 @@ If beside the production you also have staging, preview and testing environments
 
 A lot of people finds this unpractical, you can witness this by popularity of such issues on Next.js repository:
 
-[Better support for runtime environment variables. #44628](https://github.com/vercel/next.js/discussions/44628)
+[Better support for runtime environment variables #44628](https://github.com/vercel/next.js/discussions/44628)
 
 [docker image with NEXT_PUBLIC_ env variables #17641](https://github.com/vercel/next.js/discussions/17641)
+
+[Not possible to use different configurations in staging + production #22243](https://github.com/vercel/next.js/discussions/22243)
 
 ## The solution: run-time environment variables
 
@@ -405,6 +407,10 @@ export const createClientConfig: CreateClientConfig = (config) => {
 };
 ```
 
+### Safe build-time environment variables
+
+Variables that are same for every environment are ok to be left as `NEXT_PUBLIC_` and let to be inlined in the bundle. Also, they should be versioned in Git (their `.env.*` files). Since it's that way, the best way is to simply store them as TypeScript constants directly in the source anyway, because that's what they truly are - the shared constants.
+
 ## Build and deploy reusable Docker image
 
 ### Building
@@ -513,8 +519,14 @@ apps/full-stack-fastapi-template-nextjs/.env.example
 
 ## References
 
+- How to use environment variables in Next.js, Next.js docs guide https://nextjs.org/docs/app/guides/environment-variables#runtime-environment-variables
+- Better support for runtime environment variables #44628, Github discussion https://github.com/vercel/next.js/discussions/44628
+- Docker image with NEXT_PUBLIC_ env variables #17641, Github discussion https://github.com/vercel/next.js/discussions/17641
+- Not possible to use different configurations in staging + production #22243, Github discussion https://github.com/vercel/next.js/discussions/22243
+- Runtime variables for static website, tutorial https://phase.dev/blog/nextjs-public-runtime-variables/
+- Runtime Environment Variables in Next.js, concise overview https://dt.in.th/NextRuntimeEnv
 
 // todo:
-env vars same for all envs can remain NEXT_PUBLIC_
-add urls with git hash **Dockerfile**
+        env vars same for all envs can remain NEXT_PUBLIC_
+        add urls with git hash **Dockerfile**
 

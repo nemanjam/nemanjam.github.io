@@ -249,5 +249,5 @@ must do all in js, not html
   document.head.appendChild(script);
 </script>
 ```
-bash sed replace much better
+bash sed replace much better, envsubst instead sed for env vars
 custom command: in nginx docker-compose.yml too
