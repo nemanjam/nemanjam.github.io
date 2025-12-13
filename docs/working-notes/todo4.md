@@ -216,3 +216,38 @@ tailwind 4, eslint 9
 reuse and clean up mpc, opi, rpi scripts // impossible
 --------
 decent Astro, ShadCN example https://github.com/shadcnblocks/mainline-astro-template
+-------------
+load env.js from nginx
+{isProd && <script src="/env.js" />}
+```yml
+  nmc-nginx-with-volume:
+    image: nginx:1.29.1-alpine3.22-slim
+    container_name: nmc-nginx-with-volume
+    restart: unless-stopped
+    volumes:
+      - ./website:/usr/share/nginx/html
+      - ./env.js:/usr/share/nginx/html/env.js
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+```
+need to include <script /> wherever i use env vars
+must do all in js, not html
+```html
+<!-- Load your runtime env first -->
+<script src="/env.js"></script>
+
+<!-- Partytown script -->
+<script>
+  // wait until env.js is loaded
+  const script = document.createElement("script");
+  script.defer = true;
+  script.type = "text/partytown";
+
+  // dynamically set attributes from runtime env
+  script.src = window.__RUNTIME_ENV__.PLAUSIBLE_SCRIPT_URL;
+  script.dataset.domain = window.__RUNTIME_ENV__.PLAUSIBLE_DOMAIN;
+
+  document.head.appendChild(script);
+</script>
+```
+bash sed replace much better, envsubst instead sed for env vars
+custom command: in nginx docker-compose.yml too
