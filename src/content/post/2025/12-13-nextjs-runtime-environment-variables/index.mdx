@@ -32,11 +32,11 @@ There are probably more, but this is enough to understand why it can be challeng
 
 ## Next.js environment variables
 
-If you search Next.js docs you will find a [guide](https://nextjs.org/docs/app/guides/environment-variables#runtime-environment-variables) for environment variables, e.g. `.env*` filenames that are loaded by default, their load order and priority, expanding, also exposing and inlining variables with prefix `NEXT_PUBLIC_` into the client. In the self-hosting [guide](https://nextjs.org/docs/app/guides/self-hosting#environment-variables) you will even find a paragraph about opting out into dynamic rendering so variable value is read on each server component render, not just once at build time and how this is useful for reusable Docker images.
+If you search the Next.js docs, you will find a [guide](https://nextjs.org/docs/app/guides/environment-variables#runtime-environment-variables) on environment variables, such as `.env*` filenames that are loaded by default, their load order and priority, variable expansion, and exposing and inlining variables with the `NEXT_PUBLIC_` prefix into the client. In the self-hosting [guide](https://nextjs.org/docs/app/guides/self-hosting#environment-variables), you will also find a paragraph about opting into dynamic rendering so that variable values are read on each server component render, not just once at build time, and how this is useful for reusable Docker images.
 
 ## The problem with build-time environment variables
 
-The common scenario after reading the docs is to just be aware of `NEXT_PUBLIC_` and server variables and scatter them around the codebase. If you use Docker and Github Actions you will typically end up with something like the this:
+A common scenario after reading the docs is to be aware of `NEXT_PUBLIC_` and server variables and then scatter them around the codebase. If you use Docker and GitHub Actions, you will typically end up with something like this:
 
 [11c8a512.../frontend/Dockerfile](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/11c8a512f57e937aa623776418fa4cfb1e9b4dc4/frontend/Dockerfile)
 
@@ -141,19 +141,19 @@ jobs:
 }
 ```
 
-In the code above we can see that our Next.js app requires `NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_API_URL` environment variables at build time. Those values will be inlined in the bundle at build time and can't be changed later. Meaning `Dockerfile` must pass them as corresponding `ARG_NEXT_PUBLIC_SITE_URL` and `ARG_NEXT_PUBLIC_API_URL` build args while building the image. 
+In the code above, we can see that our Next.js app requires the `NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_API_URL` environment variables at build time. These values will be inlined into the bundle during the build and cannot be changed later. This means the `Dockerfile` must pass them as the corresponding `ARG_NEXT_PUBLIC_SITE_URL` and `ARG_NEXT_PUBLIC_API_URL` build arguments when building the image. 
 
-Leaving them undefined would break the build because they are validated with Zod inside the Next.js app and validation will run at both build and run time. Stripping the `NEXT_PUBLIC_` prefix would break the build even without Zod if they are used in client code.
+Leaving them undefined would break the build because they are validated with Zod inside the Next.js app, and validation runs at both build time and run time. Stripping the `NEXT_PUBLIC_` prefix would also break the build, even without Zod, if they are used in client code.
 
-Consequently we need to pass those build args whenever we build Docker image, e.g. Github Actions and `package.json` local build script.
+Consequently, we need to pass these build arguments whenever we build the Docker image, for example in GitHub Actions and in the local build script defined in `package.json`.
 
-Using this method we would get a functional Docker image, but with one major drawback: **it can be used only in a single environment** since the values `NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_API_URL`  are baked into the image at build time and immutable.
+Using this method, we would get a functional Docker image, but with one major drawback: **it can be used only in a single environment** because the `NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_API_URL` values are baked into the image at build time and are immutable.
 
-To expand more on this to be crystal clear, whatever we set for `NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_API_URL` environment variables at runtime will be ignored because they don't even exist in the Next.js app anymore. After the build they are replaced with string literals in the JavaScript bundle.
+To make this crystal clear, whatever we set for the `NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_API_URL` environment variables at runtime will be ignored because they no longer exist in the Next.js app. After the build they are replaced with string literals in the JavaScript bundle.
 
-If beside the production you also have staging, preview and testing environments or other production mirrors you would need to maintain a separate image with its own configuration code, build process and registry storage for each of them. Meaning - a lot of overhead.
+If, besides production, you also have staging, preview, testing environments, or other production mirrors, you would need to maintain a separate image with its own configuration code, build process, and registry storage for each of them. This means a lot of overhead.
 
-A lot of people finds this unpractical, you can witness this by popularity of such issues on Next.js repository:
+Many people find this impractical, which you can see from the popularity of such issues in the Next.js repository:
 
 [Better support for runtime environment variables #44628](https://github.com/vercel/next.js/discussions/44628)
 
@@ -573,6 +573,7 @@ apps/full-stack-fastapi-template-nextjs/.env.example
 ## References
 
 - How to use environment variables in Next.js, Next.js docs guide https://nextjs.org/docs/app/guides/environment-variables#runtime-environment-variables
+- How to self-host your Next.js application, Next.js docs guide https://nextjs.org/docs/app/guides/self-hosting#environment-variables
 - Better support for runtime environment variables #44628, Github discussion https://github.com/vercel/next.js/discussions/44628
 - Docker image with NEXT_PUBLIC_ env variables #17641, Github discussion https://github.com/vercel/next.js/discussions/17641
 - Not possible to use different configurations in staging + production #22243, Github discussion https://github.com/vercel/next.js/discussions/22243
