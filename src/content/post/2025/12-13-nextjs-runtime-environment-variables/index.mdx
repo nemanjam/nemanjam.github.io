@@ -407,11 +407,13 @@ export const createClientConfig: CreateClientConfig = (config) => {
 };
 ```
 
-### Safe build-time environment variables
+### Legitimate build-time environment variables
 
 Variables that are same for every environment are ok to be left as `NEXT_PUBLIC_` and let to be inlined in the bundle. Also, they should be versioned in Git (their `.env.*` files). Since it's that way, the best way is to simply store them as TypeScript constants directly in the source anyway, because that's what they truly are - the shared constants.
 
 ## Build and deploy reusable Docker image
+
+Build once - deploy everywhere. Single image and `.env` file, no redundancy.
 
 ### Building
 
@@ -603,5 +605,10 @@ apps/full-stack-fastapi-template-nextjs/.env.example
 - Runtime variables for static website, tutorial https://phase.dev/blog/nextjs-public-runtime-variables/
 - Runtime Environment Variables in Next.js, concise overview https://dt.in.th/NextRuntimeEnv
 
+
+// todo:
+remove comment file path
+fix list paragraphs indentation
+remove git hash from link text
 
 
