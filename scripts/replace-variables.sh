@@ -30,7 +30,9 @@ fi
 
 # Check required environment variables are defined
 for VAR in $REQUIRED_VARS; do
-    if [ -z "${!VAR}" ]; then
+    # POSIX sh-compatible indirect expansion
+    eval "VAL=\$$VAR"
+    if [ -z "$VAL" ]; then
         echo "$VAR required environment variable is not set. Please set it and rerun the script."
         exit 1
     fi
@@ -38,7 +40,8 @@ done
 
 # Default optional variables to empty string
 for VAR in $OPTIONAL_VARS; do
-    if [ -z "${!VAR}" ]; then
+    eval "VAL=\$$VAR"
+    if [ -z "$VAL" ]; then
         eval "$VAR=''"
     fi
 done
