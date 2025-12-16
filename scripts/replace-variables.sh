@@ -1,5 +1,6 @@
-#!/bin/bash
+#!/bin/sh
 
+# Note: sh shell syntax, NO bash in Alpine Nginx
 
 # Summary:
 # 1. Required variables are checked to be defined.
@@ -7,16 +8,14 @@
 # 3. All files in DIST_PATH with specified extensions are processed.
 # 4. Placeholders of the form PREFIX_VAR are replaced with actual environment variable values.
 
-
-# Define required and optional environment variables
-REQUIRED_VARS=("SITE_URL" "PLAUSIBLE_SCRIPT_URL" "PLAUSIBLE_DOMAIN")
-OPTIONAL_VARS=("PREVIEW_MODE")
+# Define required and optional environment variables (space-separated strings for /bin/sh)
+REQUIRED_VARS="SITE_URL PLAUSIBLE_SCRIPT_URL PLAUSIBLE_DOMAIN"
+OPTIONAL_VARS="PREVIEW_MODE"
 
 PREFIX="BAKED_"
-FILE_EXTENSIONS=("html" "js" "xml" "json")
+FILE_EXTENSIONS="html js xml json"
 
 # Read DIST_PATH from environment variable
-
 # Do not provide a default; it must be set
 if [ -z "${DIST_PATH}" ]; then
     echo "ERROR: DIST_PATH environment variable is not set."
@@ -30,7 +29,7 @@ if [ ! -d "${DIST_PATH}" ]; then
 fi
 
 # Check required environment variables are defined
-for VAR in "${REQUIRED_VARS[@]}"; do
+for VAR in $REQUIRED_VARS; do
     if [ -z "${!VAR}" ]; then
         echo "$VAR required environment variable is not set. Please set it and rerun the script."
         exit 1
@@ -38,17 +37,17 @@ for VAR in "${REQUIRED_VARS[@]}"; do
 done
 
 # Default optional variables to empty string
-for VAR in "${OPTIONAL_VARS[@]}"; do
+for VAR in $OPTIONAL_VARS; do
     if [ -z "${!VAR}" ]; then
-        declare "$VAR"=""
+        eval "$VAR=''"
     fi
 done
 
-# Combine required and optional variables into a single array
-ALL_VARS=("${REQUIRED_VARS[@]}" "${OPTIONAL_VARS[@]}")
+# Combine required and optional variables into a single string
+ALL_VARS="$REQUIRED_VARS $OPTIONAL_VARS"
 
 # Find and replace placeholders in files
-for ext in "${FILE_EXTENSIONS[@]}"; do
+for ext in $FILE_EXTENSIONS; do
 
     # Use 'find' to recursively search for all files with the current extension
     # -type f ensures only regular files are returned
@@ -61,11 +60,11 @@ for ext in "${FILE_EXTENSIONS[@]}"; do
         echo "[replace] Processing file: $file"
 
         # Loop over each variable that needs to be replaced
-        for VAR in "${ALL_VARS[@]}"; do
+        for VAR in $ALL_VARS; do
 
-            # Retrieve the value of the variable
+            # Retrieve the value of the variable (POSIX sh compatible)
             # Optional variables are guaranteed to have a value (possibly empty)
-            VALUE="${!VAR}"
+            eval "VALUE=\$$VAR"
 
             if [ -z "$VALUE" ]; then
                 echo "[replace]   ${PREFIX}${VAR} -> (empty)"
@@ -82,5 +81,3 @@ for ext in "${FILE_EXTENSIONS[@]}"; do
         done
     done
 done
-
-
