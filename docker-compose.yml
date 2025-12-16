@@ -9,16 +9,17 @@ services:
     build:
       context: .
       dockerfile: ./docker/Dockerfile
-      args:
-        ARG_SITE_URL_AMD64: 'http://localhost:8080'
-        # make separate script with localhost enabled
-        ARG_PLAUSIBLE_SCRIPT_URL: 'https://plausible.arm1.nemanjamitic.com/js/script.js'
-        # will trigger analytics
-        ARG_PLAUSIBLE_DOMAIN: 'nemanjamitic.com'
 
     # platform: linux/arm64
     platform: linux/amd64
     restart: unless-stopped
+    environment:
+      SITE_URL: 'http://localhost:8080'
+      # make separate script with localhost enabled
+      PLAUSIBLE_SCRIPT_URL: 'https://plausible.arm1.nemanjamitic.com/js/script.js'
+      # will trigger analytics
+      PLAUSIBLE_DOMAIN: 'nemanjamitic.com'
+      PREVIEW_MODE: true
     ports:
       - '8080:8080'
     networks:

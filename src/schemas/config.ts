@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import { baked } from '../utils/baked';
+
 export const nodeEnvValues = ['development', 'test', 'production'] as const;
 export const booleanValues = ['true', 'false', ''] as const;
 
@@ -14,14 +16,22 @@ export const processEnvSchema = z.object({
   NODE_ENV: z.enum(nodeEnvValues),
   PREVIEW_MODE: z
     .enum(booleanValues)
+    .or(z.literal(baked('PREVIEW_MODE')))
     .transform((value) => value === 'true')
     .default(false),
-  // ensure no trailing slash
-  SITE_URL: z.url().regex(/[^/]$/, 'SITE_URL should not end with a slash "/"'),
-  PLAUSIBLE_SCRIPT_URL: z.url().or(z.literal('')).optional(),
+  SITE_URL: z
+    .url()
+    .regex(/[^/]$/, 'SITE_URL should not end with a slash "/"') // ensure no trailing slash
+    .or(z.literal(baked('SITE_URL'))),
+  PLAUSIBLE_SCRIPT_URL: z
+    .url()
+    .or(z.literal(''))
+    .or(z.literal(baked('PLAUSIBLE_SCRIPT_URL')))
+    .optional(),
   PLAUSIBLE_DOMAIN: z
     .string()
     .or(z.enum(['', 'localhost'])) // for types
+    .or(z.literal(baked('PLAUSIBLE_DOMAIN')))
     .optional()
     .refine(
       // check regex this way
@@ -29,6 +39,7 @@ export const processEnvSchema = z.object({
         value === undefined ||
         value === '' ||
         value === 'localhost' || // astro:env default
+        value === baked('PLAUSIBLE_DOMAIN') ||
         domainSubdomainRegex.test(value),
       { message: 'Invalid hostname for PLAUSIBLE_DOMAIN 1' }
     ),

@@ -14,10 +14,6 @@ on:
 
 env:
   IMAGE_NAME: ${{ github.event.repository.name }}
-  SITE_URL_ARM64: 'https://nmc-docker.arm1.nemanjamitic.com'
-  SITE_URL_AMD64: 'https://nmc-docker.local.nemanjamitic.com'
-  PLAUSIBLE_SCRIPT_URL: 'https://plausible.arm1.nemanjamitic.com/js/script.js'
-  PLAUSIBLE_DOMAIN: 'nemanjamitic.com'
 
 jobs:
   build:
@@ -69,11 +65,6 @@ jobs:
           # cant use matrix, must pass platforms like this
           platforms: linux/amd64,linux/arm64
           progress: plain
-          build-args: |
-            "ARG_SITE_URL_ARM64=${{ env.SITE_URL_ARM64 }}"
-            "ARG_SITE_URL_AMD64=${{ env.SITE_URL_AMD64 }}"
-            "ARG_PLAUSIBLE_SCRIPT_URL=${{ env.PLAUSIBLE_SCRIPT_URL }}"
-            "ARG_PLAUSIBLE_DOMAIN=${{ env.PLAUSIBLE_DOMAIN }}"
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
           # cache-to: type=inline

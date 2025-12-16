@@ -16,14 +16,16 @@ import { remarkReadingTime } from './plugins/remark-reading-time.mjs';
 import { envSchema, PROCESS_ENV } from './src/config/process-env';
 import { expressiveCodeIntegration } from './src/libs/integrations/expressive-code';
 import { sitemapIntegration } from './src/libs/integrations/sitemap';
+import { isBaked } from './src/utils/baked';
 
 const { SITE_URL } = PROCESS_ENV;
+const VALID_SITE_URL = isBaked('SITE_URL', SITE_URL) ? undefined : SITE_URL;
 
 const remarkPlugins = [remarkReadingTime];
 const rehypePlugins = [rehypeExternalLinks];
 
 export default defineConfig({
-  site: SITE_URL,
+  site: VALID_SITE_URL,
   trailingSlash: 'ignore',
   env: envSchema,
   // default

@@ -27,17 +27,8 @@ RUN pnpm install --frozen-lockfile
 
 COPY . .
 
-# set env vars placeholders for build
-
-# required vars
-ENV SITE_URL="BAKED_SITE_URL"
-ENV PLAUSIBLE_DOMAIN="BAKED_PLAUSIBLE_DOMAIN"
-ENV PLAUSIBLE_SCRIPT_URL="BAKED_PLAUSIBLE_SCRIPT_URL"
-
-# optional vars
-ENV PREVIEW_MODE="BAKED_PREVIEW_MODE"
-
-RUN pnpm build
+# Note: builds WITH placeholder env vars
+RUN pnpm build:baked
 
 # -------------- runner --------------
 

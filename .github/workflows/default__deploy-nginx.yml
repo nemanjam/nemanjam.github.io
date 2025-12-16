@@ -12,11 +12,6 @@ on:
       - 'disabled-main'
   workflow_dispatch:
 
-env:
-  SITE_URL: 'https://nemanjamitic.com'
-  PLAUSIBLE_SCRIPT_URL: 'https://plausible.arm1.nemanjamitic.com/js/script.js'
-  PLAUSIBLE_DOMAIN: 'nemanjamitic.com'
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -46,9 +41,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # fix this for turbo
-      - name: Build nemanjamiticcom
-        run: pnpm build
+      - name: Build app with placeholder env vars
+        run: pnpm build:baked
 
       - name: Clean up website dir
         uses: appleboy/ssh-action@master

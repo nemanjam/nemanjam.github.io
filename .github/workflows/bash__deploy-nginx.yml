@@ -12,11 +12,7 @@ on:
   workflow_dispatch:
 
 env:
-  SITE_URL: 'https://nemanjamitic.com'
-  PLAUSIBLE_SCRIPT_URL: 'https://plausible.arm1.nemanjamitic.com/js/script.js'
   SSH_ALIAS: arm1
-  # can be omitted for main domain, will default to SITE_URL
-  PLAUSIBLE_DOMAIN: 'nemanjamitic.com'
 
 jobs:
   deploy:
@@ -47,8 +43,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build app
-        run: pnpm build
+      - name: Build app with placeholder env vars
+        run: pnpm build:baked
 
       - name: Set up SSH config
         run: |

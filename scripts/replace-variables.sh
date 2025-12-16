@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 # Summary:
 # 1. Required variables are checked to be defined.
 # 2. Optional variables are initialized to empty string if undefined.
@@ -57,12 +58,20 @@ for ext in "${FILE_EXTENSIONS[@]}"; do
     # Pipe the list of found files into a while loop for processing
     while read -r file; do
 
+        echo "[replace] Processing file: $file"
+
         # Loop over each variable that needs to be replaced
         for VAR in "${ALL_VARS[@]}"; do
 
             # Retrieve the value of the variable
             # Optional variables are guaranteed to have a value (possibly empty)
             VALUE="${!VAR}"
+
+            if [ -z "$VALUE" ]; then
+                echo "[replace]   ${PREFIX}${VAR} -> (empty)"
+            else
+                echo "[replace]   ${PREFIX}${VAR} -> ${VALUE}"
+            fi
 
             # Perform in-place replacement using sed
             # "s|pattern|replacement|g" replaces all occurrences in the file

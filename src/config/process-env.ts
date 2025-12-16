@@ -4,6 +4,7 @@ import { envField } from 'astro/config';
 import dotenv from 'dotenv';
 
 import { nodeEnvValues, processEnvSchema } from '../schemas/config';
+import { isBaked } from '../utils/baked';
 import { prettyPrintObject } from '../utils/log';
 import { getHostnameFromUrl } from '../utils/urls';
 import { validateData } from '../utils/validation';
@@ -43,6 +44,12 @@ export const PROCESS_ENV = validateData(processEnvData, processEnvSchema);
 
 /*------------------ experimental.env.schema -----------------*/
 
+const { SITE_URL } = PROCESS_ENV;
+
+const defaultPlausibleDomain = isBaked('SITE_URL', SITE_URL)
+  ? undefined
+  : getHostnameFromUrl(PROCESS_ENV.SITE_URL);
+
 export const envSchema = {
   schema: {
     // server
@@ -51,6 +58,7 @@ export const envSchema = {
       access: 'public',
       default: 'development',
     }),
+    // Todo: must convert to string or enum for baked
     PREVIEW_MODE: envField.boolean({
       context: 'server',
       access: 'public',
@@ -71,7 +79,7 @@ export const envSchema = {
       context: 'client',
       access: 'public',
       optional: true,
-      default: getHostnameFromUrl(PROCESS_ENV.SITE_URL),
+      default: defaultPlausibleDomain,
     }),
   },
 };
