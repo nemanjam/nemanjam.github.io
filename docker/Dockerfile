@@ -4,6 +4,8 @@
 # node:22.1.0-bookworm, node:20.13.1-slim, node:20.13.1-alpine
 ARG NODE_IMAGE=node:24.7.0-alpine3.22
 
+# -------------- base --------------
+
 FROM --platform=$BUILDPLATFORM ${NODE_IMAGE} AS base
 WORKDIR /app
 
@@ -17,46 +19,41 @@ ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 RUN corepack prepare pnpm@10.17.0 --activate
 
+# -------------- builder --------------
+
 FROM base AS build
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
 COPY . .
 
-ARG ARG_SITE_URL_ARM64
-ARG ARG_SITE_URL_AMD64
-ARG TARGETARCH
+# set env vars placeholders for build
 
-ENV TARGETARCH=$TARGETARCH
-RUN echo "TARGETARCH=$TARGETARCH"
+# required vars
+ENV SITE_URL="BAKED_SITE_URL"
+ENV PLAUSIBLE_DOMAIN="BAKED_PLAUSIBLE_DOMAIN"
+ENV PLAUSIBLE_SCRIPT_URL="BAKED_PLAUSIBLE_SCRIPT_URL"
 
-RUN if [ "$TARGETARCH" = "arm64" ]; then \
-    SITE_URL=$ARG_SITE_URL_ARM64; \
-  else \
-    SITE_URL=$ARG_SITE_URL_AMD64; \
-  fi && \
-  echo "SITE_URL=$SITE_URL" && \
-  # must set SITE_URL via .env.production file for pnpm build, important
-  # must use .env.production, .env doesn't work, my logic with dotenv in src/config/process-env.ts
-  echo SITE_URL=$SITE_URL > .env.production;
-
-RUN echo "ls -la=" && ls -la
-RUN echo ".env.production file=" && cat .env.production
-
-ARG ARG_PLAUSIBLE_SCRIPT_URL
-ENV PLAUSIBLE_SCRIPT_URL=$ARG_PLAUSIBLE_SCRIPT_URL
-RUN echo "PLAUSIBLE_SCRIPT_URL=$PLAUSIBLE_SCRIPT_URL"
-
-ARG ARG_PLAUSIBLE_DOMAIN
-ENV PLAUSIBLE_DOMAIN=$ARG_PLAUSIBLE_DOMAIN
-RUN echo "PLAUSIBLE_DOMAIN=$PLAUSIBLE_DOMAIN"
+# optional vars
+ENV PREVIEW_MODE="BAKED_PREVIEW_MODE"
 
 RUN pnpm build
+
+# -------------- runner --------------
 
 FROM nginx:1.29.1-alpine3.22-slim AS runtime
 COPY ./docker/nginx.conf /etc/nginx/nginx.conf
 
+# set dist folder path for both web folder and script arg
+ENV DIST_PATH=/usr/share/nginx/html
+
 # sufficient for SSG
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=build /app/dist ${DIST_PATH}
+
+# copy to pre-start scripts folder
+# 10-xxx controls the order
+COPY ./scripts/replace-variables.sh /docker-entrypoint.d/10-replace-variables.sh
+RUN chmod +x /docker-entrypoint.d/10-replace-variables.sh
+
 EXPOSE 8080
 
