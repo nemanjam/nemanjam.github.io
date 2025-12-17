@@ -19,15 +19,8 @@ export const processEnvSchema = z.object({
     .enum(booleanValues)
     .or(z.literal(baked('PREVIEW_MODE')))
     .default('false'),
-  SITE_URL: z
-    .url()
-    .regex(/[^/]$/, 'SITE_URL should not end with a slash "/"') // ensure no trailing slash
-    .or(z.literal(baked('SITE_URL'))),
-  PLAUSIBLE_SCRIPT_URL: z
-    .url()
-    .or(z.literal(''))
-    .or(z.literal(baked('PLAUSIBLE_SCRIPT_URL')))
-    .optional(),
+  SITE_URL: z.url().regex(/[^/]$/, 'SITE_URL should not end with a slash "/"'), // ensure no trailing slash
+  PLAUSIBLE_SCRIPT_URL: z.url().or(z.literal('')).optional(),
   PLAUSIBLE_DOMAIN: z
     .string()
     .or(z.enum(['', 'localhost'])) // for types

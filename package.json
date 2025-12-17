@@ -7,7 +7,7 @@
     "start": "serve ./dist",
     "preview": "astro preview",
     "build": "astro build",
-    "build:baked": "SITE_URL='BAKED_SITE_URL' PLAUSIBLE_SCRIPT_URL='BAKED_PLAUSIBLE_SCRIPT_URL' PLAUSIBLE_DOMAIN='BAKED_PLAUSIBLE_DOMAIN' astro build",
+    "build:baked": "SITE_URL='https://BAKED_SITE_URL' PLAUSIBLE_SCRIPT_URL='https://BAKED_PLAUSIBLE_SCRIPT_URL' PLAUSIBLE_DOMAIN='BAKED_PLAUSIBLE_DOMAIN' PREVIEW_MODE='BAKED_PREVIEW_MODE' astro build",
     "astro": "astro",
     "sync": "astro sync",
     "lint": "eslint --ext .astro,.tsx,.ts,.js,.mdx src",

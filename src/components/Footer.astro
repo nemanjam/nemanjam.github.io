@@ -4,6 +4,8 @@ import { Icon } from 'astro-icon/components';
 import Link from '@/components/Link.astro';
 import { ROUTES } from '@/constants/routes';
 import { CONFIG_CLIENT } from '@/config/client';
+import { MERGED_CONFIG } from '@/config/server';
+// import { PROCESS_ENV } from '@/config/process-env';
 import { getLatestCommitInfo } from '@/libs/git';
 import { shortDate } from '@/utils/datetime';
 import { limitString, trimHttpProtocol } from '@/utils/strings';
@@ -21,6 +23,11 @@ const shortDateStr = shortDate(new Date(time));
 const trimmedMessage = limitString(message, messageLength);
 
 const firstName = AUTHOR_NAME.split(' ')[0];
+
+// debug runtime env vars
+const { PLAUSIBLE_SCRIPT_URL, PLAUSIBLE_DOMAIN, PREVIEW_MODE } = MERGED_CONFIG;
+
+const RUNTIME_ENV = { SITE_URL, PLAUSIBLE_SCRIPT_URL, PLAUSIBLE_DOMAIN, PREVIEW_MODE };
 
 // footer is full width for border, div has max-w
 ---
@@ -40,6 +47,9 @@ const firstName = AUTHOR_NAME.split(' ')[0];
           <label class="font-bold">Design system:</label>
           <Link href={`${ROUTES.DESIGN}`} title="Design system">link</Link>
         </div>
+
+        <!-- _Debugging, do not occupy space, inspect only -->
+        <pre class="hidden">{JSON.stringify(RUNTIME_ENV, null, 2)}</pre>
       </div>
 
       <!-- right column -->

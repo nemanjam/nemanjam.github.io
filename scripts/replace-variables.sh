@@ -12,7 +12,13 @@
 REQUIRED_VARS="SITE_URL PLAUSIBLE_SCRIPT_URL PLAUSIBLE_DOMAIN"
 OPTIONAL_VARS="PREVIEW_MODE"
 
+# Variables that are baked as URL-shaped placeholders (https://BAKED_VAR)
+BAKED_URL_VARS="SITE_URL PLAUSIBLE_SCRIPT_URL"
+
 PREFIX="BAKED_"
+# Baked has always https://BAKED_VAR
+# Will be replaced with whatever VAR value http:// or https:// or any string
+URL_PREFIX="https://${PREFIX}"
 FILE_EXTENSIONS="html js xml json"
 
 # Read DIST_PATH from environment variable
@@ -67,13 +73,45 @@ for ext in $FILE_EXTENSIONS; do
         for VAR in $ALL_VARS; do
 
             PLACEHOLDER="${PREFIX}${VAR}"
-
-            # Note: exits loop early if placeholder is not present in the file
-            echo "$FILE_CONTENT" | grep -q "$PLACEHOLDER" || continue
+            URL_PLACEHOLDER="${URL_PREFIX}${VAR}"
 
             # Get variable value (POSIX sh compatible)
             # Optional variables are guaranteed to have a value (possibly empty)
             eval "VALUE=\$$VAR"
+
+            # Escape VALUE for sed replacement:
+            # - & → \&  (ampersand is special in replacement, expands to the whole match)
+            # - | → \|  (pipe is used as sed delimiter)
+            ESCAPED_VALUE=$(printf '%s' "$VALUE" | sed 's/[&|]/\\&/g')
+
+            # Handle baked URL variables (e.g. https://BAKED_SITE_URL)
+            # These must be replaced as full URLs to avoid invalid or double protocols
+            for URL_VAR in $BAKED_URL_VARS; do
+                # Check if current variable is a baked URL var
+                if [ "$VAR" = "$URL_VAR" ]; then
+                    # Skip if URL placeholder is not present in this file, 2 - parent loop, i - case insensitive
+                    echo "$FILE_CONTENT" | grep -qi "$URL_PLACEHOLDER" || continue 2
+
+                    # Print file name once on first replacement
+                    if [ "$FILE_REPLACED" -eq 0 ]; then
+                        echo "Processing file: $file"
+                        FILE_REPLACED=1
+                    fi
+
+                    # Log replacement
+                    # Log $VALUE, because $ESCAPED_VALUE is just for sed
+                    echo "replaced: $URL_PLACEHOLDER -> $VALUE"
+
+                    # Replace full URL placeholder in-place, I - case insensitive
+                    sed -i "s|$URL_PLACEHOLDER|$ESCAPED_VALUE|gI" "$file"
+
+                    # Continue with next variable, 2 - parent loop
+                    continue 2
+                fi
+            done
+
+            # Note: exits loop early if placeholder is not present in the file, i - case insensitive
+            echo "$FILE_CONTENT" | grep -qi "$PLACEHOLDER" || continue
 
             # Print file name only on first replacement
             if [ "$FILE_REPLACED" -eq 0 ]; then
@@ -91,8 +129,9 @@ for ext in $FILE_EXTENSIONS; do
             # Perform in-place replacement using sed
             # "s|pattern|replacement|g" replaces all occurrences in the file
             # The | delimiter is used instead of / to avoid conflicts with paths
+            # I - case insensitive
             # Example: BAKED_SITE_URL → https://example.com
-            sed -i "s|$PLACEHOLDER|$VALUE|g" "$file"
+            sed -i "s|$PLACEHOLDER|$ESCAPED_VALUE|gI" "$file"
 
         done
     done
