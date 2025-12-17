@@ -14,11 +14,11 @@ const domainSubdomainRegex =
 /** runs after astro:env check in astro.config.ts */
 export const processEnvSchema = z.object({
   NODE_ENV: z.enum(nodeEnvValues),
+  // Note: string union, not boolean, for baked
   PREVIEW_MODE: z
     .enum(booleanValues)
     .or(z.literal(baked('PREVIEW_MODE')))
-    .transform((value) => value === 'true')
-    .default(false),
+    .default('false'),
   SITE_URL: z
     .url()
     .regex(/[^/]$/, 'SITE_URL should not end with a slash "/"') // ensure no trailing slash
@@ -45,9 +45,11 @@ export const processEnvSchema = z.object({
     ),
 });
 
-export const configServerSchema = processEnvSchema
-  .omit({ SITE_URL: true, PREVIEW_MODE: true, PLAUSIBLE_SCRIPT_URL: true, PLAUSIBLE_DOMAIN: true })
-  .extend({ PREVIEW_MODE: z.boolean() }); // here its boolean, not 'true' | 'false'
+export const configServerSchema = processEnvSchema.omit({
+  SITE_URL: true,
+  PLAUSIBLE_SCRIPT_URL: true,
+  PLAUSIBLE_DOMAIN: true,
+});
 
 export const configClientSchema = processEnvSchema
   .pick({ SITE_URL: true, PLAUSIBLE_SCRIPT_URL: true, PLAUSIBLE_DOMAIN: true })

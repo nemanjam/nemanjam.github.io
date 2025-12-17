@@ -4,7 +4,7 @@ declare namespace NodeJS {
     readonly NODE_ENV: 'development' | 'production' | 'test';
     readonly SITE_URL: string;
     /** Optional in .env file but always defined in type. Default: false. */
-    readonly PREVIEW_MODE: boolean;
+    readonly PREVIEW_MODE: 'true' | 'false' | '';
   }
 }
 
@@ -14,7 +14,7 @@ declare namespace NodeJS {
 interface ImportMetaEnv {
   // NODE_ENV, SITE_URL... included by default
 
-  readonly PREVIEW_MODE: boolean;
+  readonly PREVIEW_MODE: 'true' | 'false' | '';
 }
 
 interface ImportMeta {

@@ -19,7 +19,7 @@ import { sitemapIntegration } from './src/libs/integrations/sitemap';
 import { isBaked } from './src/utils/baked';
 
 const { SITE_URL } = PROCESS_ENV;
-const VALID_SITE_URL = isBaked('SITE_URL', SITE_URL) ? undefined : SITE_URL;
+const VALID_SITE_URL = isBaked('SITE_URL', SITE_URL) ? 'http://bezveze-baked.com' : SITE_URL;
 
 const remarkPlugins = [remarkReadingTime];
 const rehypePlugins = [rehypeExternalLinks];

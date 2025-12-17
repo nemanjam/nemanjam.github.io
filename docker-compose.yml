@@ -19,7 +19,7 @@ services:
       PLAUSIBLE_SCRIPT_URL: 'https://plausible.arm1.nemanjamitic.com/js/script.js'
       # will trigger analytics
       PLAUSIBLE_DOMAIN: 'nemanjamitic.com'
-      PREVIEW_MODE: true
+      PREVIEW_MODE: 'true'
     ports:
       - '8080:8080'
     networks:
