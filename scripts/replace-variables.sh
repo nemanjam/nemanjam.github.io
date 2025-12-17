@@ -59,27 +59,40 @@ for ext in $FILE_EXTENSIONS; do
 
     # Pipe the list of found files into a while loop for processing
     while read -r file; do
-
-        echo "[replace] Processing file: $file"
+        # Read file once into a variable for faster checks
+        FILE_CONTENT=$(cat "$file")
+        FILE_REPLACED=0
 
         # Loop over each variable that needs to be replaced
         for VAR in $ALL_VARS; do
 
-            # Retrieve the value of the variable (POSIX sh compatible)
+            PLACEHOLDER="${PREFIX}${VAR}"
+
+            # Note: exits loop early if placeholder is not present in the file
+            echo "$FILE_CONTENT" | grep -q "$PLACEHOLDER" || continue
+
+            # Get variable value (POSIX sh compatible)
             # Optional variables are guaranteed to have a value (possibly empty)
             eval "VALUE=\$$VAR"
 
+            # Print file name only on first replacement
+            if [ "$FILE_REPLACED" -eq 0 ]; then
+                echo "Processing file: $file"
+                FILE_REPLACED=1
+            fi
+
+            # Log what is replaced
             if [ -z "$VALUE" ]; then
-                echo "[replace]   ${PREFIX}${VAR} -> (empty)"
+                echo "replaced: $PLACEHOLDER -> (empty)"
             else
-                echo "[replace]   ${PREFIX}${VAR} -> ${VALUE}"
+                echo "replaced: $PLACEHOLDER -> $VALUE"
             fi
 
             # Perform in-place replacement using sed
             # "s|pattern|replacement|g" replaces all occurrences in the file
             # The | delimiter is used instead of / to avoid conflicts with paths
             # Example: BAKED_SITE_URL → https://example.com
-            sed -i "s|${PREFIX}$VAR|$VALUE|g" "$file"
+            sed -i "s|$PLACEHOLDER|$VALUE|g" "$file"
 
         done
     done
