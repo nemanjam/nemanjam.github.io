@@ -30,4 +30,5 @@ const configClientData: ConfigClientType = {
   REPO_URL: 'https://github.com/nemanjam/nemanjam.github.io',
 };
 
+/** env vars in app must be accessed only through CLIENT_CONFIG, CONFIG_SERVER, MERGED_CONFIG */
 export const CONFIG_CLIENT = validateData(configClientData, configClientSchema);

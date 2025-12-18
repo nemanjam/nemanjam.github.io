@@ -2,7 +2,7 @@ User-agent: *
 Disallow:
 
 #
-# Disallow decidedly bad actors…
+# Disallow decidedly bad actors
 #
 User-agent: undici
 User-agent: GPTBot

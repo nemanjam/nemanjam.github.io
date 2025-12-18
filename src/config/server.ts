@@ -13,9 +13,11 @@ const NODE_ENV = NODE_ENV_STRING as ConfigServerType['NODE_ENV'];
 /** SSG - all env vars are build time only. */
 const configServerData: ConfigServerType = { NODE_ENV, PREVIEW_MODE };
 
+/** env vars in app must be accessed only through CLIENT_CONFIG, CONFIG_SERVER, MERGED_CONFIG */
 export const CONFIG_SERVER = validateData(configServerData, configServerSchema);
 
 // print merged config
+/** env vars in app must be accessed only through CLIENT_CONFIG, CONFIG_SERVER, MERGED_CONFIG */
 export const MERGED_CONFIG = { ...CONFIG_SERVER, ...CONFIG_CLIENT };
 
 // move in onAppLoad handler
