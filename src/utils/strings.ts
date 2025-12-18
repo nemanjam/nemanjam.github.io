@@ -8,15 +8,5 @@ export const getRandomLengthSubstring = (inputString: string, length: number, ma
 export const limitString = (str: string, maxLength: number) =>
   str.length > maxLength ? str.slice(0, maxLength).trim() + '...' : str.trim();
 
-export const trimHttpProtocol = (url: string) => {
-  const trailingSlashRegex = /\/$/;
-  const protocolRegex = /^(https?:\/\/)/i;
-
-  const withoutSlash = url.replace(trailingSlashRegex, '');
-  const withoutProtocol = withoutSlash.replace(protocolRegex, '');
-
-  return withoutProtocol;
-};
-
 export const capitalizeFirstLetter = (str: string) =>
   str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();

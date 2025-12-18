@@ -14,8 +14,15 @@ configure local build .env.production, .env.development
 astro did lowercase
 <meta property="og:image" content="https://baked_site_url/api/open-graph/pages.png">
 convert host to getHost(), no vars, pure functions
-urls utils file with pure functions
+urls utils file with pure functions // no, must set full SITE_URL and trim with JS in script onLoad, and add 'RSS feed for' string
 baked domain in og image satori template // images created build-time, cant be solved
+  <link
+    rel="alternate"
+    type="application/rss+xml"
+    title={`RSS feed for ${host}`}
+    title={`RSS feed for ${SITE_URL}`} // trim onLoad
+    href={`${ROUTES.API.FEED_RSS}`}
+  />
 -----
 config must support build with both baked and real vars
 update traefik-proxy repo
