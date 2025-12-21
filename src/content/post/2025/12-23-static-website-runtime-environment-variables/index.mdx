@@ -4,7 +4,7 @@ description: |
   Build and deploy a static website as a reusable Docker image, and see how practical it really is.
 publishDate: 2025-12-23
 heroImage: '../../../../content/post/2025/12-23-static-website-runtime-environment-variables/_images/open-graph-baked-url.png'
-heroAlt: Open Graph image with incorrect baked url
+heroAlt: Open Graph image with incorrect SITE_URL placeholder
 tags:
   - astro
   - docker
@@ -54,7 +54,7 @@ Before we start following the original tutorial and move on to the practical imp
 
 3. Another method is to rely on the JavaScript runtime in the browser and dynamically host and load `<script src="./env.js"></script>` in the HTML of your root layout. It can have a few variations. For example, you can create an `env.template` file that holds placeholders for the replacement script called in the entrypoint, or you could even inline `env.js` directly in the `nginx.conf` itself:
 
-```nginx
+```nginx title="nginx.conf"
 location = /env.js {
   default_type application/javascript;
   return 200 "window.__CONFIG__ = { API_URL: '$API_URL' }";
@@ -399,7 +399,7 @@ One obvious piece of information that an Open Graph image should include is the 
 
 On my website, I use an Astro static endpoint in [src/pages/api/open-graph/[...route].png.ts](https://gitlab.com/nemanjam/nemanjam.github.io/-/blob/feature/runtime-environment-variables/src/pages/api/open-graph/%5B...route%5D.png.ts) to dynamically render `.png` images from a Satori HTML template. This endpoint is called at build time, and the rendered `.png` images are included in the bundle. There is nothing we can do at runtime.
 
-<Image {...IMAGE_SIZES.FIXED.MDX_MD} src={OpenGraphBakedUrlImage} alt="Open Graph image with incorrect baked url" />
+<Image {...IMAGE_SIZES.FIXED.MDX_MD} src={OpenGraphBakedUrlImage} alt="Open Graph image with incorrect SITE_URL placeholder" />
 
 The obvious consequence is that we can either:
 
