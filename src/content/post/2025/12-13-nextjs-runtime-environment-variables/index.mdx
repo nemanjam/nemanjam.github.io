@@ -40,7 +40,7 @@ A common scenario after reading the docs is to be aware of `NEXT_PUBLIC_` and se
 
 [11c8a512.../frontend/Dockerfile](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/11c8a512f57e937aa623776418fa4cfb1e9b4dc4/frontend/Dockerfile)
 
-```bash title="frontend/Dockerfile"
+```dockerfile title="frontend/Dockerfile"
 # Next.js app installer stage
 FROM base AS installer
 RUN apk update
@@ -407,7 +407,7 @@ Now that we have eliminated all build-time variables by converting them to run-t
 
 Simply remove all build arguments and build-time environment variables from the `Dockerfile`:
 
-```bash title="frontend/Dockerfile"
+```dockerfile title="frontend/Dockerfile"
 # Not needed anymore, remove all build args
 ARG ARG_NEXT_PUBLIC_SITE_URL
 ENV NEXT_PUBLIC_SITE_URL=$ARG_NEXT_PUBLIC_SITE_URL

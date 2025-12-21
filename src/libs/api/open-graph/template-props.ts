@@ -5,7 +5,7 @@ import { FILE_PATHS } from '@/constants/file-paths';
 import { CONFIG_CLIENT } from '@/config/client';
 import { getRandomElementFromArray } from '@/utils/array';
 import { removeTrailingSlash } from '@/utils/paths';
-import { trimHttpProtocol } from '@/utils/strings';
+import { getHostnameFromUrl } from '@/utils/urls';
 
 import type { FrontmatterProps, TemplateProps } from '@/types/open-graph';
 
@@ -48,7 +48,7 @@ export const getTemplatePropsBase64 = async (
     title,
     heroImageUrl: heroImageBase64Url,
     avatarImageUrl: avatarImageBase64Url,
-    siteUrl: trimHttpProtocol(SITE_URL),
+    siteUrl: getHostnameFromUrl(SITE_URL),
   };
 
   return templateProps;
@@ -139,7 +139,7 @@ export const getTemplatePropsUrl = (frontmatterProps: FrontmatterProps): Templat
     title,
     heroImageUrl: heroImageUrl,
     avatarImageUrl: avatarImageUrl,
-    siteUrl: trimHttpProtocol(SITE_URL),
+    siteUrl: getHostnameFromUrl(SITE_URL),
   };
 
   return templateProps;
