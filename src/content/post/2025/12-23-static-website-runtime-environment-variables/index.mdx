@@ -1,7 +1,7 @@
 ---
 title: Why runtime environment variables for a pure static website are a bad idea
 description: |
-  Build and deploy a static website as a reusable Docker image and see how practical it is.
+  Build and deploy a static website as a reusable Docker image, and see how practical it really is.
 publishDate: 2025-12-23
 heroImage: '../../../../content/post/2025/12-23-static-website-runtime-environment-variables/_images/open-graph-baked-url.png'
 heroAlt: Open Graph image with incorrect baked url
@@ -21,15 +21,16 @@ import OpenGraphBakedUrlImage from '../../../../content/post/2025/12-23-static-w
 
 ## Introduction
 
- This article will be a live "try and see" practical experiment. I will use this exact blog project, static Astro website and try to package it as an reusable Nginx Docker image that will require just a single `.env` file to run in any environment.
+This article is a live, "try and see" practical experiment. I will use this exact blog project, a static Astro website, and try to package it as a reusable Nginx Docker image that requires just a single `.env` file to run in any environment.
 
- I will use this tutorial as a starting point https://phase.dev/blog/nextjs-public-runtime-variables/. It describes the idea and the process, it uses Next.js and has shell replacement script that we can work with.
+I will use this tutorial as a starting point: https://phase.dev/blog/nextjs-public-runtime-variables/. It describes the idea and the process, uses Next.js, and includes a shell replacement script that we can work with.
 
 ## Goal
 
-Let's define our goal and the requirements at the beginning. We will use a pure, static website that consists just from assets without any server runtime code. This is important because hosting static website is simple, free and widely available. We want to have reusable builds, no environment specific data is bundled within the app code, but read from a single `.env` file.
+Let's define our goal and requirements at the beginning. We will use a pure static website that consists only of assets, without any server-side runtime code. This is important because hosting a static website is simple, free, and widely available. We want reusable builds where no environment-specific data is bundled into the application code, but instead read from a single `.env` file.
 
-Now it's time to identify which data is environment specific. In this particular website it's these 4 environment variables:
+Now it's time to identify which data is environment-specific. In this particular website, these are the four environment variables:
+
 
 ```bash title=".env"
 
@@ -40,19 +41,21 @@ PLAUSIBLE_SCRIPT_URL=https://plausible.arm1.nemanjamitic.com/js/script.js
 PLAUSIBLE_DOMAIN=nemanjamitic.com
 PREVIEW_MODE=true
 ```
-Notice the format of these variables, (almost) three url's and one boolean value.
+Notice the format of these variables: (almost) three URLs and one boolean value.
 
-Now let's understand clearly what makes it challenging: Once compiled, static website becomes just a collection of static assets (`.html`, `.js`, `.css`, `.jpg`, etc. files) deployed to a Nginx web folder. It practically means we have no server runtime and we cannot run any code, which greatly limits our power and control. The only runtime we have is the one in browser, which is only useful to some extent, when it comes to loading environment specific data at runtime.
+Now let's clearly understand what makes this challenging. Once compiled, a static website becomes just a collection of static assets (`.html`, `.js`, `.css`, `.jpg`, etc.) deployed to an Nginx web folder. This practically means there is no server runtime and we cannot run any code, which greatly limits our power and control. The only runtime we have is the browser runtime, which is only useful to a limited extent when it comes to loading environment-specific data at runtime.
 
 ## Options
 
-Before we start following the original tutorial and the practical implementation, let's once again reconsider possible alternatives that we have at our disposal. I already touched on this in my previous article about the runtime environment variables: https://nemanjamitic.com/blog/2025-12-13-nextjs-runtime-environment-variables#alternative-approaches but lets go through it once again, since this time the entire article is dedicated to the runtime variables in purely static websites. Here are the alternatives:
+Before we start following the original tutorial and move on to the practical implementation, let's reconsider the possible alternatives at our disposal. I already touched on this in my previous article about runtime environment variables: https://nemanjamitic.com/blog/2025-12-13-nextjs-runtime-environment-variables#alternative-approaches, but let's go through them once again, since this article is entirely dedicated to runtime variables in purely static websites. Here are the alternatives:
 
-1. The first one is the original idea from the tutorial: we will use a shell script with `sed` command to string-replace all placeholder values inlined at build-time directly in the bundle. We will include this script in the Docker entrypoint so it can run at container start and insert environment specific values. This way we will accomplish an effect of start-time variables.
 
-2. Nginx has certain features to inject environment variables in responses. For example `sub_filter` can perform string replace in each text response. Upside of this is that it's truly runtime variable that will reflect any change, but the mayor disadvantage is the performance overhead, especially under big traffic load.
+1. The first option is the original idea from the tutorial: using a shell script with the `sed` command to string-replace all placeholder values that were inlined at build time directly in the bundle. We will include this script in the Docker entrypoint so it can run when the container starts and insert environment-specific values. This way, we achieve an effect similar to start-time variables.
 
-3. Another method is to rely on JavaScript runtime in the browser and dynamically host and load `<script src="./env.js" />` in the html of your root layout. It an have a few variations, for example, you can make `env.template` file that holds placeholders for the replacement script called in entrypoint, or you could even inline `env.js` in the `nginx.config` itself:
+2. Nginx has certain features for injecting environment variables into responses. For example, `sub_filter` can perform string replacement in each text response. The upside of this approach is that the variables are truly runtime and will reflect any change immediately, but the major disadvantage is the performance overhead, especially under heavy traffic.
+
+3. Another method is to rely on the JavaScript runtime in the browser and dynamically host and load `<script src="./env.js"></script>` in the HTML of your root layout. It can have a few variations. For example, you can create an `env.template` file that holds placeholders for the replacement script called in the entrypoint, or you could even inline `env.js` directly in the `nginx.conf` itself:
+
 
 ```nginx
 location = /env.js {
@@ -61,7 +64,10 @@ location = /env.js {
 }
 ```
 
-    The common thing is that you need to run client JavaScript on a given page to access the runtime variables through `window` object, e.g. `window.__RUNTIME_ENV__.MY_VAR`. This is disadvantage on its on and has performance cost, for example Astro enforces __zero client-side JavaScript by default__ strategy exactly for performance reasons. Another deal-breaker that files that don't run client JavaScript can't access these variables,  e.g. some of those are `sitemap.xml` and `robots.txt` which are a very important SEO related file especially in static websites.
+    The common aspect of all these approaches is that you need to run client-side JavaScript on a given page to access runtime variables through the `window` object, for example `window.__RUNTIME_ENV__.MY_VAR`. This is a disadvantage on its own and comes with a performance cost. For example, Astro enforces a __zero client-side JavaScript by default__ strategy precisely for performance reasons.
+
+    Another deal-breaker is that files which do not run client-side JavaScript cannot access these variables. Examples include `sitemap.xml` and `robots.txt`, which are very important SEO-related files, especially for static websites.
+
 
 ## Implementation
 
