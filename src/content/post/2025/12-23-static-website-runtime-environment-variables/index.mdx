@@ -31,7 +31,6 @@ Let's define our goal and requirements at the beginning. We will use a pure stat
 
 Now it's time to identify which data is environment-specific. In this particular website, these are the four environment variables:
 
-
 ```bash title=".env"
 
 # some example values
@@ -49,13 +48,11 @@ Now let's clearly understand what makes this challenging. Once compiled, a stati
 
 Before we start following the original tutorial and move on to the practical implementation, let's reconsider the possible alternatives at our disposal. I already touched on this in my previous article about runtime environment variables: https://nemanjamitic.com/blog/2025-12-13-nextjs-runtime-environment-variables#alternative-approaches, but let's go through them once again, since this article is entirely dedicated to runtime variables in purely static websites. Here are the alternatives:
 
-
 1. The first option is the original idea from the tutorial: using a shell script with the `sed` command to string-replace all placeholder values that were inlined at build time directly in the bundle. We will include this script in the Docker entrypoint so it can run when the container starts and insert environment-specific values. This way, we achieve an effect similar to start-time variables.
 
 2. Nginx has certain features for injecting environment variables into responses. For example, `sub_filter` can perform string replacement in each text response. The upside of this approach is that the variables are truly runtime and will reflect any change immediately, but the major disadvantage is the performance overhead, especially under heavy traffic.
 
 3. Another method is to rely on the JavaScript runtime in the browser and dynamically host and load `<script src="./env.js"></script>` in the HTML of your root layout. It can have a few variations. For example, you can create an `env.template` file that holds placeholders for the replacement script called in the entrypoint, or you could even inline `env.js` directly in the `nginx.conf` itself:
-
 
 ```nginx
 location = /env.js {
@@ -67,7 +64,6 @@ location = /env.js {
     The common aspect of all these approaches is that you need to run client-side JavaScript on a given page to access runtime variables through the `window` object, for example `window.__RUNTIME_ENV__.MY_VAR`. This is a disadvantage on its own and comes with a performance cost. For example, Astro enforces a __zero client-side JavaScript by default__ strategy precisely for performance reasons.
 
     Another deal-breaker is that files which do not run client-side JavaScript cannot access these variables. Examples include `sitemap.xml` and `robots.txt`, which are very important SEO-related files, especially for static websites.
-
 
 ## Implementation
 
@@ -239,8 +235,6 @@ Fortunately, the Nginx Alpine image already provides a dedicated pre-start folde
 
 Below is the complete `runner` stage of the [docker/Dockerfile](https://github.com/nemanjam/nemanjam.github.io/blob/feature/runtime-environment-variables/docker/Dockerfile):
 
-
-
 ```bash title="docker/Dockerfile"
 # -------------- runner --------------
 
@@ -290,13 +284,13 @@ With this, we are all set to run the container and apply the start-time environm
 
 ## Issues
 
-This is by far the most important section of the article. If you wanted a "TLDR" of the article this would be it. Let's review one by one:
+This is by far the most important section of the article. If you wanted a "TLDR" of the article, this would be it. Let's review the issues one by one:
 
 ### You can have only string variables
 
-You can have only string variables (or unions of string literals - enums). Let's illustrate with code example:
+You can have only string variables (or unions of string literals - enums). Let's illustrate this with a code example:
 
-My website uses one boolean variable `PLAUSIBLE_DOMAIN` that enables preview of draft articles. Initially it's typed and validated as boolean in both Zod and Astro schemas:
+My website uses one boolean variable, `PLAUSIBLE_DOMAIN`, that enables preview of draft articles. Initially, it's typed and validated as a boolean in both Zod and Astro schemas:
 
 ```ts title="src/schemas/config.ts"
 // Zod schema
@@ -326,7 +320,7 @@ export const envSchema = {
     // ...
 ```
 
-But obviously, since our replacement method requires unique, baked placeholder values we cannot use `true` and `false` values. So we must convert it to union of string literals so that the baked placeholder value can be valid on build time and the build can succeed. The type becomes: `PREVIEW_MODE: 'true' | 'false' | '' | 'BAKED_PREVIEW_MODE'`. Here is the updated code:
+But obviously, since our replacement method requires unique, baked placeholder values, we cannot use `true` and `false` directly. We must convert it to a union of string literals so that the baked placeholder value is valid at build time and the build can succeed. The type becomes: `PREVIEW_MODE: 'true' | 'false' | '' | 'BAKED_PREVIEW_MODE'`. Here is the updated code:
 
 ```ts title="src/schemas/config.ts"
 // Zod schema
@@ -364,19 +358,19 @@ export const envSchema = {
     // ...
 ```
 
-And here is the example usage of the ne quasi-boolean variable:
+And here is an example of how to use the new quasi-boolean variable:
 
 ```ts title="src/utils/preview.ts"
 export const isPreviewMode = (): boolean => CONFIG_SERVER.PREVIEW_MODE === 'true';
 ```
 
-**Issue no 1. conclusion:** It's a bit of workaround but it's acceptable.
+**Issue no. 1 conclusion:** It's a bit of a workaround, but acceptable.
 
-### You must handle url-shaped variables separately
+### You must handle URL-shaped variables separately
 
-You must bake and replace url-shaped variables separately for build to pass. The one typical and the most obvious variable is `SITE_URL` that is assigned to the `site:` option inside the `astro.config.ts`. This option is deeply integrated in the framework, used for routing and passed within default `Astro.props`, and if you leave it `undefined` Astro will just default to `http://localhost:port`. On the other hand, if you set it to non-url baked placeholder e.g. `BAKED_SITE_URL` build will fail, as soon Astro internally passes it into the native `new URL()` constructor.
+You must bake and replace URL-shaped variables separately for the build to pass. The most typical and obvious variable is `SITE_URL`, which is assigned to the `site:` option inside `astro.config.ts`. This option is deeply integrated into the framework, used for routing, and passed within default `Astro.props`. If left `undefined`, Astro defaults to `http://localhost:port`. On the other hand, if you set it to a non-URL baked placeholder, e.g., `BAKED_SITE_URL`, the build will fail, as Astro internally passes it into the native `new URL()` constructor.
 
-We solve this simply by treating url-shaped variables separately, meaning they have a different prefix and replacement rule, so a baked placeholder can be a valid url e.g. `https://BAKED_SITE_URL` and build can succeed.
+We solve this by treating URL-shaped variables separately, giving them a different prefix and replacement rule. This way, a baked placeholder can be a valid URL, e.g., `https://BAKED_SITE_URL`, allowing the build to succeed.
 
 ```bash title="scripts/replace-variables.sh"
 PREFIX="BAKED_"
@@ -393,34 +387,34 @@ sed -i "s|$PLACEHOLDER|$ESCAPED_VALUE|gI" "$file"
 sed -i "s|$URL_PLACEHOLDER|$ESCAPED_VALUE|gI" "$file"
 ```
 
-Fortunately, Astro doesn't transform `site:` option internally anywhere so the placeholder maintains integrity and this works as expected.
+Fortunately, Astro doesn't transform the `site:` option internally, so the placeholder maintains its integrity and this works as expected.
 
-**Issue no 2. conclusion:** It was a bit of a close call but it works and it's acceptable.
+**Issue no. 2 conclusion:** It was a close call, but it works and is acceptable.
 
 ### Open Graph images with runtime data are impossible
 
-This one was kind of obvious but still I missed to predict it. Open Graph images are typically very important for SEO and reach of static websites as these are usually blog or content websites whose success largely depends on sharing on social networks.
+This issue was somewhat obvious, but I still failed to predict it. Open Graph images are typically very important for SEO and the reach of static websites, especially for blogs or content-focused sites whose success largely depends on sharing on social networks.
 
-One obvious info that Open Graph image should include is the url of the website. As we made `SITE_URL` start-time variable obviously only its placeholder is available at build time. 
+One obvious piece of information that an Open Graph image should include is the website URL. Since we made `SITE_URL` a start-time variable, only its placeholder is available at build time.
 
-In my website I use an Astro static endpoint in [src/pages/api/open-graph/[...route].png.ts](https://gitlab.com/nemanjam/nemanjam.github.io/-/blob/feature/runtime-environment-variables/src/pages/api/open-graph/%5B...route%5D.png.ts) to dynamically render `.png` images from Satori html template. This endpoint is called at build time and rendered `.png` images are included in the bundle, there is nothing we can do at runtime.
+On my website, I use an Astro static endpoint in [src/pages/api/open-graph/[...route].png.ts](https://gitlab.com/nemanjam/nemanjam.github.io/-/blob/feature/runtime-environment-variables/src/pages/api/open-graph/%5B...route%5D.png.ts) to dynamically render `.png` images from a Satori HTML template. This endpoint is called at build time, and the rendered `.png` images are included in the bundle. There is nothing we can do at runtime.
 
 <Image {...IMAGE_SIZES.FIXED.MDX_MD} src={OpenGraphBakedUrlImage} alt="Open Graph image with incorrect baked url" />
 
 The obvious consequence is that we can either:
 
-1. Omit runtime data (`SITE_URL`) from the Open Graph images. Or use unique and equal `SITE_URL_CANONICAL` for all environments.
-2. Externalize Open Graph endpoint, implement it as an dynamic API endpoint with full Node.js runtime that read request object and render images dynamically. It means a separate backend app and hosting and the complexity of this setup overcomes the complexity of the rebuilding images for each environment.
+1. Omit runtime data (`SITE_URL`) from the Open Graph images, or use a unique and consistent `SITE_URL_CANONICAL` for all environments.
+2. Externalize the Open Graph endpoint and implement it as a dynamic API endpoint with a full Node.js runtime that reads the request object and renders images dynamically. This would require a separate backend app and hosting, and the complexity of this setup outweighs the complexity of rebuilding the images for each environment.
 
-Obviously both `1.` and `2.` are bad tradeoff and beyond of what's acceptable. At this point its's better deal to just keep the existing setup and rebuild website for each environment.
+Obviously, both options 1 and 2 are bad trade-offs and beyond what's acceptable. At this point, it's better to keep the existing setup and rebuild the website for each environment.
 
-**Issue no 3. conclusion:** It is unacceptable.
+**Issue no. 3 conclusion:** It is unacceptable.
 
-### You must transform variables in client side JavaScript
+### You must transform variables in client-side JavaScript
 
-Often you need to transform url variable, for example to extract the domain from the url. Obviously, you can't just do that in Astro Typescript code that runs at build time because it would use values from the baked placeholders and inline the incorrect, baked placeholder domain into the bundle. You must keep the baked variable intact during the build.
+Often, you need to transform a URL variable, for example to extract the domain from the URL. Obviously, you can't do this in Astro TypeScript code that runs at build time, because it would use values from the baked placeholders and inline the incorrect placeholder domain into the bundle. You must keep the baked variable intact during the build.
 
-The solution is to move that transformation to the client JavaScript code by including `<script />` with transformation code that runs on page load. As already said this degrades the performance and SEO of the page because client needs to parse and run the JavaScript to get the final content of the page.
+The solution is to move that transformation to client-side JavaScript by including a `<script />` with the transformation code that runs on page load. As mentioned earlier, this degrades page performance and SEO, because the client needs to parse and run the JavaScript to get the final content of the page.
 
 ```html title="src/components/BaseHead.astro"
 <!-- title attribute needs just the domain from the SITE_URL -->
@@ -447,9 +441,9 @@ The solution is to move that transformation to the client JavaScript code by inc
 </script>
 ```
 
-As said, this makes the cody messy, overly verbose, error prone, it degrades page performance and SEO, defeats Astro's __zero client-side JavaScript by default__ strategy, so all of this is once again beyond acceptable. 
+As mentioned, this makes the code messy, overly verbose, and error-prone. It degrades page performance and SEO, and defeats Astro's __zero client-side JavaScript by default__ strategy. All of this is, once again, beyond acceptable.
 
-**Issue no 4. conclusion:** It is unacceptable.
+**Issue no. 4 conclusion:** It is unacceptable.
 
 ## Completed code
 
@@ -457,18 +451,18 @@ As said, this makes the cody messy, overly verbose, error prone, it degrades pag
 
 ## Conclusion
 
-The experiment partially worked, but the result clearly shows why a reusable build for **a pure static website** is a bad idea in practice.
+The experiment partially worked, but the results clearly show why a reusable build for **a pure static website** is a bad idea in practice.
 
-Yes, it is possible to inject start-time environment variables into a static bundle using shell scripts, Nginx entrypoints, and carefully crafted placeholders. With enough discipline, you can even make builds pass by separating string variables from URL-shaped variables, bending schemas, and moving certain logic into client-side JavaScript. However, every step in that direction chips away at the very benefits that make static websites attractive in the first place.
+It is possible to inject start-time environment variables into a static bundle using shell scripts, Nginx entrypoints, and carefully crafted placeholders. With enough discipline, you can even make builds pass by separating string variables from URL-shaped variables, bending schemas, and moving certain logic into client-side JavaScript. However, every step in that direction erodes the very benefits that make static websites attractive in the first place.
 
-A pure static website has no server runtime, no request context, and no dynamic execution environment. As soon as you try to retrofit runtime configuration into that model, you run into hard limitations. Non-string values must be faked, URLs must be handled as special cases, Open Graph images become impossible to render correctly, and any transformation of environment data leaks into client-side JavaScript. At that point you are no longer building a clean static site, but a fragile system of workarounds that hurts performance, SEO, and maintainability.
+A pure static website has no server runtime, no request context, and no dynamic execution environment. As soon as you try to retrofit runtime configuration into that model, you run into hard limitations. Non-string values must be faked, URLs must be handled as special cases, Open Graph images become impossible to render correctly, and any transformation of environment data leaks into client-side JavaScript. At that point, you are no longer building a clean static site, but a fragile system of workarounds that hurts performance, SEO, and maintainability.
 
-If you already have a dynamic, server side rendered website that already uses a server runtime and you need just a few static pages, then a few workarounds to benefit from runtime environment variables and reusable builds can represent a reasonable tradeoff and a good deal. I already described that use case in the previous article: https://nemanjamitic.com/blog/2025-12-13-nextjs-runtime-environment-variables.
+If you already have a dynamic, server-side rendered website that uses a server runtime and only need a few static pages, then a few workarounds to benefit from runtime environment variables and reusable builds can represent a reasonable trade-off. I already described that use case in the previous article: https://nemanjamitic.com/blog/2025-12-13-nextjs-runtime-environment-variables.
 
 On the other hand, if you want the simplicity, performance, and reliability of a pure static website, then accept rebuilds as part of the workflow.
 
 ## References
 
-- The starting point tutorial: https://phase.dev/blog/nextjs-public-runtime-variables/
+- Starting point tutorial: https://phase.dev/blog/nextjs-public-runtime-variables/
 
 
