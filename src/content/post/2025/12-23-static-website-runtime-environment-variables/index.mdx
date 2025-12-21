@@ -71,14 +71,13 @@ location = /env.js {
 
 ## Implementation
 
-And finally the most important and the most interesting part, the practical implementation of the most promising alternative. We spent quite a lot of time on introduction and the alternatives overview.
+And finally, the most important and interesting part: the practical implementation of the most promising alternative. We have spent quite a lot of time on the introduction and the overview of alternatives.
 
-You can review this exact feature code in the pull request on this link: https://github.com/nemanjam/nemanjam.github.io/pull/28
-
+You can review the exact implementation in the pull request at this link: https://github.com/nemanjam/nemanjam.github.io/pull/28
 
 ### Replacement script
 
-Let's start with the shell replacement script, we will use the `replace-variables.sh` from the tutorial as the starting point. After some trial and error and few iterations this is how the final script looks like:
+Let's start with the shell replacement script. We will use the `replace-variables.sh` script from the tutorial as a starting point. After some trial and error and a few iterations, this is what the final script looks like:
 
 [scripts/replace-variables.sh](https://github.com/nemanjam/nemanjam.github.io/blob/feature/runtime-environment-variables/scripts/replace-variables.sh)
 
@@ -225,20 +224,21 @@ done
 
 I left the verbose comments in the script for clarity, but here are the most important points to keep in mind:
 
-- It uses `#!/bin/sh` shell syntax because `bash` is not available by default in Nginx Alpine image and we want to keep the image size minimal.
-- It uses `DIST_PATH` environment variable used as argument to pass the path to the bundle into the script. On the top of the script we validate and initialize all the hardcoded and passed arguments and exit early in case of invalid data is provided.
-- We support and handle separately both required and optional variables with `REQUIRED_VARS` and `OPTIONAL_VARS`.
-- This is the important part: we treat ordinary string variables and and "url shaped" string variables separately, assign them separate identifying prefixes `PREFIX="BAKED_"` and `URL_PREFIX="https://${PREFIX}"` and placeholders `PLACEHOLDER="${PREFIX}${VAR}"` and `URL_PLACEHOLDER="${URL_PREFIX}${VAR}"` accordingly. This is needed because baked build for Astro will fail if we pass invalid url for `site` option in the `astro.config.ts`.
-- We keep using `sed` over `envsubst` because of more control over string replacement. Additionally, we escape special chars `&` and `|` for `sed` input.
+- It uses `#!/bin/sh` shell syntax because `bash` is not available by default in the Nginx Alpine image, and we want to keep the image size minimal.
+- It uses the `DIST_PATH` environment variable as an argument to pass the path to the bundle into the script. At the top of the script, we validate and initialize all hardcoded and passed arguments, and exit early if invalid data is provided.
+- We support and handle required and optional variables separately via `REQUIRED_VARS` and `OPTIONAL_VARS`.
+- This is the important part: we treat ordinary string variables and "URL-shaped" string variables separately, assign them distinct identifying prefixes (`PREFIX="BAKED_"` and `URL_PREFIX="https://${PREFIX}"`), and use the corresponding placeholders (`PLACEHOLDER="${PREFIX}${VAR}"` and `URL_PLACEHOLDER="${URL_PREFIX}${VAR}"`). This is necessary because a baked build for Astro will fail if we pass an invalid URL to the `site` option in `astro.config.ts`.
+- We continue to use `sed` instead of `envsubst` because it gives us more control over string replacement. Additionally, we escape special characters such as `&` and `|` in the `sed` input.
 - We log processed files and replaced variables for debugging and monitoring purposes.
 
 ### Nginx image entrypoint
 
-Once we have working and tested replacement script it's time to include it in the Docker entrypoint so it can run on the container start and replace baked placeholders in the bundle with the actual environment variables from the current environment.
+Once we have a working and tested replacement script, it's time to include it in the Docker entrypoint so it can run when the container starts and replace baked placeholders in the bundle with the actual environment variables from the current environment.
 
-Fortunately, Nginx Alpine image already provides dedicated pre-start folder `/docker-entrypoint.d` intended to place the entrypoint scripts. We define the `ENV DIST_PATH=/usr/share/nginx/html` environment variable because `replace-variables.sh` expects it as an input argument. Additionally, we include `10-` prefix in the script file name because it defines the scripts execution order in the entrypoint. We want to run our script before any other.
+Fortunately, the Nginx Alpine image already provides a dedicated pre-start folder, `/docker-entrypoint.d`, intended for entrypoint scripts. We define the `ENV DIST_PATH=/usr/share/nginx/html` environment variable because `replace-variables.sh` expects it as an input argument. Additionally, we include a `10-` prefix in the script file name to define the execution order of scripts in the entrypoint. We want our script to run before any others.
 
-Bellow is the complete `runner` stage of the [docker/Dockerfile](https://github.com/nemanjam/nemanjam.github.io/blob/feature/runtime-environment-variables/docker/Dockerfile):
+Below is the complete `runner` stage of the [docker/Dockerfile](https://github.com/nemanjam/nemanjam.github.io/blob/feature/runtime-environment-variables/docker/Dockerfile):
+
 
 
 ```bash title="docker/Dockerfile"
@@ -263,7 +263,7 @@ EXPOSE 8080
 
 ### Setting the variables for test
 
-And finally, we define the actual values for environment variables in the [docker-compose.yml](https://github.com/nemanjam/nemanjam.github.io/blob/feature/runtime-environment-variables/docker-compose.yml) for test:
+Finally, we define the actual values for the environment variables in the [docker-compose.yml](https://github.com/nemanjam/nemanjam.github.io/blob/feature/runtime-environment-variables/docker-compose.yml) for testing:
 
 ```yml title="docker-compose.yml"
 services:
@@ -286,7 +286,7 @@ services:
       - default
 ```
 
-With this we have all set up to run the container and set the start-time environment variables. The original tutorial mentions certain tradeoffs of this method, like the slower container startup, the risk of unintentional string replacements but those are tolerable for our use case. But let's actually see if there is more to it, in detail, in the next section.
+With this, we are all set to run the container and apply the start-time environment variables. The original tutorial mentions certain trade-offs of this method, such as slower container startup and the risk of unintentional string replacements, but these are tolerable for our use case. But let's actually see if there is more to it, in detail, in the next section.
 
 ## Issues
 
