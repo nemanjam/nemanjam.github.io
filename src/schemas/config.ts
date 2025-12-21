@@ -9,6 +9,8 @@ export const themeValues = ['default-light', 'default-dark', 'green-light', 'gre
 const domainSubdomainRegex =
   /^(?!-)[A-Za-z0-9-]{1,63}(?<!-)(\.(?!-)[A-Za-z0-9-]{1,63}(?<!-))*\.[A-Za-z]{2,}$/;
 
+const localhostWithPortRegex = /^localhost(:\d{1,5})?$/;
+
 /** runs after astro:env check in astro.config.ts */
 export const processEnvSchema = z.object({
   NODE_ENV: z.enum(nodeEnvValues),
@@ -28,7 +30,7 @@ export const processEnvSchema = z.object({
       (value) =>
         value === undefined ||
         value === '' ||
-        value === 'localhost' || // astro:env default
+        localhostWithPortRegex.test(value) || // astro:env default, allow localhost or localhost:PORT
         domainSubdomainRegex.test(value),
       { message: 'Invalid hostname for PLAUSIBLE_DOMAIN 1' }
     ),
