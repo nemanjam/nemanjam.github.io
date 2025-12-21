@@ -1,0 +1,468 @@
+---
+title: Why runtime environment variables for a pure static website are a bad idea
+description: |
+  Build and deploy a static website as a reusable Docker image and see how practical it is.
+publishDate: 2025-12-23
+heroImage: '../../../../content/post/2025/12-23-static-website-runtime-environment-variables/_images/open-graph-baked-url.png'
+heroAlt: Open Graph image with incorrect baked url
+tags:
+  - astro
+  - docker
+category: tips-and-tricks
+toc: true
+draft: false
+---
+
+
+import { Image } from 'astro:assets';
+
+import { IMAGE_SIZES } from '../../../../constants/image';
+import OpenGraphBakedUrlImage from '../../../../content/post/2025/12-23-static-website-runtime-environment-variables/_images/open-graph-baked-url.png';
+
+## Introduction
+
+ This article will be a live "try and see" practical experiment. I will use this exact blog project, static Astro website and try to package it as an reusable Nginx Docker image that will require just a single `.env` file to run in any environment.
+
+ I will use this tutorial as a starting point https://phase.dev/blog/nextjs-public-runtime-variables/. It describes the idea and the process, it uses Next.js and has shell replacement script that we can work with.
+
+## Goal
+
+Let's define our goal and the requirements at the beginning. We will use a pure, static website that consists just from assets without any server runtime code. This is important because hosting static website is simple, free and widely available. We want to have reusable builds, no environment specific data is bundled within the app code, but read from a single `.env` file.
+
+Now it's time to identify which data is environment specific. In this particular website it's these 4 environment variables:
+
+```bash title=".env"
+
+# some example values
+
+SITE_URL=http://localhost:8080
+PLAUSIBLE_SCRIPT_URL=https://plausible.arm1.nemanjamitic.com/js/script.js
+PLAUSIBLE_DOMAIN=nemanjamitic.com
+PREVIEW_MODE=true
+```
+Notice the format of these variables, (almost) three url's and one boolean value.
+
+Now let's understand clearly what makes it challenging: Once compiled, static website becomes just a collection of static assets (`.html`, `.js`, `.css`, `.jpg`, etc. files) deployed to a Nginx web folder. It practically means we have no server runtime and we cannot run any code, which greatly limits our power and control. The only runtime we have is the one in browser, which is only useful to some extent, when it comes to loading environment specific data at runtime.
+
+## Options
+
+Before we start following the original tutorial and the practical implementation, let's once again reconsider possible alternatives that we have at our disposal. I already touched on this in my previous article about the runtime environment variables: https://nemanjamitic.com/blog/2025-12-13-nextjs-runtime-environment-variables#alternative-approaches but lets go through it once again, since this time the entire article is dedicated to the runtime variables in purely static websites. Here are the alternatives:
+
+1. The first one is the original idea from the tutorial: we will use a shell script with `sed` command to string-replace all placeholder values inlined at build-time directly in the bundle. We will include this script in the Docker entrypoint so it can run at container start and insert environment specific values. This way we will accomplish an effect of start-time variables.
+
+2. Nginx has certain features to inject environment variables in responses. For example `sub_filter` can perform string replace in each text response. Upside of this is that it's truly runtime variable that will reflect any change, but the mayor disadvantage is the performance overhead, especially under big traffic load.
+
+3. Another method is to rely on JavaScript runtime in the browser and dynamically host and load `<script src="./env.js" />` in the html of your root layout. It an have a few variations, for example, you can make `env.template` file that holds placeholders for the replacement script called in entrypoint, or you could even inline `env.js` in the `nginx.config` itself:
+
+```nginx
+location = /env.js {
+  default_type application/javascript;
+  return 200 "window.__CONFIG__ = { API_URL: '$API_URL' }";
+}
+```
+
+    The common thing is that you need to run client JavaScript on a given page to access the runtime variables through `window` object, e.g. `window.__RUNTIME_ENV__.MY_VAR`. This is disadvantage on its on and has performance cost, for example Astro enforces __zero client-side JavaScript by default__ strategy exactly for performance reasons. Another deal-breaker that files that don't run client JavaScript can't access these variables,  e.g. some of those are `sitemap.xml` and `robots.txt` which are a very important SEO related file especially in static websites.
+
+## Implementation
+
+And finally the most important and the most interesting part, the practical implementation of the most promising alternative. We spent quite a lot of time on introduction and the alternatives overview.
+
+You can review this exact feature code in the pull request on this link: https://github.com/nemanjam/nemanjam.github.io/pull/28
+
+
+### Replacement script
+
+Let's start with the shell replacement script, we will use the `replace-variables.sh` from the tutorial as the starting point. After some trial and error and few iterations this is how the final script looks like:
+
+[scripts/replace-variables.sh](https://github.com/nemanjam/nemanjam.github.io/blob/feature/runtime-environment-variables/scripts/replace-variables.sh)
+
+```bash title="replace-variables.sh"
+#!/bin/sh
+
+# Note: sh shell syntax, NO bash in Alpine Nginx
+
+# Summary:
+# 1. Required variables are checked to be defined.
+# 2. Optional variables are initialized to empty string if undefined.
+# 3. All files in DIST_PATH with specified extensions are processed.
+# 4. Placeholders of the form PREFIX_VAR are replaced with actual environment variable values.
+
+# Define required and optional environment variables (space-separated strings for /bin/sh)
+REQUIRED_VARS="SITE_URL PLAUSIBLE_SCRIPT_URL PLAUSIBLE_DOMAIN"
+OPTIONAL_VARS="PREVIEW_MODE"
+
+# Variables that are baked as URL-shaped placeholders (https://BAKED_VAR)
+BAKED_URL_VARS="SITE_URL PLAUSIBLE_SCRIPT_URL"
+
+PREFIX="BAKED_"
+# Baked has always https://BAKED_VAR
+# Will be replaced with whatever VAR value http:// or https:// or any string
+URL_PREFIX="https://${PREFIX}"
+FILE_EXTENSIONS="html js xml json"
+
+# Read DIST_PATH from environment variable
+# Do not provide a default; it must be set
+if [ -z "${DIST_PATH}" ]; then
+    echo "ERROR: DIST_PATH environment variable is not set."
+    exit 1
+fi
+
+# Check if the directory exists
+if [ ! -d "${DIST_PATH}" ]; then
+    echo "ERROR: DIST_PATH directory '${DIST_PATH}' does not exist."
+    exit 1
+fi
+
+# Check required environment variables are defined
+for VAR in $REQUIRED_VARS; do
+    # POSIX sh-compatible indirect expansion
+    eval "VAL=\$$VAR"
+    if [ -z "$VAL" ]; then
+        echo "$VAR required environment variable is not set. Please set it and rerun the script."
+        exit 1
+    fi
+done
+
+# Default optional variables to empty string
+for VAR in $OPTIONAL_VARS; do
+    eval "VAL=\$$VAR"
+    if [ -z "$VAL" ]; then
+        eval "$VAR=''"
+    fi
+done
+
+# Combine required and optional variables into a single string
+ALL_VARS="$REQUIRED_VARS $OPTIONAL_VARS"
+
+# Find and replace placeholders in files
+for ext in $FILE_EXTENSIONS; do
+
+    # Use 'find' to recursively search for all files with the current extension
+    # -type f ensures only regular files are returned
+    # -name "*.$ext" matches files ending with the current extension
+    find "$DIST_PATH" -type f -name "*.$ext" |
+
+    # Pipe the list of found files into a while loop for processing
+    while read -r file; do
+        # Read file once into a variable for faster checks
+        FILE_CONTENT=$(cat "$file")
+        FILE_REPLACED=0
+
+        # Loop over each variable that needs to be replaced
+        for VAR in $ALL_VARS; do
+
+            PLACEHOLDER="${PREFIX}${VAR}"
+            URL_PLACEHOLDER="${URL_PREFIX}${VAR}"
+
+            # Get variable value (POSIX sh compatible)
+            # Optional variables are guaranteed to have a value (possibly empty)
+            eval "VALUE=\$$VAR"
+
+            # Escape VALUE for sed replacement:
+            # - & → \&  (ampersand is special in replacement, expands to the whole match)
+            # - | → \|  (pipe is used as sed delimiter)
+            ESCAPED_VALUE=$(printf '%s' "$VALUE" | sed 's/[&|]/\\&/g')
+
+            # Handle baked URL variables (e.g. https://BAKED_SITE_URL)
+            # These must be replaced as full URLs to avoid invalid or double protocols
+            for URL_VAR in $BAKED_URL_VARS; do
+                # Check if current variable is a baked URL var
+                if [ "$VAR" = "$URL_VAR" ]; then
+                    # Skip if URL placeholder is not present in this file, 2 - parent loop, i - case insensitive
+                    echo "$FILE_CONTENT" | grep -qi "$URL_PLACEHOLDER" || continue 2
+
+                    # Print file name once on first replacement
+                    if [ "$FILE_REPLACED" -eq 0 ]; then
+                        echo "Processing file: $file"
+                        FILE_REPLACED=1
+                    fi
+
+                    # Log replacement
+                    # Log $VALUE, because $ESCAPED_VALUE is just for sed
+                    echo "replaced: $URL_PLACEHOLDER -> $VALUE"
+
+                    # Replace full URL placeholder in-place, I - case insensitive
+                    sed -i "s|$URL_PLACEHOLDER|$ESCAPED_VALUE|gI" "$file"
+
+                    # Continue with next variable, 2 - parent loop
+                    continue 2
+                fi
+            done
+
+            # Note: exits loop early if placeholder is not present in the file, i - case insensitive
+            echo "$FILE_CONTENT" | grep -qi "$PLACEHOLDER" || continue
+
+            # Print file name only on first replacement
+            if [ "$FILE_REPLACED" -eq 0 ]; then
+                echo "Processing file: $file"
+                FILE_REPLACED=1
+            fi
+
+            # Log what is replaced
+            if [ -z "$VALUE" ]; then
+                echo "replaced: $PLACEHOLDER -> (empty)"
+            else
+                echo "replaced: $PLACEHOLDER -> $VALUE"
+            fi
+
+            # Perform in-place replacement using sed
+            # "s|pattern|replacement|g" replaces all occurrences in the file
+            # The | delimiter is used instead of / to avoid conflicts with paths
+            # I - case insensitive
+            # Example: BAKED_SITE_URL → https://example.com
+            sed -i "s|$PLACEHOLDER|$ESCAPED_VALUE|gI" "$file"
+
+        done
+    done
+done
+```
+
+I left the verbose comments in the script for clarity, but here are the most important points to keep in mind:
+
+- It uses `#!/bin/sh` shell syntax because `bash` is not available by default in Nginx Alpine image and we want to keep the image size minimal.
+- It uses `DIST_PATH` environment variable used as argument to pass the path to the bundle into the script. On the top of the script we validate and initialize all the hardcoded and passed arguments and exit early in case of invalid data is provided.
+- We support and handle separately both required and optional variables with `REQUIRED_VARS` and `OPTIONAL_VARS`.
+- This is the important part: we treat ordinary string variables and and "url shaped" string variables separately, assign them separate identifying prefixes `PREFIX="BAKED_"` and `URL_PREFIX="https://${PREFIX}"` and placeholders `PLACEHOLDER="${PREFIX}${VAR}"` and `URL_PLACEHOLDER="${URL_PREFIX}${VAR}"` accordingly. This is needed because baked build for Astro will fail if we pass invalid url for `site` option in the `astro.config.ts`.
+- We keep using `sed` over `envsubst` because of more control over string replacement. Additionally, we escape special chars `&` and `|` for `sed` input.
+- We log processed files and replaced variables for debugging and monitoring purposes.
+
+### Nginx image entrypoint
+
+Once we have working and tested replacement script it's time to include it in the Docker entrypoint so it can run on the container start and replace baked placeholders in the bundle with the actual environment variables from the current environment.
+
+Fortunately, Nginx Alpine image already provides dedicated pre-start folder `/docker-entrypoint.d` intended to place the entrypoint scripts. We define the `ENV DIST_PATH=/usr/share/nginx/html` environment variable because `replace-variables.sh` expects it as an input argument. Additionally, we include `10-` prefix in the script file name because it defines the scripts execution order in the entrypoint. We want to run our script before any other.
+
+Bellow is the complete `runner` stage of the [docker/Dockerfile](https://github.com/nemanjam/nemanjam.github.io/blob/feature/runtime-environment-variables/docker/Dockerfile):
+
+
+```bash title="docker/Dockerfile"
+# -------------- runner --------------
+
+FROM nginx:1.29.1-alpine3.22-slim AS runtime
+COPY ./docker/nginx.conf /etc/nginx/nginx.conf
+
+# set dist folder path for both web folder and script arg
+ENV DIST_PATH=/usr/share/nginx/html
+
+# sufficient for SSG
+COPY --from=build /app/dist ${DIST_PATH}
+
+# copy to pre-start scripts folder
+# 10-xxx controls the order
+COPY ./scripts/replace-variables.sh /docker-entrypoint.d/10-replace-variables.sh
+RUN chmod +x /docker-entrypoint.d/10-replace-variables.sh
+
+EXPOSE 8080
+```
+
+### Setting the variables for test
+
+And finally, we define the actual values for environment variables in the [docker-compose.yml](https://github.com/nemanjam/nemanjam.github.io/blob/feature/runtime-environment-variables/docker-compose.yml) for test:
+
+```yml title="docker-compose.yml"
+services:
+  nmc-docker:
+    container_name: nmc-docker
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+
+    platform: linux/amd64
+    restart: unless-stopped
+    environment:
+      SITE_URL: 'http://localhost:8080'
+      PLAUSIBLE_SCRIPT_URL: 'https://plausible.arm1.nemanjamitic.com/js/script.js'
+      PLAUSIBLE_DOMAIN: 'nemanjamitic.com'
+      PREVIEW_MODE: 'true'
+    ports:
+      - '8080:8080'
+    networks:
+      - default
+```
+
+With this we have all set up to run the container and set the start-time environment variables. The original tutorial mentions certain tradeoffs of this method, like the slower container startup, the risk of unintentional string replacements but those are tolerable for our use case. But let's actually see if there is more to it, in detail, in the next section.
+
+## Issues
+
+This is by far the most important section of the article. If you wanted a "TLDR" of the article this would be it. Let's review one by one:
+
+### You can have only string variables
+
+You can have only string variables (or unions of string literals - enums). Let's illustrate with code example:
+
+My website uses one boolean variable `PLAUSIBLE_DOMAIN` that enables preview of draft articles. Initially it's typed and validated as boolean in both Zod and Astro schemas:
+
+```ts title="src/schemas/config.ts"
+// Zod schema
+
+export const booleanValues = ['true', 'false', ''] as const;
+
+export const processEnvSchema = z.object({
+  // ...
+  PREVIEW_MODE: z
+    .enum(booleanValues)
+    .transform((value) => value === 'true')
+    .default(false),
+  // ...
+```
+
+```ts title="src/config/process-env.ts"
+// Astro schema
+
+export const envSchema = {
+  schema: {
+    // ...
+    PREVIEW_MODE: envField.boolean({
+      context: 'server',
+      access: 'public',
+      default: false,
+    }),
+    // ...
+```
+
+But obviously, since our replacement method requires unique, baked placeholder values we cannot use `true` and `false` values. So we must convert it to union of string literals so that the baked placeholder value can be valid on build time and the build can succeed. The type becomes: `PREVIEW_MODE: 'true' | 'false' | '' | 'BAKED_PREVIEW_MODE'`. Here is the updated code:
+
+```ts title="src/schemas/config.ts"
+// Zod schema
+
+// src/utils/baked.ts
+export const baked = <T extends string>(name: T): `BAKED_${T}` => `BAKED_${name}` as `BAKED_${T}`;
+
+export const booleanValues = ['true', 'false', ''] as const;
+
+export const processEnvSchema = z.object({
+  // ...
+  // Note: string union, not boolean, for baked
+  PREVIEW_MODE: z
+    .enum(booleanValues)
+    .or(z.literal(baked('PREVIEW_MODE')))
+    .default('false'),
+  // ...
+```
+
+```ts title="src/config/process-env.ts"
+// Astro schema
+
+// src/utils/baked.ts
+export const baked = <T extends string>(name: T): `BAKED_${T}` => `BAKED_${name}` as `BAKED_${T}`;
+
+export const envSchema = {
+  schema: {
+    // ...
+    PREVIEW_MODE: envField.enum({
+      context: 'server',
+      access: 'public',
+      values: [...booleanValues, baked('PREVIEW_MODE')],
+      default: 'false',
+    }),
+    // ...
+```
+
+And here is the example usage of the ne quasi-boolean variable:
+
+```ts title="src/utils/preview.ts"
+export const isPreviewMode = (): boolean => CONFIG_SERVER.PREVIEW_MODE === 'true';
+```
+
+**Issue no 1. conclusion:** It's a bit of workaround but it's acceptable.
+
+### You must handle url-shaped variables separately
+
+You must bake and replace url-shaped variables separately for build to pass. The one typical and the most obvious variable is `SITE_URL` that is assigned to the `site:` option inside the `astro.config.ts`. This option is deeply integrated in the framework, used for routing and passed within default `Astro.props`, and if you leave it `undefined` Astro will just default to `http://localhost:port`. On the other hand, if you set it to non-url baked placeholder e.g. `BAKED_SITE_URL` build will fail, as soon Astro internally passes it into the native `new URL()` constructor.
+
+We solve this simply by treating url-shaped variables separately, meaning they have a different prefix and replacement rule, so a baked placeholder can be a valid url e.g. `https://BAKED_SITE_URL` and build can succeed.
+
+```bash title="scripts/replace-variables.sh"
+PREFIX="BAKED_"
+URL_PREFIX="https://${PREFIX}"
+
+# ...
+
+PLACEHOLDER="${PREFIX}${VAR}"
+URL_PLACEHOLDER="${URL_PREFIX}${VAR}"
+
+# ...
+
+sed -i "s|$PLACEHOLDER|$ESCAPED_VALUE|gI" "$file"
+sed -i "s|$URL_PLACEHOLDER|$ESCAPED_VALUE|gI" "$file"
+```
+
+Fortunately, Astro doesn't transform `site:` option internally anywhere so the placeholder maintains integrity and this works as expected.
+
+**Issue no 2. conclusion:** It was a bit of a close call but it works and it's acceptable.
+
+### Open Graph images with runtime data are impossible
+
+This one was kind of obvious but still I missed to predict it. Open Graph images are typically very important for SEO and reach of static websites as these are usually blog or content websites whose success largely depends on sharing on social networks.
+
+One obvious info that Open Graph image should include is the url of the website. As we made `SITE_URL` start-time variable obviously only its placeholder is available at build time. 
+
+In my website I use an Astro static endpoint in [src/pages/api/open-graph/[...route].png.ts](https://gitlab.com/nemanjam/nemanjam.github.io/-/blob/feature/runtime-environment-variables/src/pages/api/open-graph/%5B...route%5D.png.ts) to dynamically render `.png` images from Satori html template. This endpoint is called at build time and rendered `.png` images are included in the bundle, there is nothing we can do at runtime.
+
+<Image {...IMAGE_SIZES.FIXED.MDX_MD} src={OpenGraphBakedUrlImage} alt="Open Graph image with incorrect baked url" />
+
+The obvious consequence is that we can either:
+
+1. Omit runtime data (`SITE_URL`) from the Open Graph images. Or use unique and equal `SITE_URL_CANONICAL` for all environments.
+2. Externalize Open Graph endpoint, implement it as an dynamic API endpoint with full Node.js runtime that read request object and render images dynamically. It means a separate backend app and hosting and the complexity of this setup overcomes the complexity of the rebuilding images for each environment.
+
+Obviously both `1.` and `2.` are bad tradeoff and beyond of what's acceptable. At this point its's better deal to just keep the existing setup and rebuild website for each environment.
+
+**Issue no 3. conclusion:** It is unacceptable.
+
+### You must transform variables in client side JavaScript
+
+Often you need to transform url variable, for example to extract the domain from the url. Obviously, you can't just do that in Astro Typescript code that runs at build time because it would use values from the baked placeholders and inline the incorrect, baked placeholder domain into the bundle. You must keep the baked variable intact during the build.
+
+The solution is to move that transformation to the client JavaScript code by including `<script />` with transformation code that runs on page load. As already said this degrades the performance and SEO of the page because client needs to parse and run the JavaScript to get the final content of the page.
+
+```html title="src/components/BaseHead.astro"
+<!-- title attribute needs just the domain from the SITE_URL -->
+
+<link
+  id="rss-link"
+  rel="alternate"
+  type="application/rss+xml"
+  data-SITE_URL={SITE_URL}
+  title="RSS feed"
+  href="/api/feed/rss"
+/>
+
+<script>
+  // or read it form DOM and data-SITE_URL attribute
+  const siteUrl = window.__RUNTIME_ENV__.SITE_URL;
+  const hostname = new URL(siteUrl).hostname;
+
+  const link = document.getElementById('rss-link');
+
+  if (link && hostname) {
+    link.title = 'RSS feed for ' + hostname;
+  }
+</script>
+```
+
+As said, this makes the cody messy, overly verbose, error prone, it degrades page performance and SEO, defeats Astro's __zero client-side JavaScript by default__ strategy, so all of this is once again beyond acceptable. 
+
+**Issue no 4. conclusion:** It is unacceptable.
+
+## Completed code
+
+- **Pull request:** https://github.com/nemanjam/nemanjam.github.io/pull/28
+
+## Conclusion
+
+The experiment partially worked, but the result clearly shows why a reusable build for **a pure static website** is a bad idea in practice.
+
+Yes, it is possible to inject start-time environment variables into a static bundle using shell scripts, Nginx entrypoints, and carefully crafted placeholders. With enough discipline, you can even make builds pass by separating string variables from URL-shaped variables, bending schemas, and moving certain logic into client-side JavaScript. However, every step in that direction chips away at the very benefits that make static websites attractive in the first place.
+
+A pure static website has no server runtime, no request context, and no dynamic execution environment. As soon as you try to retrofit runtime configuration into that model, you run into hard limitations. Non-string values must be faked, URLs must be handled as special cases, Open Graph images become impossible to render correctly, and any transformation of environment data leaks into client-side JavaScript. At that point you are no longer building a clean static site, but a fragile system of workarounds that hurts performance, SEO, and maintainability.
+
+If you already have a dynamic, server side rendered website that already uses a server runtime and you need just a few static pages, then a few workarounds to benefit from runtime environment variables and reusable builds can represent a reasonable tradeoff and a good deal. I already described that use case in the previous article: https://nemanjamitic.com/blog/2025-12-13-nextjs-runtime-environment-variables.
+
+On the other hand, if you want the simplicity, performance, and reliability of a pure static website, then accept rebuilds as part of the workflow.
+
+## References
+
+- The starting point tutorial: https://phase.dev/blog/nextjs-public-runtime-variables/
+
+

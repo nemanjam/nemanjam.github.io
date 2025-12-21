@@ -6,11 +6,12 @@ import { ROUTES } from '@/constants/routes';
 import { CONFIG_CLIENT } from '@/config/client';
 import { getLatestCommitInfo } from '@/libs/git';
 import { shortDate } from '@/utils/datetime';
-import { limitString, trimHttpProtocol } from '@/utils/strings';
+import { limitString } from '@/utils/strings';
+import { getHostnameFromUrl } from '@/utils/urls';
 
 const { SITE_URL, AUTHOR_EMAIL, AUTHOR_GITHUB, AUTHOR_LINKEDIN, AUTHOR_NAME, REPO_URL } =
   CONFIG_CLIENT;
-const domain = trimHttpProtocol(SITE_URL);
+const domain = getHostnameFromUrl(SITE_URL);
 const messageLength = 15 as const;
 
 const { time, fullHash, message } = getLatestCommitInfo();
