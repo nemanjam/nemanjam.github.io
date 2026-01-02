@@ -1,0 +1,682 @@
+---
+title: Next.js server actions with FastAPI backend and OpenAPI client
+description: |
+  Connect Next.js with a FastAPI backend while preserving a modern React workflow with server actions and server components. 
+publishDate: 2026-01-03
+heroImage: '../../../../content/post/2026/01-03-nextjs-server-actions-fastapi-openapi/_images/architecture-diagram-todo.png'
+heroAlt: Next.js, FastAPI interaction, architecture diagram
+tags:
+  - next.js
+  - react
+  - fastapi
+  - python
+category: tutorials
+toc: true
+draft: false
+---
+
+
+import { Image } from 'astro:assets';
+
+import { IMAGE_SIZES } from '../../../../constants/image';
+import ArchitectureDiagramTodoImage from '../../../../content/post/2026/01-03-nextjs-server-actions-fastapi-openapi/_images/architecture-diagram-todo.png'
+
+## Introduction
+
+In 2025. Next.js and server components are industry standard how you do server side rendered React websites. Next.js comes by default with API routes for building backend endpoints but for different reasons you may want to use a completely different programming language and a non-TypeScript backend. For example FastAPI is known for excellent integration with ML/AI libraries which are typically implemented in Python.
+
+Today we will show how to implement one critical part of every full stack app - data fetching and data mutations using Next.js and FastAPI. There is a more than one way to do it, but preferably we will try to choose and implement the best one.
+
+We won't start completely from scratch but will reuse https://github.com/fastapi/full-stack-fastapi-template as a starting point. It already provides a good foundation, especially backend, where we will only change storing session from `localStorage` to HttpOnly cookie. In contrast we will replace the most of frontend code by switching from Tanstack router, react Query and Chakra to Next.js 16, ShadcnUI and Tailwind 4.
+
+## The problem statement and requirements
+
+What's the real challenge here? Modern React 19 and Next.js 16 provide a new, advanced features and standardized workflow not just for fetching data into components but also for managing state. These span through both server and client and we should aim to fully leverage those features.
+
+So the real goal is this: we want to use a non-TypeScript backend but at the same time preserve the well established server components model for data fetching and server actions model for data mutations with the full type safety and state management as we were using Next.js API endpoints.
+
+## Architecture overview
+
+<Image {...IMAGE_SIZES.FIXED.MDX_MD} src={ArchitectureDiagramTodoImage} alt="Architecture diagram, client JavaScript, Next.js server and FastAPI server" />
+
+## Modify the backend to use HttpOnly cookie auth
+
+Server side rendering and server components are the central features of the modern Next.js and React. The original starter stores session into browser's `localStorage` which prevents us from having server side rendered private pages and components. We will modify this and store session in HttpOnly cookie instead, which we can access and read in server components.
+
+In the original repository there is already [Replace plaintext auth tokens with HttpOnly cookies #1606](https://github.com/fastapi/full-stack-fastapi-template/pull/1606) pull request that implements this, we will reuse it and accommodate to our needs. Let's show the most important parts of this code and discuss it.
+
+First, let's create utils to set and unset auth cookie in API responses. Note the signature of the set method `set_auth_cookie(subject, expires_delta, response)`. We pass in the subject (typically a `user.id`) and expiration for the token, but also a response argument with the base class type `Response` so we can apply this util to any specific response subclass. `create_access_token()` method itself is untouched, the token is created the same way for both `localStorage` and cookie.
+
+[backend/app/core/security.py](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/backend/app/core/security.py)
+
+```py title="backend/app/core/security.py"
+def set_auth_cookie(
+    subject: str | Any, expires_delta: timedelta, response: Response
+) -> Response:
+    # Cookie expiration and JWT expiration match
+    # Note: cookie expiration must be in seconds
+    expires_in_seconds = int(expires_delta.total_seconds())
+    access_token = create_access_token(subject, expires_delta)
+
+    # Dev defaults
+    samesite = "lax"
+    domain = None
+
+    # Prod overrides
+    if is_prod:
+        samesite = "none"
+        # Note: important for cross-site cookies in prod to succeed
+        # api-site.rpi.example.com and site.rpi.example.com
+        parsed = urlparse(settings.SITE_URL)
+        domain = parsed.hostname  # full domain
+
+        # if it has subdomains whitelist cookie for "1 level less" subdomain, rpi.example.com
+        host_segments = domain.split(".")
+        if len(host_segments) > 2:
+            domain = ".".join(host_segments[1:])  # remove the first segment (head)
+
+    logger.info(f"domain: {domain}")
+
+    response.set_cookie(
+        key=settings.AUTH_COOKIE,
+        value=access_token,
+        httponly=True,
+        max_age=expires_in_seconds,
+        expires=expires_in_seconds,
+        samesite=samesite,
+        secure=is_prod,
+        domain=domain,
+    )
+    return response
+```
+
+The core idea is straightforward, create token, assign it to cookie value and attach the cookie to the response object argument. 
+
+There is some added cross site cookie complexity, specific for my use case that you may not necessarily want to repeat, so lets explain it.
+
+### Cross site cookie configuration
+
+In general, often in practice frontend and backend don't use the same domain and you need to account this because cookie is tied to a domain. For example frontend is on `my-website.com`, and backend on `api.my-website.com`. For a browser to accept and store the cookie backend must set `domain = "my-website.com", samesite = "none"`. 
+
+On my server I use an additional Traefik TCP router that recognizes a dot `.` as an special delimiter character and it can't route correctly infinite depth subdomains, so I had to use a dash `-` instead for my backend domain.
+
+```bash
+# frontend url
+https://full-stack-fastapi-template-nextjs.arm1.nemanjamitic.com
+
+# backend url
+https://api-full-stack-fastapi-template-nextjs.arm1.nemanjamitic.com
+```
+So the additional cookie domain logic that you see basically does this: If the frontend is on subdomain set the cookie for the parent (one level less) domain, e.g. `arm1.nemanjamitic.com` in this specific case.
+
+That's enough for this digression, just wanted to draw your attention that you must carefully adjust domain property of the cross site cookie depending on which URLs you host your frontend and backend. Otherwise browser will reject setting the cookie and auth will fail.
+
+Similarly, we use this code to unset the auth cookie. We just return `JSONResponse` containing an expired cookie with the same key.  It can be improved but it will do for now.
+
+[backend/app/core/security.py](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/backend/app/core/security.py)
+
+
+```py title="backend/app/core/security.py"
+def delete_auth_cookie() -> JSONResponse:
+    response = JSONResponse(content={"message": "Logout successful"})
+    response.delete_cookie(
+        key=settings.AUTH_COOKIE,
+        path="/",
+        domain=None,
+        httponly=True,
+        samesite="lax",
+        secure=is_prod,
+    )
+    return response
+```
+
+### Login / logout endpoints
+
+Now it's time to make use of these utils to login and logout user. 
+
+For the login, naturally first we check that user provided a valid email and password and if yes we use `user.id` to generate access token, set it as cookie value and include the cookie in the response, using already mentioned `security.set_auth_cookie()` util.
+
+[backend/app/api/routes/login.py](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/backend/app/api/routes/login.py)
+
+
+```py title="backend/app/api/routes/login.py"
+@router.post("/login/access-token")
+def login_access_token(
+    session: SessionDep, form_data: Annotated[OAuth2PasswordRequestForm, Depends()]
+) -> JSONResponse:
+    """
+    OAuth2-compatible token login: get an access token for future requests (sent in an HTTP-only cookie)
+    """
+    user = crud.authenticate(
+        session=session, email=form_data.username, password=form_data.password
+    )
+    if not user:
+        raise HTTPException(status_code=400, detail="Incorrect email or password")
+    elif not user.is_active:
+        raise HTTPException(status_code=400, detail="Inactive user")
+
+    access_token_expires = timedelta(hours=settings.ACCESS_TOKEN_EXPIRE_HOURS)
+    response = JSONResponse(content={"message": "Login successful"})
+
+    return security.set_auth_cookie(user.id, access_token_expires, response)
+```
+
+For the logout we just make use of `security.delete_auth_cookie()` util to unset the cookie from the users browser.
+
+Note: we are implementing this endpoint for the sake of completeness of the FastAPI backend. In our particular case we will use Next.js server to clear the auth cookie.
+
+[backend/app/api/routes/login.py](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/backend/app/api/routes/login.py)
+
+
+```py title="backend/app/api/routes/login.py"
+@router.post("/logout", dependencies=[Depends(get_current_user)])
+def logout() -> JSONResponse:
+    """
+    Delete the HTTP-only cookie during logout
+    """
+    return security.delete_auth_cookie()
+```
+
+### Protect endpoints with auth
+
+After we implemented login/logout we can use it to protect specific API endpoints by identifying user from the request and check weather he has enough privileges to access some resource or perform some action.
+
+We will make use of FasAPI dependency injection to centralize logic for obtaining auth cookie with `CookieDep` and for identifying the user that sent the cookie with `CurrentUser`. `get_current_user()` method checks for cookie existence, decodes and verifies validity of the access token from the cookie, and finally uses the `user.id` from the token subject to query user from the database.
+
+[backend/app/api/deps.py](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/backend/app/api/deps.py)
+
+
+```py title="backend/app/api/deps.py"
+cookie_scheme = APIKeyCookie(name=settings.AUTH_COOKIE)
+
+CookieDep = Annotated[str, Depends(cookie_scheme)]
+
+
+def get_current_user(session: SessionDep, cookie: CookieDep) -> User:
+    if not cookie:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Not authenticated",
+        )
+
+    try:
+        payload = jwt.decode(
+            cookie, settings.JWT_SECRET_KEY, algorithms=[security.ALGORITHM]
+        )
+        token_data = TokenPayload(**payload)
+    except (InvalidTokenError, ValidationError):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Could not validate credentials",
+        )
+
+    user = session.get(User, token_data.sub)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    if not user.is_active:
+        raise HTTPException(status_code=400, detail="Inactive user")
+
+    return user
+
+CurrentUser = Annotated[User, Depends(get_current_user)]
+
+```
+
+Now, any function and route from ht FastAPI can make use of `CurrentUser` dependency to identify the user just by including it as an typed argument. Bellow is the simple `/me` endpoint for illustration.
+
+[backend/app/api/routes/users.py](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/backend/app/api/routes/users.py)
+
+```py title="backend/app/api/routes/users.py"
+@router.get("/me", response_model=UserPublic)
+def read_user_me(current_user: CurrentUser) -> Any:
+    """
+    Get current user.
+    """
+    return current_user
+```
+
+With this HttpOnly cookie auth is completed on backend. Basically we didn't change much, we only emitted access token within the cookie header instead of within the JSON body of the response.
+
+## Generate and configure OpenAPI client
+
+Now that we moved session from `localStorage` to HttpOnly cookie we can identify the user in server components in the Next.js server. Important and obvious note worth mentioning again: HttpOnly cookie is accessible only on the Next.js server, not in the client JavaScript that runs in the browser.
+
+But since we have a bit more complex setup with `Next.js client -> Next.js server -> FastAPI server` we need to handle cookie transmission accordingly. We will keep the `@hey-api/openapi-ts` package from the original template, but we will use `@hey-api/client-next` client for our Next.js app and and we will configure it to handle auth cookie properly.
+
+Here is the configuration for generating the OpenAPI client:
+
+[frontend/apps/web/openapi-ts.config.ts](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/openapi-ts.config.ts)
+
+
+```ts title="frontend/apps/web/openapi-ts.config.ts"
+const config: HeyApiConfig = defineConfig({
+  input: './openapi.json',
+  output: {
+    format: 'prettier',
+    lint: 'eslint',
+    path: './src/client',
+    importFileExtension: null,
+  },
+  exportSchemas: true, // backend models types
+  plugins: [
+    // Note: order matters
+    {
+      name: '@hey-api/typescript',
+      enums: 'javascript', // const objects instead of enums
+    },
+    '@hey-api/schemas', // default json, req.body, '{"username":"abc","password":"123"}'
+    {
+      name: '@hey-api/sdk',
+      asClass: true, // UsersService.readUserMe(), 'true' doesn't allow tree-shaking
+      classNameBuilder: '{{name}}Service', // class Users -> UsersService
+      // @ts-expect-error @hey-api/openapi-ts doesn't export types
+      methodNameBuilder, // usersReadUserMe -> readUserMe
+    },
+    {
+      name: '@hey-api/client-next',
+      // relative from src/client/ folder
+      runtimeConfigPath: '../lib/hey-api', // sets API_URL, auth...
+    },
+  ],
+});
+```
+
+Important parts are: we choose Next.js client `@hey-api/client-next`, we control SDK methods naming with `methodNameBuilder` callback, and we use `runtimeConfigPath` to specify the path for the generated client runtime configuration.
+
+### Runtime client configuration
+
+There are a few ways to set runtime configuration for generated client, we will use `runtimeConfigPath` field to set the path to the configuration file, since it is the recommended way as noted in the docs: https://heyapi.dev/openapi-ts/clients/next-js#runtime-api.
+
+Auth cookie is originally stored in the browser and its included in the requests made from client by default. In contrast, http requests made from Next.js server don't contain cookie by default, se we need to forward it explicitly. We are doing this in a base runtime configuration on a SDK instance level in a single place, so we don't have to repeat this logic for every specific call.
+
+
+Here is the code:
+
+[frontend/apps/web/src/lib/hey-api.ts](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/lib/hey-api.ts)
+
+
+```ts title="frontend/apps/web/src/lib/hey-api.ts"
+/** Runtime config. Runs and imported both on server and in browser. */
+export const createClientConfig: CreateClientConfig = (config) => {
+  const { API_URL } = getPublicEnv();
+
+  return {
+    ...config,
+    baseUrl: API_URL,
+    credentials: 'include',
+    ...(isServer() ? { fetch: serverFetch } : {}),
+  };
+};
+
+const serverFetch: typeof fetch = async (input, init = {}) => {
+  // Note: Dynamic import to avoid bundling 'next/headers' on client
+  const { cookies } = await import('next/headers');
+
+  const cookieStore = await cookies();
+  const cookieHeader = cookieStore
+    .getAll()
+    .map((c) => `${c.name}=${c.value}`)
+    .join('; ');
+
+  // Note: must append auth_cookie like this or content-type header will break in server actions
+  const headers = new Headers(init.headers);
+  headers.append('Cookie', cookieHeader);
+
+  const response = fetch(input, { ...init, headers });
+
+  return response;
+};
+```
+
+Important part here is `serverFetch` override for `fetch` function generated client uses on Next.js server. `serverFetch` code will typically run either on a server side rendered page or in server action. Both of those have access to the request object (and the headers and cookies) that originally comes from the browser. Based on this, we will read the cookies (including auth cookie) and forward them to the `fetch` client that will makes request from Next.js server to FastAPI endpoints. So this is the chain: `browser -> Next.js server -> FastAPI server`.
+
+There are few more tricks to make this work correctly.
+
+- We use dynamic import `const { cookies } = await import('next/headers')` to prevent bundling server code into the client bundle which will break the build.
+- We must create a `new Headers()` instance and use `append()` method to pass cookies to the `fetch`.
+- We obtain `API_URL` environment variable using `const { API_URL } = getPublicEnv()` from `next-public-env` package. For a reusable build `API_URL` must be runtime variable and this code is called on both server and in client, so it must get correct value for both. I wrote about reusable Next.js builds and runtime environment variables in detail in this article: [Runtime environment variables in Next.js - build reusable Docker images](https://nemanjamitic.com/blog/2025-12-13-nextjs-runtime-environment-variables).
+
+## Example client calls
+
+With this OpenAPI client is configured to make http authenticated calls from Next.js pages, server components and server actions to protected FastAPI endpoints.
+
+**Example 1.** Query in page:
+
+[frontend/apps/web/src/app/dashboard/items/[[...page]]/page.tsx](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/app/dashboard/items/%5B%5B...page%5D%5D/page.tsx)
+
+
+```tsx title="frontend/apps/web/src/app/dashboard/items/[[...page]]/page.tsx"
+
+const ItemsPage: FC<Props> = async ({ params }) => {
+  const { page } = await params;
+  const { currentPage, isValidPage } = parsePage(page);
+
+  if (!isValidPage) notFound();
+
+  const result = await ItemsService.readItems({
+    query: {
+      skip: (currentPage - 1) * PAGE_SIZE_TABLE,
+      limit: PAGE_SIZE_TABLE,
+    },
+  });
+
+  const items = result.data;
+
+  // ...
+
+}
+```
+
+**Example 2.** Query in server component:
+
+[frontend/apps/web/src/components/dashboard/home/list-recent-items.tsx](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/components/dashboard/home/list-recent-items.tsx)
+
+```tsx title="frontend/apps/web/src/components/dashboard/home/list-recent-items.tsx"
+const ListRecentItems: FC = async () => {
+  const result = await ItemsService.readItems();
+
+  throwIfApiError(result);
+
+  const items = result.data?.data ?? [];
+
+  // ...
+
+}
+```
+
+**Example 3.** Mutation in server action:
+
+[frontend/apps/web/src/actions/item.ts](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/actions/item.ts)
+
+```ts title="frontend/apps/web/src/actions/item.ts"
+export const itemCreateAction = async (
+  _prevState: ApiResult,
+  formData: FormData
+): Promise<ApiResult> => {
+  const body = Object.fromEntries(formData) as ItemCreate;
+
+  const apiResponse = await ItemsService.createItem({ body });
+
+  const { response: _, ...result } = apiResponse;
+
+  revalidatePath(ITEMS);
+
+  return result;
+};
+```
+
+## Mutations
+
+The original idea of the article is to preserve default React workflow, despite having a non-TypeScript backend. To accomplish this client code must not know about the existence of FastAPI endpoints and should never call them directly but only through Next.js server which will forward the requests.
+
+We already implemented passing the cookie from browser to FastAPI via Next.js server but we haven't yet implemented the opposite direction. FastAPI login endpoint sets cookie in the response, now we need to forward it through Next.js server into the users browser. Here is the code that does this:
+
+[frontend/apps/web/src/utils/actions.ts](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/utils/actions.ts)
+
+```ts title="frontend/apps/web/src/utils/actions.ts"
+export const forwardCookiesFromResponse = async (response: Response): Promise<void> => {
+  const rawCookies = response.headers.get('set-cookie');
+  if (!rawCookies) return;
+
+  const parsed = setCookieParser.parse(rawCookies);
+  const cookieStore = await cookies();
+
+  for (const c of parsed) {
+    cookieStore.set({
+      name: c.name,
+      value: c.value,
+      httpOnly: c.httpOnly,
+      secure: c.secure,
+      path: c.path ?? '/',
+      sameSite: c.sameSite as any,
+      expires: c.expires,
+    });
+  }
+};
+```
+
+The utility method above gets the cookies from the FastAPI response object which we parse using `set-cookie-parser` package and finally attach the parsed cookies to the Next.js response that will be returned as part of the server action. 
+
+We then call this util method with the login server action which response sets the forwarded cookies into the users browser. Bellow the hood, a server action is just a POST request and it can set the cookies as any other http call.
+
+[frontend/apps/web/src/actions/auth.ts](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/actions/auth.ts)
+
+```ts title="frontend/apps/web/src/actions/auth.ts"
+export const loginAction = async (
+  _prevState: ApiResult,
+  formData: FormData
+): Promise<ApiResult> => {
+  const body = Object.fromEntries(formData) as BodyLoginLoginAccessToken;
+  const apiResponse = await LoginService.loginAccessToken({ body });
+
+  const { response, ...result } = apiResponse;
+  await forwardCookiesFromResponse(response);
+
+  return result;
+};
+```
+
+## React Hook Form and useActionState
+
+Now that we configured backend and http client its time to handle forms submission within our client code. For some time `react-hook-form` the dominant forms package in react ecosystem. There are a few tricks to integrate it properly with `useActionState` React API and server actions.
+
+Here is the example code for creating an item:
+
+[frontend/apps/web/src/components/dashboard/items/form-item-create.tsx](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/components/dashboard/items/form-item-create.tsx)
+
+```tsx title="frontend/apps/web/src/components/dashboard/items/form-item-create.tsx"
+
+const defaultValues: ItemCreateFormValues = {
+  title: '',
+  description: '',
+} as const;
+
+const resolver = zodResolver(itemCreateSchema);
+
+const FormItemCreate: FC<Props> = ({ onSuccess, onCancel }) => {
+  const initialState = { data: undefined };
+  const [state, formAction, isPending] = useActionState(itemCreateAction, initialState);
+
+  const form = useForm<ItemCreateFormValues>({ resolver, defaultValues });
+
+  const isSuccess = isSuccessApiResult(state);
+
+  useEffect(() => {
+    if (isSuccess) onSuccess?.();
+  }, [isSuccess, onSuccess]);
+
+  const isError = isErrorApiResult(state);
+
+  const validateAndSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    form.handleSubmit(() => {
+      const formElement = event.target as HTMLFormElement;
+      const formData = new FormData(formElement);
+
+      startTransition(() => {
+        formAction(formData);
+        form.reset();
+      });
+    })(event);
+  };
+
+  return (
+    <Form {...form}>
+      <form action={formAction} onSubmit={validateAndSubmit} className="space-y-6">
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Title *</FormLabel>
+              <FormControl>
+                <Input {...field} placeholder="Enter item title..." disabled={isPending} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Input {...field} placeholder="Enter item description..." disabled={isPending} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {isError && (
+          <Alert variant="destructive">
+            <AlertDescription>{getApiErrorMessage(state.error)}</AlertDescription>
+          </Alert>
+        )}
+
+        <div className="flex justify-end space-x-2">
+          <Button type="button" variant="outline" onClick={onCancel} disabled={isPending}>
+            Cancel
+          </Button>
+
+          <Button type="submit" disabled={isPending}>
+            {isPending ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Creating...
+              </>
+            ) : (
+              'Create Item'
+            )}
+          </Button>
+        </div>
+      </form>
+    </Form>
+  );
+};
+```
+
+### Form submission and validation
+
+The code above addresses two important requirements:
+
+1. Server actions are designed to support form submission even with JavaScript disabled. In our code we support this by assigning the `action` attribute on the `<form />` tag to the `formAction` result returned by the `useFormAction` hook: `<form action={formAction} ... />`.
+
+2. We use client JavaScript to validate the fields with Zod and display user friendly error messages. For this, as well for form submission when JavaScript is enabled we use `validateAndSubmit` event handler attached to the `onSubmit` event: `<form onSubmit={validateAndSubmit} ... />`.
+
+I learned this trick from the tutorial linked in this comment in Github issue: [react-hook-form/discussions/11832#discussioncomment-11832211](https://github.com/orgs/react-hook-form/discussions/11832#discussioncomment-11832211).
+
+### useActionState
+
+React provides `useActionState` API as a hook not only to handle form submission and call server actions but also to manage state, all at the same time. It accepts the server action `itemCreateAction` as an argument and returns `formAction` function as result that we can use to bind to the form `action` attribute or invoke it manually with an event handler, or both at the same time like in our case.
+
+```ts
+const [state, formAction, isPending] = useActionState(itemCreateAction, initialState);
+```
+
+State management is modeled in a way that reminds a bit how its done in reducers and Redux. It uses concept of previous and next state, where the next state is the result of previous state plus some transformation which in this case happens on the server. Naturally, it all starts with the initial state.
+
+In our case `useActionState` accepts `initialState` as the second argument and the server action response is contained inside the `state` item in the returned tuple.
+
+## Server actions handle success and error results
+
+There are certain rules that apply to React server actions in general:
+
+1. In server actions you shouldn't throw exceptions but return error within the result. This affects what particular generic we will use to type OpenAPI client response. Because in our case a server action is just a proxy to respective FastAPI endpoint.
+
+    Here is the `ItemsService.createItem()` return type as example. This type is reused for both FastAPI and server action. That's intentional because server action is just a proxy and we want to avoid any needles transformation of the results.
+
+    As already stated, errors should be included as return values and this type clearly shows it: result is an union with success and error branches and additionally contains raw http `Response` object. You remember we already used it to extract cookie from it in the login endpoint.
+
+    ```ts
+    Promise<({
+        data: ItemPublic;
+        error: undefined;
+    } | {
+        data: undefined;
+        error: HttpValidationError;
+    }) & {
+        response: Response;
+    }>
+    ```
+
+2. Server actions have limited serializing capabilities. You can not return class instances, error instances, database model instances, etc. You should mostly rely on object literals for return values from server actions.
+
+    Let's see the code example:
+
+    [frontend/apps/web/src/actions/item.ts](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/actions/item.ts)
+
+    ```ts title="frontend/apps/web/src/actions/item.ts"
+    export const itemCreateAction = async (
+      _prevState: ApiResult,
+      formData: FormData
+    ): Promise<ApiResult> => {
+      const body = Object.fromEntries(formData) as ItemCreate;
+
+      const apiResponse = await ItemsService.createItem({ body });
+
+      const { response: _, ...result } = apiResponse;
+
+      revalidatePath(ITEMS);
+
+      return result;
+    };
+    ```
+
+    Note that `response` field is a class instance and it's not serializable, that's why we omit it from the server action return value.
+
+    You remember that we bound `action` attribute to the `formAction` in the form `<form action="formAction" ... >`. Because of this form values are received as `FormData` in the server action, and we use `Object.fromEntries()` to convert it to plain object that we can forward as http request body to the FastAPI endpoint.
+
+## useActionState vs useTransition to call actions
+
+Just a quick reminder, `useActionState` is not the only way to call a server action. It is typically used in conjunction with form element, while also providing state and `isPending` flag. We already saw code example for this.
+
+When we have just a simple `void` server action we can skip the form and simply invoke the action within an event handler. Such call we typically want to mark as lower priority by wrapping with `startTransition`. Bellow is the code example:
+
+[frontend/apps/web/src/components/dashboard/items/dropdown-item.tsx](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/components/dashboard/items/dropdown-item.tsx)
+
+```ts title="frontend/apps/web/src/components/dashboard/items/dropdown-item.tsx"
+const DropdownItem: FC<Props> = ({ item }) => {
+  const [isPending, startTransition] = useTransition();
+
+  const handleDeleteItem = (userId: string) => {
+    startTransition(() => {
+      itemDeleteAction(userId);
+    });
+  };
+
+  // ...
+
+};
+```
+
+## Completed code
+
+https://github.com/nemanjam/full-stack-fastapi-template-nextjs
+
+- **Repository:** https://github.com/nemanjam/full-stack-fastapi-template-nextjs
+
+The relevant files:
+
+```bash
+# 
+
+```
+
+## Conclusion
+
+// long to read, long to write and figure out
+
+## References
+
+- Server Actions, Next.js docs https://nextjs.org/docs/app/getting-started/updating-data
+- HttpOnly cookie PR https://github.com/fastapi/full-stack-fastapi-template/pull/1606
+- HttpOnly cookie branch https://github.com/sinkozs/full-stack-fastapi-template/tree/use-http-only-cookie
+- `@hey-api/openapi-ts` configuration docs https://heyapi.dev/openapi-ts/configuration
+- `@hey-api/client-next` client docs https://heyapi.dev/openapi-ts/clients/next-js
+- Connect React Hook Form with server action trick, blog article https://github.com/orgs/react-hook-form/discussions/11832#discussioncomment-11832211, https://dev.to/emmanuel_xs/how-to-use-react-hook-form-with-useactionstate-hook-in-nextjs15-1hja
+
