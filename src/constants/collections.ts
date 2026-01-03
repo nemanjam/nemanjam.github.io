@@ -27,6 +27,7 @@ export const TAGS = [
   'self-hosting',
   'algorithms',
   'computer-science',
+  'fastapi',
 ] as const;
 
 /** adjust this later */

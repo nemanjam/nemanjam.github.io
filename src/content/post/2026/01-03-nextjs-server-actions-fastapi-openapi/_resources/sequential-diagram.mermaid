@@ -1,0 +1,23 @@
+sequenceDiagram
+    autonumber
+    participant B as Browser
+    participant N as Next.js Server<br/>(RSC + Server Actions)
+    participant F as FastAPI<br/>(OpenAPI + Cookie Auth)
+
+    %% --- LOGIN ---
+    B->>N: POST /login (server action)
+    N->>F: POST /login/access-token (no cookie)
+    F-->>N: Set-Cookie: auth_token=JWT
+    N-->>B: Set-Cookie: auth_token=JWT (forwarded)
+
+    %% --- PAGE LOAD ---
+    B->>N: GET /dashboard (Cookie: auth_token)
+    N->>F: GET /items (Cookie forwarded)
+    F-->>N: 200 OK (JSON)
+    N-->>B: RSC stream + HTML
+
+    %% --- SERVER ACTION (mutation) ---
+    B->>N: POST form → server action (Cookie: auth_token)
+    N->>F: POST /items (Cookie forwarded)
+    F-->>N: 200 OK (JSON)
+    N-->>B: RSC revalidation + updated UI
