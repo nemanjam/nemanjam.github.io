@@ -661,8 +661,34 @@ const DropdownItem: FC<Props> = ({ item }) => {
 The relevant files:
 
 ```bash
-# 
+git clone git@github.com:nemanjam/full-stack-fastapi-template-nextjs.git
 
+# Backend
+backend/app/core/security.py
+backend/app/api/deps.py
+backend/app/api/routes/login.py
+backend/app/api/routes/users.py
+
+# Frontend
+
+# OpenAPI configuration
+frontend/apps/web/openapi-ts.config.ts
+frontend/apps/web/src/lib/hey-api.ts
+
+# Queries
+frontend/apps/web/src/app/dashboard/items/[[...page]]/page.tsx
+frontend/apps/web/src/components/dashboard/home/list-recent-items.tsx
+
+# Mutations
+
+# Server actions
+frontend/apps/web/src/utils/actions.ts
+frontend/apps/web/src/actions/item.ts
+frontend/apps/web/src/actions/auth.ts
+
+# Forms
+frontend/apps/web/src/components/dashboard/items/form-item-create.tsx
+frontend/apps/web/src/components/dashboard/items/dropdown-item.tsx
 ```
 
 ## Conclusion
