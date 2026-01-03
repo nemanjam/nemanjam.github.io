@@ -702,7 +702,17 @@ frontend/apps/web/src/components/dashboard/items/dropdown-item.tsx
 
 ## Conclusion
 
-// long to read, long to write and figure out
+Congratulations on reading this far. It was long to read, but also long to write and figure out.
+
+Next.js is a comprehensive full-stack meta-framework, but for any reason you might want to use it with a backend written in a completely different programming language. In this tutorial, we have demonstrated that it is entirely possible to bridge the modern Next.js ecosystem with a powerful Python-based FastAPI backend while preserving the full benefits of React Server Components and Server Actions. This approach demonstrates that you don't have to compromise on developer experience or type safety when choosing a non-TypeScript backend.
+
+The key idea is that **Next.js remains the only thing the browser ever talks to**. FastAPI is treated as **an internal service behind the Next.js server**. This lets you keep a clean React mental model: components call server actions, server actions call strongly typed OpenAPI clients, and only the Next.js server is responsible for cookies, authentication, and cross-service communication. From the client’s point of view, nothing changes.
+
+The result is a stack where FastAPI does what it is best at (Python, validation, data, ML, background jobs) and Next.js does what it is best at (React, rendering, routing, and UX), without either one leaking into the other.
+
+Feel free to explore the complete implementation in the accompanying repository. It serves as a solid starting point for anyone building AI-powered or data-intensive applications that demand the rich AI/ML ecosystem and library availability of Python on the backend and the developer experience of modern React on the front.
+
+Have you faced similar challenges, and used a different approach? Feel free to share in the comments. I would love to hear about your experience.
 
 ## References
 
