@@ -3,12 +3,12 @@ title: Next.js server actions with FastAPI backend and OpenAPI client
 description: |
   Connect Next.js with a FastAPI backend while preserving a modern React workflow with server actions and server components. 
 publishDate: 2026-01-03
-heroImage: '../../../../content/post/2026/01-03-nextjs-server-actions-fastapi-openapi/_images/architecture-diagram-todo.png'
-heroAlt: Next.js, FastAPI interaction, architecture diagram
+heroImage: '../../../../content/post/2026/01-03-nextjs-server-actions-fastapi-openapi/_images/deployment-diagram-16-8.png'
+heroAlt: Next.js, FastAPI interaction, deployment diagram
 tags:
   - next.js
-  - react
   - fastapi
+  - react
   - python
 category: tutorials
 toc: true
@@ -19,7 +19,8 @@ draft: false
 import { Image } from 'astro:assets';
 
 import { IMAGE_SIZES } from '../../../../constants/image';
-import ArchitectureDiagramTodoImage from '../../../../content/post/2026/01-03-nextjs-server-actions-fastapi-openapi/_images/architecture-diagram-todo.png'
+import DeploymentDiagramImage from '../../../../content/post/2026/01-03-nextjs-server-actions-fastapi-openapi/_images/deployment-diagram-16-8.png'
+import SequentialDiagramImage from '../../../../content/post/2026/01-03-nextjs-server-actions-fastapi-openapi/_images/sequential-diagram.png'
 
 ## Introduction
 
@@ -37,7 +38,15 @@ So the real goal is this: we want to use a non-TypeScript backend but at the sam
 
 ## Architecture overview
 
-<Image {...IMAGE_SIZES.FIXED.MDX_MD} src={ArchitectureDiagramTodoImage} alt="Architecture diagram, client JavaScript, Next.js server and FastAPI server" />
+Visual representation of the architecture that we will build in this tutorial.
+
+**Deployment diagram:**
+
+<Image {...IMAGE_SIZES.FIXED.MDX_MD} src={DeploymentDiagramImage} alt="Deployment diagram, client JavaScript, Next.js server and FastAPI server" />
+
+**Sequential diagram:**
+
+<Image {...IMAGE_SIZES.FIXED.MDX_MD} src={SequentialDiagramImage} alt="Sequential diagram, client JavaScript, Next.js server and FastAPI server" />
 
 ## Modify the backend to use HttpOnly cookie auth
 
