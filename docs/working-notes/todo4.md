@@ -159,14 +159,14 @@ style="image-rendering: pixelated;"
 -------
 // tunnel preview
 ssh -R *:1082:localhost:3000 amd1c
-https://preview.amd1.nemanjamitic.com
+https://preview1.amd1.nemanjamitic.com
 
 vite: {
   build: {
     sourcemap: false,
   },
   server: {
-    allowedHosts: ['preview.amd1.nemanjamitic.com'],
+    allowedHosts: ['preview1.amd1.nemanjamitic.com'],
   },
 },
 image flicker, sacekaj i da nije prevMainImage
