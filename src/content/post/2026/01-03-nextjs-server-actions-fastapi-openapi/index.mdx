@@ -141,9 +141,9 @@ def delete_auth_cookie() -> JSONResponse:
 
 ### Login / logout endpoints
 
-Now it's time to make use of these utils to login and logout user. 
+Now it's time to make use of these utilities to log in and log out a user.  
 
-For the login, naturally first we check that user provided a valid email and password and if yes we use `user.id` to generate access token, set it as cookie value and include the cookie in the response, using already mentioned `security.set_auth_cookie()` util.
+For login, we first verify that the user has provided a valid email and password. If the credentials are correct, we use the `user.id` to generate an access token, set it as the cookie value, and include the cookie in the response using the previously mentioned `security.set_auth_cookie()` utility.
 
 [backend/app/api/routes/login.py](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/backend/app/api/routes/login.py)
 
@@ -170,9 +170,9 @@ def login_access_token(
     return security.set_auth_cookie(user.id, access_token_expires, response)
 ```
 
-For the logout we just make use of `security.delete_auth_cookie()` util to unset the cookie from the users browser.
+For logout, we simply use the `security.delete_auth_cookie()` utility to unset the cookie from the user's browser.
 
-Note: we are implementing this endpoint for the sake of completeness of the FastAPI backend. In our particular case we will use Next.js server to clear the auth cookie.
+Note: we are implementing this endpoint for the sake of completeness in the FastAPI backend. In our particular setup, however, we will use the Next.js server to clear the auth cookie.
 
 [backend/app/api/routes/login.py](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/backend/app/api/routes/login.py)
 
@@ -188,9 +188,9 @@ def logout() -> JSONResponse:
 
 ### Protect endpoints with auth
 
-After we implemented login/logout we can use it to protect specific API endpoints by identifying user from the request and check weather he has enough privileges to access some resource or perform some action.
+After implementing login and logout, we can use them to protect specific API endpoints by identifying the user from the request and checking whether they have sufficient privileges to access a resource or perform an action.  
 
-We will make use of FasAPI dependency injection to centralize logic for obtaining auth cookie with `CookieDep` and for identifying the user that sent the cookie with `CurrentUser`. `get_current_user()` method checks for cookie existence, decodes and verifies validity of the access token from the cookie, and finally uses the `user.id` from the token subject to query user from the database.
+We will use FastAPI's dependency injection to centralize the logic for obtaining the auth cookie with `CookieDep` and for identifying the user who sent the cookie with `CurrentUser`. The `get_current_user()` method checks for the existence of the cookie, decodes and verifies the validity of the access token from the cookie, and finally uses the `user.id` from the token's subject to query the user from the database.
 
 [backend/app/api/deps.py](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/backend/app/api/deps.py)
 
@@ -231,7 +231,7 @@ CurrentUser = Annotated[User, Depends(get_current_user)]
 
 ```
 
-Now, any function and route from ht FastAPI can make use of `CurrentUser` dependency to identify the user just by including it as an typed argument. Bellow is the simple `/me` endpoint for illustration.
+Now, any function or route in FastAPI can make use of the `CurrentUser` dependency to identify the user simply by including it as a typed argument. Below is a simple `/me` endpoint for illustration.
 
 [backend/app/api/routes/users.py](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/backend/app/api/routes/users.py)
 
@@ -244,13 +244,13 @@ def read_user_me(current_user: CurrentUser) -> Any:
     return current_user
 ```
 
-With this HttpOnly cookie auth is completed on backend. Basically we didn't change much, we only emitted access token within the cookie header instead of within the JSON body of the response.
+With this HttpOnly cookie setup, authentication on the backend is complete. Essentially, we didn't change much, we only moved the access token from the JSON body of the response to the cookie header.
 
 ## Generate and configure OpenAPI client
 
-Now that we moved session from `localStorage` to HttpOnly cookie we can identify the user in server components in the Next.js server. Important and obvious note worth mentioning again: HttpOnly cookie is accessible only on the Next.js server, not in the client JavaScript that runs in the browser.
+Now that we have moved the session from `localStorage` to an HttpOnly cookie, we can identify the user in server components on the Next.js server. An important and obvious note worth repeating: HttpOnly cookies are accessible only on the Next.js server, not in the client-side JavaScript running in the browser.
 
-But since we have a bit more complex setup with `Next.js client -> Next.js server -> FastAPI server` we need to handle cookie transmission accordingly. We will keep the `@hey-api/openapi-ts` package from the original template, but we will use `@hey-api/client-next` client for our Next.js app and and we will configure it to handle auth cookie properly.
+Since our setup involves `Next.js client -> Next.js server -> FastAPI server`, we need to handle cookie transmission accordingly. We will continue using the `@hey-api/openapi-ts` package from the original template, but for our Next.js app, we will use the `@hey-api/client-next` client and configure it to handle the auth cookie properly.
 
 Here is the configuration for generating the OpenAPI client:
 
@@ -290,7 +290,7 @@ const config: HeyApiConfig = defineConfig({
 });
 ```
 
-Important parts are: we choose Next.js client `@hey-api/client-next`, we control SDK methods naming with `methodNameBuilder` callback, and we use `runtimeConfigPath` to specify the path for the generated client runtime configuration.
+The important parts are: we choose the Next.js client `@hey-api/client-next`, control the SDK method names using the `methodNameBuilder` callback, and specify the path for the generated client runtime configuration with `runtimeConfigPath`.
 
 ### Runtime client configuration
 
