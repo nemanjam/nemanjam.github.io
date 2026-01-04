@@ -1,7 +1,7 @@
 ---
 title: Next.js server actions with FastAPI backend and OpenAPI client
 description: |
-  Connect Next.js with a FastAPI backend while preserving a modern React workflow with server actions and server components. 
+  Connect Next.js to a FastAPI backend while preserving a modern React workflow with server actions and server components.
 publishDate: 2026-01-03
 heroImage: '../../../../content/post/2026/01-03-nextjs-server-actions-fastapi-openapi/_images/deployment-diagram-16-8.png'
 heroAlt: Next.js, FastAPI interaction, deployment diagram
@@ -24,21 +24,21 @@ import SequentialDiagramImage from '../../../../content/post/2026/01-03-nextjs-s
 
 ## Introduction
 
-In 2025. Next.js and server components are industry standard how you do server side rendered React websites. Next.js comes by default with API routes for building backend endpoints but for different reasons you may want to use a completely different programming language and a non-TypeScript backend. For example FastAPI is known for excellent integration with ML/AI libraries which are typically implemented in Python.
+In 2026, Next.js and server components are the industry standard for building server-side rendered React websites. Next.js comes with API routes by default for building backend endpoints, but for various reasons you may want to use a completely different programming language and a non-TypeScript backend. For example, FastAPI is known for its excellent integration with ML and AI libraries, which are typically implemented in Python.
 
-Today we will show how to implement one critical part of every full stack app - data fetching and data mutations using Next.js and FastAPI. There is a more than one way to do it, but preferably we will try to choose and implement the best one.
+Today we will show how to implement one critical part of every full-stack app: data fetching and data mutations using Next.js and FastAPI. There is more than one way to do this, but we will aim to choose and implement the best one.
 
-We won't start completely from scratch but will reuse https://github.com/fastapi/full-stack-fastapi-template as a starting point. It already provides a good foundation, especially backend, where we will only change storing session from `localStorage` to HttpOnly cookie. In contrast we will replace the most of frontend code by switching from Tanstack router, react Query and Chakra to Next.js 16, ShadcnUI and Tailwind 4.
+We will not start completely from scratch, but instead reuse https://github.com/fastapi/full-stack-fastapi-template as a starting point. It already provides a solid foundation, especially on the backend, where we will only change session storage from `localStorage` to an HttpOnly cookie. In contrast, we will replace most of the frontend code by switching from TanStack Router, React Query, and Chakra to Next.js 16, ShadcnUI, and Tailwind CSS 4.
 
 ## The problem statement and requirements
 
-What's the real challenge here? Modern React 19 and Next.js 16 provide a new, advanced features and standardized workflow not just for fetching data into components but also for managing state. These span through both server and client and we should aim to fully leverage those features.
+What is the real challenge here? Modern React 19 and Next.js 16 provide new, advanced features and a standardized workflow not only for fetching data into components but also for managing state. These span both the server and the client, and we should aim to fully leverage them.
 
-So the real goal is this: we want to use a non-TypeScript backend but at the same time preserve the well established server components model for data fetching and server actions model for data mutations with the full type safety and state management as we were using Next.js API endpoints.
+So the real goal is this: we want to use a non-TypeScript backend while at the same time preserving the well-established server components model for data fetching and the server actions model for data mutations, with the same level of type safety and state management we would have when using Next.js API endpoints.
 
 ## Architecture overview
 
-Visual representation of the architecture that we will build in this tutorial.
+Visual representation of the architecture we will build in this tutorial.
 
 **Deployment diagram:**
 
@@ -50,11 +50,11 @@ Visual representation of the architecture that we will build in this tutorial.
 
 ## Modify the backend to use HttpOnly cookie auth
 
-Server side rendering and server components are the central features of the modern Next.js and React. The original starter stores session into browser's `localStorage` which prevents us from having server side rendered private pages and components. We will modify this and store session in HttpOnly cookie instead, which we can access and read in server components.
+Server-side rendering and server components are central features of modern Next.js and React. The original starter stores the session in the browser’s `localStorage`, which prevents us from having server-side rendered private pages and components. We will modify this to store the session in an HttpOnly cookie instead, which we can access and read in server components.
 
-In the original repository there is already [Replace plaintext auth tokens with HttpOnly cookies #1606](https://github.com/fastapi/full-stack-fastapi-template/pull/1606) pull request that implements this, we will reuse it and accommodate to our needs. Let's show the most important parts of this code and discuss it.
+In the original repository, there is already a pull request, [Replace plaintext auth tokens with HttpOnly cookies #1606](https://github.com/fastapi/full-stack-fastapi-template/pull/1606), that implements this. We will reuse it and adapt it to our needs. Let's highlight the most important parts of this code and discuss them.
 
-First, let's create utils to set and unset auth cookie in API responses. Note the signature of the set method `set_auth_cookie(subject, expires_delta, response)`. We pass in the subject (typically a `user.id`) and expiration for the token, but also a response argument with the base class type `Response` so we can apply this util to any specific response subclass. `create_access_token()` method itself is untouched, the token is created the same way for both `localStorage` and cookie.
+First, let's create utilities to set and unset the auth cookie in API responses. Note the signature of the `set_auth_cookie` method: `set_auth_cookie(subject, expires_delta, response)`. We pass in the subject (typically a `user.id`) and the token's expiration, as well as a `response` argument of the base class type `Response` so that this utility can be applied to any specific response subclass. The `create_access_token()` method itself remains unchanged; the token is created the same way for both `localStorage` and cookies.
 
 [backend/app/core/security.py](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/backend/app/core/security.py)
 
@@ -99,15 +99,15 @@ def set_auth_cookie(
     return response
 ```
 
-The core idea is straightforward, create token, assign it to cookie value and attach the cookie to the response object argument. 
+The core idea is straightforward: create a token, assign it to the cookie value, and attach the cookie to the `response` object.  
 
-There is some added cross site cookie complexity, specific for my use case that you may not necessarily want to repeat, so lets explain it.
+There is some added cross-site cookie complexity specific to my use case, which you may not necessarily need to replicate, but let's explain it for the sake of clarity.
 
 ### Cross site cookie configuration
 
-In general, often in practice frontend and backend don't use the same domain and you need to account this because cookie is tied to a domain. For example frontend is on `my-website.com`, and backend on `api.my-website.com`. For a browser to accept and store the cookie backend must set `domain = "my-website.com", samesite = "none"`. 
+In general, in practice, the frontend and backend often don't share the same domain, and you need to account for this because cookies are tied to a domain. For example, if the frontend is on `my-website.com` and the backend is on `api.my-website.com`, the backend must set `domain = "my-website.com"` and `samesite = "none"` for the browser to accept and store the cookie.
 
-On my server I use an additional Traefik TCP router that recognizes a dot `.` as an special delimiter character and it can't route correctly infinite depth subdomains, so I had to use a dash `-` instead for my backend domain.
+On my server, I use an additional Traefik TCP router that treats a dot `.` as a special delimiter character, which prevents it from correctly routing infinite-depth subdomains. As a result, I had to use a dash `-` instead for my backend domain.
 
 ```bash
 # frontend url
@@ -116,11 +116,11 @@ https://full-stack-fastapi-template-nextjs.arm1.nemanjamitic.com
 # backend url
 https://api-full-stack-fastapi-template-nextjs.arm1.nemanjamitic.com
 ```
-So the additional cookie domain logic that you see basically does this: If the frontend is on subdomain set the cookie for the parent (one level less) domain, e.g. `arm1.nemanjamitic.com` in this specific case.
+The additional cookie domain logic essentially does the following: if the frontend is on a subdomain, it sets the cookie for the parent domain (one level up). For example, in this specific case, `arm1.nemanjamitic.com`.  
 
-That's enough for this digression, just wanted to draw your attention that you must carefully adjust domain property of the cross site cookie depending on which URLs you host your frontend and backend. Otherwise browser will reject setting the cookie and auth will fail.
+That's enough for this digression, I just wanted to emphasize that you must carefully adjust the `domain` property of a cross-site cookie depending on the URLs where you host your frontend and backend. Otherwise, the browser will reject the cookie, and authentication will fail.  
 
-Similarly, we use this code to unset the auth cookie. We just return `JSONResponse` containing an expired cookie with the same key.  It can be improved but it will do for now.
+Similarly, we use this code to unset the auth cookie. We simply return a `JSONResponse` containing an expired cookie with the same key. It can be improved, but it will suffice for now.
 
 [backend/app/core/security.py](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/backend/app/core/security.py)
 
