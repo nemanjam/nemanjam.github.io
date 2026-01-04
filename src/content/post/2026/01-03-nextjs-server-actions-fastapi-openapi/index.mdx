@@ -294,10 +294,9 @@ The important parts are: we choose the Next.js client `@hey-api/client-next`, co
 
 ### Runtime client configuration
 
-There are a few ways to set runtime configuration for generated client, we will use `runtimeConfigPath` field to set the path to the configuration file, since it is the recommended way as noted in the docs: https://heyapi.dev/openapi-ts/clients/next-js#runtime-api.
+There are several ways to set runtime configuration for the generated client. We will use the `runtimeConfigPath` field to specify the path to the configuration file, as this is the recommended approach according to the docs: https://heyapi.dev/openapi-ts/clients/next-js#runtime-api.
 
-Auth cookie is originally stored in the browser and its included in the requests made from client by default. In contrast, http requests made from Next.js server don't contain cookie by default, se we need to forward it explicitly. We are doing this in a base runtime configuration on a SDK instance level in a single place, so we don't have to repeat this logic for every specific call.
-
+The auth cookie is originally stored in the browser and included in requests from the client by default. In contrast, HTTP requests made from the Next.js server do not include the cookie automatically, so we need to forward it explicitly. We handle this in a base runtime configuration at the SDK instance level in a single place, so we don’t have to repeat this logic for every specific call.
 
 Here is the code:
 
@@ -337,17 +336,19 @@ const serverFetch: typeof fetch = async (input, init = {}) => {
 };
 ```
 
-Important part here is `serverFetch` override for `fetch` function generated client uses on Next.js server. `serverFetch` code will typically run either on a server side rendered page or in server action. Both of those have access to the request object (and the headers and cookies) that originally comes from the browser. Based on this, we will read the cookies (including auth cookie) and forward them to the `fetch` client that will makes request from Next.js server to FastAPI endpoints. So this is the chain: `browser -> Next.js server -> FastAPI server`.
+The important part here is the `serverFetch` override for the `fetch` function used by the generated client on the Next.js server. The `serverFetch` code typically runs either on a server-side rendered page or in a server action. Both of these have access to the request object (including headers and cookies) that originally comes from the browser.
 
-There are few more tricks to make this work correctly.
+Based on this, we read the cookies (including the auth cookie) and forward them to the `fetch` client, which makes requests from the Next.js server to the FastAPI endpoints. This creates the following chain: `browser -> Next.js server -> FastAPI server`.
 
-- We use dynamic import `const { cookies } = await import('next/headers')` to prevent bundling server code into the client bundle which will break the build.
-- We must create a `new Headers()` instance and use `append()` method to pass cookies to the `fetch`.
-- We obtain `API_URL` environment variable using `const { API_URL } = getPublicEnv()` from `next-public-env` package. For a reusable build `API_URL` must be runtime variable and this code is called on both server and in client, so it must get correct value for both. I wrote about reusable Next.js builds and runtime environment variables in detail in this article: [Runtime environment variables in Next.js - build reusable Docker images](https://nemanjamitic.com/blog/2025-12-13-nextjs-runtime-environment-variables).
+There are a few additional tricks required to make this work correctly.
+
+- We use a dynamic import, `const { cookies } = await import('next/headers')`, to prevent bundling server-only code into the client bundle, which would break the build.
+- We must create a `new Headers()` instance and use the `append()` method to pass cookies to `fetch`.
+- We obtain the `API_URL` environment variable using `const { API_URL } = getPublicEnv()` from the `next-public-env` package. For a reusable build, `API_URL` must be a runtime variable. Since this code runs both on the server and in the client, it must get the correct value in both environments. I wrote about reusable Next.js builds and runtime environment variables in detail in this article: [Runtime environment variables in Next.js - build reusable Docker images](https://nemanjamitic.com/blog/2025-12-13-nextjs-runtime-environment-variables).
 
 ## Example client calls
 
-With this OpenAPI client is configured to make http authenticated calls from Next.js pages, server components and server actions to protected FastAPI endpoints.
+With this OpenAPI client, we can make HTTP authenticated calls from Next.js pages, server components, and server actions to protected FastAPI endpoints.
 
 **Example 1.** Query in page:
 
@@ -416,9 +417,9 @@ export const itemCreateAction = async (
 
 ## Mutations
 
-The original idea of the article is to preserve default React workflow, despite having a non-TypeScript backend. To accomplish this client code must not know about the existence of FastAPI endpoints and should never call them directly but only through Next.js server which will forward the requests.
+The original idea of this article is to preserve the default React workflow, even when using a non-TypeScript backend. To achieve this, the client code must not be aware of the FastAPI endpoints and should never call them directly, but only through the Next.js server, which will forward the requests.
 
-We already implemented passing the cookie from browser to FastAPI via Next.js server but we haven't yet implemented the opposite direction. FastAPI login endpoint sets cookie in the response, now we need to forward it through Next.js server into the users browser. Here is the code that does this:
+We have already implemented passing the cookie from the browser to FastAPI via the Next.js server, but we have not yet implemented the opposite direction. The FastAPI login endpoint sets the cookie in the response; now we need to forward it through the Next.js server to the user's browser. Here is the code that accomplishes this:
 
 [frontend/apps/web/src/utils/actions.ts](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/utils/actions.ts)
 
@@ -444,9 +445,9 @@ export const forwardCookiesFromResponse = async (response: Response): Promise<vo
 };
 ```
 
-The utility method above gets the cookies from the FastAPI response object which we parse using `set-cookie-parser` package and finally attach the parsed cookies to the Next.js response that will be returned as part of the server action. 
+The utility method above retrieves the cookies from the FastAPI response object, parses them using the `set-cookie-parser` package, and finally attaches the parsed cookies to the Next.js response that will be returned as part of the server action.
 
-We then call this util method with the login server action which response sets the forwarded cookies into the users browser. Bellow the hood, a server action is just a POST request and it can set the cookies as any other http call.
+We then call this utility method within the login server action, which sets the forwarded cookies in the user's browser. Under the hood, a server action is just a POST request, and it can set cookies just like any other HTTP call.
 
 [frontend/apps/web/src/actions/auth.ts](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/actions/auth.ts)
 
@@ -467,9 +468,9 @@ export const loginAction = async (
 
 ## React Hook Form and useActionState
 
-Now that we configured backend and http client its time to handle forms submission within our client code. For some time `react-hook-form` the dominant forms package in react ecosystem. There are a few tricks to integrate it properly with `useActionState` React API and server actions.
+Now that we have configured the backend and HTTP client, it is time to handle form submission within our client code. For some time, `react-hook-form` has been the dominant forms package in the React ecosystem. There are a few tricks to integrate it properly with the `useActionState` React API and server actions.
 
-Here is the example code for creating an item:
+Here is example code for creating an item:
 
 [frontend/apps/web/src/components/dashboard/items/form-item-create.tsx](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/components/dashboard/items/form-item-create.tsx)
 
@@ -573,33 +574,33 @@ const FormItemCreate: FC<Props> = ({ onSuccess, onCancel }) => {
 
 The code above addresses two important requirements:
 
-1. Server actions are designed to support form submission even with JavaScript disabled. In our code we support this by assigning the `action` attribute on the `<form />` tag to the `formAction` result returned by the `useFormAction` hook: `<form action={formAction} ... />`.
+1. Server actions are designed to support form submission even with JavaScript disabled. In our code, we support this by assigning the `action` attribute on the `<form />` tag to the `formAction` result returned by the `useFormAction` hook: `<form action={formAction} ... />`.
 
-2. We use client JavaScript to validate the fields with Zod and display user friendly error messages. For this, as well for form submission when JavaScript is enabled we use `validateAndSubmit` event handler attached to the `onSubmit` event: `<form onSubmit={validateAndSubmit} ... />`.
+2. We use client-side JavaScript to validate the fields with Zod and display user-friendly error messages. For this, as well as for form submission when JavaScript is enabled, we use the `validateAndSubmit` event handler attached to the `onSubmit` event: `<form onSubmit={validateAndSubmit} ... />`.
 
-I learned this trick from the tutorial linked in this comment in Github issue: [react-hook-form/discussions/11832#discussioncomment-11832211](https://github.com/orgs/react-hook-form/discussions/11832#discussioncomment-11832211).
+I learned this trick from the tutorial linked in this GitHub discussion comment: [react-hook-form/discussions/11832#discussioncomment-11832211](https://github.com/orgs/react-hook-form/discussions/11832#discussioncomment-11832211).
 
 ### useActionState
 
-React provides `useActionState` API as a hook not only to handle form submission and call server actions but also to manage state, all at the same time. It accepts the server action `itemCreateAction` as an argument and returns `formAction` function as result that we can use to bind to the form `action` attribute or invoke it manually with an event handler, or both at the same time like in our case.
+React provides the `useActionState` hook not only to handle form submission and call server actions, but also to manage state, all at the same time. It accepts the server action `itemCreateAction` as an argument and returns the `formAction` function, which can be used to bind to the form's `action` attribute, invoked manually with an event handler, or both at the same time, as we do in this case.
 
 ```ts
 const [state, formAction, isPending] = useActionState(itemCreateAction, initialState);
 ```
 
-State management is modeled in a way that reminds a bit how its done in reducers and Redux. It uses concept of previous and next state, where the next state is the result of previous state plus some transformation which in this case happens on the server. Naturally, it all starts with the initial state.
+State management is modeled in a way that is somewhat reminiscent of reducers in Redux. It uses the concept of previous and next state, where the next state is the result of applying a transformation to the previous state, in this case, the transformation occurs on the server. Naturally, it all starts with an initial state.  
 
-In our case `useActionState` accepts `initialState` as the second argument and the server action response is contained inside the `state` item in the returned tuple.
+In our example, `useActionState` accepts `initialState` as the second argument, and the server action response is contained within the `state` item in the returned tuple.
 
 ## Server actions handle success and error results
 
 There are certain rules that apply to React server actions in general:
 
-1. In server actions you shouldn't throw exceptions but return error within the result. This affects what particular generic we will use to type OpenAPI client response. Because in our case a server action is just a proxy to respective FastAPI endpoint.
+1. In server actions, you shouldn't throw exceptions but instead return errors within the result. This affects which particular generic we will use to type the OpenAPI client response, because in our case a server action is just a proxy to the respective FastAPI endpoint.
 
-    Here is the `ItemsService.createItem()` return type as example. This type is reused for both FastAPI and server action. That's intentional because server action is just a proxy and we want to avoid any needles transformation of the results.
+    Here is the `ItemsService.createItem()` return type as an example. This type is reused for both FastAPI and the server action. This is intentional because the server action is just a proxy, and we want to avoid any unnecessary transformation of the results.
 
-    As already stated, errors should be included as return values and this type clearly shows it: result is an union with success and error branches and additionally contains raw http `Response` object. You remember we already used it to extract cookie from it in the login endpoint.
+    As mentioned earlier, errors should be included as return values. This type clearly shows that: the result is a union of success and error branches and additionally contains the raw HTTP `Response` object. You may recall that we already used it to extract the cookie in the login endpoint.
 
     ```ts
     Promise<({
@@ -613,7 +614,7 @@ There are certain rules that apply to React server actions in general:
     }>
     ```
 
-2. Server actions have limited serializing capabilities. You can not return class instances, error instances, database model instances, etc. You should mostly rely on object literals for return values from server actions.
+2. Server actions have limited serialization capabilities. You cannot return class instances, error instances, database model instances, etc. You should mostly rely on object literals for return values from server actions.
 
     Let's see the code example:
 
@@ -636,15 +637,15 @@ There are certain rules that apply to React server actions in general:
     };
     ```
 
-    Note that `response` field is a class instance and it's not serializable, that's why we omit it from the server action return value.
+    Note that the `response` field is a class instance and is not serializable, which is why we omit it from the server action return value.
 
-    You remember that we bound `action` attribute to the `formAction` in the form `<form action="formAction" ... >`. Because of this form values are received as `FormData` in the server action, and we use `Object.fromEntries()` to convert it to plain object that we can forward as http request body to the FastAPI endpoint.
+    You may recall that we bound the `action` attribute to `formAction` in the form: `<form action={formAction} ... >`. Because of this, form values are received as `FormData` in the server action, and we use `Object.fromEntries()` to convert it to a plain object that can be forwarded as the HTTP request body to the FastAPI endpoint.
 
 ## useActionState vs useTransition to call actions
 
-Just a quick reminder, `useActionState` is not the only way to call a server action. It is typically used in conjunction with form element, while also providing state and `isPending` flag. We already saw code example for this.
+Just a quick reminder: `useActionState` is not the only way to call a server action. It is typically used with a form element, while also providing state and an `isPending` flag. We have already seen a code example for this.
 
-When we have just a simple `void` server action we can skip the form and simply invoke the action within an event handler. Such call we typically want to mark as lower priority by wrapping with `startTransition`. Bellow is the code example:
+When we have a simple `void` server action, we can skip the form and simply invoke the action within an event handler. Such calls are typically marked as lower priority by wrapping them with `startTransition`. Below is a code example:
 
 [frontend/apps/web/src/components/dashboard/items/dropdown-item.tsx](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/components/dashboard/items/dropdown-item.tsx)
 
@@ -704,15 +705,15 @@ frontend/apps/web/src/components/dashboard/items/dropdown-item.tsx
 
 Congratulations on reading this far. It was long to read, but also long to write and figure out.
 
-Next.js is a comprehensive full-stack meta-framework, but for any reason you might want to use it with a backend written in a completely different programming language. In this tutorial, we have demonstrated that it is entirely possible to bridge the modern Next.js ecosystem with a powerful Python-based FastAPI backend while preserving the full benefits of React Server Components and Server Actions. This approach demonstrates that you don't have to compromise on developer experience or type safety when choosing a non-TypeScript backend.
+Next.js is a comprehensive full-stack meta-framework, but there are situations where you might want to use it with a backend written in a completely different programming language. In this tutorial, we have demonstrated that it is entirely possible to bridge the modern Next.js ecosystem with a powerful Python-based FastAPI backend while preserving the full benefits of React Server Components and Server Actions. This approach shows that you don't have to compromise on developer experience or type safety when using a non-TypeScript backend.
 
-The key idea is that **Next.js remains the only thing the browser ever talks to**. FastAPI is treated as **an internal service behind the Next.js server**. This lets you keep a clean React mental model: components call server actions, server actions call strongly typed OpenAPI clients, and only the Next.js server is responsible for cookies, authentication, and cross-service communication. From the client’s point of view, nothing changes.
+The key idea is that **Next.js remains the only thing the browser ever talks to**. FastAPI is treated as **an internal service behind the Next.js server**. This keeps a clean React mental model: components call server actions, server actions call strongly typed OpenAPI clients, and only the Next.js server handles cookies, authentication, and cross-service communication. From the client’s perspective, nothing changes.
 
-The result is a stack where FastAPI does what it is best at (Python, validation, data, ML, background jobs) and Next.js does what it is best at (React, rendering, routing, and UX), without either one leaking into the other.
+The result is a stack where FastAPI does what it does best (Python, validation, data, ML, background jobs) and Next.js does what it does best (React, rendering, routing, and UX), without either one leaking into the other.
 
-Feel free to explore the complete implementation in the accompanying repository. It serves as a solid starting point for anyone building AI-powered or data-intensive applications that demand the rich AI/ML ecosystem and library availability of Python on the backend and the developer experience of modern React on the front.
+Feel free to explore the complete implementation in the accompanying repository. It serves as a solid starting point for anyone building AI-powered or data-intensive applications that require the rich AI/ML ecosystem and library availability of Python on the backend, along with the developer experience of modern React on the front.
 
-Have you faced similar challenges, and used a different approach? Feel free to share in the comments. I would love to hear about your experience.
+Have you faced similar challenges and used a different approach? Feel free to share in the comments. I would love to hear about your experience.
 
 ## References
 
