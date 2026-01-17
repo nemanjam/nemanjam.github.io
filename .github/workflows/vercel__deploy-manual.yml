@@ -20,9 +20,11 @@ permissions:
 
 env:
   # Project vars
-  SITE_URL: 'https://nemanjam.vercel.app'
-  PLAUSIBLE_DOMAIN: 'nemanjamitic.com'
-  PLAUSIBLE_SCRIPT_URL: 'https://plausible.arm1.nemanjamitic.com/js/script.js'
+  # Redundant, vercel pull will define them
+  # SITE_URL: 'https://nemanjam.vercel.app'
+  # PLAUSIBLE_DOMAIN: 'nemanjamitic.com'
+  # PLAUSIBLE_SCRIPT_URL: 'https://plausible.arm1.nemanjamitic.com/js/script.js'
+
   # Vercel vars
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
@@ -56,7 +58,7 @@ jobs:
       - name: Install Vercel CLI
         run: pnpm add -g vercel
 
-      - name: Pull Vercel production environment
+      - name: Pull Vercel production environment variables
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Build project using Vercel
