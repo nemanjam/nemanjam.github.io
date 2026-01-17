@@ -4,7 +4,8 @@ node_modules
 .npm
 .yarn
 
-# ! Must not ignore Git, need it for commit info
+# ! Needed for commit info
+# Vercel omits it by default, now way to upload it
 # .git
 # .gitignore
 

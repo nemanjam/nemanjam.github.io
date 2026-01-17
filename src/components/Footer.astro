@@ -2,6 +2,7 @@
 import { Icon } from 'astro-icon/components';
 
 import Link from '@/components/Link.astro';
+import { BLANK_GIT_RESULT } from '@/constants/git';
 import { ROUTES } from '@/constants/routes';
 import { CONFIG_CLIENT } from '@/config/client';
 import { getLatestCommitInfo } from '@/libs/git';
@@ -14,9 +15,12 @@ const { SITE_URL, AUTHOR_EMAIL, AUTHOR_GITHUB, AUTHOR_LINKEDIN, AUTHOR_NAME, REP
 const domain = getHostnameFromUrl(SITE_URL);
 const messageLength = 15 as const;
 
-const { time, fullHash, message } = getLatestCommitInfo();
+const { time, fullHash, message } = await getLatestCommitInfo();
 
 const commitUrl = `${REPO_URL}/commit/${fullHash}`;
+
+const isBlankCommitInfo = fullHash === BLANK_GIT_RESULT.fullHash;
+const commitLinkProps = !isBlankCommitInfo ? { href: commitUrl, target: '_blank' } : { href: '#' };
 
 const shortDateStr = shortDate(new Date(time));
 const trimmedMessage = limitString(message, messageLength);
@@ -33,7 +37,7 @@ const firstName = AUTHOR_NAME.split(' ')[0];
       <div class="flex items-center gap-2 flex-wrap text-sm text-content whitespace-nowrap">
         <div class="flex items-center gap-2">
           <label class="font-bold">Latest commit:</label>
-          <Link href={commitUrl} title={shortDateStr} target="_blank">
+          <Link {...commitLinkProps} title={shortDateStr}>
             {trimmedMessage}
           </Link>
         </div>
