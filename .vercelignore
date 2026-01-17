@@ -1,0 +1,39 @@
+# Node / package managers
+node_modules
+.pnpm-store
+.npm
+.yarn
+
+# ! Must not ignore Git, need it for commit info
+# .git
+# .gitignore
+
+# Local env files
+.env
+.env.*
+!.env.*example
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Docker & tooling
+docker/
+scripts/
+
+# Documentation & notes
+docs/
+
+# OS / editor junk
+.DS_Store
+.idea
+.vscode
+
+# Astro build cache
+.astro/*
+# Keep types if build needs them
+!.astro/types.d.ts
+
+# Github
+.github/

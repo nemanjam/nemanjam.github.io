@@ -13,8 +13,10 @@ pnpm-debug.log*
 
 # environment variables
 .env
-.env.development
-.env.production
+.env.development*
+!.env.development.example
+.env.production*
+!.env.production.example
 
 # macOS-specific files
 .DS_Store
@@ -33,3 +35,6 @@ pnpm-debug.log*
 
 .astro/*
 !.astro/types.d.ts
+
+# Vercel
+.vercel

@@ -11,6 +11,16 @@ docs/
 LICENSE
 README.md
 
+# Astro build cache
+.astro/*
+# Keep types if build needs them
+!.astro/types.d.ts
+
+# Vercel, ignore in Docker only
+.vercel
+.vercelignore
+vercel.json
+
 # must keep git for commit info in node.js
 # .git/
 # .gitignore
