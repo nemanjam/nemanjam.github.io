@@ -34,6 +34,7 @@
     "mpc": "pnpm build:nginx:mpc && pnpm deploy:nginx:mpc",
     "nginx": "pnpm build:nginx && pnpm deploy:nginx",
     "tunnel": "ssh -R *:1081:localhost:3000 amd1c",
+    "vercel": "vercel --prod",
     "dc:up": "docker compose up --build --force-recreate -d"
   },
   "dependencies": {

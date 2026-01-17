@@ -9,5 +9,9 @@
 vercel --prod
 
 reads .env.production
+--------
+// todo:
+add vercel button and docs
+
 
 ```
