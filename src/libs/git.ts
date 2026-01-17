@@ -12,7 +12,7 @@ let _cachedCommitInfo: GitResult | null = null;
 
 /**
  * Runs ONLY once per BUILD.
- * Cache it to prevent GitHub api rate limit.
+ * Caches result to prevent GitHub API rate limit.
  * Otherwise it would run once per each page.
  */
 export const getLatestCommitInfo = async (): Promise<GitResult> => {
@@ -25,13 +25,12 @@ export const getLatestCommitInfo = async (): Promise<GitResult> => {
     // local Git
     commitInfo = getLatestCommitInfoLocal();
   } catch (localError: unknown) {
-    console.error('Failed to get local Git commit info:', localError);
-    console.log('Retrying with GitHub...');
+    console.warn('Failed to get local Git commit info:', localError);
+    console.log('Retrying with GitHub API...');
 
     try {
       // Github fallback
       commitInfo = await getLatestCommitInfoGitHub();
-      console.log('Github commit info: ', commitInfo);
     } catch (githubError: unknown) {
       console.error('Failed to get GitHub commit info:', githubError);
       console.log('Fallback to blank commit info.');

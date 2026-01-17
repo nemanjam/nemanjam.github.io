@@ -1,5 +1,7 @@
 name: Deploy to Vercel manually
 
+# Docs example: https://vercel.com/kb/guide/how-can-i-use-github-actions-with-vercel
+
 on:
   push:
     branches:
