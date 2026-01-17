@@ -21,7 +21,7 @@ permissions:
 env:
   # Project vars
   SITE_URL: 'https://nemanjam.vercel.app'
-  PLAUSIBLE_DOMAIN: 'nemanjamic.com'
+  PLAUSIBLE_DOMAIN: 'nemanjamitic.com'
   PLAUSIBLE_SCRIPT_URL: 'https://plausible.arm1.nemanjamitic.com/js/script.js'
   # Vercel vars
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
