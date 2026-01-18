@@ -68,21 +68,42 @@ I intend to use this website for years to come, so I consider the extra effort w
 
 #### Environment variables
 
-In development you can see draft posts by default.
+This project uses static generation - **all environment variables are build-time only**. The values are inlined at build time and are immutable at runtime. Any variables defined at runtime will be ignored.
+
+A list of required and optional environment variables:
 
 ```bash
-# .env.development
+# .env.production | .env.development
 
-# this var is always without trailing slash '/'
-SITE_URL=http://localhost:3000
-```
+# --------------- Required ---------------
 
-```bash
-# .env.production
+# Your website url.
+# Includes protocol https:// or http://, no trailing slash '/'.
+# Example values dev: http://localhost:3000
+# Example values prod: https://nemanjamitic.com | https://nemanjam.github.io | https://nemanjam.vercel.app
+SITE_URL=https://nemanjam.github.io
 
-SITE_URL=https://nemanjamitic.com
+# Url of the 'script.js' file hosted on Plausible analytics server.
+# Safe to omit in development.
+# Can be either hosted by Plausible or your own self-hosted server instance.
+# Example values dev: empty
+# Example values prod: https://plausible.io/js/script.js | https://plausible.arm1.nemanjamitic.com/js/script.js
+PLAUSIBLE_SCRIPT_URL=https://plausible.arm1.nemanjamitic.com/js/script.js
 
-# set to true to preview draft posts in production
+# --------------- Optional ---------------
+
+# Domain that identifies your website instance in Plausible analytics dashboard.
+# Safe to omit in development.
+# Example values dev: localhost:3000 | empty
+# Example values prod: nemanjamitic.com | nemanjam.github.io | nemanjam.vercel.app
+# Default value: SITE_URL without https://
+PLAUSIBLE_DOMAIN=nemanjamitic.com
+
+# Include draft posts and projects.
+# Set only in production build.
+# Ignored in development. Drafts are always included in development.
+# Example values prod: true | false | empty
+# Default value: false
 PREVIEW_MODE=
 ```
 
@@ -203,7 +224,7 @@ You have three options to deploy to Vercel: 1. Deploy button, 2. Local and 3. Gi
 
 Just click the button bellow and follow the wizard to create a new project, set environment variables, build and deploy.
 
-[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fnemanjam%2Fnemanjam.github.io&env=SITE_URL%2CPLAUSIBLE_DOMAIN%2CPLAUSIBLE_SCRIPT_URL&envDefaults=%7B%22SITE_URL%22%3A%22https%3A%2F%2Fmy-blog.vercel.app%22%2C%22PLAUSIBLE_DOMAIN%22%3A%22my-blog.vercel.app%22%2C%22PLAUSIBLE_SCRIPT_URL%22%3A%22https%3A%2F%2Fplausible.io%2Fjs%2Fscript.js%22%7D&envDescription=https%3A%2F%2Fgithub.com%2Fnemanjam%2Fnemanjam.github.io%2Ftree%2Fvercel-deploy%2Fdocs%2Fvercel-deployment-frontend.md%23environment-variables&envLink=https%3A%2F%2Fgithub.com%2Fnemanjam%2Fnemanjam.github.io%2Fblob%2Fmain%2F.env.production.example&project-name=Developer%20blog&repository-name=nemanjam.github.io&demo-title=Developer%20blog%20built%20with%20Astro%20and%20Tailwind&demo-description=Developer%20blog%20website%20with%20a%20comprehensive%20feature%20set%20and%20well%20structured%20code.&demo-url=https%3A%2F%2Fnemanjam.vercel.app&demo-image=https%3A%2F%2Fraw.githubusercontent.com%2Fnemanjam%2Fnemanjam.github.io%2Frefs%2Fheads%2Fmain%2Fdocs%2Fscreenshots%2Fdeveloper-blog-screenshot-1200x630.png&skippable-integrations=1)
+[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fnemanjam%2Fnemanjam.github.io&env=SITE_URL%2CPLAUSIBLE_DOMAIN%2CPLAUSIBLE_SCRIPT_URL&envDefaults=%7B%22SITE_URL%22%3A%22https%3A%2F%2Fmy-blog.vercel.app%22%2C%22PLAUSIBLE_DOMAIN%22%3A%22my-blog.vercel.app%22%2C%22PLAUSIBLE_SCRIPT_URL%22%3A%22https%3A%2F%2Fplausible.io%2Fjs%2Fscript.js%22%7D&envDescription=https%3A%2F%2Fgithub.com%2Fnemanjam%2Fnemanjam.github.io%23environment-variables&envLink=https%3A%2F%2Fgithub.com%2Fnemanjam%2Fnemanjam.github.io%2Fblob%2Fmain%2F.env.production.example&project-name=Developer%20blog&repository-name=nemanjam.github.io&demo-title=Developer%20blog%20built%20with%20Astro%20and%20Tailwind&demo-description=Developer%20blog%20website%20with%20a%20comprehensive%20feature%20set%20and%20well%20structured%20code.&demo-url=https%3A%2F%2Fnemanjam.vercel.app&demo-image=https%3A%2F%2Fraw.githubusercontent.com%2Fnemanjam%2Fnemanjam.github.io%2Frefs%2Fheads%2Fmain%2Fdocs%2Fscreenshots%2Fdeveloper-blog-screenshot-1200x630.png&skippable-integrations=1)
 
 #### Local
 

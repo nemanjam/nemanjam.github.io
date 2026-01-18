@@ -10,7 +10,7 @@ envDefaults={
   "PLAUSIBLE_DOMAIN": "my-blog.vercel.app",
   "PLAUSIBLE_SCRIPT_URL": "https://plausible.io/js/script.js",
 }
-envDescription=https://github.com/nemanjam/nemanjam.github.io/tree/vercel-deploy/docs/vercel-deployment-frontend.md#environment-variables
+envDescription=https://github.com/nemanjam/nemanjam.github.io#environment-variables
 envLink=https://github.com/nemanjam/nemanjam.github.io/blob/main/.env.production.example
 project-name=Developer blog
 repository-name=nemanjam.github.io
