@@ -17,7 +17,7 @@ repository-name=nemanjam.github.io
 demo-title=Developer blog built with Astro and Tailwind
 demo-description=Developer blog website with a comprehensive feature set and well structured code.
 demo-url=https://nemanjam.vercel.app
-demo-image=https://github.com/nemanjam/nemanjam.github.io/blob/main/docs/screenshots/developer-blog-screenshot-1200x630.png
+demo-image=https://raw.githubusercontent.com/nemanjam/nemanjam.github.io/refs/heads/main/docs/screenshots/developer-blog-screenshot-1200x630.png
 &skippable-integrations=1
 `
 ```
