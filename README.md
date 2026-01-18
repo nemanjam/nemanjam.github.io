@@ -207,6 +207,8 @@ Just click the button bellow and follow the wizard to create a new project, set 
 
 Create a new Vercel project, and deploy it using Vercel CLI.
 
+**Note:** Normally, at build time the code tries to read the latest commit information from your local `.git` folder. Since the Vercel CLI ignores the `.git` folder during upload by default, the site build falls back to reading the latest commit information from the `main` branch of the GitHub repository URL defined in the `REPO_URL` constant in [src/config/client.ts](src/config/client.ts).
+
 ```bash
 # Install Vercel CLI
 pnpm install -g vercel
