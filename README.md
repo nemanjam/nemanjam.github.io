@@ -8,6 +8,7 @@ This is the repository for my coding blog [nemanjamitic.com](https://nemanjamiti
 | :----------- | :--------------------------------------- |
 | Nginx        | https://nemanjamitic.com                 |
 | Github Pages | https://nemanjam.github.io               |
+| Vercel       | https://nemanjam.vercel.app              |
 | Docker       | https://nmc-docker.arm1.nemanjamitic.com |
 
 #### Self hosted mirrors
@@ -194,7 +195,71 @@ gh-pages__deploy-astro.yml
 gh-pages__deploy-manual.yml
 ```
 
-### 3. Docker
+### 3. Vercel
+
+#### Deploy button
+
+Just click the button bellow and follow the wizard to create a new project, set environment variables, build and deploy.
+
+[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fnemanjam%2Fnemanjam.github.io&env=SITE_URL%2CPLAUSIBLE_DOMAIN%2CPLAUSIBLE_SCRIPT_URL&envDefaults=%7B%22SITE_URL%22%3A%22https%3A%2F%2Fmy-blog.vercel.app%22%2C%22PLAUSIBLE_DOMAIN%22%3A%22my-blog.vercel.app%22%2C%22PLAUSIBLE_SCRIPT_URL%22%3A%22https%3A%2F%2Fplausible.io%2Fjs%2Fscript.js%22%7D&envDescription=https%3A%2F%2Fgithub.com%2Fnemanjam%2Fnemanjam.github.io%2Ftree%2Fvercel-deploy%2Fdocs%2Fvercel-deployment-frontend.md%23environment-variables&envLink=https%3A%2F%2Fgithub.com%2Fnemanjam%2Fnemanjam.github.io%2Fblob%2Fmain%2F.env.production.example&project-name=Developer%20blog&repository-name=nemanjam.github.io&demo-title=Developer%20blog%20built%20with%20Astro%20and%20Tailwind&demo-description=Developer%20blog%20website%20with%20a%20comprehensive%20feature%20set%20and%20well%20structured%20code.&demo-url=https%3A%2F%2Fnemanjam.vercel.app&demo-image=https%3A%2F%2Fgithub.com%2Fnemanjam%2Fnemanjam.github.io%2Fblob%2Fmain%2Fdocs%2Fscreenshots%2Fdeveloper-blog-screenshot-1200x630.png&skippable-integrations=1)
+
+#### Local
+
+Create a new Vercel project, and deploy it using Vercel CLI.
+
+```bash
+# Install Vercel CLI
+pnpm install -g vercel
+
+# Log in to Vercel
+vercel login
+
+# Deploy for the first time (production)
+# Fill prompts for name (will determine your website url), root directory `./` (vercel.json dir)
+vercel --prod
+
+# Set required environment variables (production)
+echo "https://my-blog.vercel.app" | vercel env add SITE_URL production
+echo "my-blog.vercel.app" | vercel env add PLAUSIBLE_DOMAIN production
+echo "https://plausible.io/js/script.js" | vercel env add PLAUSIBLE_SCRIPT_URL production
+# Set more optional variables...
+
+# List existing environment variables
+vercel env ls
+
+# Redeploy after changes
+vercel --prod  # production
+
+# After deploy, the CLI outputs the URL
+# Example: https://my-blog.vercel.app
+
+# Debug deployment
+vercel inspect https://my-blog.vercel.app --json
+```
+
+#### Github Actions
+
+In Vercel dashboard create a new project and set the environment variables. In Vercel account settings create a access token and set it as `VERCEL_TOKEN` Github repository secret. In Vercel project settings copy your user id and project id and set them as `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID` Github repository secrets.
+
+```bash
+# Github repository -> Settings -> Secrets and variables -> Repository secrets
+
+VERCEL_TOKEN
+VERCEL_ORG_ID
+VERCEL_PROJECT_ID
+```
+
+Then just trigger the following workflow:
+
+```bash
+# .github/workflows
+
+# uses Vercel CLI to pull, pre-build and deploy
+# you must have an existing project and environment variables already defined on Vercel
+vercel__deploy-manual.yml
+```
+
+### 4. Docker
 
 #### Local
 
