@@ -197,6 +197,8 @@ gh-pages__deploy-manual.yml
 
 ### 3. Vercel
 
+You have three options to deploy to Vercel: 1. Deploy button, 2. Local and 3. Github Actions.
+
 #### Deploy button
 
 Just click the button bellow and follow the wizard to create a new project, set environment variables, build and deploy.
