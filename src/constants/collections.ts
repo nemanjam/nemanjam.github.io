@@ -28,6 +28,7 @@ export const TAGS = [
   'algorithms',
   'computer-science',
   'fastapi',
+  'authentication',
 ] as const;
 
 /** adjust this later */
