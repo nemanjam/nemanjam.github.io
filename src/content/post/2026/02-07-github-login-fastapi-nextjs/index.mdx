@@ -3,8 +3,8 @@ title: GitHub login with FastAPI and Next.js
 description: |
   A practical example of implementing GitHub OAuth in FastAPI, and why Next.js server actions and API routes are convenient for managing cookies and domains.
 publishDate: 2026-02-07
-heroImage: '../../../../content/post/2026/02-07-github-login-fastapi-nextjs/_images/deployment-diagram-16-8.png'
-heroAlt: FastAPI and Next.js API authentication flow
+heroImage: '../../../../content/post/2026/02-07-github-login-fastapi-nextjs/_images/github-login-architecture-16-9.png'
+heroAlt: GitHub login architecture diagram
 tags:
   - next.js
   - fastapi
@@ -15,12 +15,21 @@ draft: false
 ---
 
 
+import { Image } from 'astro:assets';
+
+import { IMAGE_SIZES } from '../../../../constants/image';
+import GithubLoginArchitectureImage from '../../../../content/post/2026/02-07-github-login-fastapi-nextjs/_images/github-login-architecture-16-9.png';
+import OAuth2FlowDiagramImage from '../../../../content/post/2026/02-07-github-login-fastapi-nextjs/_images/oauth2-diagram.png';
+
 ## Introduction
 
 In this article, we will show how to implement GitHub login in a FastAPI and Next.js application. We use GitHub in this particular case, but the same approach applies to any OAuth provider, you only need to adjust the FastAPI redirect and callback endpoints. Since this is a Next.js app using server components, we will store the session in an HttpOnly cookie. We will dig into implementation details such as domains, cookies, redirects, and overall structuring to achieve a clean, maintainable, and robust solution.
 
 ## OAuth flow reminder
-oauth flow diagram
+
+**OAuth2 flow sequential diagram:** ([Source gist](https://gist.github.com/cseeman/cf1a0cf7d931794d78f570e9f413f4a1))
+
+<Image {...IMAGE_SIZES.FIXED.MDX_MD} src={OAuth2FlowDiagramImage} alt="OAuth2 flow sequential diagram" />
 
 Let's begin with a quick reminder of how OAuth works in very simplified terms. OAuth is built around the principle of a trusted middleman: both we (our app) and the user know who GitHub is (the authorization server) and trust it. This means we can use GitHub to identify the user and obtain their information. For the user, this means GitHub vouches for our app's identity and legitimacy, clearly showing what information the app will access and at what level, so the user can give informed consent. Of course, there are many more implementation details, but this is enough for a high-level overview.
 
@@ -34,7 +43,10 @@ Additionally, within the callback endpoint we store the user's information (emai
 In this way, we achieve a unified interface for authenticating users, regardless of whether they log in with GitHub or via email/password.
 
 ## Architecture overview
-user/pass, oauth diagram, cookie, redirects, next.js api and server action
+
+**Architecture diagram:**
+
+<Image {...IMAGE_SIZES.FIXED.MDX_MD} src={GithubLoginArchitectureImage} alt="GitHub login architecture diagram" />
 
 The one obvious and constant assumption is that we will use a FastAPI backend and a Next.js frontend. When it comes to authorization, this leaves additional room for deciding how we structure the logic and separate concerns. There is more than one way to do this, and some approaches can be fragile and hard to maintain, which is exactly what we want to avoid.
 
@@ -53,8 +65,6 @@ Let's go straight to the point and explain the optimal approach that we will use
 - The OAuth callback endpoint in FastAPI needs to initiate an uninterrupted redirect chain composed of two steps (FastAPI and Next.js API): `GitHub -> FastAPI callback redirect -> Next.js API redirect -> Next.js home page`. During this process, the `access_token` and `expires` values need to be passed as query parameters appended to the URL. Redirects are mandatory because the entire flow is driven by the browser, and we do not want the user's browser to just land on a raw API response, but rather on the website's home page as a successfully logged-in user.
 
 ### Suboptimal approaches and their problems
-    tuning cross site cookies, domain, samesite
-    vercel.app is in public suffix list
 
 There is some ambiguity caused by the redundancy of options, which can lead to suboptimal solutions if we do not think clearly enough. Let's discuss some of them:
 
@@ -91,7 +101,7 @@ GITHUB_CLIENT_SECRET=c9ad7bc12977515fed61409492abe169212345
 
 ```
 
-### Create OAuth client
+### Instantiate OAuth client
 
 We need to install OAuth client library, we will use [authlib/authlib](https://github.com/authlib/authlib).
 
@@ -126,7 +136,7 @@ def create_oauth() -> OAuth:
 oauth = create_oauth()
 ```
 
-### Create OAuth endpoints in FastAPI
+### Define OAuth endpoints in FastAPI
 
 We can then use the instantiated OAuth client to implement the OAuth redirect and callback endpoints.
 
