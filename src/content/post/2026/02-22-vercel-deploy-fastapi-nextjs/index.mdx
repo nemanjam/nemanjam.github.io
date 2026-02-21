@@ -16,6 +16,12 @@ draft: false
 ---
 
 
+import { Image } from 'astro:assets';
+
+import { IMAGE_SIZES } from '../../../../constants/image';
+import FrontendScreenshotImage from '../../../../content/post/2026/02-22-vercel-deploy-fastapi-nextjs/_images/frontend-screenshot-1200x630.png';
+import BackendScreenshotImage from '../../../../content/post/2026/02-22-vercel-deploy-fastapi-nextjs/_images/backend-screenshot-1200x630.png';
+
 ## Introduction
 
 This article is a practical guide that presents a single, proven approach for deploying a FastAPI and Next.js application on Vercel. It is not intended to be a comprehensive, in depth overview of all Vercel features or deployment options. The main idea is to show how to host demo apps on Vercel for free.
@@ -378,7 +384,7 @@ Once the deployment wizard completes successfully, you can verify the result by 
 
 This will display the OpenAPI UI. The exact URL depends on how you named the project. You can view all associated URLs in the Vercel dashboard under the deployment settings.
 
-Swagger screenshot here
+<Image {...IMAGE_SIZES.FIXED.MDX_MD} src={BackendScreenshotImage} alt="OpenAPI screenshot" />
 
 ## Configuring the Next.js frontend
 
@@ -560,7 +566,7 @@ If everything is configured correctly, your full-stack FastAPI and Next.js appli
 
 The exact URL will depend on the name you chose for the project. Congratulations!
 
-frontend screenshot here
+<Image {...IMAGE_SIZES.FIXED.MDX_MD} src={FrontendScreenshotImage} alt="Frontend screenshot" />
 
 ## Vercel button
 
@@ -678,8 +684,25 @@ git clone git@github.com:nemanjam/full-stack-fastapi-template-nextjs.git
 git checkout vercel-deploy
 
 # Backend
+backend/vercel.json
+backend/.vercelignore
+
+backend/app/api/index.py
+backend/app/core/config.py
+
+.env.vercel.example
+docs/notes/vercel-button-backend.md
 
 # Frontend
+frontend/apps/web/vercel.json
+frontend/.vercelignore
+
+frontend/apps/web/src/config/process-env.ts
+frontend/apps/web/src/env.d.ts
+frontend/turbo.json
+
+frontend/apps/web/.env.vercel.example
+docs/notes/vercel-button-frontend.md
 
 # Compare branches in a clear diff
 https://github.com/nemanjam/full-stack-fastapi-template-nextjs/compare/vercel-deploy?expand=1
