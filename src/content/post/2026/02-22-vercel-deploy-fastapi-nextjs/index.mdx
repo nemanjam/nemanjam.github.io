@@ -1,0 +1,696 @@
+---
+title: Deploying a FastAPI and Next.js website to Vercel
+description: |
+  A straightforward guide on how to deploy a full-stack FastAPI and Next.js app to Vercel, including a ready-to-use code example.
+publishDate: 2026-02-22
+heroImage: '../../../../content/post/2026/02-22-vercel-deploy-fastapi-nextjs/_images/todo-hero-16-8.png'
+heroAlt: FastAPI and Next.js deployment architecture on Vercel
+tags:
+  - fastapi
+  - next.js
+  - devops
+  - serverless
+category: tutorials
+toc: true
+draft: false
+---
+
+
+## Introduction
+
+This article is a practical guide that presents a single, proven approach for deploying a FastAPI and Next.js application on Vercel. It is not intended to be a comprehensive, in depth overview of all Vercel features or deployment options. The main idea is to show how to host demo apps on Vercel for free.
+
+Python is one of the runtimes with first-class support on Vercel, as stated in the documentation: https://vercel.com/docs/functions/runtimes. Additionally, FastAPI is an officially supported backend framework and is documented here: https://vercel.com/docs/frameworks/backend/fastapi.
+
+Naturally, Next.js is developed by Vercel and has full, native support on the platform. Given all of this, deploying a full-stack FastAPI and Next.js application on Vercel is entirely viable, and we can confidently proceed with the configuration and deployment.
+
+## Project structure prerequisites
+
+There are certain constraints on how a FastAPI and Next.js project must be structured and configured in order to be deployable on Vercel. When deploying with Docker, we typically use separate containers for the backend and frontend, since a container is designed to run a single process. Similarly, on Vercel we will use two separate deployments, one for the backend and one for the frontend, and connect them using the `SITE_URL` and `API_URL` environment variables.
+
+In general, a full-stack application should be designed without making assumptions about the values of `SITE_URL` and `API_URL`, allowing the backend and frontend to be hosted independently on any arbitrary domains.
+
+This is especially important for authentication and cookies, since the frontend and backend will use different `*.vercel.app` domains. Because these domains are included in the public suffix list (https://publicsuffix.org/list), cookie behavior cannot be fully controlled across them.
+
+One effective solution is to enforce a clean separation of concerns: use FastAPI for authentication logic, and rely on Next.js API routes or server actions for setting and unsetting cookies. I covered this approach in detail in a previous article: https://nemanjamitic.com/blog/2026-02-07-github-login-fastapi-nextjs#architecture-overview.
+
+**Note:** If your project originally hosts the backend and frontend on the same domain and relies on a reverse proxy such as Nginx or Traefik for routing, you will need to reconfigure this setup, as Vercel does not provide that level of routing control.
+
+## Configuration
+
+Vercel offers two basic ways to deploy a project: 1. using the CLI to deploy from a local machine, and 2. deploying from a repository URL, such as Github or Gitlab. There are also several variations of these approaches, including the "Vercel button" which launches a setup wizard from a repository URL, and Github Actions, where the CLI is used inside a workflow runner.
+
+In this tutorial, we will use the CLI approach and deploy both the backend and frontend directly from our local development machine.
+
+We will begin by installing the Vercel CLI globally on our local machine and then logging in with our Vercel account.
+
+```bash
+# Install Vercel CLI
+pnpm install -g vercel
+
+# Log in to Vercel
+vercel login
+```
+
+## Configuring the FastAPI backend
+
+### vercel.json
+
+First, we need to expose a FastAPI entry point in a way that can be consumed by a Vercel serverless function.
+
+https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/vercel-deploy/backend/app/api/index.py
+
+```py title="backend/app/api/index.py"
+# Required by vercel.json to locate the FastAPI `app` instance.
+# `# noqa: F401` prevents formatters from removing this import.
+
+from app.main import app  # noqa: F401
+```
+
+Then we can use it in `vercel.json` to define the build path for the serverless function and the root request handler for HTTP requests.
+
+https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/vercel-deploy/backend/vercel.json
+
+```json title="backend/vercel.json"
+{
+  "builds": [
+    {
+      "src": "app/api/index.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "app/api/index.py"
+    }
+  ]
+}
+```
+### .vercelignore
+
+Next, we need to define the backend's root project directory and specify which files should be included or excluded from the serverless function. This step is important to avoid unnecessary bloat, as it affects both performance and the 250 MB size limit for Vercel functions on the free plan. By default, the root project directory is the folder where you run the `vercel` CLI command, though you can override it during the deployment prompt.
+
+The `.vercelignore` file is used to exclude files from being uploaded during deployment. It should be placed inside the root project directory. If you already have a properly configured `.dockerignore`, these two files are basically the same. Below is my `.vercelignore` configuration:
+
+https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/vercel-deploy/backend/.vercelignore
+
+```bash title="backend/.vercelignore"
+# Python
+.venv/
+__pycache__/
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+app.egg-info
+*.pyc
+
+# Tests
+.coverage
+htmlcov
+
+Dockerfile*
+
+# ignore database
+!data/database
+data/database/*
+!data/database/.gitkeep
+```
+
+You can also verify and debug any redundant files in the Vercel dashboard under `My Project -> My Deployment -> Source`. I highly recommend performing this check to ensure that no unnecessary bloat is included in the serverless function.
+
+Additionally, add the `backend/.vercel/` directory to your `.gitignore` file. This directory contains local Vercel configuration and should not be committed to Git.
+
+```bash title="backend/.gitignore"
+# Local Vercel configuration
+.vercel/
+```
+
+### Environment variables
+
+Your application already relies on certain environment variables that are configured in a specific way. However, their names and formats may not fully align with the predefined variables available in the Vercel environment, so some adaptation is usually required. In my case, this involved the following changes:
+
+1. I had an `ENVIRONMENT` variable that needed to be derived from the predefined `VERCEL_ENV` variable and then reassigned using a Pydantic model validator.
+2. For the database configuration, I originally used five separate variables: `POSTGRES_SERVER`, `POSTGRES_PORT`, `POSTGRES_USER`, `POSTGRES_PASSWORD`, and `POSTGRES_DB`. These were replaced with a single `DATABASE_URL` variable, which is exposed by Neon by default. This value can then be piped into a `SQLALCHEMY_DATABASE_URI` computed property.
+
+https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/vercel-deploy/backend/app/core/config.py
+
+```py title="backend/app/core/config.py"
+
+# Vercel default vars
+VERCEL_ENV: str | None = None
+
+# ...
+
+# for Vercel and Neon
+DATABASE_URL: PostgresDsn | None = None
+
+# Local / Docker fallback
+POSTGRES_SERVER: str | None = None
+POSTGRES_PORT: int = 5432
+POSTGRES_USER: str | None = None
+POSTGRES_PASSWORD: str | None = None
+POSTGRES_DB: str | None = None
+
+# ...
+
+@computed_field  # type: ignore[prop-decorator]
+@property
+def SQLALCHEMY_DATABASE_URI(self) -> PostgresDsn:
+    # Vercel + Neon
+    if self.DATABASE_URL:
+        database_url = str(self.DATABASE_URL)
+        # Force SQLAlchemy to use psycopg v3 on Vercel (Neon provides postgresql:// by default)
+        if database_url.startswith("postgresql://"):
+            database_url = database_url.replace(
+                "postgresql://", "postgresql+psycopg://"
+            )
+        return database_url
+
+    # Local / Docker
+    if not all(
+        [
+            self.POSTGRES_SERVER,
+            self.POSTGRES_USER,
+            self.POSTGRES_PASSWORD,
+            self.POSTGRES_DB,
+        ]
+    ):
+        raise ValueError(
+            "Either DATABASE_URL (Vercel/Neon) or POSTGRES_* variables must be set"
+        )
+
+    return MultiHostUrl.build(
+        scheme="postgresql+psycopg",
+        username=self.POSTGRES_USER,
+        password=self.POSTGRES_PASSWORD,
+        host=self.POSTGRES_SERVER,
+        port=self.POSTGRES_PORT,
+        path=self.POSTGRES_DB,
+    )
+
+# ...
+
+@model_validator(mode="after")
+def resolve_environment(self) -> Self:
+    if self.VERCEL_ENV == "production":
+        self.ENVIRONMENT = "production"
+    elif self.VERCEL_ENV == "preview":
+        self.ENVIRONMENT = "staging"
+    # else: keep whatever ENVIRONMENT was set from OS/.env
+    return self
+
+```
+
+As already noted, `SITE_URL` is a particularly important variable, as it is the primary way to inform the backend about the domain on which the frontend is hosted. It is used throughout the backend for CORS whitelisting, redirects, constructing absolute URLs, etc.
+
+You may not have this value available during the initial backend deployment. In that case, you can temporarily set a placeholder value to satisfy Pydantic validation. Once the actual frontend URL is known, update the variable via the Vercel dashboard or CLI and redeploy the application for the change to take effect.
+
+Below is the full list of required and optional environment variables used by this backend application:
+
+https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/vercel-deploy/.env.vercel.example
+
+```bash title=".env.vercel.example"
+# ------------ Required vars --------------
+
+# Frontend url
+# Used by the backend to generate links in emails to the frontend
+SITE_URL=my-frontend-url.vercel.app
+
+# Auth
+JWT_SECRET_KEY=my-secret
+SESSION_SECRET_KEY=my-secret
+
+# Superuser email and password
+FIRST_SUPERUSER=admin@example.com
+FIRST_SUPERUSER_PASSWORD=password
+
+# Postgres database, e.g. Neon
+# Format: postgresql://<username>:<password>@<host>/<database>?<query>
+# Neon example: postgresql://neondb_owner:npg_someHash@ep-solitary-moon-some-hash-pooler.c-3.us-east-1.aws.neon.tech/neondb?sslmode=require
+DATABASE_URL=
+
+# ------------ Optional vars --------------
+
+# Used in email templates and OpenAPI docs
+PROJECT_NAME="Full stack FastAPI template Next.js"
+
+# Whitelisted frontend urls
+# SITE_URL is included by default
+BACKEND_CORS_ORIGINS="http://localhost,https://localhost,http://localhost:3000,https://localhost:3000,http://localhost:3001,https://localhost:3001,https://my-frontend-url.vercel.app"
+
+# Environment: local, staging, production
+# If omitted defaults to VERCEL_ENV
+ENVIRONMENT=production
+
+# If omitted defaults to 7 days = 24 * 7 = 168 hours
+ACCESS_TOKEN_EXPIRE_HOURS=168
+
+# Github OAuth id and secret
+# Only a single deployment (callback url) per Github app is possible
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+
+# Postgres database, e.g. Neon
+# Supply either all POSTGRES_* variables or a single DATABASE_URL
+# If both are defined DATABASE_URL has precedence
+POSTGRES_SERVER=localhost
+POSTGRES_PORT=5432
+POSTGRES_DB=app
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=password
+```
+
+### Database migrations and seed
+
+At this point, the only remaining step is to obtain a valid `DATABASE_URL` that points to a migrated, seeded, and running database instance. You can use any cloud or self-hosted PostgreSQL instance, as long as it is accessible over the internet. In this case, we will use Neon, since it is an officially supported PostgreSQL integration on Vercel.
+
+Create an account at https://neon.com, then create a new project and a new database. Next, connect the database to your Vercel project using the Neon integration and use the default `production` database branch. When the integration is added, Neon will automatically expose certain environment variables to your Vercel deployment, which you can customize in the Neon integration settings. The `DATABASE_URL` variable is exposed by default, and since we configured the backend to use it in the previous step, no further action is required at this stage.
+
+At this point, the backend can connect to the database, but the database is still empty. We now need to run migrations to create the tables and seed the initial data.
+
+**Note:** You might be tempted to automate database migrations and seeding (especially for demo apps) by running them on application startup. However, since Vercel is a serverless environment, there is no single, well-defined application start event (unlike a VPS or Docker-based setup). Instead, multiple instances can start independently, which would cause migrations and seeds to run multiple times in an unpredictable manner. This can lead to serious issues. For this reason, database migrations and initial seeding should be performed as a single, manual step.
+
+We will use our local development environment, where the application is already fully installed and configured, to run the migrations and seed the data. In the local `.env` file, simply replace the local development database connection with the remote production database connection that is already used by the Vercel deployment.
+
+Also, make sure to check out the `vercel-deploy` branch locally, as only that branch is configured to handle the `DATABASE_URL` variable correctly.
+
+```bash
+# Checkout vercel-deploy branch that has Vercel configuration (backend/vercel.json, backend/.vercelignore, backend/app/api/index.py, modified backend/app/core/config.py)
+git checkout vercel-deploy
+```
+
+```bash title=".env"
+
+# Comment out local Postgres database
+# POSTGRES_SERVER=localhost
+# POSTGRES_PORT=5433
+# POSTGRES_DB=app
+# POSTGRES_USER=postgres
+# POSTGRES_PASSWORD=password
+
+# Neon database url example used on Vercel:
+DATABASE_URL=postgresql://neondb_owner:npg_some-slug@ep-rough-cherry-some-slug-pooler.c-3.us-east-1.aws.neon.tech/neondb?sslmode=require
+```
+
+Now we can run the migrations and seed the Neon remote database. Make sure that all backend dependencies are installed and that your Python virtual environment is activated. Be patient and allow the command to complete, as this process can take a few minutes.
+
+```bash
+# From /backend
+cd ./backend
+
+# Create virtual environment
+uv venv
+
+# Activate the environment
+source .venv/bin/activate
+
+# Install dependencies
+uv sync
+
+# Migration and seed scripts need activated venv and Python dependencies
+
+# Await db, run migrations and seed (must have .env)
+# With a remote Neon database, this command can take a few minutes to complete
+# Be patient and do not interrupt it
+bash scripts/prestart.sh
+```
+
+Open the Neon dashboard and verify that the `user` and `item` tables have been created and populated with the seed data. At this point, the backend is fully configured and ready to be deployed using the Vercel CLI.
+
+### Deploying backend from terminal
+
+First, install the `vercel` CLI and log in with your Vercel account. Then navigate to the `backend` directory and start the deployment wizard by running the `vercel --prod` command. The wizard will prompt you to:
+
+- Link an existing Vercel project or create and name a new one (this determines the app's public URL)
+- Select the project root directory - choose the current directory (`./`)
+- Set environment variables - this step can be skipped for now
+- Modify the build configuration - select "No"
+
+```bash
+# Install Vercel CLI
+pnpm install -g vercel
+
+# Log in to Vercel
+vercel login
+
+# Navigate to the backend folder
+cd backend
+
+# Deploy for the first time (production)
+# Fill prompts for name, root directory `./` (vercel.json dir)
+vercel --prod
+
+# Add required environment variables (production) (after the wizard completes)
+echo "Full stack FastAPI template Next.js" | vercel env add PROJECT_NAME production
+echo "https://my-frontend-url.vercel.app" | vercel env add SITE_URL production
+echo "my-secret" | vercel env add JWT_SECRET_KEY production
+echo "my-secret" | vercel env add SESSION_SECRET_KEY production
+echo "admin@example.com" | vercel env add FIRST_SUPERUSER production
+echo "password" | vercel env add FIRST_SUPERUSER_PASSWORD production
+echo "postgresql://user:pass@host/db" | vercel env add DATABASE_URL production
+# Set more optional variables...
+
+# List existing environment variables
+vercel env ls
+
+# Redeploy after changes
+vercel --prod  # production
+
+# After deploy, the CLI outputs the URL
+# Example: https://api-full-stack-fastapi-template-nextjs-my-slug.vercel.app
+
+# Debug deployment
+vercel inspect https://api-full-stack-fastapi-template-nextjs-my-slug.vercel.app --json
+```
+
+Treat the initial deployment as disposable. At this stage, the frontend is likely not deployed yet, which means the `SITE_URL` value is not available. You can temporarily set a placeholder URL that satisfies Pydantic validation. Once the frontend is deployed, update `SITE_URL` with the actual value using the CLI (as shown earlier) or via the Vercel dashboard (`Project -> Settings -> Environment Variables`).
+
+The same approach applies to other environment variables, such as `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`. After updating any environment variable, you must redeploy the project for the changes to take effect.
+
+```bash
+# Update (remove and add) an existing env var SITE_URL
+vercel env rm SITE_URL production --yes
+echo "https://my-new-frontend-url.vercel.app" | vercel env add SITE_URL production
+```
+
+Once the deployment wizard completes successfully, you can verify the result by accessing the FastAPI backend at the URL printed in the terminal, for example: `https://api-full-stack-fastapi-template-nextjs-my-slug.vercel.app/docs`.
+
+This will display the OpenAPI UI. The exact URL depends on how you named the project. You can view all associated URLs in the Vercel dashboard under the deployment settings.
+
+Swagger screenshot here
+
+## Configuring the Next.js frontend
+
+Deploying the Next.js application is much simpler, as it requires fewer environment variables and no database. However, there are still a few details to keep in mind, which we will cover here.
+
+### vercel.json
+
+We use a `vercel.json` file to specify the framework, install and build commands, and the output directory. These settings mirror the local development environment and are pretty self-explanatory.
+
+https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/vercel-deploy/frontend/apps/web/vercel.json
+
+```json title="frontend/apps/web/vercel.json"
+{
+  "framework": "nextjs",
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm turbo run build --filter=web",
+  "outputDirectory": ".next"
+}
+```
+
+Note that our Next.js application uses a monorepo setup with Turbo, which has a few implications:
+
+- The `vercel.json` file **is NOT** placed at the monorepo root (`frontend/`). Instead, it lives in the Next.js application directory at `frontend/apps/web/vercel.json`. Despite this, the Vercel project root directory **IS** the monorepo root (`frontend/`), since all packages and source files must be uploaded in order to build the application successfully. This is the correct approach for deploying monorepo projects to Vercel.
+- The `.vercelignore` file should also be placed in the monorepo root directory (`frontend/`).
+
+### .vercelignore
+
+As with the backend, we need to ignore all unused local files during deployment to prevent unnecessary uploads, performance degradation, and excess bloat, and to stay below the 250 MB limit for a serverless function. Once again, it is a good idea to verify that nothing was missed by checking `My Project -> My Deployment -> Source` in the Vercel dashboard.
+
+https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/vercel-deploy/frontend/.vercelignore
+
+```bash title="frontend/.vercelignore"
+# Node.js
+**/node_modules/
+**/.next/
+**/.turbo/
+**/dist/
+
+# Ignore all env files, env vars are passed into container explicitly
+**/.env*
+
+# Tests
+**/test-results/
+**/playwright-report/
+**/blob-report/
+**/playwright/.cache/
+```
+
+Similarly, add the `frontend/.vercel/` directory to your frontend `.gitignore` file. This directory contains local Vercel configuration and should not be committed to Git.
+
+https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/vercel-deploy/frontend/.gitignore
+
+```bash title="frontend/.gitignore"
+# Local Vercel configuration
+.vercel/
+```
+
+### Environment variables
+
+The frontend uses far fewer environment variables, only two in fact: `API_URL`, which points to the backend URL, and `SITE_URL`, which represents the frontend's own URL. The value of `SITE_URL` can be derived from the predefined `VERCEL_PROJECT_PRODUCTION_URL` variable exposed by Vercel.
+
+https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/vercel-deploy/frontend/apps/web/.env.vercel.example
+
+```bash title="frontend/apps/web/.env.vercel.example"
+# ------------ Required vars --------------
+
+# Backend url
+API_URL=https://my-backend-url.vercel.app
+
+# ------------ Optional vars --------------
+
+# Frontend url
+# If omitted defaults to https:// + VERCEL_PROJECT_PRODUCTION_URL
+SITE_URL=https://my-frontend-url.vercel.app
+```
+
+With this in mind, we need to include `VERCEL_PROJECT_PRODUCTION_URL` in the Next.js environment variable handling logic.
+
+Set it as a fallback value in the `next-public-env` schema.
+
+https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/vercel-deploy/frontend/apps/web/src/config/process-env.ts
+
+```ts title="frontend/apps/web/src/config/process-env.ts"
+export const { getPublicEnv, PublicEnv } = createPublicEnv(
+  {
+    NODE_ENV: process.env.NODE_ENV,
+    SITE_URL: process.env.SITE_URL || `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`,
+    API_URL: process.env.API_URL,
+  },
+  { schema: (z) => getProcessEnvSchemaProps(z) }
+```
+
+Include it in the `process.env` type.
+
+https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/vercel-deploy/frontend/apps/web/src/env.d.ts
+
+```ts title="frontend/apps/web/src/env.d.ts"
+declare namespace NodeJS {
+  interface ProcessEnv {
+    readonly NODE_ENV: 'development' | 'production' | 'test';
+    readonly SITE_URL: string;
+    readonly API_URL: string;
+    readonly VERCEL_PROJECT_PRODUCTION_URL: string;
+  }
+}
+```
+
+Notify Turborepo.
+
+https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/vercel-deploy/frontend/turbo.json
+
+```json title="frontend/turbo.json"
+{
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
+  "globalEnv": ["NODE_ENV", "SITE_URL", "API_URL", "NEXT_RUNTIME", "VERCEL_PROJECT_PRODUCTION_URL"],
+  
+  // ...
+
+}
+```
+
+That's it. Our Next.js frontend is ready for deployment.
+
+### Deploying frontend from terminal
+
+Deploying the frontend is very similar to deploying the backend, with the main difference being the selection of the project root directory, since we are deploying a monorepo. Navigate to the `frontend` directory and start the deployment wizard by running the `vercel --prod` command. The wizard will prompt you to:
+- Link an existing Vercel project or create and name a new one (this determines the app's public URL)
+- Select the project root directory - **choose the Next.js app directory** (`./apps/web/`)
+- Set environment variables - this step can be skipped for now
+- Modify the build configuration - select "No"
+
+```bash
+# Install Vercel CLI
+pnpm install -g vercel
+
+# Log in to Vercel
+vercel login
+
+# Navigate to the frontend folder
+cd frontend
+
+# Deploy for the first time (production)
+# Fill prompts for name, root directory `./apps/web/` (vercel.json dir)
+vercel --prod
+
+# Set required environment variables (production)
+echo "https://api-full-stack-fastapi-template-nextjs-my-slug.vercel.app" | vercel env add API_URL production
+# Set more optional variables...
+
+# List existing environment variables
+vercel env ls
+
+# Redeploy after changes
+vercel --prod  # production
+
+# After deploy, the CLI outputs the URL
+# Example: https://full-stack-fastapi-template-nextjs-my-slug.vercel.app
+
+# Debug deployment
+vercel inspect https://full-stack-fastapi-template-nextjs-my-slug.vercel.app --json
+```
+
+Make sure to set the environment variables `API_URL` and `SITE_URL` (optional), either through the Vercel dashboard (`Project -> Settings -> Environment Variables`) or via the CLI. If `SITE_URL` is not set, it will fall back to the predefined `VERCEL_PROJECT_PRODUCTION_URL` variable, as explained earlier.
+
+Remember to redeploy the project whenever you update environment variables to apply the changes.
+
+```bash
+# Update (remove and add) an existing env vars API_URL and SITE_URL
+
+vercel env rm API_URL production --yes
+echo "https://api-full-stack-fastapi-template-nextjs-my-slug.vercel.app" | vercel env add API_URL production
+
+vercel env rm SITE_URL production --yes
+echo "https://full-stack-fastapi-template-nextjs-my-slug.vercel.app" | vercel env add ITE_UR production
+```
+
+If everything is configured correctly, your full-stack FastAPI and Next.js application should now be fully deployed and functional at the URL displayed in the terminal: `https://full-stack-fastapi-template-nextjs-my-slug.vercel.app`
+
+The exact URL will depend on the name you chose for the project. Congratulations!
+
+frontend screenshot here
+
+## Vercel button
+
+In addition to the CLI, Vercel also allows deploying a project by simply specifying the repository URL. Naturally, the repository must be properly prepared and configured beforehand. One variation of this method is the "Vercel Deploy" button, a URL-encoded `href` link that points to Vercel and includes query parameters for the repository URL, environment variables, integrations, and other necessary configuration details. When clicked, it launches a setup wizard to complete any remaining deployment configuration.
+
+Vercel also provides a utility form to generate these buttons conveniently: https://vercel.com/docs/deploy-button. The "Vercel Deploy" button can be embedded in markdown or HTML pages, allowing visitors to deploy a live demo of your project quickly and effortlessly.
+
+With this in mind, we can define two "Vercel Deploy" buttons to deploy the backend and frontend of our FastAPI and Next.js project, and include them in the project's `README.md` file. The buttons below specify URLs (repository, demo, images, `.env.example`, etc.) for this particular example,  you can adjust them to match your own URLs.
+
+### Backend Vercel button
+
+This is fairly self-explanatory, but let’s clarify the query parameters for completeness: 
+
+- `repository-url` points to the Github repository and the `vercel-deploy` branch.  
+- `root-directory` specifies the backend project root directory (`backend`).  
+- `env` lists all environment variables, while `envDefaults` provides default values for some of them.  
+- `envDescription` links to the documentation for the variables, and `envLink` points to the `.env.example` file.  
+
+Additional parameters include:  
+- `project-name` — the name of the Vercel project.  
+- `repository-name` — the name of the cloned repository.  
+- `demo-*` — information and URLs displayed in the wizard for demo purposes.  
+
+The `products` parameter is particularly important, as it activates the Neon integration in the wizard to provision a new PostgreSQL database.
+
+```bash
+# URL for the backend "Vercel Deploy" button's href attribute
+
+https://vercel.com/new/clone
+repository-url=https://github.com/nemanjam/full-stack-fastapi-template-nextjs/tree/vercel-deploy
+root-directory=backend
+env=SITE_URL,JWT_SECRET_KEY,SESSION_SECRET_KEY,FIRST_SUPERUSER,FIRST_SUPERUSER_PASSWORD,GITHUB_CLIENT_ID,GITHUB_CLIENT_SECRET
+envDefaults={
+  "SITE_URL": "https://my-frontend-url.vercel.app",
+  "JWT_SECRET_KEY": "my-secret",
+  "SESSION_SECRET_KEY": "my-secret",
+  "FIRST_SUPERUSER": "admin@example.com",
+  "FIRST_SUPERUSER_PASSWORD": "password"
+  "GITHUB_CLIENT_ID": "my-github-app-client-id"
+  "GITHUB_CLIENT_SECRET": "my-github-app-client-secret"
+}
+envDescription=https://github.com/nemanjam/full-stack-fastapi-template-nextjs/tree/vercel-deploy/docs/vercel-deployment-backend.md#environment-variables
+envLink=https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/vercel-deploy/.env.vercel.example
+project-name=api-full-stack-fastapi-template-nextjs
+repository-name=api-full-stack-fastapi-template-nextjs
+demo-title=Backend of the full stack FastAPI template Next.js
+demo-description=Backend of the Next.js fork of the official "fastapi/full-stack-fastapi-template" template.
+demo-url=https://full-stack-fastapi-template-nextjs.vercel.app
+demo-image=https://github.com/nemanjam/full-stack-fastapi-template-nextjs/raw/vercel-deploy/docs/screenshots/frontend-screenshot-1200x630.png
+skippable-integrations=1
+products=[
+  {
+    "type": "integration",
+    "integrationSlug": "neon",
+    "productSlug": "neon",
+    "protocol": "storage"
+  }
+]
+```
+
+Once the URL is constructed, it should be URL-encoded and then embedded in the markdown (or HTML) as shown below.
+
+```md
+<!-- Markdown for the button -->
+
+[![Deploy backend to Vercel](https://vercel.com/button)](urlencoded-url-from-above)
+```
+
+**Note:** The button and wizard will deploy the backend and **provision a blank Neon database**. Users will still need to run migrations and seed the database manually, as described in the previous section: [Database migrations and seed](#database-migrations-and-seed).
+
+### Frontend Vercel button
+
+The frontend button requires fewer parameters, all of which have already been described and are analogous to their backend counterparts.
+
+```bash
+# URL for the frontend "Vercel Deploy" button's href attribute
+
+https://vercel.com/new/clone
+repository-url=https://github.com/nemanjam/full-stack-fastapi-template-nextjs/tree/vercel-deploy
+root-directory=frontend/apps/web
+env=API_URL
+envDefaults={
+  "API_URL": "https://my-backend-url.vercel.app",
+}
+envDescription=https://github.com/nemanjam/full-stack-fastapi-template-nextjs/tree/vercel-deploy/docs/vercel-deployment-frontend.md#environment-variables
+envLink=https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/vercel-deploy/frontend/apps/web/.env.vercel.example
+project-name=full-stack-fastapi-template-nextjs
+repository-name=full-stack-fastapi-template-nextjs
+demo-title=Frontend of the full stack FastAPI template Next.js
+demo-description=Frontend of the Next.js fork of the official "fastapi/full-stack-fastapi-template" template.
+demo-url=https://full-stack-fastapi-template-nextjs.vercel.app
+demo-image=https://github.com/nemanjam/full-stack-fastapi-template-nextjs/raw/vercel-deploy/docs/screenshots/frontend-screenshot-1200x630.png
+```
+
+URL-encode the frontend button's URL and embed it in the markdown (or HTML).
+
+```md
+<!-- Markdown for the button -->
+
+[![Deploy frontend to Vercel](https://vercel.com/button)](urlencoded-url-from-above)
+```
+
+wizard screenshot
+
+## Completed code
+
+- **Repository and branch:** https://github.com/nemanjam/full-stack-fastapi-template-nextjs/tree/vercel-deploy
+
+The relevant branch `vercel-deploy` and files:
+
+```bash
+git clone git@github.com:nemanjam/full-stack-fastapi-template-nextjs.git
+
+# Checkout the vercel-deploy branch
+git checkout vercel-deploy
+
+# Backend
+
+# Frontend
+
+# Compare branches in a clear diff
+https://github.com/nemanjam/full-stack-fastapi-template-nextjs/compare/vercel-deploy?expand=1
+
+# Compare specific commits in a clear diff
+https://github.com/nemanjam/full-stack-fastapi-template-nextjs/compare/45c840d48cba2aeab07e0a66f8245110b852571e...e5fa4b4af3c19c8c2c584fe437b7298f9e342083
+```
+
+## References
+
+- Vercel supported runtimes https://vercel.com/docs/functions/runtimes
+- Vercel supported backend frameworks https://vercel.com/docs/frameworks/backend/fastapi
+
+
