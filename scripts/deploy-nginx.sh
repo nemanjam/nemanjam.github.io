@@ -20,24 +20,26 @@ ssh $REMOTE_HOST "cd $REMOTE_PATH && \
                   ls && \
                   echo 'Count before clearing:' && \
                   ls -l | grep -v ^l | wc -l && \
-                  echo 'Clearing contents of the folder...' && \
-                  rm -rf * && \
-                  echo 'List after clearing:' && \
-                  ls && \
-                  echo 'Count after clearing:' && \
-                  ls -l | grep -v ^l | wc -l && \
+
+                  # Only possible to skip with rsync --delete
+                  # echo 'Clearing contents of the folder...' && \
+                  # rm -rf * && \
+                  # echo 'List after clearing:' && \
+                  # ls && \
+                  # echo 'Count after clearing:' && \
+                  # ls -l | grep -v ^l | wc -l && \
+
                   echo 'Copying new contents...'"
 
-# Copy new contents, 27MB
-# Using scp -rq
-scp -r $LOCAL_PATH/* $REMOTE_HOST:$REMOTE_PATH
+# Copy new contents, 320 MB
+# Using scp -rq, slowest, not resumable
+# scp -r $LOCAL_PATH/* $REMOTE_HOST:$REMOTE_PATH
 
-# Using rsync
-# rsync -az --progress $LOCAL_PATH/* $REMOTE_HOST:$REMOTE_PATH
+# Using rsync, fastest, resumable, deletes without clearing, lot faster with reusing unchanged files (--delete)
+rsync -az --delete --info=stats,progress2 $LOCAL_PATH/ $REMOTE_HOST:$REMOTE_PATH
 
-# Using tar and ssh cat
-# tar czf - -C $LOCAL_PATH . | ssh $REMOTE_HOST "cat > $REMOTE_PATH/dist.tar.gz && tar xzf $REMOTE_PATH/dist.tar.gz -C $REMOTE_PATH && rm $REMOTE_PATH/dist.tar.gz"
-
+# Using tar, fast for cleaned dir
+# tar cf - -C "$LOCAL_PATH" . | ssh "$REMOTE_HOST" "tar xvf - -C $REMOTE_PATH"
 
 # List all files after copying
 ssh $REMOTE_HOST "cd $REMOTE_PATH && \
