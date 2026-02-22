@@ -2,7 +2,7 @@
 
 # alpine is fine
 # node:22.1.0-bookworm, node:20.13.1-slim, node:20.13.1-alpine
-ARG NODE_IMAGE=node:24.7.0-alpine3.22
+ARG NODE_IMAGE=node:24.13.0-alpine3.22
 
 FROM --platform=$BUILDPLATFORM ${NODE_IMAGE} AS base
 WORKDIR /app
@@ -15,7 +15,7 @@ ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 
 RUN corepack enable
-RUN corepack prepare pnpm@10.17.0 --activate
+RUN corepack prepare pnpm@10.30.1 --activate
 
 FROM base AS build
 COPY package.json pnpm-lock.yaml ./

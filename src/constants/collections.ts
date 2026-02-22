@@ -29,6 +29,7 @@ export const TAGS = [
   'computer-science',
   'fastapi',
   'authentication',
+  'serverless',
 ] as const;
 
 /** adjust this later */

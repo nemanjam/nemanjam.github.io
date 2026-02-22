@@ -47,13 +47,13 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 24.7.0
+          node-version: 24.13.0
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10.17.0
+          version: 10.30.1
 
       - name: Install Vercel CLI
         run: pnpm add -g vercel
