@@ -19,6 +19,7 @@ draft: false
 import { Image } from 'astro:assets';
 
 import { IMAGE_SIZES } from '../../../../constants/image';
+import DeploymentDiagramImage from '../../../../content/post/2026/02-22-vercel-deploy-fastapi-nextjs/_images/vercel-fastapi-nextjs.png';
 import FrontendScreenshotImage from '../../../../content/post/2026/02-22-vercel-deploy-fastapi-nextjs/_images/frontend-screenshot-1200x630.png';
 import BackendScreenshotImage from '../../../../content/post/2026/02-22-vercel-deploy-fastapi-nextjs/_images/backend-screenshot-1200x630.png';
 
@@ -31,6 +32,8 @@ Python is one of the runtimes with first-class support on Vercel, as stated in t
 Naturally, Next.js is developed by Vercel and has full, native support on the platform. Given all of this, deploying a full-stack FastAPI and Next.js application on Vercel is entirely viable, and we can confidently proceed with the configuration and deployment.
 
 ## Project structure prerequisites
+
+<Image {...IMAGE_SIZES.FIXED.MDX_MD} src={DeploymentDiagramImage} alt="Deployment diagram" />
 
 There are certain constraints on how a FastAPI and Next.js project must be structured and configured in order to be deployable on Vercel. When deploying with Docker, we typically use separate containers for the backend and frontend, since a container is designed to run a single process. Similarly, on Vercel we will use two separate deployments, one for the backend and one for the frontend, and connect them using the `SITE_URL` and `API_URL` environment variables.
 
