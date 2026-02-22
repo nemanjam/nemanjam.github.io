@@ -22,6 +22,7 @@ import { IMAGE_SIZES } from '../../../../constants/image';
 import DeploymentDiagramImage from '../../../../content/post/2026/02-22-vercel-deploy-fastapi-nextjs/_images/vercel-fastapi-nextjs.png';
 import FrontendScreenshotImage from '../../../../content/post/2026/02-22-vercel-deploy-fastapi-nextjs/_images/frontend-screenshot-1200x630.png';
 import BackendScreenshotImage from '../../../../content/post/2026/02-22-vercel-deploy-fastapi-nextjs/_images/backend-screenshot-1200x630.png';
+import VercelButtonWizardScreenshotImage from '../../../../content/post/2026/02-22-vercel-deploy-fastapi-nextjs/_images/vercel-button-wizard-screenshot.png';
 
 ## Introduction
 
@@ -672,7 +673,9 @@ URL-encode the frontend button's URL and embed it in the markdown (or HTML).
 [![Deploy frontend to Vercel](https://vercel.com/button)](urlencoded-url-from-above)
 ```
 
-wizard screenshot
+After clicking the "Vercel Deploy" button, the user will be taken to a form wizard, as shown below.
+
+<Image {...IMAGE_SIZES.FIXED.MDX_MD} src={VercelButtonWizardScreenshotImage} alt="Vercel button wizard" />
 
 ## Completed code
 
@@ -713,6 +716,14 @@ https://github.com/nemanjam/full-stack-fastapi-template-nextjs/compare/vercel-de
 # Compare specific commits in a clear diff
 https://github.com/nemanjam/full-stack-fastapi-template-nextjs/compare/45c840d48cba2aeab07e0a66f8245110b852571e...e5fa4b4af3c19c8c2c584fe437b7298f9e342083
 ```
+
+## Conclusion
+
+Vercel is quite viable option to host full-stack FastAPI, Next.js demo projects for free. It works well when the project is designed around serverless constraints. Keeping the backend and frontend as separate deployments, using environment variables consistently, and handling database migrations manually results in a setup that is simple, predictable, and reliable on the free tier.
+
+This guide focused on one practical approach that is easy to reproduce and debug. With the provided repository and Vercel Deploy buttons, you can use this setup as a solid baseline for demos, prototypes, or small production projects.
+
+Have you done something similar yourself and used a different approach? Leave a comment below, I'm happy to hear your opinions.
 
 ## References
 

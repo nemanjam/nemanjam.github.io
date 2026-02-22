@@ -12,3 +12,7 @@ https://github.com/ncdai/chanhdai.com
 
 [Shiki] 10 instances have been created. Shiki is supposed to be used as a singleton, consider refactoring your code to cache your highlighter instance; Or call `highlighter.dispose()` to release unused instances.
 src/libs/integrations/expressive-code.ts
+
+replace scp github action with rsync
+https://github.com/Burnett01/rsync-deployments
+
