@@ -284,6 +284,8 @@ Then just trigger the following workflow:
 vercel__deploy-manual.yml
 ```
 
+**Detailed tutorial:** https://nemanjamitic.com/blog/2026-02-26-vercel-static-github-actions
+
 ### 4. Docker
 
 #### Local
