@@ -1,7 +1,7 @@
 ---
-title: Automating the deployment of a static website to Vercel with GitHub Actions
+title: Automating the deployment of a static website to Vercel with Github Actions
 description: |
-  Use GitHub Actions and the Vercel CLI to automate the deployment of a static website to Vercel.
+  Use Github Actions and the Vercel CLI to automate the deployment of a static website to Vercel.
 publishDate: 2026-02-26
 heroImage: '../../../../content/post/2026/02-26-vercel-static-github-actions/_images/hero-vercel-github-actions-astro.png'
 heroAlt: Vercel, Github Actions, Astro logos
@@ -17,13 +17,13 @@ draft: false
 
 ## Introduction
 
-This article focuses specifically on deploying static websites to Vercel. In a previous article https://nemanjamitic.com/blog/2026-02-22-vercel-deploy-fastapi-nextjs, we covered in detail how to deploy a full-stack application using the Vercel CLI from a local development environment. This time, we will use the same CLI inside a GitHub Actions runner to automate redeploying a static website on every push, for example, after adding a new blog article in markdown.
+This article focuses specifically on deploying static websites to Vercel. In a previous article https://nemanjamitic.com/blog/2026-02-22-vercel-deploy-fastapi-nextjs, we covered in detail how to deploy a full-stack application using the Vercel CLI from a local development environment. This time, we will use the same CLI inside a Github Actions runner to automate redeploying a static website on every push, for example, after adding a new blog article in markdown.
 
 As an example, we will deploy the same blog website you are currently reading. The site itself is a statically built Astro application.
 
 ## Vercel Github integration vs Github Actions
 
-Vercel supports deployments through a GitHub integration (documented here: https://vercel.com/docs/git/vercel-for-github). You provide Vercel with your GitHub repository URL and read access, and Vercel automatically redeploys your application on every push. If you prefer not to grant Vercel access to your source code or GitHub repository, or if you want more control over the deployment process, you can instead use GitHub Actions, the approach described in this article.
+Vercel supports deployments through a Github integration (documented here: https://vercel.com/docs/git/vercel-for-github). You provide Vercel with your Github repository URL and read access, and Vercel automatically redeploys your application on every push. If you prefer not to grant Vercel access to your source code or Github repository, or if you want more control over the deployment process, you can instead use Github Actions, the approach described in this article.
 
 ## Vercel configuration files
 
@@ -197,7 +197,7 @@ The first part of the workflow is standard and straightforward. We simply check 
 
 Here we are referring to **your project's** environment variables. Since we are deploying a fully static website, all environment variables are strictly **build-time** variables, as explained here: https://nemanjamitic.com/blog/2025-12-21-static-website-runtime-environment-variables. The Vercel target environment does not need to define any variables because they are inlined during the build, immutable, and ignored afterward. This also means the build artifacts are specific to the environment they were built for.
 
-Although variables in the target environment are ignored at runtime, it is still a good practice to define them in the Vercel dashboard and use Vercel as the single source of truth for your deployment. This allows you to easily pull them into the GitHub Actions runner using: `vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}`
+Although variables in the target environment are ignored at runtime, it is still a good practice to define them in the Vercel dashboard and use Vercel as the single source of truth for your deployment. This allows you to easily pull them into the Github Actions runner using: `vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}`
 
 The `--environment=production` flag selects the production environment. To deploy to preview environments, you can create a separate workflow `.yml` file triggered by feature branches (any branch other than `main`) and use `vercel pull` with the `--environment=preview` option to fetch the corresponding variables.
 
@@ -212,7 +212,7 @@ on:
 
 ### Building and deploying
 
-At this point, we are ready to build the project using: `vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}`. This command generates the application artifacts in the output folder specified in `vercel.json`, all within the GitHub Actions runner. After that, the Vercel CLI copies the framework's output folder (defined in `vercel.json`) inside the `.vercel/output` folder, creating a deployment-ready package that can be uploaded directly to Vercel.
+At this point, we are ready to build the project using: `vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}`. This command generates the application artifacts in the output folder specified in `vercel.json`, all within the Github Actions runner. After that, the Vercel CLI copies the framework's output folder (defined in `vercel.json`) inside the `.vercel/output` folder, creating a deployment-ready package that can be uploaded directly to Vercel.
 
 The final step is to upload the deployment-ready package inside the `.vercel/output` folder to Vercel using: `vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}`. The `--prebuilt` option tells Vercel to skip the build step since the application has already been built in the Github Actions runner.
 
