@@ -107,7 +107,7 @@ const ogImageUrl = new URL(image, url);
 
   {/* Analytics */}
   {
-    PLAUSIBLE_SCRIPT_URL && (
+    PLAUSIBLE_SCRIPT_URL && PLAUSIBLE_DOMAIN && (
       <>
         <link rel="preconnect" href={PLAUSIBLE_SCRIPT_URL} />
         {/* PLAUSIBLE_DOMAIN must be the same for all mirrors */}

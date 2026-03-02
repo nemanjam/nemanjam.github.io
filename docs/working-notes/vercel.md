@@ -15,4 +15,6 @@ add vercel button and docs
 
 Developer blog template built with Astro and Tailwind that you can reuse to build your own blog.
 
+VERCEL_PROJECT_PRODUCTION_URL fallback
+
 ```

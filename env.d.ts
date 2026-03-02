@@ -5,6 +5,9 @@ declare namespace NodeJS {
     readonly SITE_URL: string;
     /** Optional in .env file but always defined in type. Default: false. */
     readonly PREVIEW_MODE: boolean;
+    readonly PLAUSIBLE_SCRIPT_URL?: string;
+    readonly PLAUSIBLE_DOMAIN?: string;
+    readonly VERCEL_PROJECT_PRODUCTION_URL?: string;
   }
 }
 
@@ -15,6 +18,9 @@ interface ImportMetaEnv {
   // NODE_ENV, SITE_URL... included by default
 
   readonly PREVIEW_MODE: boolean;
+  readonly PLAUSIBLE_SCRIPT_URL?: string;
+  readonly PLAUSIBLE_DOMAIN?: string;
+  readonly VERCEL_PROJECT_PRODUCTION_URL?: string;
 }
 
 interface ImportMeta {
