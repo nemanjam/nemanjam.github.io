@@ -29,10 +29,14 @@ dotenv.config({ path: envFileName });
 
 /*------------------ validate processEnvData -----------------*/
 
+const VERCEL_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : '';
+
 const processEnvData: ProcessEnvType = {
   NODE_ENV: process.env.NODE_ENV,
   PREVIEW_MODE: process.env.PREVIEW_MODE,
-  SITE_URL: process.env.SITE_URL,
+  SITE_URL: process.env.SITE_URL || VERCEL_URL,
   PLAUSIBLE_SCRIPT_URL: process.env.PLAUSIBLE_SCRIPT_URL,
   PLAUSIBLE_DOMAIN: process.env.PLAUSIBLE_DOMAIN,
 };
@@ -71,7 +75,8 @@ export const envSchema = {
       context: 'client',
       access: 'public',
       optional: true,
-      default: getHostnameFromUrl(PROCESS_ENV.SITE_URL),
+      // must be explicitly defined in Plausible dashboard
+      // default: getHostnameFromUrl(PROCESS_ENV.SITE_URL),
     }),
   },
 };
