@@ -222,7 +222,7 @@ You have three options to deploy to Vercel: 1. Deploy button, 2. Local and 3. Gi
 
 #### Deploy button
 
-Just click the button bellow and follow the wizard to create a new project, build and deploy. By default it will infer `SITE_URL` environment variable from predefined `VERCEL_PROJECT_PRODUCTION_URL`. Additionally, you can explicitly set custom `SITE_URL`, and also `PLAUSIBLE_DOMAIN` and `PLAUSIBLE_SCRIPT_URL` to enable Plausible analytics. You will need to rebuild and redeploy the app to apply updated environment variables.
+Just click the button below and follow the wizard to create a new project, build it, and deploy it. By default, the `SITE_URL` environment variable is inferred from the predefined `VERCEL_PROJECT_PRODUCTION_URL`. You can also explicitly set a custom `SITE_URL`, as well as `PLAUSIBLE_DOMAIN` and `PLAUSIBLE_SCRIPT_URL`, to enable Plausible Analytics. After updating environment variables, you will need to rebuild and redeploy the app for the changes to take effect.
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fnemanjam%2Fnemanjam.github.io&envDescription=https%3A%2F%2Fgithub.com%2Fnemanjam%2Fnemanjam.github.io%23environment-variables&envLink=https%3A%2F%2Fgithub.com%2Fnemanjam%2Fnemanjam.github.io%2Fblob%2Fmain%2F.env.production.example&project-name=Developer%20blog&repository-name=nemanjam.github.io&demo-title=Developer%20blog&demo-description=Developer%20blog%20template%20built%20with%20Astro%20and%20Tailwind.&demo-url=https%3A%2F%2Fnemanjam.vercel.app&demo-image=https%3A%2F%2Fraw.githubusercontent.com%2Fnemanjam%2Fnemanjam.github.io%2Frefs%2Fheads%2Fmain%2Fdocs%2Fscreenshots%2Fdeveloper-blog-screenshot-1200x630.png&skippable-integrations=1)
 
