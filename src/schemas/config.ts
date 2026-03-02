@@ -6,16 +6,18 @@ export const booleanValues = ['true', 'false', ''] as const;
 export const modeValues = ['light', 'dark'] as const;
 export const themeValues = ['default-light', 'default-dark', 'green-light', 'green-dark'] as const;
 
-export const VERCEL_URL = (
-  process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : undefined
-) as string;
-
 const domainSubdomainRegex =
   /^(?!-)[A-Za-z0-9-]{1,63}(?<!-)(\.(?!-)[A-Za-z0-9-]{1,63}(?<!-))*\.[A-Za-z]{2,}$/;
 
 const localhostWithPortRegex = /^localhost(:\d{1,5})?$/;
+
+// Note: must be defined in 2 places (src/schemas/config.ts and src/config/process-env.ts)
+// Note: to be possible to load from .env.production file and avoid circular import and astro.config.ts
+const VERCEL_URL = (
+  process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : undefined
+) as string;
 
 /** runs after astro:env check in astro.config.ts */
 export const processEnvSchema = z.object({
