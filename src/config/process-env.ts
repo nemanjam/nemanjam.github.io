@@ -3,10 +3,11 @@ import { envField } from 'astro/config';
 
 import dotenv from 'dotenv';
 
-import { nodeEnvValues, processEnvSchema } from '../schemas/config';
+import { nodeEnvValues, processEnvSchema, VERCEL_URL } from '../schemas/config';
 import { prettyPrintObject } from '../utils/log';
-import { getHostnameFromUrl } from '../utils/urls';
 import { validateData } from '../utils/validation';
+
+// import { getHostnameFromUrl } from '../utils/urls';
 
 import type { ProcessEnvType } from '../types/config';
 
@@ -28,10 +29,6 @@ const envFileName = `.env.${NODE_ENV}`;
 dotenv.config({ path: envFileName });
 
 /*------------------ validate processEnvData -----------------*/
-
-const VERCEL_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
-  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  : '';
 
 const processEnvData: ProcessEnvType = {
   NODE_ENV: process.env.NODE_ENV,

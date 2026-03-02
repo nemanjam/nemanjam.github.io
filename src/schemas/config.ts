@@ -6,6 +6,12 @@ export const booleanValues = ['true', 'false', ''] as const;
 export const modeValues = ['light', 'dark'] as const;
 export const themeValues = ['default-light', 'default-dark', 'green-light', 'green-dark'] as const;
 
+export const VERCEL_URL = (
+  process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : undefined
+) as string;
+
 const domainSubdomainRegex =
   /^(?!-)[A-Za-z0-9-]{1,63}(?<!-)(\.(?!-)[A-Za-z0-9-]{1,63}(?<!-))*\.[A-Za-z]{2,}$/;
 
@@ -19,7 +25,7 @@ export const processEnvSchema = z.object({
     .transform((value) => value === 'true')
     .default(false),
   // ensure no trailing slash
-  SITE_URL: z.url().regex(/[^/]$/, 'SITE_URL should not end with a slash "/"'),
+  SITE_URL: z.url().regex(/[^/]$/, 'SITE_URL should not end with a slash "/"').default(VERCEL_URL),
   PLAUSIBLE_SCRIPT_URL: z.url().or(z.literal('')).optional(),
   PLAUSIBLE_DOMAIN: z
     .string()
