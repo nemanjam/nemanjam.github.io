@@ -61,7 +61,7 @@ export const envSchema = {
     SITE_URL: envField.string({
       context: 'client',
       access: 'public',
-      // default: omit to have explicit validation
+      default: VERCEL_URL, // omit to have explicit validation
     }),
     PLAUSIBLE_SCRIPT_URL: envField.string({
       context: 'client',
