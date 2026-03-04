@@ -5,17 +5,17 @@ Developer blog built with Astro, with a comprehensive feature set and well-struc
 
 Run your coding blog in minutes. Benefit from robust, understandable, well-separated code. Optionally customize design by modifying files in the components folder. Multiple deployment options, Vercel, Nginx, Github Pages and Docker.
 
-# Screenshot
+## Screenshot
 
 ![Frontend screenshot](https://raw.githubusercontent.com/nemanjam/nemanjam.github.io/refs/heads/main/docs/screenshots/developer-blog-screenshot-1200x630.png)
 
-# Demo
+## Demo
 
 **Vercel: [https://nemanjam.vercel.app](https://nemanjam.vercel.app)**
 
 **Nginx: [https://nemanjamitic.com](https://nemanjamitic.com)**
 
-# Features
+## Features
 
 - Latest Astro, static, high performance website
 - Post and Project content collections
@@ -38,7 +38,7 @@ Run your coding blog in minutes. Benefit from robust, understandable, well-separ
 - Vercel, GitHub Pages, Nginx, x86 and arm Docker deployments
 - GitHub Actions workflows and local scripts
 
-# Running locally
+## Running locally
 
 Install and run project locally for development. 
 
@@ -64,7 +64,7 @@ pnpm dev
 pnpm clean
 ```
 
-# Deploying to Vercel
+## Deploying to Vercel
 
 ### Vercel button
 
@@ -76,7 +76,7 @@ By default, the `SITE_URL` environment variable is inferred from the predefined 
 
 After updating environment variables, you will need to rebuild and redeploy the app for the changes to take effect.
 
-#### Github Actions
+### Github Actions
 
 In Vercel dashboard create a new project and set the environment variables. In Vercel account settings create a access token and set it as `VERCEL_TOKEN` Github repository secret. In Vercel project settings copy your user id and project id and set them as `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID` Github repository secrets.
 
@@ -100,7 +100,7 @@ vercel__deploy-manual.yml
 
 **Detailed tutorial:** https://nemanjamitic.com/blog/2026-02-26-vercel-static-github-actions
 
-# Credits
+## Credits
 
 It reuses good solutions from other projects, see the [Credits list](https://github.com/nemanjam/nemanjam.github.io#credits).
 
