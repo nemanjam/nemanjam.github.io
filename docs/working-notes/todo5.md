@@ -18,5 +18,5 @@ https://github.com/Burnett01/rsync-deployments
 
 review this if it can work for static website without node.js
 https://github.com/ruachtech/rep
-
+https://rep-protocol.dev/examples/quick-no-manifest/
 
