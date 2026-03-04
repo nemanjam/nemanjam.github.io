@@ -16,3 +16,7 @@ src/libs/integrations/expressive-code.ts
 replace scp github action with rsync
 https://github.com/Burnett01/rsync-deployments
 
+review this if it can work for static website without node.js
+https://github.com/ruachtech/rep
+
+
