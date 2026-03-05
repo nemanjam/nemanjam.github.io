@@ -1,0 +1,60 @@
+name: Deploy Nginx rsync
+
+on:
+  push:
+    branches:
+      - 'main'
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+  pull_request:
+    branches:
+      - 'disabled-main'
+  workflow_dispatch:
+
+env:
+  SITE_URL: 'https://nemanjamitic.com'
+  PLAUSIBLE_SCRIPT_URL: 'https://plausible.arm1.nemanjamitic.com/js/script.js'
+  PLAUSIBLE_DOMAIN: 'nemanjamitic.com'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Print commit id, message and tag
+        run: |
+          git show -s --format='%h %s'
+          echo "github.ref -> ${{ github.ref }}"
+
+      - name: Set up Node.js and pnpm
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.13.0
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.30.1
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build nemanjamiticcom
+        run: pnpm build
+
+      - name: Deploy dist via rsync
+        uses: burnett01/rsync-deployments@v8
+        with:
+          switches: -avz --delete
+          path: dist/
+          remote_path: /home/ubuntu/traefik-proxy/apps/nmc-nginx-with-volume/website/
+          remote_host: ${{ secrets.REMOTE_HOST }}
+          remote_user: ${{ secrets.REMOTE_USERNAME }}
+          remote_port: ${{ secrets.REMOTE_PORT }}
+          remote_key: ${{ secrets.REMOTE_KEY_ED25519 }}
