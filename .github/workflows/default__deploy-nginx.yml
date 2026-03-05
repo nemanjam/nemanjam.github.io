@@ -2,7 +2,7 @@ name: Deploy Nginx
 
 on:
   push:
-    # enabled
+    # Disabled permanently, use rsync action, ./default__deploy-nginx-rsync.yml
     branches:
       - 'disabled-main'
     tags:
