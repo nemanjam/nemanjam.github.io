@@ -51,7 +51,7 @@ jobs:
       - name: Deploy dist via rsync
         uses: burnett01/rsync-deployments@v8
         with:
-          switches: -avz --delete
+          switches: -az --delete --info=stats
           path: dist/
           remote_path: /home/ubuntu/traefik-proxy/apps/nmc-nginx-with-volume/website/
           remote_host: ${{ secrets.REMOTE_HOST }}
