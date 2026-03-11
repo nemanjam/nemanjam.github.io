@@ -19,21 +19,21 @@ ssh $REMOTE_HOST "cd $REMOTE_PATH && \
                   echo 'List before clearing:' && \
                   ls && \
                   echo 'Count before clearing:' && \
-                  ls -l | grep -v ^l | wc -l && \
+                  find . -type f | wc -l && \
 
                   # Only possible to skip with rsync --delete
-                  # echo 'Clearing contents of the folder...' && \
-                  # rm -rf * && \
-                  # echo 'List after clearing:' && \
-                  # ls && \
-                  # echo 'Count after clearing:' && \
-                  # ls -l | grep -v ^l | wc -l && \
+                  echo 'Clearing contents of the folder...' && \
+                  rm -rf * && \
+                  echo 'List after clearing:' && \
+                  ls && \
+                  echo 'Count after clearing:' && \
+                  find . -type f | wc -l && \
 
                   echo 'Copying new contents...'"
 
 # Copy new contents, 320 MB
 # Using scp -rq, slowest, not resumable
-# scp -r $LOCAL_PATH/* $REMOTE_HOST:$REMOTE_PATH
+# scp -rq $LOCAL_PATH/* $REMOTE_HOST:$REMOTE_PATH
 
 # Using rsync, fastest, resumable, deletes without clearing, lot faster with reusing unchanged files (--delete)
 rsync -az --delete --info=stats2,progress2 $LOCAL_PATH/ $REMOTE_HOST:$REMOTE_PATH
@@ -46,7 +46,7 @@ ssh $REMOTE_HOST "cd $REMOTE_PATH && \
                   echo 'List after copying:' && \
                   ls && \
                   echo 'Count after copying:' && \
-                  ls -l | grep -v ^l | wc -l"
+                  find . -type f | wc -l"
 
 
 
