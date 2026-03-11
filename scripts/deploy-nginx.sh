@@ -36,7 +36,7 @@ ssh $REMOTE_HOST "cd $REMOTE_PATH && \
 # scp -r $LOCAL_PATH/* $REMOTE_HOST:$REMOTE_PATH
 
 # Using rsync, fastest, resumable, deletes without clearing, lot faster with reusing unchanged files (--delete)
-rsync -az --delete --info=stats,progress2 $LOCAL_PATH/ $REMOTE_HOST:$REMOTE_PATH
+rsync -az --delete --info=stats2,progress2 $LOCAL_PATH/ $REMOTE_HOST:$REMOTE_PATH
 
 # Using tar, fast for cleaned dir
 # tar cf - -C "$LOCAL_PATH" . | ssh "$REMOTE_HOST" "tar xvf - -C $REMOTE_PATH"

@@ -46,7 +46,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # fix this for turbo
       - name: Build nemanjamiticcom
         run: pnpm build
 
