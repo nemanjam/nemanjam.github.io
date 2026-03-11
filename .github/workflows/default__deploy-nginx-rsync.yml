@@ -3,8 +3,7 @@ name: Deploy Nginx rsync
 on:
   push:
     branches:
-      # - 'main'
-      - 'disabled-main'
+      - 'main'
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
   pull_request:
