@@ -22,25 +22,25 @@ ssh $REMOTE_HOST "cd $REMOTE_PATH && \
                   find . -type f | wc -l && \
 
                   # Only possible to skip with rsync --delete
-                  echo 'Clearing contents of the folder...' && \
-                  rm -rf * && \
-                  echo 'List after clearing:' && \
-                  ls && \
-                  echo 'Count after clearing:' && \
-                  find . -type f | wc -l && \
+
+                  # echo 'Clearing contents of the folder...' && \
+                  # rm -rf * && \
+                  # echo 'List after clearing:' && \
+                  # ls && \
+                  # echo 'Count after clearing:' && \
+                  # find . -type f | wc -l && \
 
                   echo 'Copying new contents...'"
 
 # Copy new contents, 320 MB
 # Using scp -rq, slowest, not resumable
 # scp -rq $LOCAL_PATH/* $REMOTE_HOST:$REMOTE_PATH
-time scp -rq $LOCAL_PATH/* $REMOTE_HOST:$REMOTE_PATH
 
 # Using rsync, fastest, resumable, deletes without clearing, lot faster with reusing unchanged files (--delete)
-# rsync -az --delete --info=stats2,progress2 $LOCAL_PATH/ $REMOTE_HOST:$REMOTE_PATH
+rsync -az --delete --info=stats2,progress2 $LOCAL_PATH/ $REMOTE_HOST:$REMOTE_PATH
 
 # Using tar, fast for cleaned dir
-# tar cf - -C "$LOCAL_PATH" . | ssh "$REMOTE_HOST" "tar xvf - -C $REMOTE_PATH"
+# tar cf - -C "$LOCAL_PATH" . | ssh "$REMOTE_HOST" "tar xvf - -C $REMOTE_PATH" >/dev/null 2>&1
 
 # List all files after copying
 ssh $REMOTE_HOST "cd $REMOTE_PATH && \
