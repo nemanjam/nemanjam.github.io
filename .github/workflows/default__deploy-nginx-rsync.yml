@@ -48,8 +48,21 @@ jobs:
       - name: Build nemanjamiticcom
         run: pnpm build
 
-      - name: Start timer
-        run: echo "START_TIME=$(date +%s)" >> $GITHUB_ENV
+      - name: Clean up website dir
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USERNAME }}
+          key: ${{ secrets.REMOTE_KEY_ED25519 }}
+          port: ${{ secrets.REMOTE_PORT }}
+          script_stop: true
+          script: |
+            cd /home/ubuntu/traefik-proxy/apps/nmc-nginx-with-volume/website
+            echo "Content before deletion: $(pwd)"
+            ls -la
+            rm -rf ./*
+            echo "Content after deletion: $(pwd)"
+            ls -la
 
       - name: Deploy dist via rsync
         uses: burnett01/rsync-deployments@v8
@@ -61,8 +74,3 @@ jobs:
           remote_user: ${{ secrets.REMOTE_USERNAME }}
           remote_port: ${{ secrets.REMOTE_PORT }}
           remote_key: ${{ secrets.REMOTE_KEY_ED25519 }}
-
-      - name: Print duration
-        run: |
-          END=$(date +%s)
-          echo "Deployment took $((END - START_TIME)) seconds"
