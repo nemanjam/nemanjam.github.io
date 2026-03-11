@@ -12,6 +12,7 @@ const shades = [50, 100, 200] as ShadeKeys[];
 const directions = ['to right', 'to bottom', '45deg'];
 
 // to support white
+// Todo: for cached build should depend on title arg
 const getRandomColor = () => {
   const rndColor = rnd(colors);
   return rndColor === 'white' ? rndColor : twColors[rndColor][rnd(shades)];

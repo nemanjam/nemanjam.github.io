@@ -66,10 +66,16 @@ jobs:
             echo "Content after deletion: $(pwd)"
             ls -la
 
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.REMOTE_KEY_ED25519 }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
       - name: Copy dist via tar over ssh
         run: |
           tar cf - -C dist . | ssh \
-            -i <(echo "${{ secrets.REMOTE_KEY_ED25519 }}") \
+            -i ~/.ssh/id_ed25519 \
             -p ${{ secrets.REMOTE_PORT }} \
             -o StrictHostKeyChecking=no \
             ${{ secrets.REMOTE_USERNAME }}@${{ secrets.REMOTE_HOST }} \
