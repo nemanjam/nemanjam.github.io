@@ -3,7 +3,8 @@ name: Deploy Nginx rsync
 on:
   push:
     branches:
-      - 'main'
+      # - 'main'
+      - 'disabled-main'
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
   pull_request:
@@ -47,22 +48,6 @@ jobs:
 
       - name: Build nemanjamiticcom
         run: pnpm build
-
-      - name: Clean up website dir
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USERNAME }}
-          key: ${{ secrets.REMOTE_KEY_ED25519 }}
-          port: ${{ secrets.REMOTE_PORT }}
-          script_stop: true
-          script: |
-            cd /home/ubuntu/traefik-proxy/apps/nmc-nginx-with-volume/website
-            echo "Content before deletion: $(pwd)"
-            ls -la
-            rm -rf ./*
-            echo "Content after deletion: $(pwd)"
-            ls -la
 
       - name: Deploy dist via rsync
         uses: burnett01/rsync-deployments@v8
