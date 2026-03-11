@@ -1,6 +1,6 @@
 import { default as twColors } from 'tailwindcss/colors';
 
-import { getRandomElementFromArray as rnd } from '@/utils/array';
+import { getRandomElementFromArray as rndFn } from '@/utils/array';
 
 import type { DefaultColors } from 'tailwindcss/types/generated/colors';
 
@@ -12,13 +12,13 @@ const shades = [50, 100, 200] as ShadeKeys[];
 const directions = ['to right', 'to bottom', '45deg'];
 
 // to support white
-// Todo: for cached build should depend on title arg
+// Todo: for cached build should depend on title arg, deterministic random. Won't work. Satori renders each time, no caching, outside of Astro build caching.
 const getRandomColor = () => {
-  const rndColor = rnd(colors);
-  return rndColor === 'white' ? rndColor : twColors[rndColor][rnd(shades)];
+  const rndColor = rndFn(colors);
+  return rndColor === 'white' ? rndColor : twColors[rndColor][rndFn(shades)];
 };
 
 export const getRandomGradient = () =>
-  `background: linear-gradient(${rnd(directions)}, ${getRandomColor()}, ${getRandomColor()})`;
+  `background: linear-gradient(${rndFn(directions)}, ${getRandomColor()}, ${getRandomColor()})`;
 
 export const grayGradient = `background: linear-gradient(to right, ${twColors.gray[100]}, ${twColors.gray[300]})`;
