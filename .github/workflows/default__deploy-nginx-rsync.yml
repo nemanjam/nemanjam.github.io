@@ -48,6 +48,9 @@ jobs:
       - name: Build nemanjamiticcom
         run: pnpm build
 
+      - name: Start timer
+        run: echo "START_TIME=$(date +%s)" >> $GITHUB_ENV
+
       - name: Deploy dist via rsync
         uses: burnett01/rsync-deployments@v8
         with:
@@ -58,3 +61,8 @@ jobs:
           remote_user: ${{ secrets.REMOTE_USERNAME }}
           remote_port: ${{ secrets.REMOTE_PORT }}
           remote_key: ${{ secrets.REMOTE_KEY_ED25519 }}
+
+      - name: Print duration
+        run: |
+          END=$(date +%s)
+          echo "Deployment took $((END - START_TIME)) seconds"
