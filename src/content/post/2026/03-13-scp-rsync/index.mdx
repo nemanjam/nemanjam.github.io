@@ -352,9 +352,10 @@ For Bash script measurements, I used my local network to deploy to a Raspberry P
 
 For deployment, I used this very static Astro website you are currently reading. Its build artifacts consist of 1320 files totaling 347 MB (it contains a number of images).
 
-<div class="expand-sm">
+<div class="expand-sm overflow-x-auto">
+  <div class="min-w-max">
 
-| Method                 | Network        | Transfer Strategy                | Files Sent | Data Transferred | Time (s) |
+| Method                 | Network        | Transfer strategy                | Files sent | Data transferred | Time (s) |
 |------------------------|----------------|----------------------------------|-----------:|-----------------:|---------:|
 | Bash + scp             | LAN (Ethernet) | Copy all files every deployment  |       1320 |           347 MB |      9.6 |
 | Bash + tar over SSH    | LAN (Ethernet) | Archive then copy single file    |          1 |           347 MB |      4.1 |
@@ -369,6 +370,7 @@ For deployment, I used this very static Astro website you are currently reading.
 | GA + rsync (cleared)   | Internet       | Full file synchronization        |       1320 |           347 MB |       29 |
 | GA + rsync             | Internet       | Incremental file synchronization |          x |            24 MB |       10 |
 
+  </div>
 </div>
 
 ### Results discussion
