@@ -15,7 +15,7 @@ draft: false
 
 ## Introduction
 
-Many of you can probably guess the point of this article just by reading the title, but it's still useful to have a clear reminder backed by some real-world measurements. This will be a short, straight-to-the-point article.
+Many of you can probably guess the point of this article just by reading the title, but it's still useful to have a clear reminder backed by some real-world measurements. This will be a practical, straight-to-the-point article.
 
 ## The problem with scp in deployments
 
@@ -29,7 +29,7 @@ The important facts to keep in mind are:
 
 Clearing the `dist` folder and `scp` the entire content each time simply ignores the facts above. `scp` it is not optimized for repeated copying where most files remain unchanged.
 
-Bash deployment scripts and GitHub Actions deployment workflows run frequently, so any unnecessary time or performance overhead accumulates and wastes energy and resources. It's important to optimize as much as possible, especially when it requires very little effort.
+Bash deployment scripts and Github Actions deployment workflows run frequently, so any unnecessary time or performance overhead accumulates and wastes energy and resources. It's important to optimize as much as possible, especially when it requires very little effort.
 
 ## Why rsync is faster
 
@@ -39,7 +39,7 @@ This dramatically reduces the amount of data that needs to be sent during deploy
 
 Another advantage is that `rsync` can resume partially transferred files and optionally compress data during transfer. These features make it especially well suited for automated deployment workflows where speed and reliability are important.
 
-## Key rsync flags for deployments
+## rsync flags for deployments
 
 A typical `rsync` command used in deployments looks like this:
 
@@ -60,7 +60,7 @@ A complete list of options is available in the command's manual: https://downloa
 
 ## Example: deployment with scp
 
-For both `scp` and `rsync`, we will consider two examples: a Bash script used to deploy from a local development environment, and a GitHub Actions workflow. These represent two common approaches to deployments.
+For both `scp` and `rsync`, we will consider two examples: a Bash script used to deploy from a local development environment, and a Github Actions workflow. These represent two common approaches to deployments.
 
 For the sake of context and completeness, the full scripts are included so you can reuse them or run your own tests and performance comparisons.
 
@@ -127,6 +127,20 @@ scp -rq $LOCAL_PATH/* $REMOTE_HOST:$REMOTE_PATH
 
 # Using tar, fast for cleaned dir
 # tar cf - -C "$LOCAL_PATH" . | ssh "$REMOTE_HOST" "tar xvf - -C $REMOTE_PATH" >/dev/null 2>&1
+```
+
+Then we can call the Bash script like this by passing `REMOTE_PATH` and `REMOTE_HOST` arguments:
+
+```json title="package.json"
+{
+  "scripts": {
+    // ...
+
+    "deploy:nginx:rpi": "bash scripts/deploy-nginx.sh '~/traefik-proxy/apps/nmc-nginx-with-volume/website' rpi",
+    
+    // ...
+  }
+}
 ```
 
 ### Github Actions
@@ -277,7 +291,7 @@ ssh $REMOTE_HOST "cd $REMOTE_PATH && \
 
 ### Github Actions
 
-The workflow implements the same logic using the [Burnett01/rsync-deployments](https://github.com/Burnett01/rsync-deployments) action. Since this is not a live terminal session, `--info=stats` is sufficient for logging.
+The workflow implements the same logic using the [Burnett01/rsync-deployments](https://github.com/Burnett01/rsync-deployments) action. Since this is not a live terminal session, `--info=stats2` is sufficient for logging.
 
 Unless you are actively debugging, avoid using the `rsync -v` flag, as overly verbose logs reduce readability.
 
