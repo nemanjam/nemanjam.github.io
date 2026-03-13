@@ -402,6 +402,8 @@ Meaning, they rank in the following order (from best to worst):
 2. `rsync (cleared)` and `tar + SSH` (equally fast)
 3. `scp` (worst in every scenario)
 
+**Key takeaway:** In Github Actions, `rsync` saves `43 - 10 = 33 seconds` on each run compared to `scp`, which is a significant improvement.
+
 ## Deployment process and Amdahl's law
 
 Transferring files is just one of the steps within the deployment process. It is not even the most dominant one. If we look at the times for each step in the Github Actions `default__deploy-nginx-rsync.yml` workflow, we can see the following:
