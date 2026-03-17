@@ -50,7 +50,7 @@ You can find more implementation details in the <Link href="https://github.com/n
 
 ## Lessons learned 
 
-- Idea and project got most attention on HackerNews because the public is already profiled and familiar with "Who’s Hiring" threads.
+- Idea and project got most attention on HackerNews because the public is already profiled and familiar with "Who's Hiring" threads.
 - HackerNews is very strict with scraping their pages, best to use alternative data sources.
 - Keyv cache instance is available only within the original Next.js app process, and `cache.clear()` call from the cron script that runs in a separate Node.js process does not have any effect. Solved by detecting database change and clearing cache in the original Next.js app. Cache that runs as a standalone process like Redis would also work.
 - It is not possible to run cron in Docker as non-root user, so it is best to use Node.js or Go package for scheduling tasks inside Docker.

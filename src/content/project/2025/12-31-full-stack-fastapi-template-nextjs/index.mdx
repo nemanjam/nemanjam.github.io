@@ -1,0 +1,76 @@
+---
+title: Full stack FastAPI template Next.js
+description: Next.js fork of the official "fastapi/full-stack-fastapi-template" template. 
+heroImage: '../../../../content/project/2025/12-31-full-stack-fastapi-template-nextjs/_images/full-stack-fastapi-template-nextjs-1920x1080.png'
+heroAlt: Dashboard page Full stack FastAPI template Next.js
+publishDate: 2025-12-31
+---
+
+import { Image } from 'astro:assets';
+import Link from '../../../../components/Link.astro';
+import LinkWithLabel from '../../../../components/LinkWithLabel.astro';
+import { IMAGE_SIZES } from '../../../../constants/image';
+import FullStackFastAPITemplateNextjsImage from '../../../../content/project/2025/12-31-full-stack-fastapi-template-nextjs/_images/full-stack-fastapi-template-nextjs-1920x1080.png';
+
+# Full stack FastAPI template Next.js
+
+<Image {...IMAGE_SIZES.RESPONSIVE.POST_HERO} src={FullStackFastAPITemplateNextjsImage} class="shadow-lg shadow-base-300" alt="Dashboard page Full stack FastAPI template Next.js" />
+
+## Overview
+
+Next.js v16 fork of the official [fastapi/full-stack-fastapi-template](https://github.com/fastapi/full-stack-fastapi-template) template. Server components, server actions, HttpOnly cookie auth, Github login, ShadcnUI with TailwindCSS v4, Docker and Vercel production.
+
+## Goals
+
+Integrate a solid, up-to-date SSR FastAPI, Next.js template to reuse as a starting point for future projects.
+
+## Tech stack
+
+- Next.js, Hey Api, ShadcnUI, TailwindCSS, react-hook-form, next-public-env
+- FastAPI, SQLModel, PostgreSQL, Authlib
+- Docker, Github Actions, Vercel
+
+## Credits
+
+- The original repository: [fastapi/full-stack-fastapi-template](https://github.com/fastapi/full-stack-fastapi-template)
+- Next.js client side rendered PR: https://github.com/fastapi/full-stack-fastapi-template/pull/1733
+- HttpOnly cookie PR: https://github.com/fastapi/full-stack-fastapi-template/pull/1606
+
+## Features
+
+- Next.js v16, server components
+- React Hook Form and server actions for forms
+- HttpOnly cookie auth, enables SSR
+- Proxied HTTP requests, frontend and backend can use any domains
+- Hey Api with client-next
+- Suspense, error boundaries
+- Turborepo monorepo, TailwindCSS v4, ShadcnUI
+- Runtime only env vars with `alizeait/next-public-env`, reusable build
+- Simple local dev environment
+- Register page, Github login
+- Deploy with Docker and Vercel
+
+## Implementation details - todo
+
+This is a Next.js server side rendered app with default ShadcnUI components. Algolia API is used as a data source because HackerNews webserver has a very strict scraping policy. Minimal relevant data is stored in SQLite database which is used for fast and precise queuing. The query results are cached with Keyv LRU in memory cache to improve performance. 
+
+The app requires zero maintenance, the only insert query to parse a new month is automated using a `node-cron` scheduled task. The app is packed as a Docker image, either in Github Actions or locally, and is available for both x86 and ARM platforms. It also has Winston logger and Plausible analytics.
+
+You can find more implementation details in the <Link href="https://github.com/nemanjam/hn-new-jobs/tree/main#implementation-details" variant="markdown" target="_blank" title="README.md file">README.md</Link> file on Github.
+
+## Lessons learned - todo
+
+- Idea and project got most attention on HackerNews because the public is already profiled and familiar with "Who's Hiring" threads.
+- HackerNews is very strict with scraping their pages, best to use alternative data sources.
+- Keyv cache instance is available only within the original Next.js app process, and `cache.clear()` call from the cron script that runs in a separate Node.js process does not have any effect. Solved by detecting database change and clearing cache in the original Next.js app. Cache that runs as a standalone process like Redis would also work.
+- It is not possible to run cron in Docker as non-root user, so it is best to use Node.js or Go package for scheduling tasks inside Docker.
+
+## Links
+
+- <LinkWithLabel label="Vercel template" href="https://vercel.com/templates/template/full-stack-fastapi-template-with-next-js" title="Official Vercel template" />
+- <LinkWithLabel label="Demo Docker" href="https://full-stack-fastapi-template-nextjs.arm1.nemanjamitic.com" title="Full stack FastAPI template Next.js demo Docker" />
+- <LinkWithLabel label="Demo Vercel" href="https://full-stack-fastapi-template-nextjs.vercel.app" title="Full stack FastAPI template Next.js demo Vercel" />
+- <LinkWithLabel label="Repository" href="https://github.com/nemanjam/full-stack-fastapi-template-nextjs" title="Full stack FastAPI template Next.js repository" />
+
+
+
