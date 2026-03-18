@@ -1,0 +1,92 @@
+---
+title: Full stack FastAPI template Next.js
+description: Next.js fork of the official "fastapi/full-stack-fastapi-template" template. 
+heroImage: '../../../../content/project/2025/12-31-full-stack-fastapi-template-nextjs/_images/full-stack-fastapi-template-nextjs-1920x1080.png'
+heroAlt: Dashboard page Full stack FastAPI template Next.js
+publishDate: 2025-12-31
+---
+
+import { Image } from 'astro:assets';
+import Link from '../../../../components/Link.astro';
+import LinkWithLabel from '../../../../components/LinkWithLabel.astro';
+import { IMAGE_SIZES } from '../../../../constants/image';
+import FullStackFastAPITemplateNextjsImage from '../../../../content/project/2025/12-31-full-stack-fastapi-template-nextjs/_images/full-stack-fastapi-template-nextjs-1920x1080.png';
+
+# Full stack FastAPI template Next.js
+
+<Image {...IMAGE_SIZES.RESPONSIVE.POST_HERO} src={FullStackFastAPITemplateNextjsImage} class="shadow-lg shadow-base-300" alt="Dashboard page Full stack FastAPI template Next.js" />
+
+## Overview
+
+Next.js v16 fork of the official [fastapi/full-stack-fastapi-template](https://github.com/fastapi/full-stack-fastapi-template) template. Server components, server actions, HttpOnly cookie auth, Github login, ShadcnUI with TailwindCSS v4, Docker and Vercel production.
+
+## Goals
+
+Integrate a solid, up-to-date SSR FastAPI, Next.js template to reuse as a starting point for future projects.
+
+## Tech stack
+
+- Next.js, HeyApi, ShadcnUI, TailwindCSS, react-hook-form, next-public-env
+- FastAPI, SQLModel, PostgreSQL, Authlib
+- Docker, Github Actions, Vercel
+
+## Credits
+
+- The original repository: [fastapi/full-stack-fastapi-template](https://github.com/fastapi/full-stack-fastapi-template)
+- Next.js client side rendered PR: https://github.com/fastapi/full-stack-fastapi-template/pull/1733
+- HttpOnly cookie PR: https://github.com/fastapi/full-stack-fastapi-template/pull/1606
+
+## Features
+
+- Next.js v16, server components
+- React Hook Form and server actions for forms
+- HttpOnly cookie auth, enables SSR
+- Proxied HTTP requests, frontend and backend can use any domains
+- Hey Api with client-next
+- Suspense, error boundaries
+- Turborepo monorepo, TailwindCSS v4, ShadcnUI
+- Runtime only env vars with `alizeait/next-public-env`, reusable build
+- Simple local dev environment
+- Register page, Github login
+- Deploy with Docker and Vercel
+
+## Implementation details
+
+I needed a solid FastAPI, Next.js starter as a base for future projects. I reviewed all the examples I could find and discovered that the official [fastapi/full-stack-fastapi-template](https://github.com/fastapi/full-stack-fastapi-template) was the closest to what I wanted. However, it still wasn't a complete match, it relied entirely on client-side rendering using TanStack Router and Chakra UI, and handled authorization via tokens stored in `localStorage`.
+
+I decided to fully customize it to fit my needs and preferences, **so I rewrote the frontend from scratch using Next.js v16** with Server Components and Server Actions, along with Shadcn UI, Tailwind CSS v4, and a Turborepo monorepo setup. To enable SSR, I modified the backend to use an HttpOnly authentication cookie.
+
+Additionally, I proxied all FastAPI endpoints through the Next.js server (via API routes and Server Actions), which significantly simplified and hardened the cookie setting/unsetting logic. This approach also enables hosting the backend and frontend on separate domains without requiring an external reverse proxy (e.g., Traefik, Nginx) or URL rewrites (e.g., [Vercel](https://vercel.com/docs/routing/rewrites)).
+
+I also added Github OAuth login using Authlib, since I plan to use it in my next project.
+
+The repository also includes Github Actions workflows to build, push, and deploy the backend and frontend as separate Docker images.
+
+The Next.js app is designed to rely exclusively on runtime environment variables, enabling reusable builds and Docker images that can run in any environment and under any domain.
+
+Finally, I included Vercel configuration files and a "Deploy button" to make the project eligible for submission to the official Vercel templates gallery.
+
+## Lessons learned
+
+- I gained practical experience working with Python, which was the primary reason I chose a FastAPI backend in the first place.  
+- Properly integrating a non-TypeScript backend with Next.js requires an extra step using the HeyApi OpenAPI client. A **clear separation between client and server code (and imports) is mandatory** to avoid build-time errors and requires additional care and attention.  
+- For authorization, establish clear boundaries between auth logic (FastAPI) and cookie management (Next.js server) to avoid dealing with fragile and complex cross-site cookies.  
+- This clear separation significantly simplifies and improves the robustness of deployments where the backend and frontend are hosted on separate domains. The tradeoff is a small overhead compared to direct HTTP calls to FastAPI endpoints.  
+- **Enforce runtime environment variables in Next.js apps** to enable reusable builds and Docker images, unless there is a specific reason not to. [alizeait/next-public-env](https://github.com/alizeait/next-public-env) is a great tool for this purpose.  
+
+I documented my findings in detail in the following blog posts:
+
+- [Runtime environment variables in Next.js - build reusable Docker images](https://nemanjamitic.com/blog/2025-12-13-nextjs-runtime-environment-variables)  
+- [Next.js server actions with FastAPI backend and OpenAPI client](https://nemanjamitic.com/blog/2026-01-03-nextjs-server-actions-fastapi-openapi)  
+- [GitHub login with FastAPI and Next.js](https://nemanjamitic.com/blog/2026-02-07-github-login-fastapi-nextjs)  
+- [Deploying a FastAPI and Next.js website to Vercel](https://nemanjamitic.com/blog/2026-02-22-vercel-deploy-fastapi-nextjs)  
+
+## Links
+
+- <LinkWithLabel label="Vercel template" href="https://vercel.com/templates/template/full-stack-fastapi-template-with-next-js" title="Official Vercel template" />
+- <LinkWithLabel label="Demo Docker" href="https://full-stack-fastapi-template-nextjs.arm1.nemanjamitic.com" title="Full stack FastAPI template Next.js demo Docker" />
+- <LinkWithLabel label="Demo Vercel" href="https://full-stack-fastapi-template-nextjs.vercel.app" title="Full stack FastAPI template Next.js demo Vercel" />
+- <LinkWithLabel label="Repository" href="https://github.com/nemanjam/full-stack-fastapi-template-nextjs" title="Full stack FastAPI template Next.js repository" />
+
+
+

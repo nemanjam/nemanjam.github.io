@@ -20,3 +20,5 @@ review this if it can work for static website without node.js
 https://github.com/ruachtech/rep
 https://rep-protocol.dev/examples/quick-no-manifest/
 
+migrate to astro 6
+
