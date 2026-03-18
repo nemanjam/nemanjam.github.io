@@ -26,7 +26,7 @@ Integrate a solid, up-to-date SSR FastAPI, Next.js template to reuse as a starti
 
 ## Tech stack
 
-- Next.js, Hey Api, ShadcnUI, TailwindCSS, react-hook-form, next-public-env
+- Next.js, HeyApi, ShadcnUI, TailwindCSS, react-hook-form, next-public-env
 - FastAPI, SQLModel, PostgreSQL, Authlib
 - Docker, Github Actions, Vercel
 
@@ -66,18 +66,20 @@ The Next.js app is designed to rely exclusively on runtime environment variables
 
 Finally, I included Vercel configuration files and a "Deploy button" to make the project eligible for submission to the official Vercel templates gallery.
 
-## Lessons learned - todo
+## Lessons learned
 
-https://nemanjamitic.com/blog/2026-01-03-nextjs-server-actions-fastapi-openapi
+- I gained practical experience working with Python, which was the primary reason I chose a FastAPI backend in the first place.  
+- Properly integrating a non-TypeScript backend with Next.js requires an extra step using the HeyApi OpenAPI client. A **clear separation between client and server code (and imports) is mandatory** to avoid build-time errors and requires additional care and attention.  
+- For authorization, establish clear boundaries between auth logic (FastAPI) and cookie management (Next.js server) to avoid dealing with fragile and complex cross-site cookies.  
+- This clear separation significantly simplifies and improves the robustness of deployments where the backend and frontend are hosted on separate domains. The tradeoff is a small overhead compared to direct HTTP calls to FastAPI endpoints.  
+- **Enforce runtime environment variables in Next.js apps** to enable reusable builds and Docker images, unless there is a specific reason not to. [alizeait/next-public-env](https://github.com/alizeait/next-public-env) is a great tool for this purpose.  
 
-https://nemanjamitic.com/blog/2026-02-07-github-login-fastapi-nextjs
+I documented my findings in detail in the following blog posts:
 
-https://nemanjamitic.com/blog/2026-02-22-vercel-deploy-fastapi-nextjs
-
-- Idea and project got most attention on HackerNews because the public is already profiled and familiar with "Who's Hiring" threads.
-- HackerNews is very strict with scraping their pages, best to use alternative data sources.
-- Keyv cache instance is available only within the original Next.js app process, and `cache.clear()` call from the cron script that runs in a separate Node.js process does not have any effect. Solved by detecting database change and clearing cache in the original Next.js app. Cache that runs as a standalone process like Redis would also work.
-- It is not possible to run cron in Docker as non-root user, so it is best to use Node.js or Go package for scheduling tasks inside Docker.
+- [Runtime environment variables in Next.js - build reusable Docker images](https://nemanjamitic.com/blog/2025-12-13-nextjs-runtime-environment-variables)  
+- [Next.js server actions with FastAPI backend and OpenAPI client](https://nemanjamitic.com/blog/2026-01-03-nextjs-server-actions-fastapi-openapi)  
+- [GitHub login with FastAPI and Next.js](https://nemanjamitic.com/blog/2026-02-07-github-login-fastapi-nextjs)  
+- [Deploying a FastAPI and Next.js website to Vercel](https://nemanjamitic.com/blog/2026-02-22-vercel-deploy-fastapi-nextjs)  
 
 ## Links
 
