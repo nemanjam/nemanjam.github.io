@@ -22,8 +22,6 @@ Next.js v16 fork of the official [fastapi/full-stack-fastapi-template](https://g
 
 ## Goals
 
-original csr, tanstack router
-rewrite frontend from scratch, modify backend
 Integrate a solid, up-to-date SSR FastAPI, Next.js template to reuse as a starting point for future projects.
 
 ## Tech stack
@@ -52,15 +50,29 @@ Integrate a solid, up-to-date SSR FastAPI, Next.js template to reuse as a starti
 - Register page, Github login
 - Deploy with Docker and Vercel
 
-## Implementation details - todo
+## Implementation details
 
-This is a Next.js server side rendered app with default ShadcnUI components. Algolia API is used as a data source because HackerNews webserver has a very strict scraping policy. Minimal relevant data is stored in SQLite database which is used for fast and precise queuing. The query results are cached with Keyv LRU in memory cache to improve performance. 
+I needed a solid FastAPI, Next.js starter as a base for future projects. I reviewed all the examples I could find and discovered that the official [fastapi/full-stack-fastapi-template](https://github.com/fastapi/full-stack-fastapi-template) was the closest to what I wanted. However, it still wasn't a complete match, it relied entirely on client-side rendering using TanStack Router and Chakra UI, and handled authorization via tokens stored in `localStorage`.
 
-The app requires zero maintenance, the only insert query to parse a new month is automated using a `node-cron` scheduled task. The app is packed as a Docker image, either in Github Actions or locally, and is available for both x86 and ARM platforms. It also has Winston logger and Plausible analytics.
+I decided to fully customize it to fit my needs and preferences, **so I rewrote the frontend from scratch using Next.js v16** with Server Components and Server Actions, along with Shadcn UI, Tailwind CSS v4, and a Turborepo monorepo setup. To enable SSR, I modified the backend to use an HttpOnly authentication cookie.
 
-You can find more implementation details in the <Link href="https://github.com/nemanjam/hn-new-jobs/tree/main#implementation-details" variant="markdown" target="_blank" title="README.md file">README.md</Link> file on Github.
+Additionally, I proxied all FastAPI endpoints through the Next.js server (via API routes and Server Actions), which significantly simplified and hardened the cookie setting/unsetting logic. This approach also enables hosting the backend and frontend on separate domains without requiring an external reverse proxy (e.g., Traefik, Nginx) or URL rewrites (e.g., [Vercel](https://vercel.com/docs/routing/rewrites)).
+
+I also added Github OAuth login using Authlib, since I plan to use it in my next project.
+
+The repository also includes Github Actions workflows to build, push, and deploy the backend and frontend as separate Docker images.
+
+The Next.js app is designed to rely exclusively on runtime environment variables, enabling reusable builds and Docker images that can run in any environment and under any domain.
+
+Finally, I included Vercel configuration files and a "Deploy button" to make the project eligible for submission to the official Vercel templates gallery.
 
 ## Lessons learned - todo
+
+https://nemanjamitic.com/blog/2026-01-03-nextjs-server-actions-fastapi-openapi
+
+https://nemanjamitic.com/blog/2026-02-07-github-login-fastapi-nextjs
+
+https://nemanjamitic.com/blog/2026-02-22-vercel-deploy-fastapi-nextjs
 
 - Idea and project got most attention on HackerNews because the public is already profiled and familiar with "Who's Hiring" threads.
 - HackerNews is very strict with scraping their pages, best to use alternative data sources.
