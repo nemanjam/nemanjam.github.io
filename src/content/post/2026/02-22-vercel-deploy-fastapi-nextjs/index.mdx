@@ -3,6 +3,7 @@ title: Deploying a FastAPI and Next.js website to Vercel
 description: |
   A straightforward guide on how to deploy a full-stack FastAPI and Next.js app to Vercel, including a ready-to-use code example.
 publishDate: 2026-02-22
+updatedDate: 2026-03-23
 heroImage: '../../../../content/post/2026/02-22-vercel-deploy-fastapi-nextjs/_images/hero-vercel-fastapi-nextjs-16-9.png'
 heroAlt: Vercel, FastAPI, Next.js logos
 tags:
@@ -578,50 +579,43 @@ In addition to the CLI, Vercel also allows deploying a project by simply specify
 
 Vercel also provides a utility form to generate these buttons conveniently: https://vercel.com/docs/deploy-button. The "Vercel Deploy" button can be embedded in markdown or HTML pages, allowing visitors to deploy a live demo of your project quickly and effortlessly.
 
-With this in mind, we can define two "Vercel Deploy" buttons to deploy the backend and frontend of our FastAPI and Next.js project, and include them in the project's `README.md` file. The buttons below specify URLs (repository, demo, images, `.env.example`, etc.) for this particular example,  you can adjust them to match your own URLs.
+With this in mind, we can define a single "Vercel Deploy" button to deploy both the backend and frontend of our FastAPI and Next.js project. It will clone a single Github repository and create two separate Vercel projects. We can then include the button's Markdown in the project's `README.md` file.
 
-### Backend Vercel button
+The button below specifies URLs (repository, demo, images, etc.) for this particular example,  you can adjust them to match your own URLs.
+
+### Single monorepo Vercel button
 
 This is fairly self-explanatory, but let’s clarify the query parameters for completeness: 
 
-- `repository-url` points to the Github repository and the `vercel-deploy` branch.  
-- `root-directory` specifies the backend project root directory (`backend`).  
-- `env` lists all environment variables, while `envDefaults` provides default values for some of them.  
-- `envDescription` links to the documentation for the variables, and `envLink` points to the `.env.example` file.  
+- `repository-url` - points to the Github repository and the `vercel-deploy` branch.  
+- `repository-name` - the name of the cloned repository.  
+- `root-directories` - specifies the backend (`backend`) and frontend root directories (`frontend/apps/web`).  
+- `monorepo` - indicates that a single Git repository contains multiple Vercel projects.  
+- `totalProjects` - number of Vercel projects to create.  
 
 Additional parameters include:  
-- `project-name` — the name of the Vercel project.  
-- `repository-name` — the name of the cloned repository.  
-- `demo-*` — information and URLs displayed in the wizard for demo purposes.  
+
+- `project-names` - the names the backend and frontend Vercel projects.  
+- `demo-*` - information and URLs displayed in the wizard for demo purposes.    
 
 The `products` parameter is particularly important, as it activates the Neon integration in the wizard to provision a new PostgreSQL database.
 
 ```bash
-# URL for the backend "Vercel Deploy" button's href attribute
+# URL for the "Vercel Deploy" button's href attribute
 
 https://vercel.com/new/clone
-repository-url=https://github.com/nemanjam/full-stack-fastapi-template-nextjs/tree/vercel-deploy
-root-directory=backend
-env=SITE_URL,JWT_SECRET_KEY,SESSION_SECRET_KEY,FIRST_SUPERUSER,FIRST_SUPERUSER_PASSWORD,GITHUB_CLIENT_ID,GITHUB_CLIENT_SECRET
-envDefaults={
-  "SITE_URL": "https://my-frontend-url.vercel.app",
-  "JWT_SECRET_KEY": "my-secret",
-  "SESSION_SECRET_KEY": "my-secret",
-  "FIRST_SUPERUSER": "admin@example.com",
-  "FIRST_SUPERUSER_PASSWORD": "password"
-  "GITHUB_CLIENT_ID": "my-github-app-client-id"
-  "GITHUB_CLIENT_SECRET": "my-github-app-client-secret"
-}
-envDescription=https://github.com/nemanjam/full-stack-fastapi-template-nextjs/tree/vercel-deploy/docs/vercel-deployment-backend.md#environment-variables
-envLink=https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/vercel-deploy/.env.vercel.example
-project-name=api-full-stack-fastapi-template-nextjs
-repository-name=api-full-stack-fastapi-template-nextjs
-demo-title=Backend of the full stack FastAPI template Next.js
-demo-description=Backend of the Next.js fork of the official "fastapi/full-stack-fastapi-template" template.
-demo-url=https://full-stack-fastapi-template-nextjs.vercel.app
-demo-image=https://github.com/nemanjam/full-stack-fastapi-template-nextjs/raw/vercel-deploy/docs/screenshots/frontend-screenshot-1200x630.png
-skippable-integrations=1
-products=[
+?repository-url=https://github.com/nemanjam/full-stack-fastapi-template-nextjs/tree/vercel-deploy
+&root-directories=frontend/apps/web,backend
+&repository-name=full-stack-fastapi-template-with-next-js
+&monorepo=1
+&totalProjects=2
+&project-names=full-stack-fastapi-frontend,full-stack-fastapi-backend
+&demo-description=Build full-stack apps with Next.js and FastAPI.
+&demo-image=https://github.com/nemanjam/full-stack-fastapi-template-nextjs/raw/main/docs/screenshots/frontend-screenshot-1200x630.png
+&demo-title=Full stack FastAPI template with Next.js
+&demo-url=https://full-stack-fastapi-template-nextjs.vercel.app
+&skippable-integrations=1
+&products=[
   {
     "type": "integration",
     "integrationSlug": "neon",
@@ -639,43 +633,17 @@ Once the URL is constructed, it should be URL-encoded and then embedded in the m
 [![Deploy backend to Vercel](https://vercel.com/button)](urlencoded-url-from-above)
 ```
 
-**Note:** The button and wizard will deploy the backend and **provision a blank Neon database**. Users will still need to run migrations and seed the database manually, as described in the previous section: [Database migrations and seed](#database-migrations-and-seed).
+The button and wizard will clone a single GitHub repository and create and deploy two separate backend and frontend Vercel projects. The deployments are not functional at this point. The wizard **will not set any required environment variables** for either the backend or frontend projects. Users will need to set the appropriate environment variables themselves in the Vercel dashboard.
 
-### Frontend Vercel button
-
-The frontend button requires fewer parameters, all of which have already been described and are analogous to their backend counterparts.
-
-```bash
-# URL for the frontend "Vercel Deploy" button's href attribute
-
-https://vercel.com/new/clone
-repository-url=https://github.com/nemanjam/full-stack-fastapi-template-nextjs/tree/vercel-deploy
-root-directory=frontend/apps/web
-env=API_URL
-envDefaults={
-  "API_URL": "https://my-backend-url.vercel.app",
-}
-envDescription=https://github.com/nemanjam/full-stack-fastapi-template-nextjs/tree/vercel-deploy/docs/vercel-deployment-frontend.md#environment-variables
-envLink=https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/vercel-deploy/frontend/apps/web/.env.vercel.example
-project-name=full-stack-fastapi-template-nextjs
-repository-name=full-stack-fastapi-template-nextjs
-demo-title=Frontend of the full stack FastAPI template Next.js
-demo-description=Frontend of the Next.js fork of the official "fastapi/full-stack-fastapi-template" template.
-demo-url=https://full-stack-fastapi-template-nextjs.vercel.app
-demo-image=https://github.com/nemanjam/full-stack-fastapi-template-nextjs/raw/vercel-deploy/docs/screenshots/frontend-screenshot-1200x630.png
-```
-
-URL-encode the frontend button's URL and embed it in the markdown (or HTML).
-
-```md
-<!-- Markdown for the button -->
-
-[![Deploy frontend to Vercel](https://vercel.com/button)](urlencoded-url-from-above)
-```
+The wizard will also create an integration that **provisions an unassigned, blank Neon database**. Users will then need to **assign the integration to the backend project** and run migrations and seed the database manually, as described in the previous section: [Database migrations and seed](#database-migrations-and-seed).
 
 After clicking the "Vercel Deploy" button, the user will be taken to a form wizard, as shown below.
 
 <Image {...IMAGE_SIZES.FIXED.MDX_MD} src={VercelButtonWizardScreenshotImage} alt="Vercel button wizard" />
+
+**Note:** You can also use two separate "Vercel Deploy" buttons to clone the backend and frontend as two Github repositories (and deploy them as two Vercel projects). This approach allows you to include the list of environment variables and their default values (`env`, `envDefaults`, and `envDescription` parameters) in the button's URL. 
+
+You can see examples of such buttons at the following links: [vercel-button-backend.md](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/5f8dff480c8e5c2901706891ff0ec604c77d00db/docs/notes/vercel/vercel-button-backend.md), [vercel-button-frontend.md](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/5f8dff480c8e5c2901706891ff0ec604c77d00db/docs/notes/vercel/vercel-button-frontend.md)
 
 ## Completed code and demo
 
@@ -699,7 +667,7 @@ backend/app/api/index.py
 backend/app/core/config.py
 
 .env.vercel.example
-docs/notes/vercel-button-backend.md
+docs/notes/vercel-deployment-backend.md
 
 # Frontend
 frontend/apps/web/vercel.json
@@ -710,7 +678,7 @@ frontend/apps/web/src/env.d.ts
 frontend/turbo.json
 
 frontend/apps/web/.env.vercel.example
-docs/notes/vercel-button-frontend.md
+docs/notes/vercel-deployment-frontend.md
 
 # Compare branches in a clear diff
 https://github.com/nemanjam/full-stack-fastapi-template-nextjs/compare/vercel-deploy?expand=1

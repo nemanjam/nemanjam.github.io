@@ -37,9 +37,9 @@ export const getAllEntries = async <T extends CollectionKey>(
 
 /*-------------------------- sort by updatedDate or publishDate ------------------------*/
 
-// just for sorting
+/** Just for sorting. Always sort just by publishDate, ignore updatedDate for sorting. */
 export const getEntryLastDate = <T extends CollectionKey>(entry: CollectionEntry<T>): Date =>
-  entry.data.updatedDate ?? entry.data.publishDate;
+  entry.data.publishDate;
 
 export const sortEntriesByDateDesc = <T extends CollectionKey>(entries: CollectionEntry<T>[]) =>
   entries.slice().sort((a, b) => getEntryLastDate(b).valueOf() - getEntryLastDate(a).valueOf());
