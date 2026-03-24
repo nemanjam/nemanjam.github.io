@@ -3,6 +3,7 @@ title: Next.js server actions with FastAPI backend and OpenAPI client
 description: |
   Connect Next.js to a FastAPI backend while preserving a modern React workflow with server actions and server components.
 publishDate: 2026-01-03
+updatedDate: 2026-03-24
 heroImage: '../../../../content/post/2026/01-03-nextjs-server-actions-fastapi-openapi/_images/deployment-diagram-16-8.png'
 heroAlt: Next.js, FastAPI interaction, deployment diagram
 tags:
@@ -296,7 +297,11 @@ The important parts are: we choose the Next.js client `@hey-api/client-next`, co
 
 There are several ways to set runtime configuration for the generated client. We will use the `runtimeConfigPath` field to specify the path to the configuration file, as this is the recommended approach according to the docs: https://heyapi.dev/openapi-ts/clients/next-js#runtime-api.
 
-The auth cookie is originally stored in the browser and included in requests from the client by default. In contrast, HTTP requests made from the Next.js server do not include the cookie automatically, so we need to forward it explicitly. We handle this in a base runtime configuration at the SDK instance level in a single place, so we don’t have to repeat this logic for every specific call.
+The auth cookie is originally stored in the browser and is included in client requests by default. An important note is that the cookie in these requests is valid only for the frontend domain (Next.js server) and not for the backend domain. If you try calling the FastAPI backend using this cookie, you will get a `403 Forbidden` HTTP error. That's why requests from client code need to be proxied through a Next.js API endpoint to the FastAPI backend.
+
+In contrast, HTTP requests made from the Next.js server do not include the cookie automatically at all, so we need to forward it explicitly. 
+
+We handle both of these requirements in a base runtime configuration at the SDK instance level in a single place, so we don't have to repeat this logic for every specific call.
 
 Here is the code:
 
@@ -304,6 +309,8 @@ Here is the code:
 
 
 ```ts title="frontend/apps/web/src/lib/hey-api.ts"
+const { CLIENT_PROXY } = ROUTES.API;
+
 /** Runtime config. Runs and imported both on server and in browser. */
 export const createClientConfig: CreateClientConfig = (config) => {
   const { API_URL } = getPublicEnv();
@@ -312,7 +319,7 @@ export const createClientConfig: CreateClientConfig = (config) => {
     ...config,
     baseUrl: API_URL,
     credentials: 'include',
-    ...(isServer() ? { fetch: serverFetch } : {}),
+    fetch: isServer() ? serverFetch : clientFetch,
   };
 };
 
@@ -330,11 +337,36 @@ const serverFetch: typeof fetch = async (input, init = {}) => {
   const headers = new Headers(init.headers);
   headers.append('Cookie', cookieHeader);
 
+  // test skeletons styling
+  // await waitMs(3000);
+
   const response = fetch(input, { ...init, headers });
 
   return response;
 };
+
+/** Client-side fetch: forwards requests to api/client-proxy/[...path]/route.ts */
+const clientFetch: typeof fetch = async (input, init = {}) => {
+  const { API_URL } = getPublicEnv() as { API_URL: string };
+
+  // hey-api sends absolute URL
+  const url: string = typeof input === 'string' ? input : input.toString();
+
+  // Normalize to relative URL
+  // API_URL.length + 1 - removes leading slash, API_URL guaranteed not to have trailing slash
+  const relativeUrl = url.startsWith(API_URL) ? url.slice(API_URL.length + 1) : url;
+
+  // Build the proxy URL relative to Next.js API
+  const proxyUrl = `${CLIENT_PROXY}${relativeUrl}`;
+
+  const headers = new Headers(init.headers);
+
+  return fetch(proxyUrl, { ...init, headers, credentials: 'include' });
+};
+
 ```
+
+### Server fetch override
 
 The important part here is the `serverFetch` override for the `fetch` function used by the generated client on the Next.js server. The `serverFetch` code typically runs either on a server-side rendered page or in a server action. Both of these have access to the request object (including headers and cookies) that originally comes from the browser.
 
@@ -346,11 +378,11 @@ There are a few additional tricks required to make this work correctly.
 - We must create a `new Headers()` instance and use the `append()` method to pass cookies to `fetch`.
 - We obtain the `API_URL` environment variable using `const { API_URL } = getPublicEnv()` from the `next-public-env` package. For a reusable build, `API_URL` must be a runtime variable. Since this code runs both on the server and in the client, it must get the correct value in both environments. I wrote about reusable Next.js builds and runtime environment variables in detail in this article: [Runtime environment variables in Next.js - build reusable Docker images](https://nemanjamitic.com/blog/2025-12-13-nextjs-runtime-environment-variables).
 
-## Example client calls
+### Example client calls from Next.js server code
 
 With this OpenAPI client, we can make HTTP authenticated calls from Next.js pages, server components, and server actions to protected FastAPI endpoints.
 
-**Example 1.** Query in page:
+**Example 1.** Query in a page:
 
 [frontend/apps/web/src/app/dashboard/items/[[...page]]/page.tsx](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/app/dashboard/items/%5B%5B...page%5D%5D/page.tsx)
 
@@ -377,7 +409,7 @@ const ItemsPage: FC<Props> = async ({ params }) => {
 }
 ```
 
-**Example 2.** Query in server component:
+**Example 2.** Query in a server component:
 
 [frontend/apps/web/src/components/dashboard/home/list-recent-items.tsx](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/components/dashboard/home/list-recent-items.tsx)
 
@@ -394,7 +426,7 @@ const ListRecentItems: FC = async () => {
 }
 ```
 
-**Example 3.** Mutation in server action:
+**Example 3.** Mutation in a server action:
 
 [frontend/apps/web/src/actions/item.ts](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/actions/item.ts)
 
@@ -412,6 +444,106 @@ export const itemCreateAction = async (
   revalidatePath(ITEMS);
 
   return result;
+};
+```
+
+### Client fetch override
+
+The `clientFetch` implementation rewrites the original URL pointing to FastAPI to a Next.js API endpoint that serves as a proxy. With this, every call from the client code is routed to the Next.js API proxy endpoint.
+
+The Next.js API endpoint then parses the authorization cookie and attaches it to the actual request to the corresponding FastAPI endpoint. It does the same for the response by forwarding the cookie from the FastAPI response back to the Next.js client code. In practice, it acts as a proxy middleman that attaches the cookie in both directions.
+
+As a result, HTTP requests from the client code can be authenticated correctly with FastAPI instead of being rejected with a `403 Forbidden` error.
+
+**Note:** This call is not displayed in the architecture diagram, it needs to be updated.
+
+[frontend/apps/web/src/app/api/client-proxy/[...path]/route.ts](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/app/api/client-proxy/%5B...path%5D/route.ts)
+
+```ts title="frontend/apps/web/src/app/api/client-proxy/[...path]/route.ts"
+const proxyHandler = async (request: NextRequest, { params }: ClientProxyRouteParam) => {
+  const { path } = await params;
+
+  const { API_URL } = getPublicEnv();
+
+  // params.path just splits into array, this just joins back to string
+  // path = ['api', 'v1', 'users', 'me'] -> http://api.localhost:8000/api/v1/users/me
+  const backendUrl = `${API_URL}/${path.join('/')}`;
+
+  // clone headers from client request
+  const headers: Record<string, string> = {};
+  request.headers.forEach((value, key) => (headers[key] = value));
+
+  const { method } = request;
+  const body = ['GET', 'HEAD'].includes(method) ? undefined : await request.arrayBuffer();
+
+  const apiResponse = await fetch(backendUrl, { method, headers, body });
+
+  const data = await apiResponse.arrayBuffer();
+  const response = new NextResponse(Buffer.from(data), { status: apiResponse.status });
+
+  // copy headers from backend response, excluding ones automatically controlled by Node/Next.js internally
+  const excludeHeaders = ['content-encoding', 'transfer-encoding', 'connection'];
+  apiResponse.headers.forEach(
+    (value, key) => !excludeHeaders.includes(key) && response.headers.set(key, value)
+  );
+
+  // optional: return error if response not ok
+  if (!apiResponse.ok) {
+    console.warn('Client proxy returned error:', apiResponse.status, backendUrl);
+  }
+
+  return response;
+};
+
+// add PUT, DELETE, PATCH if needed
+
+export const GET = proxyHandler;
+
+export const POST = proxyHandler;
+```
+
+### Example client calls from Next.js client code
+
+**Example 1.** Query in a page's client component:
+
+[frontend/apps/web/src/app/page.tsx](https://github.com/nemanjam/full-stack-fastapi-template-nextjs/blob/main/frontend/apps/web/src/app/page.tsx)
+
+```ts title="frontend/apps/web/src/app/page.tsx"
+'use client';
+
+// ...
+
+const { LOGIN, DASHBOARD } = ROUTES;
+const { HOME_PAGE_REDIRECT } = DELAY;
+
+// Must be client component to show loader before redirect
+
+const HomePage: FC = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    const redirect = async () => {
+      // client side call, cookie valid only for Next.js API domain, and not for FastAPI domain
+      const result = await UsersService.readUserMe();
+      const currentUser = result.data;
+
+      await waitMs(HOME_PAGE_REDIRECT);
+
+      const redirectUrl = currentUser ? DASHBOARD : LOGIN;
+      router.push(redirectUrl);
+    };
+
+    redirect();
+  }, [router]);
+
+  return (
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto"></div>
+        <p className="mt-2 text-gray-600">Redirecting...</p>
+      </div>
+    </div>
+  );
 };
 ```
 
@@ -672,7 +804,7 @@ The relevant files:
 
 ```bash
 git clone git@github.com:nemanjam/full-stack-fastapi-template-nextjs.git
-git checkout 4442faf066b34b3c625ae4a31a3761f5dc0517f9
+git checkout be2b94b72b343563d21aeac29743099af8512f62
 
 # Backend
 backend/app/core/security.py
@@ -686,9 +818,15 @@ backend/app/api/routes/users.py
 frontend/apps/web/openapi-ts.config.ts
 frontend/apps/web/src/lib/hey-api.ts
 
-# Queries
+# Queries - Next.js server
 frontend/apps/web/src/app/dashboard/items/[[...page]]/page.tsx
 frontend/apps/web/src/components/dashboard/home/list-recent-items.tsx
+
+# Queries - Next.js client
+frontend/apps/web/src/app/page.tsx
+
+# Next.js API proxy endpoint
+frontend/apps/web/src/app/api/client-proxy/[...path]/route.ts
 
 # Mutations
 
