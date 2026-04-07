@@ -65,7 +65,7 @@ However, both approaches rely on a clear, predefined folder structure, which sho
 
 #### Local folder structure
 
-Below is the expected folder structure for both the server and local backups. In this context, "local" means local to the running application itself, on the same machine and file system. **This backup repository serves as the source of truth for all other synchronized, remote backup copies.**
+Below is the expected folder structure for both the server and local backups. In this context, "local" means local to the running application itself, on the same machine and file system. This backup repository serves as **the source of truth** for all other synchronized, remote backup copies.
 
 Here, `mybb/` is the application root directory, containing both the application files and the backup. Accordingly, `mybb/backup/` is the backup directory, which includes the backup Bash scripts (`mybb/backup/scripts/`) and the backup data (`mybb/backup/data/`). The generated `.zip` archive contains a `mysql_database/` folder for the MySQL dump, while adjacent asset folders retain their original names.
 
@@ -73,7 +73,7 @@ This folder structure is mandatory and fixed, as all file paths in the `backup-f
 
 Another useful detail is that the application files in `mybb/` are versioned, including the `backup-files-and-mysql.sh` script. Since we don't use a `.env` file for configuration, the production server contains an unversioned copy named `backup-files-and-mysql-run.sh`, which includes both the actual variables and executable code. This approach simplifies `git pull` operations and repository updates. Naturally, all backup data in `mybb/backup/data/` is excluded from version control via `.gitignore`.
 
-```bash
+```bash title=""
 #  Local (server) backup folder structure:
 #
 # mybb/
@@ -107,7 +107,7 @@ This is the synchronized backup repository, which is considered remote from the 
 
 As a synchronized mirror, its folder structure is identical, with one important distinction: it only contains the `mybb/backup/` directory and does not include any application files, only the backups themselves. Additionally, this repository is not versioned.
 
-```bash
+```bash title=""
 #  Remote (synced) backup folder structure:
 #
 # mybb/
@@ -146,7 +146,7 @@ The variables are fairly self-explanatory:
 - `BACKUP_RETENTION_*` - the number of daily, weekly, and monthly backups to retain.  
 - `MAX_RETENTION` - the upper limit for any `BACKUP_RETENTION_*` value.  
 
-```bash
+```bash title="backup-files-and-mysql.sh"
 # ---------- Configuration ----------
 
 # MySQL credentials
@@ -187,7 +187,7 @@ The variables are as follows:
 - `LOG_MAX_SIZE_MB` and `LOG_KEEP_SIZE_MB` - used to prevent unlimited log file growth. `LOG_MAX_SIZE_MB` a float defining the maximum file size (in MB), after which the log is truncated, while `LOG_KEEP_SIZE_MB` defines the size to retain after truncation.  
 - `LOG_TIMEZONE` - the time zone used for log timestamps.  
 
-```bash
+```bash title="backup-files-and-mysql.sh"
 # ---------- Logging vars ----------
 
 # Enable only when running from cron
@@ -218,7 +218,7 @@ These are constant global variables, defined in a single place and reused throug
 - `BACKUP_*` - boolean flags derived from `BACKUP_RETENTION_*` variables.  
 - `SCRIPT_DIR` - absolute path of the current script, intended for resolving relative paths (currently unused).  
 
-```bash
+```bash title="backup-files-and-mysql.sh"
 # ---------- Constants ----------
 
 # Zip vars
@@ -253,7 +253,7 @@ At the top of the script, right below the variable and constant definitions, we 
 
 Additionally, it avoids a common pitfall of infinitely growing log files by truncating the file to `LOG_KEEP_SIZE_MB` whenever it reaches `LOG_MAX_SIZE_MB`. This ensures that only the most recent log entries are preserved.
 
-```bash
+```bash title="backup-files-and-mysql.sh"
 # ---------- Enable logging ----------
 
 setup_logging() {
@@ -311,7 +311,7 @@ Before executing any other logic, we validate the existence and correctness of t
 - At least one of daily, weekly, or monthly backups is enabled.
 - Any temporary backup archive from the previous run is deleted. This also allows the backup to be recreated and overwritten on the same day.
 
-```bash
+```bash title="backup-files-and-mysql.sh"
 # ---------- Validate config ------------
 
 is_valid_config() {
@@ -380,7 +380,7 @@ is_valid_config() {
 }
 ```
 
-### Main backup logic
+### Backup logic
 
 The `create_backup()` function is the core of the entire script. It assembles a MySQL database dump and file assets into a structured archive with well-organized relative paths, while also cleaning up any temporary files created during the process.
 
@@ -394,7 +394,7 @@ Next, we create a `.zip` archive from `STAGING_DIR` using a subshell to safely c
 
 Finally, we remove the `STAGING_DIR` directory regardless of whether archive creation succeeds or fails. This ensures idempotency and prevents leftover temporary files from accumulating.
 
-```bash
+```bash title="backup-files-and-mysql.sh"
 create_backup() {
     # Note: use staging dir with relative paths to have nice overview in GUI archive utility
 
@@ -469,7 +469,7 @@ To ensure idempotency, the function checks whether a retention copy for the curr
 
 Finally, the temporary backup file with the placeholder name is deleted, as it is no longer needed after the retention copies are created.
 
-```bash
+```bash title="backup-files-and-mysql.sh"
 create_retention_copies() {
     local IS_WEEKLY=$(( DAY_OF_WEEK == 7 )) # Sunday
     local IS_MONTHLY=$(( DAY_OF_MONTH == 1 )) # First day of month
@@ -522,7 +522,7 @@ We then list the contents of the `LOCAL_BACKUP_DIR` and delete outdated copies b
 - We skip the first `RETENTION` lines, which effectively keeps the `RETENTION` most recent backups.
 - Using `xargs` and `rm -R`, we delete all remaining filenames line by line, ignoring any error messages to keep logs clean.
 
-```bash
+```bash title="backup-files-and-mysql.sh"
 prune_old_backups() {
     for FREQ in daily weekly monthly; do
         # Determine retention variable dynamically
@@ -552,7 +552,7 @@ First, we ensure that all required configuration is correct. If validation fails
 
 If the configuration is valid, the script continues by creating a backup archive, then generating additional retention copies, and finally removing old backups.
 
-```bash
+```bash title="backup-files-and-mysql.sh"
 # ---------- Main script ----------
 
 if ! is_valid_config; then
@@ -587,7 +587,7 @@ Similarly to the local scripts, these are configurable variables that would typi
 - `MIN_BACKUP_SIZE_MB` - a human-readable float value (in MB) representing the minimum valid backup size.  
 - `MIN_BACKUP_SIZE_BYTES` - the equivalent integer value in bytes, used for actual validation and computations.  
 
-```bash
+```bash title="backup-rsync-local.sh"
 # ---------- Configuration ----------
 
 REMOTE_HOST="arm2"
@@ -609,7 +609,7 @@ MIN_BACKUP_SIZE_BYTES=$(echo "$MIN_BACKUP_SIZE_MB * 1024 * 1024 / 1" | bc) # rou
 
 These are the same as in the [Local backup script](#logging-variables). The logging format is identical in both the local and remote scripts.
 
-```bash
+```bash title="backup-rsync-local.sh"
 # ---------- Logging vars ----------
 
 # Enable only when running from cron
@@ -640,7 +640,7 @@ Same as in the local script, we validate the existence and correctness of the co
 - The remote backup directory exists.
 - The local backup directory exists.
 
-```bash
+```bash title="backup-rsync-local.sh"
 # ---------- Validate config ------------
 
 is_valid_config() {
@@ -686,7 +686,7 @@ Besides validating configuration variables, we also need to validate the remote 
 - `bytes_to_human()` converts a size in bytes into a human-readable format (KB, MB, GB). It is used to improve log readability.
 - `check_file_size()` validates that all remote backup files meet a minimum size requirement. It fetches file names and sizes from the remote server via SSH and iterates through each file. For each one, it logs the size and checks whether it is smaller than the minimum allowed size `MIN_BACKUP_SIZE_BYTES`. If any file is too small, it logs the filename and exits early with an error.
 
-```bash
+```bash title="backup-rsync-local.sh"
 # ------------ Utils ------------
 
 # Extract latest YYYY-MM-DD date from backup filenames
@@ -793,7 +793,7 @@ The `is_valid_backup()` function is the final check before synchronization. It v
 
 If any validation fails, the function prints an error and exits early with a non-zero status. If all checks pass, it confirms successful validation and returns success.
 
-```bash
+```bash title="backup-rsync-local.sh"
 # ---------- Validation ----------
 
 is_valid_backup() {
@@ -870,7 +870,7 @@ It first verifies that the configuration is valid, and then that the remote back
 
 If both checks pass, it proceeds to mirror the remote backup directory locally using `rsync`, preserving structure and deleting any local files that no longer exist on the remote.
 
-```bash
+```bash title="backup-rsync-local.sh"
 # ---------- Sync ----------
 
 if ! is_valid_config; then
