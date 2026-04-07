@@ -575,6 +575,42 @@ prune_old_backups
 echo "[INFO] Backup completed successfully."
 ```
 
+Below is an example log entry from a successful run when creating a backup:
+
+```txt
+2026-04-07 00:30:01 ========================================
+2026-04-07 00:30:01 [INFO] Logging started
+2026-04-07 00:30:01 [INFO] Log file: ./log-backup-files-and-mysql.txt
+2026-04-07 00:30:01 [INFO] Max size: 1.0MB, keep: 0.5MB
+2026-04-07 00:30:01 ========================================
+2026-04-07 00:30:01 
+2026-04-07 00:30:01 [INFO] Validating configuration...
+2026-04-07 00:30:01 [INFO] Configuration is valid. Creating backup...
+2026-04-07 00:30:01 [INFO] Created staging directory: ../data/staging_dir
+2026-04-07 00:30:01 [INFO] Created temporary DB directory: ../data/staging_dir/mysql_database
+2026-04-07 00:30:01 [INFO] Created files directory: ../data/staging_dir/source_code
+2026-04-07 00:30:01 mysqldump: [Warning] Using a password on the command line interface can be insecure.
+2026-04-07 00:30:02 [INFO] MySQL database dumped: db_name=mybb -> path=../data/staging_dir/mysql_database/mybb.sql
+2026-04-07 00:30:02 [INFO] Added to staging: ../../data/mybb-data/images/custom -> source_code/
+2026-04-07 00:30:02 [INFO] Added to staging: ../../data/mybb-data/inc/config.php -> source_code/
+2026-04-07 00:30:02   adding: mysql_database/ (stored 0%)
+2026-04-07 00:30:02   adding: mysql_database/mybb.sql (deflated 83%)
+2026-04-07 00:30:02   adding: source_code/ (stored 0%)
+2026-04-07 00:30:02   adding: source_code/config.php (deflated 62%)
+2026-04-07 00:30:02   adding: source_code/custom/ (stored 0%)
+2026-04-07 00:30:02   adding: source_code/custom/logo-blue-153x75.png (stored 0%)
+2026-04-07 00:30:02   adding: source_code/custom/logo-blue-588x288.png (deflated 0%)
+2026-04-07 00:30:02 [INFO] Created zip archive: ../data/mybb_files_and_mysql-frequency-2026-04-07.zip
+2026-04-07 00:30:02 [INFO] Removed staging directory: ../data/staging_dir
+2026-04-07 00:30:02 [INFO] Backup file created successfully: ../data/mybb_files_and_mysql-frequency-2026-04-07.zip
+2026-04-07 00:30:02 [INFO] daily backup copied successfully: ../data/mybb_files_and_mysql-daily-2026-04-07.zip
+2026-04-07 00:30:02 [INFO] Removed temporary backup file: ../data/mybb_files_and_mysql-frequency-2026-04-07.zip
+2026-04-07 00:30:02 [INFO] Pruned daily backups, keeping last 3
+2026-04-07 00:30:02 [INFO] Pruned weekly backups, keeping last 2
+2026-04-07 00:30:02 [INFO] Pruned monthly backups, keeping last 6
+2026-04-07 00:30:02 [INFO] Backup completed successfully.
+```
+
 ## Remote syncing script
 
 Besides the main backup script running directly on the server, we use an additional script that replicates the original backup on remote machines.
@@ -900,10 +936,71 @@ rsync -ah --progress --delete "$REMOTE_HOST:$REMOTE_BACKUP_DIR/" "$LOCAL_BACKUP_
 echo "[INFO] Backup sync completed successfully."
 ```
 
+Below is an example log entry from a successful run when synchronizing a backup:
+
+```txt
+2026-04-07 00:45:02 ========================================
+2026-04-07 00:45:02 [INFO] Logging started
+2026-04-07 00:45:02 [INFO] Log file: ./log-backup-rsync-local.txt
+2026-04-07 00:45:02 [INFO] Max size: 1.0MB, keep: 0.5MB
+2026-04-07 00:45:02 ========================================
+2026-04-07 00:45:02 
+2026-04-07 00:45:02 ----------------------------------------
+2026-04-07 00:45:02 [INFO] Validating configuration
+2026-04-07 00:45:03 [INFO] SSH connection established: REMOTE_HOST=arm2
+2026-04-07 00:45:04 [INFO] Remote backup directory exists: / ... /traefik-proxy/apps/mybb/backup/data
+2026-04-07 00:45:04 [INFO] Local backup directory exists: / ... /mybb-backup/scripts/../data
+2026-04-07 00:45:04 [INFO] Configuration validation successful
+2026-04-07 00:45:04 ----------------------------------------
+2026-04-07 00:45:04 ----------------------------------------
+2026-04-07 00:45:04 [INFO] Validating backups
+2026-04-07 00:45:05 [INFO] Remote file: / ... /traefik-proxy/apps/mybb/backup/data/mybb_files_and_mysql-daily-2026-04-05.zip, size=279KB
+2026-04-07 00:45:05 [INFO] Remote file: / ... /traefik-proxy/apps/mybb/backup/data/mybb_files_and_mysql-daily-2026-04-06.zip, size=293KB
+2026-04-07 00:45:05 [INFO] Remote file: / ... /traefik-proxy/apps/mybb/backup/data/mybb_files_and_mysql-daily-2026-04-07.zip, size=285KB
+2026-04-07 00:45:05 [INFO] Remote file: / ... /traefik-proxy/apps/mybb/backup/data/mybb_files_and_mysql-monthly-2026-02-01.zip, size=292KB
+2026-04-07 00:45:05 [INFO] Remote file: / ... /traefik-proxy/apps/mybb/backup/data/mybb_files_and_mysql-monthly-2026-03-01.zip, size=334KB
+2026-04-07 00:45:05 [INFO] Remote file: / ... /traefik-proxy/apps/mybb/backup/data/mybb_files_and_mysql-monthly-2026-04-01.zip, size=332KB
+2026-04-07 00:45:05 [INFO] Remote file: / ... /traefik-proxy/apps/mybb/backup/data/mybb_files_and_mysql-weekly-2026-03-22.zip, size=326KB
+2026-04-07 00:45:05 [INFO] Remote file: / ... /traefik-proxy/apps/mybb/backup/data/mybb_files_and_mysql-weekly-2026-04-05.zip, size=279KB
+2026-04-07 00:45:05 [INFO] All remote backup files meet minimum size, min=102KB
+2026-04-07 00:45:05 [INFO] Remote backup file sizes validated, min=102KB
+2026-04-07 00:45:06 [INFO] Remote backup file list loaded for type(s):
+2026-04-07 00:45:06 / ... /traefik-proxy/apps/mybb/backup/data/mybb_files_and_mysql-daily-2026-04-05.zip
+2026-04-07 00:45:06 / ... /traefik-proxy/apps/mybb/backup/data/mybb_files_and_mysql-daily-2026-04-06.zip
+2026-04-07 00:45:06 / ... /traefik-proxy/apps/mybb/backup/data/mybb_files_and_mysql-daily-2026-04-07.zip
+2026-04-07 00:45:06 / ... /traefik-proxy/apps/mybb/backup/data/mybb_files_and_mysql-monthly-2026-02-01.zip
+2026-04-07 00:45:06 / ... /traefik-proxy/apps/mybb/backup/data/mybb_files_and_mysql-monthly-2026-03-01.zip
+2026-04-07 00:45:06 / ... /traefik-proxy/apps/mybb/backup/data/mybb_files_and_mysql-monthly-2026-04-01.zip
+2026-04-07 00:45:06 / ... /traefik-proxy/apps/mybb/backup/data/mybb_files_and_mysql-weekly-2026-03-22.zip
+2026-04-07 00:45:06 / ... /traefik-proxy/apps/mybb/backup/data/mybb_files_and_mysql-weekly-2026-04-05.zip
+2026-04-07 00:45:06 [INFO] Local backup file list loaded:
+2026-04-07 00:45:06 
+2026-04-07 00:45:06 [INFO] Checking backup type: daily
+2026-04-07 00:45:06 [INFO] Backup count valid: type=daily remote=3 local=0
+2026-04-07 00:45:06 [INFO] Latest backup date valid: type=daily date=2026-04-07
+2026-04-07 00:45:06 [INFO] Checking backup type: weekly
+2026-04-07 00:45:06 [INFO] Backup count valid: type=weekly remote=2 local=0
+2026-04-07 00:45:06 [INFO] Latest backup date valid: type=weekly date=2026-04-05
+2026-04-07 00:45:06 [INFO] Checking backup type: monthly
+2026-04-07 00:45:06 [INFO] Backup count valid: type=monthly remote=3 local=0
+2026-04-07 00:45:06 [INFO] Latest backup date valid: type=monthly date=2026-04-01
+2026-04-07 00:45:06 [INFO] Backup validation successful
+2026-04-07 00:45:06 ----------------------------------------
+2026-04-07 00:45:06 [INFO] Remote backup valid - syncing data
+2026-04-07 00:45:07 receiving incremental file list
+2026-04-07 00:45:07 deleting mybb_files_and_mysql-daily-2026-04-04.zip
+2026-04-07 00:45:07 ./
+2026-04-07 00:45:07 mybb_files_and_mysql-daily-2026-04-07.zip
+2026-04-07 00:45:07 
+              0   0%    0.00kB/s    0:00:00  
+        292.31K 100%    1.91MB/s    0:00:00 (xfr#1, to-chk=5/10)
+2026-04-07 00:45:07 [INFO] Backup sync completed successfully.
+```
+
 // Todo:
         overview explanation in detail
         remote, local explanation
-analyze log and files
+        analyze log and files
         hero screenshot
         relative paths
 
@@ -915,6 +1012,7 @@ analyze log and files
 // decentralized, upload remote script
 // simulate testing over time
 // cron time zone
+// enforce non-interactive ssh connections
 
 ## Completed code
 
