@@ -577,7 +577,7 @@ echo "[INFO] Backup completed successfully."
 
 Below is an example log entry from a successful run when creating a backup:
 
-```txt
+```txt title="log-backup-files-and-mysql.txt"
 2026-04-07 00:30:01 ========================================
 2026-04-07 00:30:01 [INFO] Logging started
 2026-04-07 00:30:01 [INFO] Log file: ./log-backup-files-and-mysql.txt
@@ -938,7 +938,7 @@ echo "[INFO] Backup sync completed successfully."
 
 Below is an example log entry from a successful run when synchronizing a backup:
 
-```txt
+```txt title="log-backup-rsync-local.txt"
 2026-04-07 00:45:02 ========================================
 2026-04-07 00:45:02 [INFO] Logging started
 2026-04-07 00:45:02 [INFO] Log file: ./log-backup-rsync-local.txt
@@ -997,6 +997,53 @@ Below is an example log entry from a successful run when synchronizing a backup:
 2026-04-07 00:45:07 [INFO] Backup sync completed successfully.
 ```
 
+## Cron jobs
+
+Now that we have implemented the scripts, we just need to schedule them to run daily by defining cron jobs on the server and on each machine that stores synced copies.
+
+As a reminder, we can list and edit cron jobs using the following commands:
+
+```bash
+# List crons
+crontab -l
+
+# Edit crons
+crontab -e
+```
+
+We need to carefully choose times that capture application data near the end of the day in our target time zone. The sync script must run after the backup creation script, so we need to estimate the execution time of the backup process and schedule the sync within a safe margin. With this in mind, we can schedule the backup at `23:30` and the sync at `23:45`.
+
+Another important detail is that both scripts rely on relative paths, so cron must execute them from the correct working directory. This can be achieved with `cd /.../backup/scripts && bash ./my-script.sh`. Additionally, we should use absolute paths in the cron configuration (avoiding shortcuts like `~` for the home directory), as such expansions may fail in a cron environment.
+
+On server:
+
+```bash
+# Create backup every day at 23:30 Belgrade (UTC+2) time (21:30 UTC)
+30 21 * * * cd /home/username/traefik-proxy/apps/mybb/backup/scripts && /usr/bin/bash ./run-backup-files-and-mysql.sh
+```
+
+On syncing machines:
+
+```bash
+# Sync backup every day at 23:45 Belgrade (UTC+2) time (21:45 UTC)
+45 21 * * * cd /home/username/mybb-backup/scripts && /usr/bin/bash ./run-backup-rsync-local.sh
+```
+
+Interestingly, I couldn't find a reliable way to set a custom time zone for cron jobs. I tried setting the `TZ` and `CRON_TZ` variables, but they were ignored, and cron always fell back to UTC.
+
+```bash
+# None of these actually sets the time zone successfully
+# Always falls back to UTC
+
+# Global
+TZ=Europe/Belgrade
+CRON_TZ=Europe/Belgrade
+
+# Per job
+30 23 * * * TZ=Europe/Belgrade cd /home/username/traefik-proxy/apps/mybb/backup/scripts && /usr/bin/bash ./run-backup-files-and-mysql.sh
+30 23 * * * CRON_TZ=Europe/Belgrade cd /home/username/traefik-proxy/apps/mybb/backup/scripts && /usr/bin/bash ./run-backup-files-and-mysql.sh
+```
+
 // Todo:
         overview explanation in detail
         remote, local explanation
@@ -1006,13 +1053,20 @@ Below is an example log entry from a successful run when synchronizing a backup:
 
 ## Room for improvements
 
-// no point building whole backup solution
-// var include assets
-// env file
-// decentralized, upload remote script
-// simulate testing over time
-// cron time zone
-// enforce non-interactive ssh connections
+        // var include assets
+        // env file
+        // decentralized, upload remote script
+        // simulate testing over time
+        // cron time zone
+// enforce non-interactive ssh connections // no
+
+We described an example implementation along with the thought process behind designing a usable backup script. It is certainly not perfect or final, and it can be enhanced and improved in a number of ways. Here are some possible improvements:
+
+- Extract all configuration variables from the script and load them from an `.env` file.
+- Add an `ENABLE_ASSETS` boolean flag to enable or disable including application file assets in the backup. Currently, this requires commenting out all keys in the `SRC_CODE_DIRS` associative array.
+- Create a decentralized solution by avoiding a single "source of truth" backup on the server. Instead, allow local backup repositories to connect to the server via SSH and execute code that creates a temporary backup, which can then be downloaded locally and deleted afterward. In practice, `backup-rsync-local.sh` would send and execute the `backup-files-and-mysql.sh` script remotely and clean up the temporary backup after downloading.
+- Set up a test environment with sample data to conveniently test and validate the scripts without waiting for scheduled time intervals (daily, weekly, monthly copies).
+- Find a reliable and actually working solution for configuring the time zone for cron jobs on Ubuntu.
 
 ## Completed code
 
@@ -1020,9 +1074,10 @@ Below is an example log entry from a successful run when synchronizing a backup:
 - **Example app:** https://github.com/nemanjam/mybb-docker
 
 ## Conclusion
-improvements
-simulate testing over time
+
+// no point building whole backup solution
 
 ## References
 
 - The original script https://github.com/todiadiyatmo/bash-backup-rotation-script
+- Crontab set custom time zone https://serverfault.com/questions/848829/how-to-use-timezone-with-cron-tab
