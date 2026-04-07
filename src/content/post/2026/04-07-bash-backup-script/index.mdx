@@ -40,6 +40,10 @@ These core requirements are enough to get us started.
 
 ## Structure
 
+At the beginning, we need to make some core decisions about how to structure the code that creates and manages backups, as well as how to organize the folder structure for the application code, backup scripts, and backup files. 
+
+**Note:** The terms "local" and "remote" are used **relative to the server** where the application being backed up is running. "Local" refers to the server's filesystem, while "remote" refers to machines where backup copies are stored permanently. These are often devices (such as a laptop, Raspberry Pi, or home server) within a local network, so don’t be confused by the terminology.
+
 ### Local and remote scripts
 
 We prefer having local backups that can be quickly restored without needing to fetch and transfer data from a remote machine. At the same time, we also want true remote backups - synced copies stored on one or more external machines, since we treat our server instance as disposable.
@@ -63,13 +67,15 @@ However, both approaches rely on a clear, predefined folder structure, which sho
 
 ### Folder structure
 
+Bash scripts rely completely on relative paths, which means the script code and the surrounding folder structure are tightly coupled. A simple and understandable structure is a prerequisite for clean and reliable code.
+
 #### Local folder structure
 
 Below is the expected folder structure for both the server and local backups. In this context, "local" means local to the running application itself, on the same machine and file system. This backup repository serves as **the source of truth** for all other synchronized, remote backup copies.
 
 Here, `mybb/` is the application root directory, containing both the application files and the backup. Accordingly, `mybb/backup/` is the backup directory, which includes the backup Bash scripts (`mybb/backup/scripts/`) and the backup data (`mybb/backup/data/`). The generated `.zip` archive contains a `mysql_database/` folder for the MySQL dump, while adjacent asset folders retain their original names.
 
-This folder structure is mandatory and fixed, as all file paths in the `backup-files-and-mysql.sh` script are defined relative to the script location (`mybb/backup/scripts/`).
+This folder structure is mandatory and fixed, as **all file paths** in the `backup-files-and-mysql.sh` script are defined **relative to the script location** (`mybb/backup/scripts/`).
 
 Another useful detail is that the application files in `mybb/` are versioned, including the `backup-files-and-mysql.sh` script. Since we don't use a `.env` file for configuration, the production server contains an unversioned copy named `backup-files-and-mysql-run.sh`, which includes both the actual variables and executable code. This approach simplifies `git pull` operations and repository updates. Naturally, all backup data in `mybb/backup/data/` is excluded from version control via `.gitignore`.
 
@@ -128,9 +134,9 @@ As a synchronized mirror, its folder structure is identical, with one important 
 
 ## Local backup script
 
-Let's walk through the main script responsible for creating backups of MySQL database and arbitrary application assets, section by section.
-
 // explain script behavior more here
+
+Let's walk through the main script responsible for creating backups of MySQL database and arbitrary application assets, section by section.
 
 Entire script: https://github.com/nemanjam/bash-backup/blob/main/backup-files-and-mysql.sh
 
@@ -896,9 +902,10 @@ echo "[INFO] Backup sync completed successfully."
 
 // Todo:
 overview explanation in detail
-remote, local explanation
+        remote, local explanation
 analyze log and files
-hero screenshot
+        hero screenshot
+        relative paths
 
 ## Room for improvements
 
