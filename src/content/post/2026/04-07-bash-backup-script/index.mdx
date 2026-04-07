@@ -134,7 +134,7 @@ As a synchronized mirror, its folder structure is identical, with one important 
 
 ## Local backup script
 
-// explain script behavior more here
+This is the main script that creates a backup on the server's local filesystem. It dumps the MySQL database running in Docker into a plain UTF-8 `.sql` file and also backs up predefined application files and folders. A temporary staging folder is used to create a well-structured `.zip` archive.
 
 Let's walk through the main script responsible for creating backups of MySQL database and arbitrary application assets, section by section.
 
@@ -901,7 +901,7 @@ echo "[INFO] Backup sync completed successfully."
 ```
 
 // Todo:
-overview explanation in detail
+        overview explanation in detail
         remote, local explanation
 analyze log and files
         hero screenshot
