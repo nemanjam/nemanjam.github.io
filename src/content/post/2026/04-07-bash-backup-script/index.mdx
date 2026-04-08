@@ -1,12 +1,12 @@
 ---
-title: Building a simple bash backup script with docker, mysql, and rsync
+title: Building a simple Bash backup script with Docker, MySQL, and rsync
 description: |
   Step-by-step guide to designing pragmatic bash scripts for automated backups,
   including database dumps, file archiving, retention policies, validation,
   and remote synchronization.
 publishDate: 2026-04-07
 heroImage: '../../../../content/post/2026/04-07-bash-backup-script/_images/filesystem-screenshot-hero.png'
-heroAlt: bash backup mysql docker rsync illustration
+heroAlt: Backup files screenshot
 tags:
   - devops
   - self-hosting
@@ -25,8 +25,6 @@ We won't start entirely from scratch. Instead, we'll use the existing [todiadiya
 As a sample application, we'll use the latest MyBB forum running on PHP and MySQL, based on [nemanjam/mybb-docker](https://github.com/nemanjam/mybb-docker), deployed with Docker.
 
 ## Requirements
-mysql and file assets, docker
-folder structure
 
 Let's start by clearly defining the requirements the script should fulfill so we can address them properly:
 
@@ -1040,25 +1038,11 @@ TZ=Europe/Belgrade
 CRON_TZ=Europe/Belgrade
 
 # Per job
-30 23 * * * TZ=Europe/Belgrade cd /home/username/traefik-proxy/apps/mybb/backup/scripts && /usr/bin/bash ./run-backup-files-and-mysql.sh
-30 23 * * * CRON_TZ=Europe/Belgrade cd /home/username/traefik-proxy/apps/mybb/backup/scripts && /usr/bin/bash ./run-backup-files-and-mysql.sh
+30 21 * * * TZ=Europe/Belgrade cd /home/username/traefik-proxy/apps/mybb/backup/scripts && /usr/bin/bash ./run-backup-files-and-mysql.sh
+30 21 * * * CRON_TZ=Europe/Belgrade cd /home/username/traefik-proxy/apps/mybb/backup/scripts && /usr/bin/bash ./run-backup-files-and-mysql.sh
 ```
 
-// Todo:
-        overview explanation in detail
-        remote, local explanation
-        analyze log and files
-        hero screenshot
-        relative paths
-
 ## Room for improvements
-
-        // var include assets
-        // env file
-        // decentralized, upload remote script
-        // simulate testing over time
-        // cron time zone
-// enforce non-interactive ssh connections // no
 
 We described an example implementation along with the thought process behind designing a usable backup script. It is certainly not perfect or final, and it can be enhanced and improved in a number of ways. Here are some possible improvements:
 
@@ -1075,7 +1059,11 @@ We described an example implementation along with the thought process behind des
 
 ## Conclusion
 
-// no point building whole backup solution
+The assumption was that we need to track the state of an application, including the database, configuration (source files), and assets (images), and that we need a simple, minimalistic, yet functional solution. Although this is a quite common use case, after searching I couldn't find a convincing, up-to-date Bash script for this purpose. So, I decided to build upon and adapt the closest existing script I could find. That process is described in this article.
+
+This is a pragmatic, custom script focused on simplicity, with no ambition to become a comprehensive backup solution covering many use cases and features. Such a solution would require a much larger scope of work, and many robust backup tools already exist.
+
+How do you approach creating and managing backups for your applications? Let me know in the comments.
 
 ## References
 
