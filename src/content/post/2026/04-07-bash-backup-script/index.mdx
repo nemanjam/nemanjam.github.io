@@ -645,6 +645,20 @@ MIN_BACKUP_SIZE_MB=0.1
 MIN_BACKUP_SIZE_BYTES=$(echo "$MIN_BACKUP_SIZE_MB * 1024 * 1024 / 1" | bc) # rounded to integer
 ```
 
+## Constants
+
+The only constant used is `ZIP_PREFIX` and it **must** match the one used in backup creation script `backup-files-and-mysql.sh`.
+
+```bash title="backup-rsync-local.sh"
+# ---------- Constants ----------
+
+# Must match backup-files-and-mysql.sh
+ZIP_PREFIX="mybb_files_and_mysql"
+
+# Script dir absolute path, unused
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+```
+
 ### Logging variables
 
 These are the same as in the [Local backup script](#logging-variables). The logging format is identical in both the local and remote scripts.
