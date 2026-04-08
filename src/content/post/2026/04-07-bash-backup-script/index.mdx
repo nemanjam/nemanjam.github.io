@@ -645,7 +645,7 @@ MIN_BACKUP_SIZE_MB=0.1
 MIN_BACKUP_SIZE_BYTES=$(echo "$MIN_BACKUP_SIZE_MB * 1024 * 1024 / 1" | bc) # rounded to integer
 ```
 
-## Constants
+### Constants
 
 The only constant used is `ZIP_PREFIX` and it **must** match the one used in backup creation script `backup-files-and-mysql.sh`.
 
