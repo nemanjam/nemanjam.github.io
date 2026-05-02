@@ -2,7 +2,7 @@
 import '@fontsource-variable/inter/index.css';
 import '@/styles/main.css';
 
-import { ClientRouter } from 'astro:transitions';
+// import { ClientRouter } from 'astro:transitions';
 
 import ThemeScript from '@/components/ThemeScript.astro';
 import { DEFAULT_METADATA } from '@/constants/metadata';
@@ -19,7 +19,7 @@ export interface BaseHeadProps {
   metadata: Metadata;
 }
 
-// set defualt metadata in this component
+// set default metadata in this component
 const { metadata } = Astro.props as BaseHeadProps;
 
 // site: SITE_URL var + '/'
@@ -125,13 +125,13 @@ const ogImageUrl = new URL(image, url);
   {/* MUST be inside <head /> to avoid white flash, IMPORTANT */}
   <ThemeScript />
 
-  <ClientRouter fallback="none" />
+  <!-- Has distortions in Firefox -->
+  <!-- <ClientRouter fallback="none" /> -->
 
-  <!-- 
-    <style>
+  <!-- Not supported in Firefox -->
+  <style>
     @view-transition {
       navigation: auto; /* enabled! */
     }
-    </style> 
-  -->
+  </style>
 </head>

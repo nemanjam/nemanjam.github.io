@@ -21,16 +21,21 @@ const {
   total,
   class: className,
 } = Astro.props;
-// all links in Astro are relative /blog/2
+// All URLs in Astro are relative /blog/2 and WITHOUT trailing slash and query string
 const { prev: prevUrl, current: currentUrl, next: nextUrl } = url;
 
-const getFirstUrl = (url: string) => url.replace(/\/\d+$/, '/');
+/** Trim page number and all after number (After first number in URL). */
+const getFirstUrl = () => currentUrl.replace(/\/\d+.*$/, '');
 
-const firstUrl = getFirstUrl(currentUrl);
+// Note: ALL final pagination links WITHOUT trailing slash. Consistent with tags and categories.
+
+const firstUrl = getFirstUrl();
+
 const getPageUrl = (pageNumber: number) =>
   pageNumber === 1 ? firstUrl : `${firstUrl}/${pageNumber}`;
 
 const lastUrl = getPageUrl(lastPage);
+
 const hasMoreThanOnePage = () => lastPage > 1;
 
 const pageNumbers = (length: number) => Array.from({ length }, (_, i) => i + 1);
@@ -83,7 +88,7 @@ const threePageNumbers = (currentPage: number, lastPage: number): number[] => {
         {threePageNumbers(currentPage, lastPage).map((pageNumber) => {
           const isCurrentPage = pageNumber === currentPage;
 
-          // trimm long pagination with (...)
+          // trim long pagination with (...)
 
           return (
             <Link
