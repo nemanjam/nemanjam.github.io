@@ -12,7 +12,7 @@ RUN apk add --no-cache git
 
 # installs pnpm correctly
 ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
+ENV PATH="$PNPM_HOME/bin:$PATH"
 
 RUN corepack enable
 RUN corepack prepare pnpm@11.5.1 --activate
