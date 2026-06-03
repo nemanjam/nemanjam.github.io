@@ -2,8 +2,6 @@
 import '@fontsource-variable/inter/index.css';
 import '@/styles/main.css';
 
-// import { ClientRouter } from 'astro:transitions';
-
 import ThemeScript from '@/components/ThemeScript.astro';
 import { DEFAULT_METADATA } from '@/constants/metadata';
 import { ROUTES } from '@/constants/routes';
@@ -124,9 +122,6 @@ const ogImageUrl = new URL(image, url);
   {/* Theme */}
   {/* MUST be inside <head /> to avoid white flash, IMPORTANT */}
   <ThemeScript />
-
-  <!-- Has distortions in Firefox -->
-  <!-- <ClientRouter fallback="none" /> -->
 
   <!-- Not supported in Firefox -->
   <style>
