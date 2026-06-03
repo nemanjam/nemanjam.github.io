@@ -19,9 +19,7 @@ RUN corepack prepare pnpm@11.5.1 --activate
 
 FROM base AS build
 COPY package.json pnpm-lock.yaml ./
-# approve build scripts
-RUN echo "enable-pre-post-scripts=true" > .npmrc
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --dangerously-allow-all-builds
 
 COPY . .
 
