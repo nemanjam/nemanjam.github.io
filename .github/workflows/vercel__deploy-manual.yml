@@ -51,14 +51,10 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           version: 11.5.1
-
-      - name: Setup pnpm global bin path
-        run: |
-          echo "PNPM_HOME=$(pnpm store path)/../bin" >> $GITHUB_ENV
-          echo "$(pnpm store path)/../bin" >> $GITHUB_PATH
+          cache: true
 
       - name: Install Vercel CLI
         run: pnpm add -g vercel
