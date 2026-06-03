@@ -1,5 +1,4 @@
-import path from 'path';
-
+import { unified } from '@astrojs/markdown-remark';
 import mdx from '@astrojs/mdx';
 import partytown from '@astrojs/partytown';
 import react from '@astrojs/react';
@@ -44,7 +43,7 @@ export default defineConfig({
     }),
   ],
   // pass rehype plugins only here, mdx will reuse them
-  markdown: { remarkPlugins, rehypePlugins },
+  markdown: { processor: unified({ remarkPlugins, rehypePlugins }) },
   vite: {
     build: {
       sourcemap: false,
@@ -52,11 +51,6 @@ export default defineConfig({
     server: {
       // applies only to Vite dev server
       allowedHosts: ['localhost', 'preview1.amd1.nemanjamitic.com'],
-    },
-    // import { z } from 'astro:content'; (collections) // must use zod v3 (with pnpm)
-    // import { z } from 'zod'; (config) // must use zod v4
-    ssr: {
-      noExternal: ['zod'],
     },
   },
 });

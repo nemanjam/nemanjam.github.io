@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import { isServer } from '../utils/runtime';
+
 export const nodeEnvValues = ['development', 'test', 'production'] as const;
 export const booleanValues = ['true', 'false', ''] as const;
 
@@ -14,7 +16,7 @@ const localhostWithPortRegex = /^localhost(:\d{1,5})?$/;
 // Note: must be defined in 2 places (src/schemas/config.ts and src/config/process-env.ts)
 // Note: to be possible to load from .env.production file and avoid circular import and astro.config.ts
 const VERCEL_URL = (
-  process.env.VERCEL_PROJECT_PRODUCTION_URL
+  isServer() && process.env.VERCEL_PROJECT_PRODUCTION_URL
     ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
     : undefined
 ) as string;

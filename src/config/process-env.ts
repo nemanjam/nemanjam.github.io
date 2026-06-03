@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 
 import { nodeEnvValues, processEnvSchema } from '../schemas/config';
 import { prettyPrintObject } from '../utils/log';
+import { isServer } from '../utils/runtime';
 import { validateData } from '../utils/validation';
 
 // import { getHostnameFromUrl } from '../utils/urls';
@@ -31,7 +32,7 @@ dotenv.config({ path: envFileName });
 // Note: must be defined in 2 places (src/schemas/config.ts and src/config/process-env.ts)
 // Note: to be possible to load from .env.production file and avoid circular import and astro.config.ts
 const VERCEL_URL = (
-  process.env.VERCEL_PROJECT_PRODUCTION_URL
+  isServer() && process.env.VERCEL_PROJECT_PRODUCTION_URL
     ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
     : undefined
 ) as string;
