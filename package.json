@@ -92,7 +92,7 @@
     "eslint-plugin-tailwindcss": "^3.18.3",
     "prettier": "^3.9.5",
     "prettier-plugin-astro": "^0.14.1",
-    "satori": "^0.26.0",
+    "satori": "^0.29.0",
     "satori-html": "^0.3.2",
     "serve": "^14.2.6",
     "tailwindcss": "^3.4.17",
