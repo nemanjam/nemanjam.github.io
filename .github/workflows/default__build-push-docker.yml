@@ -16,9 +16,9 @@ env:
   IMAGE_NAME: ${{ github.event.repository.name }}
   SITE_URL_ARM64: 'https://nmc-docker.arm1.nemanjamitic.com'
   SITE_URL_AMD64: 'https://nmc-docker.local.nemanjamitic.com'
+  PLAUSIBLE_DOMAIN: 'nemanjamitic.com'
   # disable analytics temporary, no arm1 instance
   # PLAUSIBLE_SCRIPT_URL: 'https://plausible.arm1.nemanjamitic.com/js/script.js'
-  # PLAUSIBLE_DOMAIN: 'nemanjamitic.com'
 
 jobs:
   build:
