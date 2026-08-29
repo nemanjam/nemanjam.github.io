@@ -315,7 +315,7 @@ docker login my-user my-pass
 # replace "nemanjamitic/nemanjam.github.io" with your image name
 # set ARG_SITE_URL_ARM64 to your production url
 # set correct architecture for your production server --platform linux/arm64 or linux/amd64
-"docker:build:push:arm": "docker buildx build -f ./docker/Dockerfile -t nemanjamitic/nemanjam.github.io --build-arg ARG_SITE_URL_ARM64='https://nmc-docker.arm1.nemanjamitic.com' --platform linux/arm64 --progress=plain --push .",
+"docker:build:push:arm": "docker buildx build -f ./docker/Dockerfile -t nemanjamitic/nemanjam.github.io --build-arg ARG_SITE_URL_ARM64='https://docker.nemanjamitic.com' --platform linux/arm64 --progress=plain --push .",
 
 # build and push Docker image, replace "arm" with your architecture
 pnpm docker:build:push:arm
