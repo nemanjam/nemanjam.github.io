@@ -4,23 +4,23 @@ This is the repository for my coding blog [nemanjamitic.com](https://nemanjamiti
 
 ## Mirrors
 
-| Method       | Url                                      |
-| :----------- | :--------------------------------------- |
-| Nginx        | https://nemanjamitic.com                 |
-| Github Pages | https://nemanjam.github.io               |
-| Vercel       | https://nemanjam.vercel.app              |
-| Docker       | https://nmc-docker.arm1.nemanjamitic.com |
+| Method       | Url                             |
+| :----------- | :------------------------------ |
+| Nginx        | https://nemanjamitic.com        |
+| Github Pages | https://nemanjam.github.io      |
+| Vercel       | https://nemanjam.vercel.app     |
+| Docker       | https://docker.nemanjamitic.com |
 
 #### Self hosted mirrors
 
 These mirrors are hosted at my home, in my homelab and are not always online.
 
-| Method             | Url                                     |
-| :----------------- | :-------------------------------------- |
-| OrangePi Nginx     | https://opi.nemanjamitic.com            |
-| OrangePi Docker    | https://nmc-docker.opi.nemanjamitic.com |
-| ThinkCentre Nginx  | https://mpc.nemanjamitic.com            |
-| ThinkCentre Docker | https://nmc-docker.mpc.nemanjamitic.com |
+| Method             | Url                                 |
+| :----------------- | :---------------------------------- |
+| OrangePi Nginx     | https://opi.nemanjamitic.com        |
+| OrangePi Docker    | https://docker.opi.nemanjamitic.com |
+| ThinkCentre Nginx  | https://mpc.nemanjamitic.com        |
+| ThinkCentre Docker | https://docker.mpc.nemanjamitic.com |
 
 #### Plausible analytics
 
